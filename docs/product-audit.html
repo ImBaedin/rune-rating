@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RuneRating Product Launch Audit</title>
+    <link rel="icon" href="data:," />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slateInk: "#18212f",
+              cloud: "#f6f8fb",
+              paper: "#ffffff",
+              line: "#d8e0ea",
+              muted: "#627084",
+              danger: "#b42318",
+              warning: "#b54708",
+              teal: "#0f766e",
+              blue: "#2563eb",
+            },
+            boxShadow: {
+              report: "0 18px 60px rgba(24, 33, 47, 0.10)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background:
+          linear-gradient(90deg, rgba(37, 99, 235, 0.045) 1px, transparent 1px),
+          linear-gradient(rgba(15, 118, 110, 0.035) 1px, transparent 1px),
+          #f6f8fb;
+        background-size: 36px 36px;
+      }
+
+      .section-anchor {
+        scroll-margin-top: 110px;
+      }
+
+      .finding[hidden] {
+        display: none;
+      }
+
+      .filter-button[aria-pressed="true"] {
+        border-color: #18212f;
+        background: #18212f;
+        color: #ffffff;
+      }
+
+      @media print {
+        .no-print {
+          display: none;
+        }
+
+        body {
+          background: #ffffff;
+        }
+
+        details {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body class="text-slateInk antialiased">
+    <main class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+      <header class="overflow-hidden rounded-lg border border-line bg-paper shadow-report">
+        <div class="grid gap-0 lg:grid-cols-[1.25fr_0.75fr]">
+          <section class="border-b border-line p-6 sm:p-8 lg:border-b-0 lg:border-r">
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-blue">Launch readiness audit</p>
+            <h1 class="mt-3 max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl">
+              RuneRating product audit
+            </h1>
+            <p class="mt-4 max-w-3xl text-base leading-7 text-muted">
+              A full-stack pass across the web app, Convex backend, route behavior, accessibility,
+              production rendering, tests, docs, and launch-facing code quality.
+            </p>
+            <div class="mt-6 flex flex-wrap gap-2 text-sm">
+              <a class="rounded-md border border-line px-3 py-2 font-medium hover:border-slateInk" href="#findings">
+                Findings
+              </a>
+              <a class="rounded-md border border-line px-3 py-2 font-medium hover:border-slateInk" href="#smoke-matrix">
+                Route smoke matrix
+              </a>
+              <a class="rounded-md border border-line px-3 py-2 font-medium hover:border-slateInk" href="#execution-plan">
+                Suggested execution
+              </a>
+              <a class="rounded-md border border-line px-3 py-2 font-medium hover:border-slateInk" href="#artifacts">
+                Evidence artifacts
+              </a>
+            </div>
+          </section>
+
+          <aside class="bg-slateInk p-6 text-white sm:p-8">
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] text-white/60">Audit snapshot</p>
+            <dl class="mt-5 grid grid-cols-2 gap-3 text-sm">
+              <div class="rounded-md border border-white/10 bg-white/10 p-4">
+                <dt class="text-white/60">Date</dt>
+                <dd class="mt-1 font-semibold">June 22, 2026</dd>
+              </div>
+              <div class="rounded-md border border-white/10 bg-white/10 p-4">
+                <dt class="text-white/60">Scope</dt>
+                <dd class="mt-1 font-semibold">Web + Convex</dd>
+              </div>
+              <div class="rounded-md border border-white/10 bg-white/10 p-4">
+                <dt class="text-white/60">Findings</dt>
+                <dd class="mt-1 font-semibold">18 total</dd>
+              </div>
+              <div class="rounded-md border border-white/10 bg-white/10 p-4">
+                <dt class="text-white/60">Checks</dt>
+                <dd class="mt-1 font-semibold">Fixes applied</dd>
+              </div>
+            </dl>
+            <p class="mt-5 text-sm leading-6 text-white/70">
+              Updated after implementation: the objective launch fixes are applied and verified. Remaining
+              items are either test/docs follow-up, subjective UX review, or larger structure work.
+            </p>
+          </aside>
+        </div>
+      </header>
+
+      <section class="mt-5 grid gap-4 md:grid-cols-4">
+        <article class="rounded-lg border border-danger/25 bg-white p-5">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-danger">P0</p>
+          <p class="mt-2 text-2xl font-semibold">2</p>
+          <p class="mt-1 text-sm text-muted">Fix before public launch.</p>
+        </article>
+        <article class="rounded-lg border border-warning/25 bg-white p-5">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-warning">P1</p>
+          <p class="mt-2 text-2xl font-semibold">4</p>
+          <p class="mt-1 text-sm text-muted">High confidence launch risks.</p>
+        </article>
+        <article class="rounded-lg border border-blue/25 bg-white p-5">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue">P2</p>
+          <p class="mt-2 text-2xl font-semibold">9</p>
+          <p class="mt-1 text-sm text-muted">Product polish and maintainability.</p>
+        </article>
+        <article class="rounded-lg border border-line bg-white p-5">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">P3</p>
+          <p class="mt-2 text-2xl font-semibold">3</p>
+          <p class="mt-1 text-sm text-muted">Cleanup and follow-up work.</p>
+        </article>
+      </section>
+
+      <section class="mt-5 rounded-lg border border-line bg-paper p-5 shadow-report">
+        <div class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-teal">Fixed in implementation pass</p>
+            <ul class="mt-3 space-y-2 text-sm leading-6 text-muted">
+              <li><strong class="text-slateInk">Invalid RSNs:</strong> compare and rating routes now validate before Convex calls and render safe UI.</li>
+              <li><strong class="text-slateInk">Root route:</strong> `/` now redirects directly to the default comparison route.</li>
+              <li><strong class="text-slateInk">Production fallbacks:</strong> player cards use route RSNs while data is loading instead of mock names.</li>
+              <li><strong class="text-slateInk">Accessibility and controls:</strong> drawer inert state, focus rings, link semantics, form metadata, and inert buttons were fixed.</li>
+              <li><strong class="text-slateInk">Backend hardening:</strong> collection refresh is capped, normalized, cooldown-aware, and uses typed RuneProfile env.</li>
+              <li><strong class="text-slateInk">Chart warnings:</strong> Combat Achievements and Minigames charts now use explicit ResponsiveContainer heights.</li>
+              <li><strong class="text-slateInk">Stale scaffold docs:</strong> root, web, backend, and UI README files no longer describe the app as unimplemented.</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-warning">Left for review</p>
+            <ul class="mt-3 space-y-2 text-sm leading-6 text-muted">
+              <li><strong class="text-slateInk">Collection refresh architecture:</strong> full integration into the main refresh queue remains a backend design pass.</li>
+              <li><strong class="text-slateInk">Frontend/backend structure:</strong> large module splits were intentionally left alone.</li>
+              <li><strong class="text-slateInk">Collection mobile chart labels:</strong> this needs product/design review before choosing list versus chart behavior.</li>
+              <li><strong class="text-slateInk">Web smoke tests:</strong> skipped per instruction for this pass.</li>
+              <li><strong class="text-slateInk">Launch docs:</strong> a fuller public setup/deployment guide still needs owner input.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="findings" class="section-anchor mt-5 rounded-lg border border-line bg-paper shadow-report">
+        <div class="border-b border-line p-5 sm:p-6">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue">Findings</p>
+              <h2 class="mt-2 text-2xl font-semibold">Launch and code quality issues</h2>
+              <p class="mt-2 max-w-3xl text-sm leading-6 text-muted">
+                Use the filters or search box to narrow the list. Each finding includes evidence, code
+                references, and the practical fix I would execute first.
+              </p>
+            </div>
+            <div class="no-print min-w-0 lg:w-[360px]">
+              <label class="text-xs font-semibold uppercase tracking-[0.16em] text-muted" for="finding-search">
+                Search findings
+              </label>
+              <input
+                id="finding-search"
+                class="mt-2 w-full rounded-md border border-line px-3 py-2 text-sm outline-none focus:border-blue focus:ring-2 focus:ring-blue/20"
+                name="finding-search"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="Example: Convex, SSR, accessibility"
+                type="search"
+              />
+            </div>
+          </div>
+          <div class="no-print mt-5 flex flex-wrap gap-2 text-sm">
+            <button class="filter-button rounded-md border border-line px-3 py-2 font-medium" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-button rounded-md border border-line px-3 py-2 font-medium" type="button" data-filter="p0" aria-pressed="false">P0</button>
+            <button class="filter-button rounded-md border border-line px-3 py-2 font-medium" type="button" data-filter="p1" aria-pressed="false">P1</button>
+            <button class="filter-button rounded-md border border-line px-3 py-2 font-medium" type="button" data-filter="p2" aria-pressed="false">P2</button>
+            <button class="filter-button rounded-md border border-line px-3 py-2 font-medium" type="button" data-filter="p3" aria-pressed="false">P3</button>
+            <button class="filter-button rounded-md border border-line px-3 py-2 font-medium" type="button" data-filter="frontend" aria-pressed="false">Frontend</button>
+            <button class="filter-button rounded-md border border-line px-3 py-2 font-medium" type="button" data-filter="backend" aria-pressed="false">Backend</button>
+            <button class="filter-button rounded-md border border-line px-3 py-2 font-medium" type="button" data-filter="ux" aria-pressed="false">UX</button>
+            <button class="filter-button rounded-md border border-line px-3 py-2 font-medium" type="button" data-filter="docs" aria-pressed="false">Docs</button>
+            <button class="filter-button rounded-md border border-line px-3 py-2 font-medium" type="button" data-filter="tests" aria-pressed="false">Tests</button>
+          </div>
+          <p class="no-print mt-3 text-sm text-muted"><span id="visible-count">18 of 18</span> findings visible</p>
+        </div>
+
+        <div class="divide-y divide-line">
+          <article id="invalid-rsn-crash" class="finding p-5 sm:p-6" data-priority="p0" data-area="frontend backend routing ux" data-title="invalid rsn crash raw convex stack trace">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-danger px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P0</span>
+                <p class="mt-3 text-sm font-semibold">Routing and errors</p>
+                <p class="mt-1 text-xs text-muted">Frontend + backend</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Invalid RSNs crash into a raw Convex stack trace.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  A malformed player route or rating query can throw from domain RSN normalization inside
+                  a Convex query. The browser then shows the default TanStack error boundary and internal
+                  server stack details.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 grid gap-4 lg:grid-cols-[1fr_280px]">
+                    <div class="space-y-3 text-sm leading-6 text-muted">
+                      <p><strong class="text-slateInk">Reproduced:</strong> <code>/compare/thisnameiswaytoolong/Hey%20Jase</code> and <code>/rating?rsn=thisnameiswaytoolong</code>.</p>
+                      <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/routes/compare/$leftRsn/$rightRsn.tsx:9</code>, <code>apps/web/src/routes/rating.tsx:4</code>, <code>packages/backend/convex/lib/players.ts:6</code>, <code>packages/domain/src/rsn.ts:3</code>.</p>
+                      <p><strong class="text-slateInk">Fix:</strong> validate and normalize route/search params at the route boundary before any Convex call, render a friendly invalid-player state, and add a route/root <code>errorComponent</code> that hides internal stack traces.</p>
+                    </div>
+                    <a class="block overflow-hidden rounded-md border border-line bg-white" href="../.playwright-cli/page-2026-06-22T19-29-08-976Z.png">
+                      <img class="h-44 w-full object-cover" src="../.playwright-cli/page-2026-06-22T19-29-08-976Z.png" alt="Invalid RSN error screenshot" />
+                    </a>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="collection-refresh-risk" class="finding p-5 sm:p-6" data-priority="p0" data-area="backend convex provider ux" data-title="collection detail refresh public auto trigger external provider">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-danger px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P0</span>
+                <p class="mt-3 text-sm font-semibold">Provider safety</p>
+                <p class="mt-1 text-xs text-muted">Convex action</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Collection detail refresh bypasses the main cooldown pipeline.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  Opening Collections can auto-call a public action that loops arbitrary RSNs, calls
+                  RuneProfile using the API key, and writes collection rows. The only repeat guard is a
+                  per-client <code>useRef</code>, so new sessions can repeat the provider call.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/pages/CollectionsPage.tsx:105</code>, <code>apps/web/src/pages/CollectionsPage.tsx:121</code>, <code>packages/backend/convex/runeProfile.ts:678</code>, <code>packages/backend/convex/runeProfile.ts:697</code>.</p>
+                    <p><strong class="text-slateInk">Contrast:</strong> the normal refresh path in <code>packages/backend/convex/refresh.ts</code> has argument caps, leases, cooldowns, and scheduled background work.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> route collection detail refresh through a server-side claim/cooldown/backoff flow, cap RSNs to the comparison pair, validate RSNs before provider work, and consider making collection detail refresh an explicit action instead of automatic page-load behavior.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="mock-ssr" class="finding p-5 sm:p-6" data-priority="p1" data-area="frontend ssr ux" data-title="production ssr mock player names northstar moss giant">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-warning px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P1</span>
+                <p class="mt-3 text-sm font-semibold">Production SSR</p>
+                <p class="mt-1 text-xs text-muted">Frontend</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Production HTML can render mock player cards for real URLs.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  The topbar route state can show the requested RSNs while the server-rendered player
+                  cards still fall back to <code>Northstar</code> and <code>Moss Giant</code>. That creates
+                  a visible flash risk and poor crawler/share-preview content.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Reproduced:</strong> production <code>/compare/Lynx%20Titan/Hey%20Jase</code> returned route RSNs in the topbar but mock player cards in SSR HTML.</p>
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/App.tsx:73</code>, <code>apps/web/src/App.tsx:741</code>, <code>apps/web/src/App.tsx:760</code>, <code>apps/web/src/App.tsx:3968</code>, <code>apps/web/src/mockData.ts:18</code>.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> remove mock player fallback from production comparison shells. Pass route RSNs into loading cards or move mock data behind story/prototype-only routes.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="typed-env" class="finding p-5 sm:p-6" data-priority="p1" data-area="backend convex config" data-title="runeprofile api key process env not typed convex env">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-warning px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P1</span>
+                <p class="mt-3 text-sm font-semibold">Config hygiene</p>
+                <p class="mt-1 text-xs text-muted">Convex</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">RuneProfile credentials are read from untyped <code>process.env</code>.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  The generated Convex guidelines for this project require environment variables to be
+                  declared in <code>convex.config.ts</code> and accessed through generated typed env bindings.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>packages/backend/convex/sources/runeProfile.ts:27</code>, <code>packages/backend/convex/runeProfile.ts:696</code>, <code>packages/backend/convex/_generated/ai/guidelines.md</code>.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> add a Convex env declaration for <code>RUNEPROFILE_API_KEY</code>, regenerate Convex files, and replace direct <code>process.env</code> reads with generated env access.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="drawer-accessibility" class="finding p-5 sm:p-6" data-priority="p1" data-area="frontend accessibility ux" data-title="mobile drawer main content still accessible tree">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-warning px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P1</span>
+                <p class="mt-3 text-sm font-semibold">Accessibility</p>
+                <p class="mt-1 text-xs text-muted">Mobile drawer</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">The mobile drawer overlays the page but leaves the page interactive to assistive tech.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  When the drawer is open, the sidebar and scrim appear, but the underlying main content
+                  remains in the accessibility tree. Keyboard and screen-reader users can still traverse
+                  content behind the overlay.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 grid gap-4 lg:grid-cols-[1fr_280px]">
+                    <div class="space-y-3 text-sm leading-6 text-muted">
+                      <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/App.tsx:652</code>, <code>apps/web/src/App.tsx:718</code>.</p>
+                      <p><strong class="text-slateInk">Fix:</strong> treat the mobile sidebar as a modal drawer: focus the drawer on open, return focus on close, close on Escape, and set the page root/main to <code>inert</code> or <code>aria-hidden</code> while open.</p>
+                    </div>
+                    <a class="block overflow-hidden rounded-md border border-line bg-white" href="../.playwright-cli/page-2026-06-22T19-24-42-874Z.png">
+                      <img class="h-44 w-full object-cover" src="../.playwright-cli/page-2026-06-22T19-24-42-874Z.png" alt="Mobile drawer screenshot" />
+                    </a>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="focus-rings" class="finding p-5 sm:p-6" data-priority="p1" data-area="frontend accessibility ux" data-title="focus outlines removed without replacement">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-warning px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P1</span>
+                <p class="mt-3 text-sm font-semibold">Accessibility</p>
+                <p class="mt-1 text-xs text-muted">Forms and controls</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Several inputs and selects remove outlines without consistent replacement focus styles.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  The app has highly customized controls, but several CSS rules set <code>outline: 0</code>
+                  and rely on visual styling that is not consistently tied to <code>:focus-visible</code>
+                  or <code>:focus-within</code>.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/styles.css:302</code>, <code>apps/web/src/styles.css:1651</code>, <code>apps/web/src/styles.css:4556</code>, <code>apps/web/src/components/comparison-ui.css:206</code>, <code>apps/web/src/pages/BossingPage.css:43</code>.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> add visible <code>:focus-visible</code> and wrapper <code>:focus-within</code> treatments for topbar RSN fields, shared search fields, rating form inputs, and selects.</p>
+                    <p><strong class="text-slateInk">Reference:</strong> this aligns with the Vercel Web Interface Guidelines focus-state guidance linked in the footer.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="blank-root" class="finding p-5 sm:p-6" data-priority="p2" data-area="frontend ssr routing ux" data-title="root route blank ssr client redirect">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-blue px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P2</span>
+                <p class="mt-3 text-sm font-semibold">SSR routing</p>
+                <p class="mt-1 text-xs text-muted">Frontend</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">The root route returns blank SSR HTML and redirects only after hydration.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  <code>/</code> returns a 200 with scripts and styles but no meaningful page content until
+                  client JavaScript runs. That makes first paint, crawler behavior, and no-JS fallback weaker.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/routes/index.tsx:9</code>, <code>apps/web/src/App.tsx:909</code>, <code>apps/web/src/App.tsx:925</code>.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> make root a real server-rendered default comparison page or use a server-side redirect to the default comparison URL.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="dead-controls" class="finding p-5 sm:p-6" data-priority="p2" data-area="frontend ux" data-title="dead buttons player actions generated highlights">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-blue px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P2</span>
+                <p class="mt-3 text-sm font-semibold">Interaction polish</p>
+                <p class="mt-1 text-xs text-muted">Frontend</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Visible buttons imply actions that do not exist yet.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  The player kebab buttons and generated highlight rows look interactive. They use button
+                  semantics, cursor affordances, and icons, but do not open menus or navigate anywhere.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/App.tsx:3998</code>, <code>apps/web/src/App.tsx:4724</code>.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> either remove these controls before launch or wire them to real behavior: player actions menu, source profile links, or deep links into the relevant comparison section.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="button-navigation" class="finding p-5 sm:p-6" data-priority="p2" data-area="frontend accessibility ux routing" data-title="navigation tabs implemented as buttons not links">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-blue px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P2</span>
+                <p class="mt-3 text-sm font-semibold">Navigation semantics</p>
+                <p class="mt-1 text-xs text-muted">Frontend</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Route navigation is implemented with buttons instead of links.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  Sidebar items and page navigation call <code>navigate()</code> from buttons. The URL updates,
+                  but users lose native link affordances such as open in new tab, copy link, and expected
+                  screen-reader link semantics.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/App.tsx:979</code>, <code>apps/web/src/App.tsx:4550</code>.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> replace route-changing buttons with TanStack Router <code>Link</code> components and keep buttons for local UI actions only.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="form-metadata" class="finding p-5 sm:p-6" data-priority="p2" data-area="frontend accessibility ux" data-title="forms missing names autocomplete spellcheck metadata">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-blue px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P2</span>
+                <p class="mt-3 text-sm font-semibold">Forms</p>
+                <p class="mt-1 text-xs text-muted">Frontend</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Search and RSN inputs are missing useful form metadata.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  Several inputs have labels but no <code>name</code>, non-auth search fields lack consistent
+                  <code>autocomplete</code> and <code>spellcheck</code> choices, and placeholders are used as
+                  examples rather than clean prompt text.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/App.tsx:3852</code>, <code>apps/web/src/RatingPage.tsx:363</code>, <code>apps/web/src/components/comparison-ui.tsx:220</code>.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> add stable field names, set <code>autocomplete="off"</code> for RSN/search fields, disable spellcheck for usernames and code-like item searches, and keep visible labels.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="recharts-warnings" class="finding p-5 sm:p-6" data-priority="p2" data-area="frontend charts ux" data-title="recharts responsivecontainer width height warnings">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-blue px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P2</span>
+                <p class="mt-3 text-sm font-semibold">Charts</p>
+                <p class="mt-1 text-xs text-muted">Frontend</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Responsive charts warn about zero or negative dimensions on mobile.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  Combat Achievements and Minigames emitted Recharts warnings during mobile route smoke
+                  tests. The charts eventually render, but the warning suggests a layout race or collapsing
+                  container.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 grid gap-4 lg:grid-cols-[1fr_280px]">
+                    <div class="space-y-3 text-sm leading-6 text-muted">
+                      <p><strong class="text-slateInk">Console warning:</strong> <code>The width(-1) and height(-1) of chart should be greater than 0</code>.</p>
+                      <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/pages/CombatAchievementsPage.tsx:1004</code>, <code>apps/web/src/pages/MinigamesPage.tsx:223</code>.</p>
+                      <p><strong class="text-slateInk">Fix:</strong> give chart wrappers stable numeric height/aspect constraints or delay <code>ResponsiveContainer</code> rendering until the container has measurable dimensions.</p>
+                    </div>
+                    <a class="block overflow-hidden rounded-md border border-line bg-white" href="../.playwright-cli/page-2026-06-22T19-26-46-689Z.png">
+                      <img class="h-44 w-full object-cover" src="../.playwright-cli/page-2026-06-22T19-26-46-689Z.png" alt="Minigames chart screenshot" />
+                    </a>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="collections-mobile-chart" class="finding p-5 sm:p-6" data-priority="p2" data-area="frontend charts mobile ux" data-title="collections mobile chart labels collide">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-blue px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P2</span>
+                <p class="mt-3 text-sm font-semibold">Mobile readability</p>
+                <p class="mt-1 text-xs text-muted">Collections</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Collection chart labels are hard to read on narrow screens.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  Long category names wrap or visually collide in the collection page-gap chart. This is
+                  most visible for Treasure Trail categories on a 390px viewport.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 grid gap-4 lg:grid-cols-[1fr_280px]">
+                    <div class="space-y-3 text-sm leading-6 text-muted">
+                      <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/pages/CollectionsPage.tsx:402</code>, <code>apps/web/src/pages/CollectionsPage.css:377</code>.</p>
+                      <p><strong class="text-slateInk">Fix:</strong> use a mobile-specific ranked list, abbreviate axis labels, or provide wider label columns with deterministic wrapping.</p>
+                    </div>
+                    <a class="block overflow-hidden rounded-md border border-line bg-white" href="../.playwright-cli/page-2026-06-22T19-27-41-906Z.png">
+                      <img class="h-44 w-full object-cover" src="../.playwright-cli/page-2026-06-22T19-27-41-906Z.png" alt="Collections mobile chart screenshot" />
+                    </a>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="web-test-gap" class="finding p-5 sm:p-6" data-priority="p2" data-area="tests frontend ci" data-title="web tests placeholder no browser smoke tests">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-blue px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P2</span>
+                <p class="mt-3 text-sm font-semibold">Test coverage</p>
+                <p class="mt-1 text-xs text-muted">Web</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">The web package has no real automated tests or route smoke suite.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  Repository tests pass, but the web script is a placeholder. The invalid-RSN crash,
+                  Recharts warnings, and mobile drawer accessibility issue are exactly the sort of launch
+                  bugs a small browser suite would catch.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code ref:</strong> <code>apps/web/package.json:14</code> has <code>echo 'No tests configured for visual prototype'</code>.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> add a Bun-driven Playwright smoke suite for root redirect, all route tabs, invalid RSN handling, mobile drawer behavior, and production SSR content.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="app-monolith" class="finding p-5 sm:p-6" data-priority="p2" data-area="frontend architecture code-quality" data-title="app tsx 5052 lines empty ui package">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-blue px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P2</span>
+                <p class="mt-3 text-sm font-semibold">Frontend structure</p>
+                <p class="mt-1 text-xs text-muted">Code quality</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold"><code>App.tsx</code> is carrying too many product surfaces.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  The main app file is over 5,000 lines and exports the shell, route pages, page widgets,
+                  cards, charts, controls, and data adapters. Meanwhile <code>packages/ui</code> exists but
+                  has no implementation.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/App.tsx</code> is 5,052 lines; route files import page components from it; <code>packages/ui</code> contains only docs/package metadata.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> split by feature first: <code>comparison/shell</code>, <code>overview</code>, <code>skills</code>, <code>efficiency</code>, and <code>activity</code>. Then promote stable primitives like source chips, empty states, loading cards, search fields, stat rows, and panel headers into a real shared UI package or local component folder.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="backend-structure" class="finding p-5 sm:p-6" data-priority="p2" data-area="backend convex architecture code-quality" data-title="backend large modules unbounded collect caps">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-blue px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P2</span>
+                <p class="mt-3 text-sm font-semibold">Backend structure</p>
+                <p class="mt-1 text-xs text-muted">Convex</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Backend provider modules are large and contain some brittle collection limits.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  <code>wiseOldMan.ts</code>, <code>refresh.ts</code>, and <code>runeProfile.ts</code> combine
+                  public APIs, cache claims, provider calls, replacement writes, and read models. Some
+                  rich-data reads/deletes also use broad <code>collect()</code> or fixed <code>take()</code>
+                  caps that could silently truncate as provider catalogs grow.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>packages/backend/convex/wiseOldMan.ts</code> is 1,734 lines; <code>packages/backend/convex/refresh.ts</code> is 830 lines; <code>packages/backend/convex/runeProfile.ts</code> is 736 lines.</p>
+                    <p><strong class="text-slateInk">Data refs:</strong> <code>runeProfile.getCategory</code> collects canonical items, and collection-log replacement/comparison uses fixed caps like <code>take(2500)</code> and <code>take(500)</code>.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> split by source capability, centralize cache claim/release helpers, and convert rich-data reads/deletes to explicit bounded queries, pagination, or revision-based cleanup.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="docs-stale" class="finding p-5 sm:p-6" data-priority="p3" data-area="docs launch" data-title="readme docs stale scaffold phase">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-muted px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P3</span>
+                <p class="mt-3 text-sm font-semibold">Docs</p>
+                <p class="mt-1 text-xs text-muted">Launch prep</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Several README files still describe an earlier scaffold phase.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  The root README says application code has not been generated yet, while package docs
+                  describe planned layouts that no longer match the current implementation.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>README.md</code>, <code>apps/web/README.md</code>, <code>packages/backend/README.md</code>, <code>packages/ui/README.md</code>.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> update launch docs with current run commands, Convex setup, provider env vars, deployment notes, and the real feature/module map.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="build-noise" class="finding p-5 sm:p-6" data-priority="p3" data-area="frontend build performance" data-title="build warnings large chunks">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-muted px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P3</span>
+                <p class="mt-3 text-sm font-semibold">Build hygiene</p>
+                <p class="mt-1 text-xs text-muted">Frontend</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Production build passes but emits dependency warnings and large chunks.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  Vite/Nitro builds successfully, but the output is noisy with ignored module-level
+                  <code>"use client"</code> directives from dependencies. The app bundle and chart/server
+                  chunks are also large enough to deserve follow-up once blockers are handled.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Observed:</strong> <code>bun run build</code> passed with many dependency warnings and large generated chunks.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> confirm warnings are harmless for deployment, then consider route-level chart splitting and bundle analysis after launch blockers are closed.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <article id="artifact-clutter" class="finding p-5 sm:p-6" data-priority="p3" data-area="docs repo cleanup" data-title="playwright output artifacts clutter repository">
+            <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
+              <aside>
+                <span class="inline-flex rounded-md bg-muted px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P3</span>
+                <p class="mt-3 text-sm font-semibold">Repo cleanup</p>
+                <p class="mt-1 text-xs text-muted">Artifacts</p>
+              </aside>
+              <div>
+                <h3 class="text-xl font-semibold">Browser and screenshot artifacts should be ignored or cleaned before release.</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">
+                  The workspace contains generated browser screenshots and output artifacts. They are useful
+                  for this audit, but should not accidentally become source-controlled product files.
+                </p>
+                <details class="mt-4 rounded-md border border-line bg-cloud p-4">
+                  <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
+                  <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
+                    <p><strong class="text-slateInk">Observed:</strong> <code>.playwright-cli</code> and <code>output/playwright</code> contain generated screenshots/logs.</p>
+                    <p><strong class="text-slateInk">Fix:</strong> ensure these paths are ignored or intentionally archived. Keep curated launch screenshots elsewhere if they are documentation assets.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="smoke-matrix" class="section-anchor mt-5 rounded-lg border border-line bg-paper p-5 shadow-report sm:p-6">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-teal">Route smoke matrix</p>
+            <h2 class="mt-2 text-2xl font-semibold">Manual browser coverage</h2>
+          </div>
+          <p class="text-sm text-muted">Desktop and 390px mobile samples</p>
+        </div>
+        <div class="mt-5 overflow-x-auto rounded-md border border-line">
+          <table class="min-w-full border-collapse bg-white text-left text-sm">
+            <thead class="bg-slateInk text-white">
+              <tr>
+                <th class="px-4 py-3 font-semibold">Route</th>
+                <th class="px-4 py-3 font-semibold">Status</th>
+                <th class="px-4 py-3 font-semibold">Notes</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-line">
+              <tr>
+                <td class="px-4 py-3 font-mono">/</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-blue/10 px-2 py-1 font-semibold text-blue">Works after hydration</span></td>
+                <td class="px-4 py-3 text-muted">Blank SSR, then client redirects to the default comparison.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono">/compare/Lynx%20Titan/Hey%20Jase</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-teal/10 px-2 py-1 font-semibold text-teal">Renders</span></td>
+                <td class="px-4 py-3 text-muted">Main comparison page renders on desktop and mobile; no horizontal overflow found.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono">skills, xp-timeline, efficiency, activity</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-teal/10 px-2 py-1 font-semibold text-teal">Renders</span></td>
+                <td class="px-4 py-3 text-muted">Core Hiscores/WOM tabs render in sampled mobile viewports.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono">quests, diaries, bossing, clues</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-teal/10 px-2 py-1 font-semibold text-teal">Renders</span></td>
+                <td class="px-4 py-3 text-muted">RuneProfile category pages render; collection refresh behavior needs backend hardening.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono">combat-achievements, minigames</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-warning/10 px-2 py-1 font-semibold text-warning">Renders with warning</span></td>
+                <td class="px-4 py-3 text-muted">Recharts warns about negative/zero dimensions before chart settles.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono">collections</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-warning/10 px-2 py-1 font-semibold text-warning">Renders with UX issue</span></td>
+                <td class="px-4 py-3 text-muted">Mobile page-gap chart labels are hard to read; detail refresh action is too exposed.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono">/not-a-page</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-teal/10 px-2 py-1 font-semibold text-teal">404</span></td>
+                <td class="px-4 py-3 text-muted">Returns HTTP 404 as expected.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono">/compare/.../not-a-page</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-teal/10 px-2 py-1 font-semibold text-teal">404</span></td>
+                <td class="px-4 py-3 text-muted">Returns HTTP 404, but the nested not-found UI is very plain.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-mono">invalid RSN routes</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-danger/10 px-2 py-1 font-semibold text-danger">Broken</span></td>
+                <td class="px-4 py-3 text-muted">Raw Convex error boundary and stack trace.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="execution-plan" class="section-anchor mt-5 rounded-lg border border-line bg-paper p-5 shadow-report sm:p-6">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue">Suggested execution</p>
+        <h2 class="mt-2 text-2xl font-semibold">Recommended launch sequence</h2>
+        <div class="mt-5 grid gap-4 lg:grid-cols-3">
+          <article class="rounded-lg border border-danger/25 bg-danger/5 p-5">
+            <p class="text-sm font-semibold text-danger">Batch 1: launch blockers</p>
+            <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-muted">
+              <li>Validate RSNs in routes/search before Convex calls.</li>
+              <li>Add route/root error UI that hides internal stack traces.</li>
+              <li>Move collection detail refresh into a cooldown/claim flow with argument caps.</li>
+            </ol>
+          </article>
+          <article class="rounded-lg border border-warning/25 bg-warning/5 p-5">
+            <p class="text-sm font-semibold text-warning">Batch 2: high-confidence polish</p>
+            <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-muted">
+              <li>Remove production mock player fallbacks.</li>
+              <li>Switch RuneProfile env access to typed Convex env.</li>
+              <li>Fix mobile drawer focus isolation and visible focus states.</li>
+              <li>Replace route-changing buttons with links.</li>
+            </ol>
+          </article>
+          <article class="rounded-lg border border-blue/25 bg-blue/5 p-5">
+            <p class="text-sm font-semibold text-blue">Batch 3: regression protection</p>
+            <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-muted">
+              <li>Add Playwright route smoke tests for desktop/mobile.</li>
+              <li>Add invalid-RSN tests to web and backend behavior.</li>
+              <li>Stabilize chart dimensions and mobile collection labels.</li>
+              <li>Split <code>App.tsx</code> along feature boundaries.</li>
+            </ol>
+          </article>
+        </div>
+      </section>
+
+      <section id="artifacts" class="section-anchor mt-5 rounded-lg border border-line bg-paper p-5 shadow-report sm:p-6">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-teal">Evidence artifacts</p>
+        <h2 class="mt-2 text-2xl font-semibold">Screenshots and command checks</h2>
+        <div class="mt-5 grid gap-4 lg:grid-cols-2">
+          <article class="rounded-lg border border-line bg-cloud p-4">
+            <p class="font-semibold">Browser screenshots</p>
+            <ul class="mt-3 space-y-2 text-sm leading-6 text-muted">
+              <li><a class="font-medium text-blue hover:underline" href="../.playwright-cli/page-2026-06-22T19-29-08-976Z.png">Invalid RSN error boundary</a></li>
+              <li><a class="font-medium text-blue hover:underline" href="../.playwright-cli/page-2026-06-22T19-24-42-874Z.png">Mobile drawer overlay</a></li>
+              <li><a class="font-medium text-blue hover:underline" href="../.playwright-cli/page-2026-06-22T19-26-46-689Z.png">Minigames mobile chart</a></li>
+              <li><a class="font-medium text-blue hover:underline" href="../.playwright-cli/page-2026-06-22T19-27-41-906Z.png">Collections mobile chart labels</a></li>
+            </ul>
+          </article>
+          <article class="rounded-lg border border-line bg-cloud p-4">
+            <p class="font-semibold">Verification commands</p>
+            <ul class="mt-3 space-y-2 text-sm leading-6 text-muted">
+              <li><code>bun run typecheck</code>: passed after the fix pass.</li>
+              <li><code>bun run lint</code>: passed after the fix pass.</li>
+              <li><code>bun run build</code>: passed after the fix pass, with the existing dependency and chunk-size warnings still present.</li>
+              <li><code>npx -y react-doctor@latest . --verbose --diff</code>: ran and reported broader pre-existing React architecture/performance findings left for review.</li>
+              <li><code>bun run test</code>: not rerun in the fix pass per instruction; it passed during the original audit, with the web package placeholder noted.</li>
+            </ul>
+          </article>
+        </div>
+        <p class="mt-5 text-sm leading-6 text-muted">
+          UI/accessibility checks referenced the
+          <a class="font-medium text-blue hover:underline" href="https://github.com/vercel-labs/web-interface-guidelines">Vercel Web Interface Guidelines</a>.
+          Convex-specific checks referenced the generated local guidance at
+          <code>packages/backend/convex/_generated/ai/guidelines.md</code>.
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const buttons = Array.from(document.querySelectorAll("[data-filter]"));
+      const search = document.getElementById("finding-search");
+      const count = document.getElementById("visible-count");
+      const findings = Array.from(document.querySelectorAll(".finding"));
+      let activeFilter = "all";
+
+      function setFilter(nextFilter) {
+        activeFilter = nextFilter;
+        buttons.forEach((button) => {
+          const pressed = button.dataset.filter === nextFilter;
+          button.setAttribute("aria-pressed", String(pressed));
+        });
+        applyFilters();
+      }
+
+      function applyFilters() {
+        const query = search.value.trim().toLowerCase();
+        let visible = 0;
+
+        findings.forEach((finding) => {
+          const haystack = [
+            finding.dataset.priority,
+            finding.dataset.area,
+            finding.dataset.title,
+            finding.textContent,
+          ]
+            .join(" ")
+            .toLowerCase();
+          const matchesFilter =
+            activeFilter === "all" ||
+            finding.dataset.priority === activeFilter ||
+            finding.dataset.area.includes(activeFilter);
+          const matchesSearch = query === "" || haystack.includes(query);
+          const shouldShow = matchesFilter && matchesSearch;
+          finding.hidden = !shouldShow;
+          if (shouldShow) visible += 1;
+        });
+
+        count.textContent = `${visible} of ${findings.length}`;
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => setFilter(button.dataset.filter));
+      });
+
+      search.addEventListener("input", applyFilters);
+    </script>
+  </body>
+</html>

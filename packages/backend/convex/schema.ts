@@ -1,0 +1,159 @@
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+import {
+  categoryDataValidator,
+  categoryValidator,
+  snapshotStatusValidator,
+  sourceValidator,
+} from "./validators";
+
+export default defineSchema({
+  players: defineTable({
+    normalizedRsn: v.string(),
+    displayRsn: v.string(),
+    createdAt: v.number(),
+    lastRequestedAt: v.number(),
+    lastSnapshotAt: v.union(v.number(), v.null()),
+    refreshAllowedAt: v.number(),
+  })
+    .index("by_normalized_rsn", ["normalizedRsn"])
+    .index("by_refresh_allowed_at", ["refreshAllowedAt"]),
+
+  snapshotStates: defineTable({
+    key: v.string(),
+    playerId: v.id("players"),
+    source: sourceValidator,
+    category: categoryValidator,
+    status: snapshotStatusValidator,
+    requestId: v.string(),
+    lastAttemptAt: v.number(),
+    lastSuccessAt: v.union(v.number(), v.null()),
+    errorCode: v.union(v.string(), v.null()),
+  }).index("by_key", ["key"]),
+
+  categorySnapshots: defineTable({
+    key: v.string(),
+    playerId: v.id("players"),
+    source: sourceValidator,
+    category: categoryValidator,
+    segment: v.string(),
+    fetchedAt: v.number(),
+    completeness: v.literal("complete"),
+    data: categoryDataValidator,
+  })
+    .index("by_key", ["key"])
+    .index("by_player_and_category", ["playerId", "category"]),
+
+  canonicalItems: defineTable({
+    key: v.string(),
+    playerId: v.id("players"),
+    source: sourceValidator,
+    category: categoryValidator,
+    revision: v.string(),
+    itemKey: v.string(),
+    label: v.string(),
+    group: v.string(),
+    state: v.union(v.string(), v.null()),
+    completed: v.union(v.boolean(), v.null()),
+    current: v.union(v.number(), v.null()),
+    total: v.union(v.number(), v.null()),
+    points: v.union(v.number(), v.null()),
+  })
+    .index("by_key", ["key"])
+    .index("by_player_and_category", ["playerId", "category"])
+    .index("by_player_and_category_and_revision", [
+      "playerId",
+      "category",
+      "revision",
+    ])
+    .index("by_player_and_category_and_revision_and_item_key", [
+      "playerId",
+      "category",
+      "revision",
+      "itemKey",
+    ])
+    .index("by_player_and_category_and_revision_and_group", [
+      "playerId",
+      "category",
+      "revision",
+      "group",
+    ]),
+
+  refreshLeases: defineTable({
+    playerId: v.id("players"),
+    requestId: v.string(),
+    leaseUntil: v.number(),
+  }).index("by_player", ["playerId"]),
+
+  wiseOldManOverviewCaches: defineTable({
+    normalizedRsn: v.string(),
+    displayRsn: v.string(),
+    fetchedAt: v.union(v.number(), v.null()),
+    refreshAllowedAt: v.number(),
+    requestId: v.union(v.string(), v.null()),
+    timeline: v.array(
+      v.object({
+        date: v.number(),
+        value: v.number(),
+      }),
+    ),
+    sevenDayGained: v.union(v.number(), v.null()),
+  }).index("by_normalized_rsn", ["normalizedRsn"]),
+
+  wiseOldManSkillGainsCaches: defineTable({
+    key: v.string(),
+    normalizedRsn: v.string(),
+    displayRsn: v.string(),
+    period: v.string(),
+    fetchedAt: v.union(v.number(), v.null()),
+    refreshAllowedAt: v.number(),
+    requestId: v.union(v.string(), v.null()),
+    gains: v.array(
+      v.object({
+        key: v.string(),
+        gained: v.union(v.number(), v.null()),
+        start: v.union(v.number(), v.null()),
+        end: v.union(v.number(), v.null()),
+      }),
+    ),
+  }).index("by_key", ["key"]),
+
+  wiseOldManSkillTimelineCaches: defineTable({
+    key: v.string(),
+    normalizedRsn: v.string(),
+    displayRsn: v.string(),
+    skillKey: v.string(),
+    fetchedAt: v.union(v.number(), v.null()),
+    refreshAllowedAt: v.number(),
+    requestId: v.union(v.string(), v.null()),
+    errorCode: v.optional(v.union(v.string(), v.null())),
+    timeline: v.array(
+      v.object({
+        date: v.number(),
+        value: v.number(),
+      }),
+    ),
+  }).index("by_key", ["key"]),
+
+  wiseOldManEfficiencyTimelineCaches: defineTable({
+    key: v.string(),
+    normalizedRsn: v.string(),
+    displayRsn: v.string(),
+    metric: v.union(v.literal("ehp"), v.literal("ehb")),
+    fetchedAt: v.union(v.number(), v.null()),
+    refreshAllowedAt: v.number(),
+    requestId: v.union(v.string(), v.null()),
+    errorCode: v.optional(v.union(v.string(), v.null())),
+    timeline: v.array(
+      v.object({
+        date: v.number(),
+        value: v.number(),
+      }),
+    ),
+  }).index("by_key", ["key"]),
+
+  runtimeConfig: defineTable({
+    key: v.string(),
+    numberValue: v.number(),
+  }).index("by_key", ["key"]),
+});

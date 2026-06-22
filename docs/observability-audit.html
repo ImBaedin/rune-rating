@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RuneRating Observability Audit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Fraunces", "ui-serif", "Georgia", "serif"],
+              body: ["IBM Plex Sans", "ui-sans-serif", "system-ui", "sans-serif"],
+              mono: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+            },
+            colors: {
+              ink: "#17211c",
+              moss: "#294336",
+              vellum: "#f6f1e7",
+              parchment: "#fffaf0",
+              rule: "#d9cfbd",
+              clay: "#a24b36",
+              gold: "#d49a2f",
+              teal: "#2f7f75",
+              blue: "#365f9f",
+            },
+            boxShadow: {
+              ledger: "0 24px 80px rgba(28, 33, 27, 0.12)",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,750&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background:
+          linear-gradient(90deg, rgba(23, 33, 28, 0.035) 1px, transparent 1px),
+          linear-gradient(rgba(23, 33, 28, 0.035) 1px, transparent 1px),
+          #f6f1e7;
+        background-size: 32px 32px;
+      }
+      .rail-label {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+      }
+      .section-anchor {
+        scroll-margin-top: 24px;
+      }
+    </style>
+  </head>
+  <body class="font-body text-ink antialiased">
+    <main class="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-10">
+      <section class="relative overflow-hidden border border-rule bg-parchment shadow-ledger">
+        <div class="grid lg:grid-cols-[88px_1fr]">
+          <aside class="hidden border-r border-rule bg-ink text-vellum lg:block">
+            <div class="sticky top-0 flex h-screen flex-col items-center justify-between py-7">
+              <div class="h-10 w-10 border border-vellum/30 bg-vellum/10"></div>
+              <p class="rail-label font-mono text-[11px] font-semibold uppercase tracking-[0.3em] text-vellum/70">
+                RuneRating telemetry plan
+              </p>
+              <div class="h-10 w-10 border border-vellum/30 bg-vellum/10"></div>
+            </div>
+          </aside>
+
+          <div>
+            <header class="border-b border-rule bg-vellum px-6 py-8 sm:px-10 lg:px-14">
+              <div class="flex flex-wrap items-start justify-between gap-6">
+                <div class="max-w-3xl">
+                  <p class="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+                    Audit report
+                  </p>
+                  <h1 class="mt-4 font-display text-4xl font-bold leading-[0.98] text-ink sm:text-6xl">
+                    Observability that explains what players compare.
+                  </h1>
+                  <p class="mt-5 max-w-2xl text-lg leading-8 text-moss">
+                    RuneRating should use analytics to measure comparison intent, source reliability,
+                    detail-page interest, and cache effectiveness without storing raw provider payloads
+                    or creating a second RuneRating history archive.
+                  </p>
+                </div>
+                <div class="min-w-64 border border-rule bg-parchment p-4">
+                  <p class="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-moss/70">
+                    Recommended stack
+                  </p>
+                  <div class="mt-4 space-y-3">
+                    <div class="flex items-center justify-between gap-4">
+                      <span class="font-semibold">Frontend</span>
+                      <code class="font-mono text-sm text-blue">posthog-js</code>
+                    </div>
+                    <div class="flex items-center justify-between gap-4">
+                      <span class="font-semibold">Backend</span>
+                      <code class="font-mono text-sm text-blue">posthog-node</code>
+                    </div>
+                    <div class="flex items-center justify-between gap-4">
+                      <span class="font-semibold">Transport</span>
+                      <code class="font-mono text-sm text-blue">batched capture</code>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </header>
+
+            <nav class="flex flex-wrap gap-2 border-b border-rule bg-parchment px-6 py-4 sm:px-10 lg:px-14">
+              <a class="border border-rule px-3 py-2 text-sm font-semibold hover:bg-vellum" href="#highest-value">Highest value</a>
+              <a class="border border-rule px-3 py-2 text-sm font-semibold hover:bg-vellum" href="#event-catalog">Event catalog</a>
+              <a class="border border-rule px-3 py-2 text-sm font-semibold hover:bg-vellum" href="#implementation">Implementation</a>
+              <a class="border border-rule px-3 py-2 text-sm font-semibold hover:bg-vellum" href="#governance">Governance</a>
+            </nav>
+
+            <section id="highest-value" class="section-anchor grid gap-6 border-b border-rule px-6 py-8 sm:px-10 lg:grid-cols-4 lg:px-14">
+              <div class="lg:col-span-1">
+                <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+                  Priority map
+                </p>
+                <h2 class="mt-3 font-display text-3xl font-bold">What to measure first</h2>
+              </div>
+              <div class="grid gap-4 lg:col-span-3 md:grid-cols-2">
+                <article class="border-l-4 border-clay bg-vellum p-5">
+                  <h3 class="text-lg font-bold">Comparison demand</h3>
+                  <p class="mt-2 leading-7 text-moss">
+                    Capture when users submit two RSNs, which page they land on, whether it came from a
+                    recent lookup, and whether data was already fresh. This answers the core question:
+                    which comparison workflows deserve optimization.
+                  </p>
+                </article>
+                <article class="border-l-4 border-blue bg-vellum p-5">
+                  <h3 class="text-lg font-bold">Page and feature interest</h3>
+                  <p class="mt-2 leading-7 text-moss">
+                    Track navigation among Overview, Skills, XP Timeline, Efficiency, Activity, Quests,
+                    Combat Achievements, Bossing, Clues, Minigames, and Collections. Pair this with
+                    dwell time and interaction depth.
+                  </p>
+                </article>
+                <article class="border-l-4 border-teal bg-vellum p-5">
+                  <h3 class="text-lg font-bold">Rich-data searches</h3>
+                  <p class="mt-2 leading-7 text-moss">
+                    The collection item lookup, quest filters, and combat achievement task lookup are
+                    the clearest signals for "what data people find interesting." Log search intent and
+                    filter combinations, not every keystroke.
+                  </p>
+                </article>
+                <article class="border-l-4 border-gold bg-vellum p-5">
+                  <h3 class="text-lg font-bold">Refresh and cache health</h3>
+                  <p class="mt-2 leading-7 text-moss">
+                    Backend events should show scheduled, cooldown, already scheduled, fresh, failed,
+                    rate-limited, and unavailable outcomes by source and category. This is the fastest
+                    route to finding provider bottlenecks and cache misses.
+                  </p>
+                </article>
+              </div>
+            </section>
+
+            <section class="grid gap-6 border-b border-rule px-6 py-8 sm:px-10 lg:grid-cols-[1.1fr_1fr] lg:px-14">
+              <div>
+                <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+                  Audit findings
+                </p>
+                <h2 class="mt-3 font-display text-3xl font-bold">Instrument around user intent, not raw data.</h2>
+                <p class="mt-4 leading-8 text-moss">
+                  This repository already has the right product boundaries: external providers stay in SDKs,
+                  Convex stores canonical current snapshots, and the web app renders source-independent
+                  comparison models. Analytics should preserve those boundaries. Frontend events explain
+                  what users attempted and interacted with; backend events explain cache, source, and query
+                  outcomes.
+                </p>
+                <p class="mt-4 leading-8 text-moss">
+                  Avoid logging raw provider responses, full snapshot values, or unbounded RSN lists. RSNs are
+                  public game names, but they are still high-cardinality identifiers; hash or normalize them
+                  consistently when they are needed for deduping funnels.
+                </p>
+              </div>
+              <div class="border border-rule bg-ink p-6 text-vellum">
+                <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-vellum/60">
+                  North-star questions
+                </p>
+                <ul class="mt-5 space-y-4 text-sm leading-6">
+                  <li><strong>1.</strong> Which comparison pages do users reach after submitting RSNs?</li>
+                  <li><strong>2.</strong> Which filters and item lookups are actually used?</li>
+                  <li><strong>3.</strong> Where do source states block useful comparisons?</li>
+                  <li><strong>4.</strong> How often do actions hit fresh cache versus external providers?</li>
+                  <li><strong>5.</strong> Which Convex query/action paths are slow, repeated, or error-prone?</li>
+                </ul>
+              </div>
+            </section>
+
+            <section id="event-catalog" class="section-anchor border-b border-rule px-6 py-8 sm:px-10 lg:px-14">
+              <div class="max-w-3xl">
+                <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+                  Event catalog
+                </p>
+                <h2 class="mt-3 font-display text-3xl font-bold">Recommended analytics events</h2>
+              </div>
+
+              <div class="mt-6 overflow-x-auto border border-rule">
+                <table class="min-w-full border-collapse bg-parchment text-left text-sm">
+                  <thead class="bg-ink text-vellum">
+                    <tr>
+                      <th class="px-4 py-3 font-mono text-xs uppercase tracking-[0.16em]">Event</th>
+                      <th class="px-4 py-3 font-mono text-xs uppercase tracking-[0.16em]">Where</th>
+                      <th class="px-4 py-3 font-mono text-xs uppercase tracking-[0.16em]">Properties</th>
+                      <th class="px-4 py-3 font-mono text-xs uppercase tracking-[0.16em]">Why it matters</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-rule">
+                    <tr>
+                      <td class="px-4 py-4 font-mono font-semibold">comparison_submitted</td>
+                      <td class="px-4 py-4">Topbar compare form</td>
+                      <td class="px-4 py-4">entry_view, left_rsn_hash, right_rsn_hash, used_recent_lookup, active_view</td>
+                      <td class="px-4 py-4">Measures two-player comparison demand and repeat lookup behavior.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-4 font-mono font-semibold">rune_rating_requested</td>
+                      <td class="px-4 py-4">Single-player rating form</td>
+                      <td class="px-4 py-4">rsn_hash, entry_source, prior_status, source_statuses, data_age_bucket</td>
+                      <td class="px-4 py-4">Measures demand for the new RuneRating metric before a card is ready.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-4 font-mono font-semibold">rune_rating_ready</td>
+                      <td class="px-4 py-4">api.runeRating.get ready state</td>
+                      <td class="px-4 py-4">rsn_hash, score_bucket, tier, formula_version, source_statuses, missing_source_count, pillar_leader</td>
+                      <td class="px-4 py-4">Shows score distribution, source completeness, and formula-version behavior without logging full card data.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-4 font-mono font-semibold">comparison_viewed</td>
+                      <td class="px-4 py-4">Route changes in TanStack Router</td>
+                      <td class="px-4 py-4">view, source_statuses, data_age_bucket, has_left_data, has_right_data</td>
+                      <td class="px-4 py-4">Shows page popularity and whether users see useful data.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-4 font-mono font-semibold">manual_refresh_clicked</td>
+                      <td class="px-4 py-4">Refresh button</td>
+                      <td class="px-4 py-4">view, stale_state, cooldown_state, source_statuses</td>
+                      <td class="px-4 py-4">Identifies confusion around freshness and refresh controls.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-4 font-mono font-semibold">rich_search_applied</td>
+                      <td class="px-4 py-4">Collections, Quests, Combat Achievements</td>
+                      <td class="px-4 py-4">category, query_length_bucket, result_count_bucket, filters, expanded_results</td>
+                      <td class="px-4 py-4">Reveals the lookup categories and filter combinations users care about.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-4 font-mono font-semibold">timeline_requested</td>
+                      <td class="px-4 py-4">Overview, Skills, XP Timeline, Efficiency</td>
+                      <td class="px-4 py-4">timeline_type, period, skill_keys_count, metric, cache_state</td>
+                      <td class="px-4 py-4">Finds high-cost WOM history patterns and useful period defaults.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-4 font-mono font-semibold">convex_operation_observed</td>
+                      <td class="px-4 py-4">Public queries/actions/mutations wrapper</td>
+                      <td class="px-4 py-4">operation, kind, duration_ms, result_state, error_code, cache_state</td>
+                      <td class="px-4 py-4">Creates backend latency and error observability without raw data logging.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-4 font-mono font-semibold">refresh_result</td>
+                      <td class="px-4 py-4">Convex refresh orchestration and source adapters</td>
+                      <td class="px-4 py-4">source, category, status, duration_ms, cooldown_ms, lease_state, error_code</td>
+                      <td class="px-4 py-4">Highlights provider reliability, rate limits, and stale data causes.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-4 font-mono font-semibold">share_or_copy_clicked</td>
+                      <td class="px-4 py-4">Rating card, comparison links</td>
+                      <td class="px-4 py-4">surface, view, action, status, score_tier_if_available</td>
+                      <td class="px-4 py-4">Separates casual browsing from moments users consider worth sharing.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="grid gap-6 border-b border-rule px-6 py-8 sm:px-10 lg:grid-cols-3 lg:px-14">
+              <div class="lg:col-span-1">
+                <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+                  Data shape
+                </p>
+                <h2 class="mt-3 font-display text-3xl font-bold">Keep properties bounded.</h2>
+              </div>
+              <div class="grid gap-4 lg:col-span-2 sm:grid-cols-2">
+                <div class="border border-rule bg-vellum p-5">
+                  <h3 class="font-bold">Use buckets</h3>
+                  <p class="mt-2 text-sm leading-6 text-moss">
+                    Send <code class="font-mono">0</code>, <code class="font-mono">1-5</code>,
+                    <code class="font-mono">6-25</code>, <code class="font-mono">26+</code> result buckets instead
+                    of exact counts where exactness is not needed.
+                  </p>
+                </div>
+                <div class="border border-rule bg-vellum p-5">
+                  <h3 class="font-bold">Hash RSNs</h3>
+                  <p class="mt-2 text-sm leading-6 text-moss">
+                    Use a stable one-way hash for player identifiers in analytics. Keep display casing out of
+                    product analytics unless explicitly needed for debugging.
+                  </p>
+                </div>
+                <div class="border border-rule bg-vellum p-5">
+                  <h3 class="font-bold">Whitelist events</h3>
+                  <p class="mt-2 text-sm leading-6 text-moss">
+                    PostHog supports autocapture, but RuneRating should disable or restrict it and emit named
+                    events for forms, filters, and navigation.
+                  </p>
+                </div>
+                <div class="border border-rule bg-vellum p-5">
+                  <h3 class="font-bold">Sample noisy spans</h3>
+                  <p class="mt-2 text-sm leading-6 text-moss">
+                    Capture every refresh outcome, but sample successful high-volume read operations after
+                    baselines are established.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section id="implementation" class="section-anchor border-b border-rule px-6 py-8 sm:px-10 lg:px-14">
+              <div class="max-w-3xl">
+                <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+                  Implementation plan
+                </p>
+                <h2 class="mt-3 font-display text-3xl font-bold">Add analytics in layers.</h2>
+              </div>
+
+              <div class="mt-7 grid gap-5 lg:grid-cols-4">
+                <article class="border border-rule bg-vellum p-5">
+                  <p class="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-clay">01</p>
+                  <h3 class="mt-3 text-lg font-bold">Create a shared event contract</h3>
+                  <p class="mt-2 text-sm leading-6 text-moss">
+                    Add a typed analytics package or module with event names, property validators, redaction
+                    helpers, RSN hashing, and environment gates.
+                  </p>
+                </article>
+                <article class="border border-rule bg-vellum p-5">
+                  <p class="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-clay">02</p>
+                  <h3 class="mt-3 text-lg font-bold">Instrument frontend intent</h3>
+                  <p class="mt-2 text-sm leading-6 text-moss">
+                    Capture page views through router subscriptions, compare submissions, refresh clicks,
+                    filter changes, search submissions, timeline requests, and share actions.
+                  </p>
+                </article>
+                <article class="border border-rule bg-vellum p-5">
+                  <p class="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-clay">03</p>
+                  <h3 class="mt-3 text-lg font-bold">Wrap backend operations</h3>
+                  <p class="mt-2 text-sm leading-6 text-moss">
+                    Use a small helper around Convex action/mutation handlers to measure duration and emit
+                    result-state events. Keep query logging sampled and low-cardinality.
+                  </p>
+                </article>
+                <article class="border border-rule bg-vellum p-5">
+                  <p class="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-clay">04</p>
+                  <h3 class="mt-3 text-lg font-bold">Build dashboards</h3>
+                  <p class="mt-2 text-sm leading-6 text-moss">
+                    Start with funnels for compare-to-data-ready, page interest, rich-search usage, refresh
+                    outcomes, source error rate, and cache hit ratio.
+                  </p>
+                </article>
+              </div>
+
+              <div class="mt-8 grid gap-6 lg:grid-cols-2">
+                <div class="border border-rule bg-ink p-6 text-vellum">
+                  <h3 class="font-display text-2xl font-bold">Frontend sketch</h3>
+                  <pre class="mt-4 overflow-x-auto bg-black/25 p-4 text-xs leading-6"><code>posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
+  api_host: import.meta.env.VITE_POSTHOG_HOST,
+  capture_pageview: false,
+  autocapture: false,
+  persistence: "localStorage+cookie",
+});
+
+analytics.capture("comparison_submitted", {
+  entry_view,
+  left_rsn_hash,
+  right_rsn_hash,
+  active_view,
+});</code></pre>
+                </div>
+                <div class="border border-rule bg-ink p-6 text-vellum">
+                  <h3 class="font-display text-2xl font-bold">Backend sketch</h3>
+                  <pre class="mt-4 overflow-x-auto bg-black/25 p-4 text-xs leading-6"><code>await captureBackendEvent(ctx, "refresh_result", {
+  source: "wiseOldMan",
+  category: "efficiency",
+  status,
+  duration_ms,
+  error_code,
+  cache_state,
+});</code></pre>
+                </div>
+              </div>
+            </section>
+
+            <section class="grid gap-6 border-b border-rule px-6 py-8 sm:px-10 lg:grid-cols-[1fr_1.2fr] lg:px-14">
+              <div>
+                <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+                  Backend notes
+                </p>
+                <h2 class="mt-3 font-display text-3xl font-bold">Convex-specific recommendations</h2>
+              </div>
+              <div class="space-y-4">
+                <div class="border-l-4 border-clay bg-vellum p-5">
+                  <h3 class="font-bold">Treat RuneRating as its own product surface.</h3>
+                  <p class="mt-2 leading-7 text-moss">
+                    The single-player <code class="font-mono">/rating</code> flow should log request,
+                    ready, unavailable, share, copy, and PNG export actions separately from two-player
+                    comparisons. Use tier, formula version, source completeness, and score buckets; avoid
+                    sending the full scorecard, pillar details, or prestige stats as raw analytics payloads.
+                  </p>
+                </div>
+                <div class="border-l-4 border-teal bg-vellum p-5">
+                  <h3 class="font-bold">Log from actions where possible.</h3>
+                  <p class="mt-2 leading-7 text-moss">
+                    Convex queries should stay fast and deterministic. Prefer backend analytics from actions
+                    and mutations that already represent operational transitions: refresh request, source
+                    fetch, cache claim, cache refresh, and failure completion.
+                  </p>
+                </div>
+                <div class="border-l-4 border-gold bg-vellum p-5">
+                  <h3 class="font-bold">Do not persist analytics in Convex first.</h3>
+                  <p class="mt-2 leading-7 text-moss">
+                    Product analytics is high-churn operational data. Send it to the analytics provider
+                    directly or through a thin internal action. Do not add a durable analytics table unless
+                    there is a concrete application feature that requires it.
+                  </p>
+                </div>
+                <div class="border-l-4 border-blue bg-vellum p-5">
+                  <h3 class="font-bold">Use source/category dimensions.</h3>
+                  <p class="mt-2 leading-7 text-moss">
+                    The useful backend dimensions are source, category, operation kind, duration bucket,
+                    cache state, and terminal status. Avoid metric names, item labels, and raw external
+                    request URLs unless debugging a narrowly scoped incident.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section id="governance" class="section-anchor border-b border-rule px-6 py-8 sm:px-10 lg:px-14">
+              <div class="max-w-3xl">
+                <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+                  Governance
+                </p>
+                <h2 class="mt-3 font-display text-3xl font-bold">Rules for useful, low-risk logging</h2>
+              </div>
+              <div class="mt-6 grid gap-4 md:grid-cols-3">
+                <div class="border border-rule bg-vellum p-5">
+                  <h3 class="font-bold">Never log</h3>
+                  <ul class="mt-3 space-y-2 text-sm leading-6 text-moss">
+                    <li>Raw provider payloads</li>
+                    <li>Full canonical snapshots</li>
+                    <li>Unbounded arrays of item names</li>
+                    <li>Browser input values before submit/search debounce</li>
+                    <li>API credentials or provider URLs with tokens</li>
+                  </ul>
+                </div>
+                <div class="border border-rule bg-vellum p-5">
+                  <h3 class="font-bold">Prefer</h3>
+                  <ul class="mt-3 space-y-2 text-sm leading-6 text-moss">
+                    <li>Stable event names</li>
+                    <li>Enum-like dimensions</li>
+                    <li>Duration and count buckets</li>
+                    <li>Hashed normalized RSNs</li>
+                    <li>Source freshness and status summaries</li>
+                  </ul>
+                </div>
+                <div class="border border-rule bg-vellum p-5">
+                  <h3 class="font-bold">Operational controls</h3>
+                  <ul class="mt-3 space-y-2 text-sm leading-6 text-moss">
+                    <li>Environment-specific API keys</li>
+                    <li>Local/dev capture disabled by default</li>
+                    <li>Sampling for repeated successful reads</li>
+                    <li>Short retention for verbose diagnostics</li>
+                    <li>Documented event ownership</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section class="grid gap-6 px-6 py-8 sm:px-10 lg:grid-cols-[1.2fr_0.8fr] lg:px-14">
+              <div>
+                <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-clay">
+                  Rollout
+                </p>
+                <h2 class="mt-3 font-display text-3xl font-bold">Suggested first milestone</h2>
+                <p class="mt-4 leading-8 text-moss">
+                  Start with ten named events, no session replay, no broad autocapture, and one dashboard.
+                  That is enough to understand whether users search, compare, refresh, and explore detail
+                  pages while keeping the data set explainable.
+                </p>
+                <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                  <div class="border border-rule bg-vellum p-4">
+                    <span class="font-mono text-xs font-semibold uppercase text-clay">Dashboard 1</span>
+                    <p class="mt-2 font-semibold">Compare funnel</p>
+                    <p class="mt-1 text-sm text-moss">Submitted -> refresh scheduled/cooldown -> data ready -> detail page viewed.</p>
+                  </div>
+                  <div class="border border-rule bg-vellum p-4">
+                    <span class="font-mono text-xs font-semibold uppercase text-clay">Dashboard 2</span>
+                    <p class="mt-2 font-semibold">Source health</p>
+                    <p class="mt-1 text-sm text-moss">Refresh outcomes, provider error codes, duration buckets, and rate-limit share.</p>
+                  </div>
+                  <div class="border border-rule bg-vellum p-4">
+                    <span class="font-mono text-xs font-semibold uppercase text-clay">Dashboard 3</span>
+                    <p class="mt-2 font-semibold">Feature interest</p>
+                    <p class="mt-1 text-sm text-moss">Page views, dwell buckets, filter usage, searches, and timeline periods.</p>
+                  </div>
+                  <div class="border border-rule bg-vellum p-4">
+                    <span class="font-mono text-xs font-semibold uppercase text-clay">Dashboard 4</span>
+                    <p class="mt-2 font-semibold">Optimization targets</p>
+                    <p class="mt-1 text-sm text-moss">Slow operations, repeated action requests, cache miss rate, and stale-view share.</p>
+                  </div>
+                  <div class="border border-rule bg-vellum p-4">
+                    <span class="font-mono text-xs font-semibold uppercase text-clay">Dashboard 5</span>
+                    <p class="mt-2 font-semibold">RuneRating metric</p>
+                    <p class="mt-1 text-sm text-moss">Requested -> ready/unavailable, tier distribution, formula version, source completeness, and share/export rate.</p>
+                  </div>
+                </div>
+              </div>
+              <aside class="border border-rule bg-vellum p-6">
+                <h3 class="font-display text-2xl font-bold">Provider notes</h3>
+                <p class="mt-3 text-sm leading-6 text-moss">
+                  PostHog's browser SDK supports page and interaction capture, and the Node SDK supports
+                  queued, batched server-side capture. For single-page apps, configure pageview handling
+                  deliberately instead of relying on page-load-only behavior. If analytics loss from blockers
+                  matters, evaluate a managed reverse proxy after the first dashboards prove value.
+                </p>
+                <div class="mt-5 space-y-2 text-sm">
+                  <a class="block font-semibold text-blue underline" href="https://posthog.com/docs/libraries/js">PostHog JavaScript docs</a>
+                  <a class="block font-semibold text-blue underline" href="https://posthog.com/docs/libraries/node">PostHog Node.js docs</a>
+                  <a class="block font-semibold text-blue underline" href="https://posthog.com/docs/advanced/proxy">PostHog proxy docs</a>
+                  <a class="block font-semibold text-blue underline" href="https://posthog.com/docs/product-analytics/capture-events">PostHog event capture docs</a>
+                </div>
+              </aside>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

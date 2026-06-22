@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rune Rating Methodology Proposal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              forge: {
+                coal: "#161312",
+                soot: "#231f1c",
+                iron: "#d7d1c7",
+                ash: "#f4f0e8",
+                ember: "#ef5b36",
+                moss: "#4d8f6f",
+                cobalt: "#3678a8",
+                gold: "#d8aa43",
+              },
+            },
+            fontFamily: {
+              display: ["Cinzel", "serif"],
+              body: ["IBM Plex Sans", "ui-sans-serif", "system-ui"],
+            },
+            boxShadow: {
+              metal:
+                "0 24px 70px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.16)",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --coal: #161312;
+        --soot: #231f1c;
+        --ash: #f4f0e8;
+        --line: rgba(244, 240, 232, 0.16);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 16% 8%, rgba(239, 91, 54, 0.18), transparent 27rem),
+          radial-gradient(circle at 86% 0%, rgba(54, 120, 168, 0.2), transparent 30rem),
+          linear-gradient(145deg, #12100f 0%, #1f1a17 46%, #11100f 100%);
+        color: var(--ash);
+      }
+
+      .grain::before {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        content: "";
+        opacity: 0.22;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+        background-size: 19px 19px, 23px 23px;
+        mask-image: linear-gradient(to bottom, black, transparent 86%);
+      }
+
+      .metal-card {
+        border: 1px solid rgba(244, 240, 232, 0.15);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
+          rgba(22, 19, 18, 0.82);
+        box-shadow:
+          0 24px 70px rgba(0, 0, 0, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(18px);
+      }
+
+      .edge-rule {
+        background: linear-gradient(90deg, transparent, rgba(244, 240, 232, 0.5), transparent);
+        height: 1px;
+      }
+
+      .crest {
+        position: relative;
+        width: min(72vw, 430px);
+        aspect-ratio: 1;
+        border-radius: 999px;
+        background:
+          conic-gradient(
+            from 215deg,
+            #7a3b29 0deg,
+            #ec6a3d 37deg,
+            #a73322 72deg,
+            #2c211d 74deg,
+            #d3a743 121deg,
+            #6e5227 152deg,
+            #2b2927 154deg,
+            #6db08e 206deg,
+            #254a3c 238deg,
+            #1f1b18 241deg,
+            #8ba9bc 291deg,
+            #2c607f 326deg,
+            #7a3b29 360deg
+          );
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.15),
+          0 28px 90px rgba(0, 0, 0, 0.58),
+          inset 0 0 30px rgba(255, 255, 255, 0.18);
+      }
+
+      .crest::before,
+      .crest::after {
+        position: absolute;
+        content: "";
+        border-radius: inherit;
+      }
+
+      .crest::before {
+        inset: 8.5%;
+        background:
+          radial-gradient(circle at 50% 42%, rgba(255, 246, 218, 0.3), transparent 9rem),
+          conic-gradient(
+            from 0deg,
+            rgba(255, 255, 255, 0.24),
+            rgba(255, 255, 255, 0.02),
+            rgba(0, 0, 0, 0.26),
+            rgba(255, 255, 255, 0.16),
+            rgba(255, 255, 255, 0.24)
+          );
+        box-shadow:
+          inset 0 0 0 12px rgba(22, 19, 18, 0.82),
+          inset 0 0 0 13px rgba(255, 255, 255, 0.18);
+      }
+
+      .crest::after {
+        inset: 29%;
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, 0.16), transparent 42%),
+          #151211;
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+          0 0 0 10px rgba(22, 19, 18, 0.58);
+      }
+
+      .crest-face {
+        position: absolute;
+        inset: 29%;
+        z-index: 2;
+        display: grid;
+        place-items: center;
+        text-align: center;
+      }
+
+      .tier-chip {
+        color: #161312;
+        background: var(--chip);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
+      }
+
+      .tier-bar {
+        height: 0.7rem;
+        background:
+          linear-gradient(90deg, var(--from), var(--to)),
+          #4a433d;
+      }
+
+      .pillar-meter span {
+        width: var(--fill);
+      }
+
+      .source-dot {
+        background: var(--dot);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--dot), transparent 76%);
+      }
+
+      .rating-card-preview {
+        position: relative;
+        overflow: hidden;
+        min-height: 620px;
+        border: 1px solid rgba(244, 240, 232, 0.18);
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 24%),
+          radial-gradient(circle at 78% 18%, rgba(239, 91, 54, 0.44), transparent 14rem),
+          radial-gradient(circle at 12% 82%, rgba(54, 120, 168, 0.36), transparent 15rem),
+          linear-gradient(160deg, #2a211c 0%, #151211 58%, #0e0d0c 100%);
+        box-shadow:
+          0 30px 90px rgba(0, 0, 0, 0.46),
+          inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      }
+
+      .rating-card-preview::before {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background-image:
+          linear-gradient(120deg, rgba(244, 240, 232, 0.12) 0 1px, transparent 1px 70px),
+          linear-gradient(30deg, rgba(244, 240, 232, 0.08) 0 1px, transparent 1px 84px);
+        opacity: 0.32;
+      }
+
+      .rating-card-preview::after {
+        position: absolute;
+        right: -5rem;
+        bottom: -6rem;
+        width: 22rem;
+        height: 22rem;
+        content: "";
+        border-radius: 999px;
+        border: 1.2rem solid rgba(239, 91, 54, 0.22);
+        box-shadow: inset 0 0 0 1px rgba(244, 240, 232, 0.1);
+      }
+
+      .card-avatar {
+        background:
+          radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.22), transparent 4.5rem),
+          linear-gradient(145deg, #d8aa43, #ef5b36 52%, #56221b);
+        clip-path: polygon(50% 0, 91% 20%, 91% 68%, 50% 100%, 9% 68%, 9% 20%);
+      }
+
+      .stat-tile {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04)),
+          rgba(0, 0, 0, 0.22);
+        border: 1px solid rgba(244, 240, 232, 0.14);
+      }
+    </style>
+  </head>
+  <body class="grain font-body antialiased">
+    <main class="relative z-10 mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+      <nav class="mb-8 flex flex-wrap items-center justify-between gap-4 text-sm text-forge-iron/70">
+        <div class="flex items-center gap-3">
+          <div class="grid size-9 rotate-45 place-items-center border border-forge-iron/30 bg-forge-ash/10">
+            <div class="size-3 bg-forge-ember"></div>
+          </div>
+          <div>
+            <p class="font-display text-base font-bold uppercase tracking-[0.22em] text-forge-ash">
+              Rune Rating
+            </p>
+            <p class="text-xs uppercase tracking-[0.18em]">Method proposal</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <a class="rounded-full border border-forge-iron/20 px-3 py-1.5 hover:border-forge-gold/70" href="#formula">
+            Formula
+          </a>
+          <a class="rounded-full border border-forge-iron/20 px-3 py-1.5 hover:border-forge-gold/70" href="#tiers">
+            Tiers
+          </a>
+          <a class="rounded-full border border-forge-iron/20 px-3 py-1.5 hover:border-forge-gold/70" href="#visual">
+            Visual
+          </a>
+          <a class="rounded-full border border-forge-iron/20 px-3 py-1.5 hover:border-forge-gold/70" href="#share-card">
+            Share card
+          </a>
+        </div>
+      </nav>
+
+      <section class="grid items-center gap-10 lg:grid-cols-[1.02fr_.98fr]">
+        <div>
+          <p class="mb-4 inline-flex rounded-full border border-forge-ember/40 bg-forge-ember/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-forge-ember">
+            Proprietary account progression score
+          </p>
+          <h1 class="font-display text-5xl font-extrabold leading-[0.96] tracking-wide text-forge-ash sm:text-7xl">
+            Make progress feel like a metal you can hold.
+          </h1>
+          <p class="mt-6 max-w-2xl text-lg leading-8 text-forge-iron/82">
+            Rune Rating should be a decomposable 0-1000 account progression score:
+            broad enough to respect skilling, bossing, quests, diaries, collection
+            log, clues, efficiency, and recent activity, but simple enough for a
+            player to understand at a glance.
+          </p>
+          <div class="mt-8 grid gap-3 sm:grid-cols-3">
+            <div class="metal-card rounded-lg p-4">
+              <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/58">Public promise</p>
+              <p class="mt-2 text-2xl font-semibold text-forge-ash">Fair, not flat</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/72">
+                A maxed skiller, PvM specialist, and completionist can all climb, but
+                one-dimensional accounts hit visible soft caps.
+              </p>
+            </div>
+            <div class="metal-card rounded-lg p-4">
+              <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/58">Data policy</p>
+              <p class="mt-2 text-2xl font-semibold text-forge-ash">Current snapshot</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/72">
+                Successful refreshes replace prior RuneRating snapshots. WOM history
+                is fetched or cached only as provider-owned context.
+              </p>
+            </div>
+            <div class="metal-card rounded-lg p-4">
+              <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/58">Player identity</p>
+              <p class="mt-2 text-2xl font-semibold text-forge-ash">Current RSN</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/72">
+                The rating follows the normalized current display name, not inferred
+                account continuity through name changes.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mx-auto">
+          <div class="crest">
+            <div class="crest-face">
+              <p class="text-xs font-bold uppercase tracking-[0.32em] text-forge-iron/60">Rune Rating</p>
+              <p class="font-display text-6xl font-extrabold text-forge-ash">884</p>
+              <p class="mt-1 rounded-full bg-forge-ember px-4 py-1 text-sm font-bold uppercase tracking-[0.2em] text-white">
+                Dragon
+              </p>
+              <p class="mt-3 max-w-28 text-xs leading-4 text-forge-iron/64">verified full profile</p>
+            </div>
+          </div>
+          <div class="mx-auto mt-5 max-w-md rounded-lg border border-forge-iron/15 bg-black/18 p-4">
+            <div class="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-forge-iron/62">
+              <span>Example crest</span>
+              <span>7 pillars lit</span>
+            </div>
+            <div class="mt-3 grid grid-cols-7 gap-1.5">
+              <div class="h-2 rounded-full bg-forge-ember"></div>
+              <div class="h-2 rounded-full bg-forge-gold"></div>
+              <div class="h-2 rounded-full bg-forge-moss"></div>
+              <div class="h-2 rounded-full bg-forge-cobalt"></div>
+              <div class="h-2 rounded-full bg-zinc-300"></div>
+              <div class="h-2 rounded-full bg-red-300"></div>
+              <div class="h-2 rounded-full bg-emerald-300"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="edge-rule my-12"></div>
+
+      <section id="formula" class="grid gap-8 lg:grid-cols-[.82fr_1.18fr]">
+        <div class="lg:sticky lg:top-8 lg:self-start">
+          <p class="text-sm font-bold uppercase tracking-[0.24em] text-forge-gold">Formula</p>
+          <h2 class="mt-3 font-display text-4xl font-bold text-forge-ash">Seven pillars, one visible grade.</h2>
+          <p class="mt-5 leading-7 text-forge-iron/76">
+            Internally, Rune Rating is a weighted sum of capped pillar scores.
+            Externally, players see the metal tier, score, confidence, strongest
+            pillars, weakest pillars, and the next few realistic upgrades.
+          </p>
+          <div class="mt-6 rounded-lg border border-forge-iron/15 bg-forge-ash p-5 text-forge-coal">
+            <p class="font-mono text-sm font-semibold">
+              RR = round(coverageConfidence * sum(pillarScore<sub>i</sub>))
+            </p>
+            <p class="mt-3 text-sm leading-6 text-forge-coal/75">
+              Each pillar uses saturating curves, category caps, and mode-specific
+              calibration so a single farmed metric cannot dominate the score.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <article class="metal-card rounded-lg p-5">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/58">01 / 260 pts</p>
+                <h3 class="mt-1 text-2xl font-semibold">Skill mastery</h3>
+              </div>
+              <span class="tier-chip rounded-full px-3 py-1 text-xs font-bold" style="--chip:#d8aa43">Hiscores-owned</span>
+            </div>
+            <p class="mt-3 leading-7 text-forge-iron/74">
+              Uses official skill levels, XP, and ranks. Score level breadth first,
+              then XP depth with diminishing returns after 13.03m and 50m per skill.
+              Overall XP matters, but the balance bonus rewards accounts with many
+              developed skills instead of one extreme 200m stack.
+            </p>
+            <div class="pillar-meter mt-4 h-2 rounded-full bg-white/10" style="--fill:86%">
+              <span class="block h-full rounded-full bg-forge-gold"></span>
+            </div>
+          </article>
+
+          <article class="metal-card rounded-lg p-5">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/58">02 / 190 pts</p>
+                <h3 class="mt-1 text-2xl font-semibold">Bossing and combat proof</h3>
+              </div>
+              <span class="tier-chip rounded-full px-3 py-1 text-xs font-bold" style="--chip:#9fb5c0">Hiscores + RuneProfile</span>
+            </div>
+            <p class="mt-3 leading-7 text-forge-iron/74">
+              Combines boss KC breadth, boss KC depth, combat achievements, and
+              high-signal PvM unlocks. KC transforms with <span class="font-mono">log1p</span>
+              style curves so 10,000 easy kills are less valuable than broad,
+              difficult coverage. Combat achievement task tiers provide completion
+              quality where RuneProfile data is available.
+            </p>
+            <div class="pillar-meter mt-4 h-2 rounded-full bg-white/10" style="--fill:78%">
+              <span class="block h-full rounded-full bg-forge-cobalt"></span>
+            </div>
+          </article>
+
+          <article class="metal-card rounded-lg p-5">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/58">03 / 150 pts</p>
+                <h3 class="mt-1 text-2xl font-semibold">World unlocks</h3>
+              </div>
+              <span class="tier-chip rounded-full px-3 py-1 text-xs font-bold" style="--chip:#e8ded0">RuneProfile-owned</span>
+            </div>
+            <p class="mt-3 leading-7 text-forge-iron/74">
+              Quests, quest points, achievement diary tiers, and account-defining
+              unlocks become the score's proof of world access. This keeps the
+              rating from becoming a pure XP or KC race.
+            </p>
+            <div class="pillar-meter mt-4 h-2 rounded-full bg-white/10" style="--fill:92%">
+              <span class="block h-full rounded-full bg-forge-moss"></span>
+            </div>
+          </article>
+
+          <article class="metal-card rounded-lg p-5">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/58">04 / 140 pts</p>
+                <h3 class="mt-1 text-2xl font-semibold">Collections, clues, and minigames</h3>
+              </div>
+              <span class="tier-chip rounded-full px-3 py-1 text-xs font-bold" style="--chip:#d7d1c7">Mixed ownership</span>
+            </div>
+            <p class="mt-3 leading-7 text-forge-iron/74">
+              Hiscores supplies clue completions and ranked minigame scores.
+              RuneProfile supplies granular collection-log completion when the
+              snapshot is complete. Absence from complete collection rows means
+              false; absence from incomplete data means unknown.
+            </p>
+            <div class="pillar-meter mt-4 h-2 rounded-full bg-white/10" style="--fill:64%">
+              <span class="block h-full rounded-full bg-red-300"></span>
+            </div>
+          </article>
+
+          <article class="metal-card rounded-lg p-5">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/58">05 / 120 pts</p>
+                <h3 class="mt-1 text-2xl font-semibold">Efficiency signal</h3>
+              </div>
+              <span class="tier-chip rounded-full px-3 py-1 text-xs font-bold" style="--chip:#b7d4c2">Wise Old Man-owned</span>
+            </div>
+            <p class="mt-3 leading-7 text-forge-iron/74">
+              EHP, EHB, time-to-max, and time-to-200m are powerful secondary
+              signals, but they should not overpower actual account breadth. Treat
+              efficiency as a quality multiplier and additive pillar, calibrated
+              separately for mains, irons, HCIM, UIM, and group variants.
+            </p>
+            <div class="pillar-meter mt-4 h-2 rounded-full bg-white/10" style="--fill:71%">
+              <span class="block h-full rounded-full bg-emerald-300"></span>
+            </div>
+          </article>
+
+          <article class="metal-card rounded-lg p-5">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/58">06 / 90 pts</p>
+                <h3 class="mt-1 text-2xl font-semibold">Momentum</h3>
+              </div>
+              <span class="tier-chip rounded-full px-3 py-1 text-xs font-bold" style="--chip:#efc4b7">Provider history only</span>
+            </div>
+            <p class="mt-3 leading-7 text-forge-iron/74">
+              Recent XP, EHP, EHB, bossing, and clue gains make the score feel
+              alive. Fetch the provider-owned history when needed, cache transformed
+              overview data briefly, and never persist RuneRating player history.
+            </p>
+            <div class="pillar-meter mt-4 h-2 rounded-full bg-white/10" style="--fill:58%">
+              <span class="block h-full rounded-full bg-forge-ember"></span>
+            </div>
+          </article>
+
+          <article class="metal-card rounded-lg p-5">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/58">07 / 50 pts</p>
+                <h3 class="mt-1 text-2xl font-semibold">Balance and account shape</h3>
+              </div>
+              <span class="tier-chip rounded-full px-3 py-1 text-xs font-bold" style="--chip:#f4f0e8">Derived canonical</span>
+            </div>
+            <p class="mt-3 leading-7 text-forge-iron/74">
+              A small proprietary adjustment rewards well-rounded progress and
+              flags unusual outliers. This is where RuneRating can feel distinctive
+              without hiding the main pillars.
+            </p>
+            <div class="pillar-meter mt-4 h-2 rounded-full bg-white/10" style="--fill:80%">
+              <span class="block h-full rounded-full bg-zinc-200"></span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="tiers" class="mt-16">
+        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-sm font-bold uppercase tracking-[0.24em] text-forge-gold">Metal ladder</p>
+            <h2 class="mt-3 font-display text-4xl font-bold text-forge-ash">Bronze to Dragon, with room for prestige.</h2>
+          </div>
+          <p class="max-w-xl leading-7 text-forge-iron/74">
+            The visible tier should be stable and memorable. The exact score changes
+            with formula versions; the metal band keeps the user's identity legible.
+          </p>
+        </div>
+
+        <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          <div class="metal-card rounded-lg p-4">
+            <div class="tier-bar rounded-full" style="--from:#8f5d35;--to:#c18b55"></div>
+            <div class="mt-4 flex items-baseline justify-between">
+              <h3 class="text-xl font-semibold">Bronze</h3>
+              <p class="font-mono text-sm text-forge-iron/62">0-149</p>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-forge-iron/70">New or lightly tracked account.</p>
+          </div>
+          <div class="metal-card rounded-lg p-4">
+            <div class="tier-bar rounded-full" style="--from:#9a9c9d;--to:#eff3f4"></div>
+            <div class="mt-4 flex items-baseline justify-between">
+              <h3 class="text-xl font-semibold">Iron</h3>
+              <p class="font-mono text-sm text-forge-iron/62">150-274</p>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-forge-iron/70">Early breadth, first real account shape.</p>
+          </div>
+          <div class="metal-card rounded-lg p-4">
+            <div class="tier-bar rounded-full" style="--from:#59636a;--to:#c2ccd3"></div>
+            <div class="mt-4 flex items-baseline justify-between">
+              <h3 class="text-xl font-semibold">Steel</h3>
+              <p class="font-mono text-sm text-forge-iron/62">275-399</p>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-forge-iron/70">A rounded midgame account is visible.</p>
+          </div>
+          <div class="metal-card rounded-lg p-4">
+            <div class="tier-bar rounded-full" style="--from:#111;--to:#4d4a46"></div>
+            <div class="mt-4 flex items-baseline justify-between">
+              <h3 class="text-xl font-semibold">Black</h3>
+              <p class="font-mono text-sm text-forge-iron/62">400-524</p>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-forge-iron/70">A serious account with category identity.</p>
+          </div>
+          <div class="metal-card rounded-lg p-4">
+            <div class="tier-bar rounded-full" style="--from:#254a55;--to:#7ab7c6"></div>
+            <div class="mt-4 flex items-baseline justify-between">
+              <h3 class="text-xl font-semibold">Mithril</h3>
+              <p class="font-mono text-sm text-forge-iron/62">525-649</p>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-forge-iron/70">Strong account breadth and meaningful depth.</p>
+          </div>
+          <div class="metal-card rounded-lg p-4">
+            <div class="tier-bar rounded-full" style="--from:#345d45;--to:#9fcf8c"></div>
+            <div class="mt-4 flex items-baseline justify-between">
+              <h3 class="text-xl font-semibold">Adamant</h3>
+              <p class="font-mono text-sm text-forge-iron/62">650-774</p>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-forge-iron/70">Late-game quality across several pillars.</p>
+          </div>
+          <div class="metal-card rounded-lg p-4">
+            <div class="tier-bar rounded-full" style="--from:#4e77a2;--to:#e7f5ff"></div>
+            <div class="mt-4 flex items-baseline justify-between">
+              <h3 class="text-xl font-semibold">Rune</h3>
+              <p class="font-mono text-sm text-forge-iron/62">775-874</p>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-forge-iron/70">Elite account progression, few obvious gaps.</p>
+          </div>
+          <div class="metal-card rounded-lg p-4 ring-1 ring-forge-ember/50">
+            <div class="tier-bar rounded-full" style="--from:#8f211c;--to:#ff6b3f"></div>
+            <div class="mt-4 flex items-baseline justify-between">
+              <h3 class="text-xl font-semibold">Dragon</h3>
+              <p class="font-mono text-sm text-forge-iron/62">875-1000</p>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-forge-iron/70">Exceptional, broad, and difficult to fake.</p>
+          </div>
+        </div>
+
+        <div class="mt-6 rounded-lg border border-forge-gold/30 bg-forge-gold/10 p-5">
+          <p class="font-semibold text-forge-gold">Optional prestige layer</p>
+          <p class="mt-2 leading-7 text-forge-iron/78">
+            Keep the core ladder Bronze through Dragon. For the very top of Dragon,
+            add cosmetic suffixes rather than new tiers: Dragon I, Dragon II, Dragon
+            III, or Dragon (Trimmed). That preserves the OSRS metal fantasy while
+            giving top players something to chase.
+          </p>
+        </div>
+      </section>
+
+      <section id="visual" class="mt-16 grid gap-8 lg:grid-cols-[1.08fr_.92fr]">
+        <div class="metal-card rounded-lg p-6">
+          <p class="text-sm font-bold uppercase tracking-[0.24em] text-forge-gold">Player visual</p>
+          <h2 class="mt-3 font-display text-4xl font-bold">The Rune Rating Crest</h2>
+          <p class="mt-5 leading-7 text-forge-iron/76">
+            The crest is the player-facing object: a metal ring for tier, a central
+            score, and seven lit segments for the pillars. It should be compact
+            enough for comparison headers and expressive enough for a share card.
+          </p>
+          <div class="mt-8 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-4">
+              <p class="text-xs font-bold uppercase tracking-[0.18em] text-forge-iron/58">Full profile</p>
+              <p class="mt-2 text-3xl font-semibold">884 Dragon</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/70">Score is eligible for leaderboards and percentile placement.</p>
+            </div>
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-4">
+              <p class="text-xs font-bold uppercase tracking-[0.18em] text-forge-iron/58">Provisional</p>
+              <p class="mt-2 text-3xl font-semibold">711 Adamant?</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/70">Missing rich sources show a score band, not a false zero.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="space-y-4">
+          <div class="metal-card rounded-lg p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.18em] text-forge-iron/58">Next best upgrades</p>
+            <ol class="mt-4 space-y-3 text-sm">
+              <li class="flex gap-3">
+                <span class="mt-1 size-2 rounded-full bg-forge-ember"></span>
+                <span><strong>+18 RR</strong> Finish elite Varrock and Fremennik diaries.</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="mt-1 size-2 rounded-full bg-forge-gold"></span>
+                <span><strong>+12 RR</strong> Bring Slayer from 94 to 99.</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="mt-1 size-2 rounded-full bg-forge-moss"></span>
+                <span><strong>+9 RR</strong> Complete 37 missing hard combat tasks.</span>
+              </li>
+            </ol>
+          </div>
+          <div class="metal-card rounded-lg p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.18em] text-forge-iron/58">Comparison moment</p>
+            <div class="mt-5 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+              <div class="text-right">
+                <p class="font-semibold">Lynx Titan</p>
+                <p class="text-forge-iron/64">912 Dragon</p>
+              </div>
+              <div class="h-px w-16 bg-forge-iron/30"></div>
+              <div>
+                <p class="font-semibold">Hey Jase</p>
+                <p class="text-forge-iron/64">901 Dragon</p>
+              </div>
+            </div>
+            <p class="mt-5 text-sm leading-6 text-forge-iron/72">
+              Pairwise pages can show the crest delta and then decompose the lead:
+              skills +21, bossing -14, unlocks +4.
+            </p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="share-card" class="mt-16 grid gap-8 lg:grid-cols-[.92fr_1.08fr]">
+        <div class="rating-card-preview rounded-lg p-6 sm:p-8">
+          <div class="relative z-10 flex h-full min-h-[560px] flex-col">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-display text-xl font-bold uppercase tracking-[0.2em] text-forge-ash">
+                  RuneRating
+                </p>
+                <p class="mt-1 text-xs uppercase tracking-[0.22em] text-forge-iron/66">
+                  Season 1 account card
+                </p>
+              </div>
+              <div class="rounded-full border border-forge-ember/40 bg-forge-ember/16 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-forge-ember">
+                Dragon
+              </div>
+            </div>
+
+            <div class="mt-10 grid gap-7 sm:grid-cols-[auto_1fr] sm:items-center">
+              <div class="card-avatar grid size-36 place-items-center shadow-metal">
+                <div class="grid size-24 place-items-center rounded-full bg-forge-coal/80">
+                  <p class="font-display text-5xl font-extrabold text-forge-ash">884</p>
+                </div>
+              </div>
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-forge-iron/60">
+                  Current RSN
+                </p>
+                <h2 class="mt-1 font-display text-5xl font-extrabold leading-none text-forge-ash">
+                  Lynx Titan
+                </h2>
+                <p class="mt-3 text-lg font-semibold text-forge-gold">
+                  Top 1.8% of tracked mains
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-10 grid grid-cols-2 gap-3">
+              <div class="stat-tile rounded-lg p-4">
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/54">Total level</p>
+                <p class="mt-2 text-3xl font-semibold">2,277</p>
+              </div>
+              <div class="stat-tile rounded-lg p-4">
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/54">Total XP</p>
+                <p class="mt-2 text-3xl font-semibold">4.6B</p>
+              </div>
+              <div class="stat-tile rounded-lg p-4">
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/54">EHP / EHB</p>
+                <p class="mt-2 text-3xl font-semibold">18.9k / 4.2k</p>
+              </div>
+              <div class="stat-tile rounded-lg p-4">
+                <p class="text-xs uppercase tracking-[0.18em] text-forge-iron/54">Completion</p>
+                <p class="mt-2 text-3xl font-semibold">91%</p>
+              </div>
+            </div>
+
+            <div class="mt-auto pt-8">
+              <div class="grid grid-cols-7 gap-1.5">
+                <div class="h-2 rounded-full bg-forge-gold"></div>
+                <div class="h-2 rounded-full bg-forge-cobalt"></div>
+                <div class="h-2 rounded-full bg-forge-moss"></div>
+                <div class="h-2 rounded-full bg-red-300"></div>
+                <div class="h-2 rounded-full bg-emerald-300"></div>
+                <div class="h-2 rounded-full bg-forge-ember"></div>
+                <div class="h-2 rounded-full bg-zinc-200"></div>
+              </div>
+              <div class="mt-5 flex flex-wrap items-center justify-between gap-3 text-xs uppercase tracking-[0.18em] text-forge-iron/62">
+                <span>Verified full profile</span>
+                <span>runerating.app/card/lynx-titan</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metal-card rounded-lg p-6">
+          <p class="text-sm font-bold uppercase tracking-[0.24em] text-forge-gold">Exportable share card</p>
+          <h2 class="mt-3 font-display text-4xl font-bold">Give players a card they want to post in Discord.</h2>
+          <p class="mt-5 leading-7 text-forge-iron/76">
+            Rune Rating should include a one-click exportable account card built
+            for clan chats, Discord, Twitter/X, Reddit, and personal profile pages.
+            The card is a compact flex: account rating, metal tier, our custom
+            generated art, and a short set of prestige stats.
+          </p>
+
+          <div class="mt-8 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-4">
+              <p class="text-lg font-semibold">Export formats</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/72">
+                PNG for quick sharing, square and story crops, plus a public card
+                URL with Open Graph metadata so pasted links unfurl cleanly.
+              </p>
+            </div>
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-4">
+              <p class="text-lg font-semibold">Visual identity</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/72">
+                Use custom RuneRating images: metal crest, tier background,
+                class-style account artwork, pillar sigils, and seasonal trims.
+              </p>
+            </div>
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-4">
+              <p class="text-lg font-semibold">Prestige stat slots</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/72">
+                Show four to six stats: total level, total XP, rank percentile,
+                EHP/EHB, quest cape state, diary tier, combat achievement tier, or
+                collection completion.
+              </p>
+            </div>
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-4">
+              <p class="text-lg font-semibold">Player control</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/72">
+                Let players pick a theme, crop, and stat loadout. Keep the score,
+                source freshness, formula version, and provisional state locked.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-8 rounded-lg border border-forge-gold/30 bg-forge-gold/10 p-5">
+            <p class="font-semibold text-forge-gold">Implementation note</p>
+            <p class="mt-2 leading-7 text-forge-iron/78">
+              Generate cards from canonical snapshots on the server side or in a
+              controlled render worker so private provider credentials and fetch
+              logic stay in Convex actions. The exported image should include a
+              timestamp and formula version, but it should not imply stored
+              RuneRating history.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-16 grid gap-6 lg:grid-cols-3">
+        <div class="metal-card rounded-lg p-6 lg:col-span-2">
+          <p class="text-sm font-bold uppercase tracking-[0.24em] text-forge-gold">Calibration plan</p>
+          <h2 class="mt-3 font-display text-4xl font-bold">Start deterministic, then tune with observed population.</h2>
+          <div class="mt-6 grid gap-4 md:grid-cols-3">
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-4">
+              <p class="text-lg font-semibold">1. Seed weights</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/70">
+                Launch with hand-tuned caps and curves based on known game structure.
+              </p>
+            </div>
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-4">
+              <p class="text-lg font-semibold">2. Build aggregates</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/70">
+                Store formula versions and aggregate quantiles, not player history.
+              </p>
+            </div>
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-4">
+              <p class="text-lg font-semibold">3. Freeze seasons</p>
+              <p class="mt-2 text-sm leading-6 text-forge-iron/70">
+                Rebalance only on formula versions so score changes are explainable.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="metal-card rounded-lg p-6">
+          <p class="text-sm font-bold uppercase tracking-[0.24em] text-forge-gold">Confidence</p>
+          <h2 class="mt-3 text-2xl font-semibold">Do not rank unknowns as bad.</h2>
+          <p class="mt-4 leading-7 text-forge-iron/74">
+            If RuneProfile is unavailable, publish a provisional band. If WOM is
+            unavailable, omit efficiency and momentum from the verified score until
+            a source policy says otherwise. Missing is not zero.
+          </p>
+        </div>
+      </section>
+
+      <section class="mt-16">
+        <div class="metal-card rounded-lg p-6">
+          <p class="text-sm font-bold uppercase tracking-[0.24em] text-forge-gold">Source map</p>
+          <h2 class="mt-3 font-display text-4xl font-bold">Keep the proprietary layer above canonical models.</h2>
+          <div class="mt-8 grid gap-4 md:grid-cols-3">
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-5">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="source-dot size-3 rounded-full" style="--dot:#d8aa43"></span>
+                <h3 class="text-xl font-semibold">Hiscores</h3>
+              </div>
+              <p class="text-sm leading-6 text-forge-iron/72">
+                Skills, rank, XP, clues, boss KC, ranked activities, and minigames.
+                This source stays authoritative for every metric it shares.
+              </p>
+            </div>
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-5">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="source-dot size-3 rounded-full" style="--dot:#4d8f6f"></span>
+                <h3 class="text-xl font-semibold">RuneProfile</h3>
+              </div>
+              <p class="text-sm leading-6 text-forge-iron/72">
+                Quests, diaries, combat achievement tasks, and collection-log
+                details. Rich categories must remain granular and searchable.
+              </p>
+            </div>
+            <div class="rounded-lg border border-forge-iron/15 bg-black/18 p-5">
+              <div class="mb-4 flex items-center gap-3">
+                <span class="source-dot size-3 rounded-full" style="--dot:#3678a8"></span>
+                <h3 class="text-xl font-semibold">Wise Old Man</h3>
+              </div>
+              <p class="text-sm leading-6 text-forge-iron/72">
+                EHP, EHB, time estimates, gains, and timelines. Provider-owned
+                history can power momentum without becoming RuneRating history.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-8 overflow-hidden rounded-lg border border-forge-iron/15">
+            <table class="w-full min-w-[720px] text-left text-sm">
+              <thead class="bg-forge-ash text-forge-coal">
+                <tr>
+                  <th class="px-4 py-3 font-semibold">Rule</th>
+                  <th class="px-4 py-3 font-semibold">Why it matters</th>
+                  <th class="px-4 py-3 font-semibold">Player-facing copy</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-forge-iron/12">
+                <tr>
+                  <td class="px-4 py-4 font-semibold">Separate mode ladders</td>
+                  <td class="px-4 py-4 text-forge-iron/72">Mains, irons, HCIM, UIM, and groups have different effort curves.</td>
+                  <td class="px-4 py-4 text-forge-iron/72">"Dragon Ironman, top 8% of tracked irons."</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-4 font-semibold">Saturating curves</td>
+                  <td class="px-4 py-4 text-forge-iron/72">Prevents single-metric farming from swamping account breadth.</td>
+                  <td class="px-4 py-4 text-forge-iron/72">"More KC helps, but new boss coverage helps more."</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-4 font-semibold">Formula versions</td>
+                  <td class="px-4 py-4 text-forge-iron/72">OSRS changes over time; ratings need auditable recalibration.</td>
+                  <td class="px-4 py-4 text-forge-iron/72">"Scored with Season 1 rules."</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-4 font-semibold">Confidence gates</td>
+                  <td class="px-4 py-4 text-forge-iron/72">Unavailable rich data should not become a hidden penalty.</td>
+                  <td class="px-4 py-4 text-forge-iron/72">"Estimated Adamant-Rune until collection data refreshes."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-16 grid gap-6 lg:grid-cols-[.95fr_1.05fr]">
+        <div class="metal-card rounded-lg p-6">
+          <p class="text-sm font-bold uppercase tracking-[0.24em] text-forge-gold">Recommendation</p>
+          <h2 class="mt-3 font-display text-4xl font-bold">Ship the score as a product surface, not just math.</h2>
+          <p class="mt-5 leading-7 text-forge-iron/76">
+            The strongest version of Rune Rating is not only a number. It is a
+            crest, a tier, a confidence label, a seven-pillar breakdown, and three
+            next upgrades, capped by an exportable card players can share with
+            friends and clan members. That gives players a reason to refresh,
+            compare, and come back without making the algorithm feel arbitrary.
+          </p>
+        </div>
+
+        <div class="metal-card rounded-lg p-6">
+          <p class="text-sm font-bold uppercase tracking-[0.24em] text-forge-gold">Research notes</p>
+          <ul class="mt-5 space-y-3 text-sm leading-6 text-forge-iron/74">
+            <li>
+              Official-style Hiscores Lite responses expose rank, level, XP, and
+              activity score data, matching the repo's current Hiscores SDK shape.
+            </li>
+            <li>
+              Wise Old Man exposes player endpoints, gains, records, snapshots,
+              timelines, EHP, and EHB, which fits efficiency and momentum.
+            </li>
+            <li>
+              The OSRS metal fantasy maps cleanly to Bronze, Iron, Steel, Black,
+              Mithril, Adamant, Rune, and Dragon.
+            </li>
+          </ul>
+          <div class="mt-5 flex flex-wrap gap-2 text-xs">
+            <a class="rounded-full border border-forge-iron/20 px-3 py-1.5 hover:border-forge-gold/70" href="https://secure.runescape.com/m=hiscore_oldschool/" target="_blank" rel="noreferrer">
+              Jagex Hiscores
+            </a>
+            <a class="rounded-full border border-forge-iron/20 px-3 py-1.5 hover:border-forge-gold/70" href="https://docs.wiseoldman.net/api/players/player-endpoints" target="_blank" rel="noreferrer">
+              WOM player API
+            </a>
+            <a class="rounded-full border border-forge-iron/20 px-3 py-1.5 hover:border-forge-gold/70" href="https://wiseoldman.net/ehp/main" target="_blank" rel="noreferrer">
+              WOM EHP rates
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

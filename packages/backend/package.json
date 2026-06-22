@@ -1,0 +1,25 @@
+{
+  "name": "@rune-rating/backend",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "dev": "convex dev",
+    "lint": "biome check convex",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rune-rating/domain": "workspace:*",
+    "@rune-rating/sdk-hiscores": "workspace:*",
+    "@rune-rating/sdk-runeprofile": "workspace:*",
+    "@rune-rating/sdk-wise-old-man": "workspace:*",
+    "convex": "^1.41.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.14",
+    "convex-test": "^0.0.53",
+    "typescript": "^5.9.3"
+  }
+}

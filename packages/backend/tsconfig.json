@@ -1,0 +1,7 @@
+{
+  "extends": "../config-typescript/base.json",
+  "compilerOptions": {
+    "lib": ["DOM", "ES2022"]
+  },
+  "include": ["convex", "test"]
+}

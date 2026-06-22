@@ -1,0 +1,37 @@
+{
+  "name": "@rune-rating/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev --port 3000",
+    "build": "vite build",
+    "start": "node .output/server/index.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src",
+    "test": "echo 'No tests configured for visual prototype'"
+  },
+  "dependencies": {
+    "@base-ui-components/react": "^1.0.0-rc.0",
+    "@dava96/osrs-icons": "^1.0.24",
+    "@rune-rating/backend": "workspace:*",
+    "@rune-rating/domain": "workspace:*",
+    "@tanstack/react-router": "^1.170.15",
+    "@tanstack/react-start": "^1.168.25",
+    "convex": "^1.41.0",
+    "lucide-react": "^0.468.0",
+    "posthog-js": "^1.392.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^3.8.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "nitro": "^3.0.1-alpha.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.0.0",
+    "vite-tsconfig-paths": "^6.1.1"
+  }
+}
