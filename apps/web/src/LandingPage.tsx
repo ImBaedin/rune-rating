@@ -22,7 +22,6 @@ const defaultExampleRsn = "IronBaedin";
 const exampleRsns = [
   defaultExampleRsn,
   "GIM Wamuu",
-  "SuggsToSuck",
   "A I D E N",
   "A ID EN",
 ] as const;
