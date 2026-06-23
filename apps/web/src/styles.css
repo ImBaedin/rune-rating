@@ -374,8 +374,10 @@ button {
 .landing-page {
   position: relative;
   width: 100%;
+  height: 100dvh;
   min-height: 100dvh;
-  overflow: hidden auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(300px, 480px);
   align-items: center;
@@ -391,6 +393,8 @@ button {
     #070909;
   color: #f6efe4;
   isolation: isolate;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
 }
 .landing-background,
 .landing-vignette {
