@@ -65,6 +65,16 @@ export default defineSchema({
   })
     .index("by_key", ["key"])
     .index("by_player_and_category", ["playerId", "category"])
+    .index("by_player_and_category_and_group", [
+      "playerId",
+      "category",
+      "group",
+    ])
+    .index("by_player_and_category_and_item_key", [
+      "playerId",
+      "category",
+      "itemKey",
+    ])
     .index("by_player_and_category_and_revision", [
       "playerId",
       "category",
@@ -165,6 +175,7 @@ export default defineSchema({
     provider: providerQueueProviderValidator,
     operation: providerQueueOperationValidator,
     dedupeKey: v.string(),
+    rsnKey: v.optional(v.string()),
     args: providerQueueJobArgsValidator,
     status: providerQueueJobStatusValidator,
     priority: v.number(),
@@ -180,6 +191,17 @@ export default defineSchema({
   })
     .index("by_dedupe_key", ["dedupeKey"])
     .index("by_status_and_next_attempt_at", ["status", "nextAttemptAt"])
+    .index("by_provider_and_rsn_key_and_status", [
+      "provider",
+      "rsnKey",
+      "status",
+    ])
+    .index("by_provider_and_operation_and_status_and_estimated_run_at", [
+      "provider",
+      "operation",
+      "status",
+      "estimatedRunAt",
+    ])
     .index("by_provider_and_status_and_estimated_run_at", [
       "provider",
       "status",

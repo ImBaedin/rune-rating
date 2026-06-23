@@ -335,6 +335,22 @@ const getCollectionComparison = makeFunctionReference<
       delta: number | null;
       pages: Array<{ delta: number | null }>;
     }>;
+  }
+>("runeProfile:getCollectionComparison");
+
+const getCollectionItemsComparison = makeFunctionReference<
+  "query",
+  {
+    leftRsn: string;
+    rightRsn: string;
+    tab: string;
+    status: "all" | "different" | "one-sided" | "left" | "right";
+    search: string;
+    limit: number;
+  },
+  {
+    matchCount: number;
+    isLimited: boolean;
     items: Array<{
       label: string;
       page: string;
@@ -344,7 +360,7 @@ const getCollectionComparison = makeFunctionReference<
       quantityDelta: number | null;
     }>;
   }
->("runeProfile:getCollectionComparison");
+>("runeProfile:getCollectionItemsComparison");
 
 const claimOverviewCacheRefresh = makeFunctionReference<
   "mutation",
@@ -1263,7 +1279,16 @@ describe("collection log comparison", () => {
         expect.objectContaining({ name: "Shared Drops", delta: -1 }),
       ]),
     );
-    expect(comparison.items).toEqual(
+    const items = await t.query(getCollectionItemsComparison, {
+      leftRsn: "Left",
+      rightRsn: "Right",
+      tab: "all",
+      status: "all",
+      search: "sire",
+      limit: 10,
+    });
+    expect(items.matchCount).toBe(2);
+    expect(items.items).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           label: "Abyssal orphan",
@@ -1281,9 +1306,59 @@ describe("collection log comparison", () => {
         }),
       ]),
     );
+    expect(items.items.filter((item) => item.label === "Unsired")).toHaveLength(
+      1,
+    );
+  });
+
+  test("keeps unchanged collection detail item rows on repeated refreshes", async () => {
+    const t = convexTest({ schema, modules });
+    await t.mutation(requestRefresh, { rsns: ["Stable"] });
+    const collectionLog = {
+      obtained: 1,
+      total: 1,
+      tabs: [
+        {
+          name: "Bosses",
+          obtained: 1,
+          total: 1,
+          pages: [
+            {
+              name: "Abyssal Sire",
+              obtained: 1,
+              total: 1,
+              items: [{ id: 13262, name: "Abyssal orphan", quantity: 1 }],
+            },
+          ],
+        },
+      ],
+    };
+
     expect(
-      comparison.items.filter((item) => item.label === "Unsired"),
-    ).toHaveLength(1);
+      await t.mutation(replaceCollectionLog, {
+        rsn: "Stable",
+        fetchedAt: 100,
+        collectionLog,
+      }),
+    ).toBe(true);
+    const firstRows = await t.run(
+      async (ctx) => await ctx.db.query("canonicalItems").collect(),
+    );
+
+    expect(
+      await t.mutation(replaceCollectionLog, {
+        rsn: "Stable",
+        fetchedAt: 200,
+        collectionLog,
+      }),
+    ).toBe(true);
+    const secondRows = await t.run(
+      async (ctx) => await ctx.db.query("canonicalItems").collect(),
+    );
+
+    expect(secondRows).toHaveLength(1);
+    expect(secondRows[0]?._id).toBe(firstRows[0]?._id);
+    expect(secondRows[0]?.revision).toBe("100");
   });
 });
 

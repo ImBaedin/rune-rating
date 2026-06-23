@@ -7,6 +7,7 @@ import {
   mutation,
 } from "./_generated/server.js";
 import { analyticsDistinctIdForRsn } from "./lib/analytics";
+import { syncCanonicalItemsForCategory } from "./lib/canonicalItems";
 import { getRefreshCooldownMs } from "./lib/config";
 import { categorySnapshotKey, snapshotStateKey } from "./lib/keys";
 import { getOrCreatePlayer } from "./lib/players";
@@ -734,9 +735,8 @@ export const completeRuneProfile = internalMutation({
       }
     }
 
-    const items = [
-      ...args.quests.map((quest) => ({
-        category: "quests" as const,
+    const itemsByCategory = {
+      quests: args.quests.map((quest) => ({
         itemKey: `quest.${quest.id}`,
         label: quest.name,
         group: quest.type,
@@ -746,9 +746,8 @@ export const completeRuneProfile = internalMutation({
         total: null,
         points: quest.points,
       })),
-      ...args.diaries.flatMap((area) =>
+      diaries: args.diaries.flatMap((area) =>
         area.tiers.map((tier) => ({
-          category: "diaries" as const,
           itemKey: `diary.${area.areaId}.${tier.tier.toLowerCase()}`,
           label: `${area.area} ${tier.tier}`,
           group: area.area,
@@ -759,9 +758,8 @@ export const completeRuneProfile = internalMutation({
           points: null,
         })),
       ),
-      ...(hasValidCombatAchievementDetail
+      combatAchievements: hasValidCombatAchievementDetail
         ? args.combatAchievementTasks.map((task) => ({
-            category: "combatAchievements" as const,
             itemKey: `combatAchievement.${task.index}`,
             label: task.name,
             group: task.monster || task.tierName,
@@ -771,28 +769,19 @@ export const completeRuneProfile = internalMutation({
             total: null,
             points: task.tierId,
           }))
-        : []),
-    ];
+        : [],
+    };
 
     const itemCategories = hasValidCombatAchievementDetail
       ? (["quests", "diaries", "combatAchievements"] as const)
       : (["quests", "diaries"] as const);
     for (const category of itemCategories) {
-      const previous = await ctx.db
-        .query("canonicalItems")
-        .withIndex("by_player_and_category", (index) =>
-          index.eq("playerId", args.playerId).eq("category", category),
-        )
-        .collect();
-      for (const item of previous) await ctx.db.delete(item._id);
-    }
-    for (const item of items) {
-      await ctx.db.insert("canonicalItems", {
-        key: `${args.playerId}:${item.category}:${item.itemKey}`,
+      await syncCanonicalItemsForCategory(ctx, {
         playerId: args.playerId,
         source: "runeProfile",
+        category,
         revision: args.requestId,
-        ...item,
+        items: itemsByCategory[category],
       });
     }
 

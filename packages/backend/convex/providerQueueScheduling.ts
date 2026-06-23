@@ -1,3 +1,4 @@
+import { rsnLookupKey } from "@rune-rating/domain";
 import { internal } from "./_generated/api.js";
 import type { Id } from "./_generated/dataModel";
 import type { MutationCtx } from "./_generated/server.js";
@@ -66,6 +67,7 @@ export async function enqueueProviderJob(
   const value = {
     provider: providerFor(args.operation),
     operation: args.operation,
+    rsnKey: rsnLookupKey(args.jobArgs.rsn),
     args: args.jobArgs,
     status: "queued" as const,
     priority: args.priority ?? 0,

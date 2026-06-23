@@ -29,7 +29,6 @@ import {
   EmptyState,
   PageHeader,
   PanelHeader,
-  PlayerPairLine,
   SearchField,
   SegmentedControl,
   SelectField,
@@ -48,9 +47,12 @@ import "./CollectionsPage.css";
 type CollectionComparison = FunctionReturnType<
   typeof api.runeProfile.getCollectionComparison
 >;
+type CollectionItemsComparison = FunctionReturnType<
+  typeof api.runeProfile.getCollectionItemsComparison
+>;
 type CollectionTab = CollectionComparison["tabs"][number];
 type CollectionPage = CollectionTab["pages"][number] & { tab: string };
-type CollectionItem = CollectionComparison["items"][number];
+type CollectionItem = CollectionItemsComparison["items"][number];
 type StatusFilter = "all" | "different" | "one-sided" | "left" | "right";
 
 const itemPreviewLimit = 5;
@@ -119,6 +121,15 @@ function CollectionsPage() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [search, setSearch] = useState("");
   const [isItemSearchExpanded, setIsItemSearchExpanded] = useState(false);
+  const itemLookupLimit = isItemSearchExpanded ? 2500 : itemPreviewLimit;
+  const itemLookup = useQuery(api.runeProfile.getCollectionItemsComparison, {
+    leftRsn: names[0],
+    rightRsn: names[1],
+    tab: tabFilter,
+    status: statusFilter,
+    search,
+    limit: itemLookupLimit,
+  });
 
   const hasDetailedData =
     comparison?.leftDetailAvailable === true &&
@@ -195,7 +206,10 @@ function CollectionsPage() {
       ? "warning"
       : "info";
 
-  const isLoading = runeProfile === undefined || comparison === undefined;
+  const isLoading =
+    runeProfile === undefined ||
+    comparison === undefined ||
+    itemLookup === undefined;
   const sourceStatus = [leftProfile, rightProfile].some(
     (profile) => profile?.collectionState?.status === "fresh",
   )
@@ -214,40 +228,14 @@ function CollectionsPage() {
     () => ["all", ...(comparison?.tabs.map((tab) => tab.name) ?? [])],
     [comparison],
   );
-  const filteredItems = useMemo(() => {
-    const query = search.trim().toLocaleLowerCase();
-    return (comparison?.items ?? []).filter((item) => {
-      if (tabFilter !== "all" && !item.tabs.includes(tabFilter)) return false;
-      if (
-        query &&
-        !`${item.label} ${item.tabs.join(" ")} ${item.pages.join(" ")}`
-          .toLocaleLowerCase()
-          .includes(query)
-      ) {
-        return false;
-      }
-      if (statusFilter === "different")
-        return item.leftOwned !== item.rightOwned;
-      if (statusFilter === "one-sided") {
-        return (
-          (item.leftOwned === true && item.rightOwned === false) ||
-          (item.leftOwned === false && item.rightOwned === true)
-        );
-      }
-      if (statusFilter === "left") {
-        return item.leftOwned === true && item.rightOwned === false;
-      }
-      if (statusFilter === "right") {
-        return item.rightOwned === true && item.leftOwned === false;
-      }
-      return true;
-    });
-  }, [comparison, search, statusFilter, tabFilter]);
   const hasItemSearch = search.trim().length > 0;
-  const displayedItems = isItemSearchExpanded
-    ? filteredItems
-    : filteredItems.slice(0, itemPreviewLimit);
-  const hiddenItemCount = Math.max(0, filteredItems.length - itemPreviewLimit);
+  const hasItemLookup =
+    hasItemSearch || tabFilter !== "all" || statusFilter !== "all";
+  const displayedItems = itemLookup?.items ?? [];
+  const hiddenItemCount = Math.max(
+    0,
+    (itemLookup?.matchCount ?? 0) - displayedItems.length,
+  );
 
   useEffect(() => {
     if (!search.trim() && tabFilter === "all" && statusFilter === "all") return;
@@ -256,7 +244,7 @@ function CollectionsPage() {
         captureAnalytics("rich_search_applied", {
           category: "collection",
           query_length_bucket: countBucket(search.trim().length),
-          result_count_bucket: countBucket(filteredItems.length),
+          result_count_bucket: countBucket(itemLookup?.matchCount ?? 0),
           filters: `status:${statusFilter}|tab:${tabFilter}`,
           expanded_results: isItemSearchExpanded,
           left_rsn_hash: leftRsnHash,
@@ -266,7 +254,7 @@ function CollectionsPage() {
     }, 800);
     return () => window.clearTimeout(timeout);
   }, [
-    filteredItems.length,
+    itemLookup?.matchCount,
     isItemSearchExpanded,
     names,
     search,
@@ -321,18 +309,14 @@ function CollectionsPage() {
         />
         <ComparisonKpiCard
           icon={<Trophy size={22} />}
-          label="One-sided items"
-          value={`${summary.oneSidedItems}`}
+          label="Lookup matches"
+          value={`${itemLookup?.matchCount ?? 0}`}
           detail={
-            <PlayerPairLine
-              names={names}
-              left={formatNumber(summary.leftOnlyItems)}
-              right={formatNumber(summary.rightOnlyItems)}
-              leftLabel="Only owned"
-              rightLabel="Only owned"
-            />
+            hasItemLookup
+              ? "items matching the active filters"
+              : "use item lookup filters to compare ownership"
           }
-          tone={sideTone(summary.itemOnlyLeader)}
+          tone="amber"
           isLoading={isLoading}
         />
       </section>
@@ -378,12 +362,12 @@ function CollectionsPage() {
             }}
           />
           <span className="collections-count">
-            {hasItemSearch
-              ? `${filteredItems.length} matches`
+            {hasItemLookup
+              ? `${itemLookup?.matchCount ?? 0} matches`
               : "Search to compare items"}
           </span>
         </div>
-        {hasItemSearch ? (
+        {hasItemLookup ? (
           <>
             <CollectionItemTable
               rows={displayedItems}
@@ -551,14 +535,6 @@ function buildSummary(
   const oneSidedPages = pages.filter(
     (page) => page.leader === "left" || page.leader === "right",
   ).length;
-  const leftOnlyItems =
-    comparison?.items.filter(
-      (item) => item.leftOwned === true && item.rightOwned === false,
-    ).length ?? 0;
-  const rightOnlyItems =
-    comparison?.items.filter(
-      (item) => item.rightOwned === true && item.leftOwned === false,
-    ).length ?? 0;
 
   return {
     itemGap,
@@ -580,15 +556,6 @@ function buildSummary(
           ? "right"
           : "tie",
     oneSidedPages,
-    oneSidedItems: leftOnlyItems + rightOnlyItems,
-    leftOnlyItems,
-    rightOnlyItems,
-    itemOnlyLeader:
-      leftOnlyItems > rightOnlyItems
-        ? "left"
-        : rightOnlyItems > leftOnlyItems
-          ? "right"
-          : "tie",
     names,
   } as const;
 }

@@ -83,28 +83,36 @@ async function queuePosition(ctx: { db: QueryCtx["db"] }, job: QueueJob) {
   const [queued, scheduled] = await Promise.all([
     ctx.db
       .query("providerJobs")
-      .withIndex("by_provider_and_status_and_estimated_run_at", (index) =>
-        index.eq("provider", job.provider).eq("status", "queued"),
+      .withIndex(
+        "by_provider_and_operation_and_status_and_estimated_run_at",
+        (index) =>
+          index
+            .eq("provider", job.provider)
+            .eq("operation", job.operation)
+            .eq("status", "queued"),
       )
       .take(100),
     ctx.db
       .query("providerJobs")
-      .withIndex("by_provider_and_status_and_estimated_run_at", (index) =>
-        index.eq("provider", job.provider).eq("status", "scheduled"),
+      .withIndex(
+        "by_provider_and_operation_and_status_and_estimated_run_at",
+        (index) =>
+          index
+            .eq("provider", job.provider)
+            .eq("operation", job.operation)
+            .eq("status", "scheduled"),
       )
       .take(100),
   ]);
-  const jobs = [...queued, ...scheduled]
-    .filter((entry) => entry.operation === job.operation)
-    .sort((left, right) => {
-      const leftTime = left.estimatedRunAt ?? left.nextAttemptAt;
-      const rightTime = right.estimatedRunAt ?? right.nextAttemptAt;
-      return (
-        leftTime - rightTime ||
-        right.priority - left.priority ||
-        left.createdAt - right.createdAt
-      );
-    });
+  const jobs = [...queued, ...scheduled].sort((left, right) => {
+    const leftTime = left.estimatedRunAt ?? left.nextAttemptAt;
+    const rightTime = right.estimatedRunAt ?? right.nextAttemptAt;
+    return (
+      leftTime - rightTime ||
+      right.priority - left.priority ||
+      left.createdAt - right.createdAt
+    );
+  });
   const index = jobs.findIndex((entry) => entry._id === job._id);
   return index === -1 ? null : index + 1;
 }
@@ -140,6 +148,43 @@ async function activeProviderJobs(
   return [...running, ...scheduled, ...queued];
 }
 
+async function activeProviderJobsForRsn(
+  ctx: { db: QueryCtx["db"] },
+  provider: Provider,
+  rsnKey: string,
+) {
+  const [running, scheduled, queued] = await Promise.all([
+    ctx.db
+      .query("providerJobs")
+      .withIndex("by_provider_and_rsn_key_and_status", (index) =>
+        index
+          .eq("provider", provider)
+          .eq("rsnKey", rsnKey)
+          .eq("status", "running"),
+      )
+      .take(20),
+    ctx.db
+      .query("providerJobs")
+      .withIndex("by_provider_and_rsn_key_and_status", (index) =>
+        index
+          .eq("provider", provider)
+          .eq("rsnKey", rsnKey)
+          .eq("status", "scheduled"),
+      )
+      .take(20),
+    ctx.db
+      .query("providerJobs")
+      .withIndex("by_provider_and_rsn_key_and_status", (index) =>
+        index
+          .eq("provider", provider)
+          .eq("rsnKey", rsnKey)
+          .eq("status", "queued"),
+      )
+      .take(20),
+  ]);
+  return [...running, ...scheduled, ...queued];
+}
+
 async function terminalProviderJobs(
   ctx: { db: QueryCtx["db"] },
   provider: Provider,
@@ -161,6 +206,34 @@ async function terminalProviderJobs(
   return [...succeeded, ...dead];
 }
 
+async function terminalProviderJobsForRsn(
+  ctx: { db: QueryCtx["db"] },
+  provider: Provider,
+  rsnKey: string,
+) {
+  const [succeeded, dead] = await Promise.all([
+    ctx.db
+      .query("providerJobs")
+      .withIndex("by_provider_and_rsn_key_and_status", (index) =>
+        index
+          .eq("provider", provider)
+          .eq("rsnKey", rsnKey)
+          .eq("status", "succeeded"),
+      )
+      .take(20),
+    ctx.db
+      .query("providerJobs")
+      .withIndex("by_provider_and_rsn_key_and_status", (index) =>
+        index
+          .eq("provider", provider)
+          .eq("rsnKey", rsnKey)
+          .eq("status", "dead"),
+      )
+      .take(20),
+  ]);
+  return [...succeeded, ...dead];
+}
+
 export async function providerQueueView(
   ctx: { db: QueryCtx["db"] },
   provider: Provider,
@@ -168,7 +241,16 @@ export async function providerQueueView(
 ) {
   const now = Date.now();
   const keys = new Set(rsns.map((rsn) => rsnLookupKey(rsn)));
-  const activeJobs = (await activeProviderJobs(ctx, provider))
+  const indexedActiveJobs = (
+    await Promise.all(
+      [...keys].map((key) => activeProviderJobsForRsn(ctx, provider, key)),
+    )
+  ).flat();
+  const activeJobs = (
+    indexedActiveJobs.length > 0
+      ? indexedActiveJobs
+      : await activeProviderJobs(ctx, provider)
+  )
     .filter((job) => keys.has(rsnLookupKey(jobRsn(job))))
     .sort((left, right) => {
       const leftStatus = queueViewStatus(left, now);
@@ -183,9 +265,22 @@ export async function providerQueueView(
         right.estimatedRunAt ?? right.nextAttemptAt ?? right.createdAt;
       return leftRank - rightRank || leftTime - rightTime;
     });
+  const indexedTerminalJobs =
+    activeJobs.length === 0
+      ? (
+          await Promise.all(
+            [...keys].map((key) =>
+              terminalProviderJobsForRsn(ctx, provider, key),
+            ),
+          )
+        ).flat()
+      : [];
   const terminalJobs =
     activeJobs.length === 0
-      ? (await terminalProviderJobs(ctx, provider))
+      ? (indexedTerminalJobs.length > 0
+          ? indexedTerminalJobs
+          : await terminalProviderJobs(ctx, provider)
+        )
           .filter((job) => keys.has(rsnLookupKey(jobRsn(job))))
           .sort(
             (left, right) =>

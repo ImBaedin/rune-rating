@@ -11,6 +11,7 @@
 import type * as analytics from "../analytics.js";
 import type * as comparisons from "../comparisons.js";
 import type * as lib_analytics from "../lib/analytics.js";
+import type * as lib_canonicalItems from "../lib/canonicalItems.js";
 import type * as lib_config from "../lib/config.js";
 import type * as lib_keys from "../lib/keys.js";
 import type * as lib_players from "../lib/players.js";
@@ -46,6 +47,7 @@ declare const fullApi: ApiFromModules<{
   analytics: typeof analytics;
   comparisons: typeof comparisons;
   "lib/analytics": typeof lib_analytics;
+  "lib/canonicalItems": typeof lib_canonicalItems;
   "lib/config": typeof lib_config;
   "lib/keys": typeof lib_keys;
   "lib/players": typeof lib_players;

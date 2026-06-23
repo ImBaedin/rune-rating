@@ -1,12 +1,16 @@
 import { normalizeRsn } from "@rune-rating/domain";
 import { v } from "convex/values";
 import { internal } from "./_generated/api.js";
+import type { Doc } from "./_generated/dataModel";
 import {
   action,
   internalMutation,
   internalQuery,
+  type MutationCtx,
+  type QueryCtx,
   query,
 } from "./_generated/server.js";
+import { syncCanonicalItemsForCategory } from "./lib/canonicalItems";
 import { getRefreshCooldownMs } from "./lib/config";
 import { categorySnapshotKey } from "./lib/keys";
 import { findPlayerByRsn } from "./lib/players";
@@ -89,6 +93,18 @@ const collectionItemComparisonValidator = v.object({
   quantityDelta: v.union(v.number(), v.null()),
   leader: comparisonLeaderValidator,
 });
+const collectionItemStatusFilterValidator = v.union(
+  v.literal("all"),
+  v.literal("different"),
+  v.literal("one-sided"),
+  v.literal("left"),
+  v.literal("right"),
+);
+const collectionItemsComparisonValidator = v.object({
+  items: v.array(collectionItemComparisonValidator),
+  matchCount: v.number(),
+  isLimited: v.boolean(),
+});
 
 type CollectionRefreshResult = Array<{
   rsn: string;
@@ -105,6 +121,22 @@ type CollectionRefreshResult = Array<{
   retryAt: number | null;
   position: number | null;
 }>;
+type CollectionItemRead = {
+  summary: ReturnType<typeof collectionSnapshotValue>;
+  detailAvailable: boolean;
+  items: Map<
+    string,
+    {
+      key: string;
+      label: string;
+      tabs: string[];
+      pages: string[];
+      itemId: number | null;
+      quantity: number;
+      owned: boolean;
+    }
+  >;
+};
 
 function combatSnapshotLooksInvalid(summary: {
   type: string;
@@ -394,6 +426,167 @@ export const getItem = query({
   },
 });
 
+async function readCollectionSnapshots(
+  ctx: QueryCtx,
+  player: Doc<"players"> | null,
+) {
+  if (!player) {
+    return {
+      summary: null,
+      detailAvailable: false,
+      tabSnapshots: new Map<
+        string,
+        ReturnType<typeof collectionSnapshotValue>
+      >(),
+      pageSnapshots: new Map<
+        string,
+        ReturnType<typeof collectionSnapshotValue>
+      >(),
+    };
+  }
+
+  const snapshots = await ctx.db
+    .query("categorySnapshots")
+    .withIndex("by_player_and_category", (index) =>
+      index.eq("playerId", player._id).eq("category", "collection"),
+    )
+    .take(500);
+  const summary = collectionSnapshotValue(
+    snapshots.find((snapshot) => snapshot.segment === "summary"),
+  );
+  const tabSnapshots = new Map<
+    string,
+    ReturnType<typeof collectionSnapshotValue>
+  >();
+  const pageSnapshots = new Map<
+    string,
+    ReturnType<typeof collectionSnapshotValue>
+  >();
+  for (const snapshot of snapshots) {
+    if (snapshot.segment.startsWith("tab:")) {
+      tabSnapshots.set(
+        snapshot.segment.slice(4),
+        collectionSnapshotValue(snapshot),
+      );
+    } else if (snapshot.segment.startsWith("page:")) {
+      pageSnapshots.set(
+        snapshot.segment.slice(5),
+        collectionSnapshotValue(snapshot),
+      );
+    }
+  }
+
+  return {
+    summary,
+    detailAvailable: tabSnapshots.size > 0,
+    tabSnapshots,
+    pageSnapshots,
+  };
+}
+
+function collectionItemMap(itemRows: Doc<"canonicalItems">[]) {
+  const items: CollectionItemRead["items"] = new Map();
+  for (const item of itemRows) {
+    const itemId = item.points;
+    const itemKey = collectionItemComparisonKey(item);
+    const existing = items.get(itemKey);
+    if (existing) {
+      if (!existing.tabs.includes(item.group)) existing.tabs.push(item.group);
+      const page = item.state ?? "Unknown";
+      if (!existing.pages.includes(page)) existing.pages.push(page);
+      existing.quantity = Math.max(existing.quantity, item.current ?? 0);
+      existing.owned = existing.owned || item.completed === true;
+      continue;
+    }
+    items.set(itemKey, {
+      key: itemKey,
+      label: item.label,
+      tabs: [item.group],
+      pages: [item.state ?? "Unknown"],
+      itemId,
+      quantity: item.current ?? 0,
+      owned: item.completed === true,
+    });
+  }
+  return items;
+}
+
+async function readCollectionItems(
+  ctx: QueryCtx,
+  player: Doc<"players"> | null,
+  tab: string,
+): Promise<CollectionItemRead> {
+  const snapshots = await readCollectionSnapshots(ctx, player);
+  if (!player) {
+    return {
+      summary: snapshots.summary,
+      detailAvailable: snapshots.detailAvailable,
+      items: new Map(),
+    };
+  }
+
+  const itemRows =
+    tab === "all"
+      ? await ctx.db
+          .query("canonicalItems")
+          .withIndex("by_player_and_category", (index) =>
+            index.eq("playerId", player._id).eq("category", "collection"),
+          )
+          .take(2500)
+      : await ctx.db
+          .query("canonicalItems")
+          .withIndex("by_player_and_category_and_group", (index) =>
+            index
+              .eq("playerId", player._id)
+              .eq("category", "collection")
+              .eq("group", tab),
+          )
+          .take(2500);
+
+  return {
+    summary: snapshots.summary,
+    detailAvailable: snapshots.detailAvailable,
+    items: collectionItemMap(itemRows),
+  };
+}
+
+function collectionItemMatchesSearch(
+  item: {
+    label: string;
+    tabs: string[];
+    pages: string[];
+  },
+  query: string,
+) {
+  if (!query) return true;
+  return `${item.label} ${item.tabs.join(" ")} ${item.pages.join(" ")}`
+    .toLocaleLowerCase()
+    .includes(query);
+}
+
+function collectionItemMatchesStatus(
+  item: {
+    leftOwned: boolean | null;
+    rightOwned: boolean | null;
+  },
+  status: "all" | "different" | "one-sided" | "left" | "right",
+) {
+  if (status === "different") return item.leftOwned !== item.rightOwned;
+  if (status === "one-sided") {
+    return (
+      (item.leftOwned === true && item.rightOwned === false) ||
+      (item.leftOwned === false && item.rightOwned === true)
+    );
+  }
+  if (status === "left") {
+    return item.leftOwned === true && item.rightOwned === false;
+  }
+  if (status === "right") {
+    return item.rightOwned === true && item.leftOwned === false;
+  }
+  return true;
+}
+
 export const getCollectionComparison = query({
   args: { leftRsn: v.string(), rightRsn: v.string() },
   returns: v.object({
@@ -402,7 +595,6 @@ export const getCollectionComparison = query({
     leftDetailAvailable: v.boolean(),
     rightDetailAvailable: v.boolean(),
     tabs: v.array(collectionTabComparisonValidator),
-    items: v.array(collectionItemComparisonValidator),
   }),
   handler: async (ctx, args) => {
     const [leftPlayer, rightPlayer] = await Promise.all([
@@ -410,119 +602,9 @@ export const getCollectionComparison = query({
       findPlayerByRsn(ctx, args.rightRsn),
     ]);
 
-    const readPlayer = async (player: typeof leftPlayer) => {
-      if (!player) {
-        return {
-          summary: null,
-          detailAvailable: false,
-          tabSnapshots: new Map<
-            string,
-            ReturnType<typeof collectionSnapshotValue>
-          >(),
-          pageSnapshots: new Map<
-            string,
-            ReturnType<typeof collectionSnapshotValue>
-          >(),
-          items: new Map<
-            string,
-            {
-              key: string;
-              label: string;
-              tabs: string[];
-              pages: string[];
-              itemId: number | null;
-              quantity: number;
-              owned: boolean;
-            }
-          >(),
-        };
-      }
-
-      const [snapshots, itemRows] = await Promise.all([
-        ctx.db
-          .query("categorySnapshots")
-          .withIndex("by_player_and_category", (index) =>
-            index.eq("playerId", player._id).eq("category", "collection"),
-          )
-          .take(500),
-        ctx.db
-          .query("canonicalItems")
-          .withIndex("by_player_and_category", (index) =>
-            index.eq("playerId", player._id).eq("category", "collection"),
-          )
-          .take(2500),
-      ]);
-      const summary = collectionSnapshotValue(
-        snapshots.find((snapshot) => snapshot.segment === "summary"),
-      );
-      const tabSnapshots = new Map<
-        string,
-        ReturnType<typeof collectionSnapshotValue>
-      >();
-      const pageSnapshots = new Map<
-        string,
-        ReturnType<typeof collectionSnapshotValue>
-      >();
-      for (const snapshot of snapshots) {
-        if (snapshot.segment.startsWith("tab:")) {
-          tabSnapshots.set(
-            snapshot.segment.slice(4),
-            collectionSnapshotValue(snapshot),
-          );
-        } else if (snapshot.segment.startsWith("page:")) {
-          pageSnapshots.set(
-            snapshot.segment.slice(5),
-            collectionSnapshotValue(snapshot),
-          );
-        }
-      }
-      const items = new Map<
-        string,
-        {
-          key: string;
-          label: string;
-          tabs: string[];
-          pages: string[];
-          itemId: number | null;
-          quantity: number;
-          owned: boolean;
-        }
-      >();
-      for (const item of itemRows) {
-        const itemId = item.points;
-        const itemKey = collectionItemComparisonKey(item);
-        const existing = items.get(itemKey);
-        if (existing) {
-          if (!existing.tabs.includes(item.group))
-            existing.tabs.push(item.group);
-          const page = item.state ?? "Unknown";
-          if (!existing.pages.includes(page)) existing.pages.push(page);
-          existing.quantity = Math.max(existing.quantity, item.current ?? 0);
-          existing.owned = existing.owned || item.completed === true;
-          continue;
-        }
-        items.set(itemKey, {
-          key: itemKey,
-          label: item.label,
-          tabs: [item.group],
-          pages: [item.state ?? "Unknown"],
-          itemId,
-          quantity: item.current ?? 0,
-          owned: item.completed === true,
-        });
-      }
-      return {
-        summary,
-        detailAvailable: tabSnapshots.size > 0,
-        tabSnapshots,
-        pageSnapshots,
-        items,
-      };
-    };
-
     const [left, right] = await Promise.all([
-      readPlayer(leftPlayer),
-      readPlayer(rightPlayer),
+      readCollectionSnapshots(ctx, leftPlayer),
+      readCollectionSnapshots(ctx, rightPlayer),
     ]);
     const tabNames = [
       ...new Set([...left.tabSnapshots.keys(), ...right.tabSnapshots.keys()]),
@@ -587,6 +669,43 @@ export const getCollectionComparison = query({
       };
     });
 
+    return {
+      left: left.summary,
+      right: right.summary,
+      leftDetailAvailable: left.detailAvailable,
+      rightDetailAvailable: right.detailAvailable,
+      tabs,
+    };
+  },
+});
+
+export const getCollectionItemsComparison = query({
+  args: {
+    leftRsn: v.string(),
+    rightRsn: v.string(),
+    tab: v.string(),
+    status: collectionItemStatusFilterValidator,
+    search: v.string(),
+    limit: v.number(),
+  },
+  returns: collectionItemsComparisonValidator,
+  handler: async (ctx, args) => {
+    const search = args.search.trim().toLocaleLowerCase();
+    const tab = args.tab.trim() || "all";
+    const limit = Math.max(1, Math.min(2500, Math.floor(args.limit)));
+
+    if (search.length === 0 && tab === "all" && args.status === "all") {
+      return { items: [], matchCount: 0, isLimited: false };
+    }
+
+    const [leftPlayer, rightPlayer] = await Promise.all([
+      findPlayerByRsn(ctx, args.leftRsn),
+      findPlayerByRsn(ctx, args.rightRsn),
+    ]);
+    const [left, right] = await Promise.all([
+      readCollectionItems(ctx, leftPlayer, tab),
+      readCollectionItems(ctx, rightPlayer, tab),
+    ]);
     const itemKeys = [
       ...new Set([...left.items.keys(), ...right.items.keys()]),
     ].sort((a, b) => {
@@ -606,7 +725,7 @@ export const getCollectionComparison = query({
         )
       );
     });
-    const items = itemKeys.map((key) => {
+    const items = itemKeys.flatMap((key) => {
       const leftItem = left.items.get(key) ?? null;
       const rightItem = right.items.get(key) ?? null;
       const leftQuantity =
@@ -624,7 +743,7 @@ export const getCollectionComparison = query({
       const pages = [
         ...new Set([...(leftItem?.pages ?? []), ...(rightItem?.pages ?? [])]),
       ].sort((a, b) => a.localeCompare(b));
-      return {
+      const item = {
         key,
         label: source?.label ?? key,
         tab: tabs[0] ?? "Unknown",
@@ -639,18 +758,94 @@ export const getCollectionComparison = query({
         quantityDelta,
         leader: collectionLeader(quantityDelta),
       };
+      return collectionItemMatchesSearch(item, search) &&
+        collectionItemMatchesStatus(item, args.status)
+        ? [item]
+        : [];
     });
 
     return {
-      left: left.summary,
-      right: right.summary,
-      leftDetailAvailable: left.detailAvailable,
-      rightDetailAvailable: right.detailAvailable,
-      tabs,
-      items,
+      items: items.slice(0, limit),
+      matchCount: items.length,
+      isLimited: items.length > limit,
     };
   },
 });
+
+type CollectionSnapshotInput = {
+  segment: string;
+  obtained: number;
+  total: number;
+};
+
+async function syncCollectionSnapshots(
+  ctx: MutationCtx,
+  args: {
+    playerId: Doc<"players">["_id"];
+    fetchedAt: number;
+    snapshots: CollectionSnapshotInput[];
+  },
+) {
+  const previousSnapshots = await ctx.db
+    .query("categorySnapshots")
+    .withIndex("by_player_and_category", (index) =>
+      index.eq("playerId", args.playerId).eq("category", "collection"),
+    )
+    .take(500);
+  const remaining = new Map(
+    previousSnapshots.map((snapshot) => [snapshot.key, snapshot]),
+  );
+
+  for (const snapshot of args.snapshots) {
+    const key = categorySnapshotKey(
+      args.playerId,
+      "collection",
+      snapshot.segment,
+    );
+    const value = {
+      source: "runeProfile" as const,
+      category: "collection" as const,
+      segment: snapshot.segment,
+      completeness: "complete" as const,
+      data: {
+        type: "collection" as const,
+        obtained: snapshot.obtained,
+        total: snapshot.total,
+      },
+    };
+    const existing = remaining.get(key);
+    if (!existing) {
+      await ctx.db.insert("categorySnapshots", {
+        key,
+        playerId: args.playerId,
+        fetchedAt: args.fetchedAt,
+        ...value,
+      });
+      continue;
+    }
+
+    remaining.delete(key);
+    const dataChanged =
+      existing.source !== value.source ||
+      existing.segment !== value.segment ||
+      existing.completeness !== value.completeness ||
+      existing.data.type !== "collection" ||
+      existing.data.obtained !== snapshot.obtained ||
+      existing.data.total !== snapshot.total;
+    const shouldUpdateFetchedAt =
+      snapshot.segment === "summary" && existing.fetchedAt !== args.fetchedAt;
+    if (dataChanged || shouldUpdateFetchedAt) {
+      await ctx.db.patch(existing._id, {
+        ...value,
+        fetchedAt: shouldUpdateFetchedAt ? args.fetchedAt : existing.fetchedAt,
+      });
+    }
+  }
+
+  for (const stale of remaining.values()) {
+    await ctx.db.delete(stale._id);
+  }
+}
 
 export const replaceCollectionLog = internalMutation({
   args: {
@@ -666,25 +861,6 @@ export const replaceCollectionLog = internalMutation({
   handler: async (ctx, args) => {
     const player = await findPlayerByRsn(ctx, args.rsn);
     if (!player) return false;
-
-    const previousSnapshots = await ctx.db
-      .query("categorySnapshots")
-      .withIndex("by_player_and_category", (index) =>
-        index.eq("playerId", player._id).eq("category", "collection"),
-      )
-      .take(500);
-    for (const snapshot of previousSnapshots) {
-      await ctx.db.delete(snapshot._id);
-    }
-    const previousItems = await ctx.db
-      .query("canonicalItems")
-      .withIndex("by_player_and_category", (index) =>
-        index.eq("playerId", player._id).eq("category", "collection"),
-      )
-      .take(2500);
-    for (const item of previousItems) {
-      await ctx.db.delete(item._id);
-    }
 
     const snapshotValues = [
       {
@@ -705,34 +881,22 @@ export const replaceCollectionLog = internalMutation({
         })),
       ]),
     ];
-    for (const snapshot of snapshotValues) {
-      await ctx.db.insert("categorySnapshots", {
-        key: categorySnapshotKey(player._id, "collection", snapshot.segment),
-        playerId: player._id,
-        source: "runeProfile",
-        category: "collection",
-        segment: snapshot.segment,
-        fetchedAt: args.fetchedAt,
-        completeness: "complete",
-        data: {
-          type: "collection",
-          obtained: snapshot.obtained,
-          total: snapshot.total,
-        },
-      });
-    }
+    await syncCollectionSnapshots(ctx, {
+      playerId: player._id,
+      fetchedAt: args.fetchedAt,
+      snapshots: snapshotValues,
+    });
 
-    for (const tab of args.collectionLog.tabs) {
-      for (const page of tab.pages) {
-        for (const item of page.items) {
-          const itemKey = `collection.${tab.name}.${page.name}.${item.id}`;
-          await ctx.db.insert("canonicalItems", {
-            key: `${player._id}:collection:${itemKey}`,
-            playerId: player._id,
-            source: "runeProfile",
-            category: "collection",
-            revision: String(args.fetchedAt),
-            itemKey,
+    await syncCanonicalItemsForCategory(ctx, {
+      playerId: player._id,
+      source: "runeProfile",
+      category: "collection",
+      revision: String(args.fetchedAt),
+      maxExisting: 2500,
+      items: args.collectionLog.tabs.flatMap((tab) =>
+        tab.pages.flatMap((page) =>
+          page.items.map((item) => ({
+            itemKey: `collection.${tab.name}.${page.name}.${item.id}`,
             label: item.name,
             group: tab.name,
             state: page.name,
@@ -740,10 +904,10 @@ export const replaceCollectionLog = internalMutation({
             current: item.quantity,
             total: null,
             points: item.id,
-          });
-        }
-      }
-    }
+          })),
+        ),
+      ),
+    });
 
     return true;
   },
