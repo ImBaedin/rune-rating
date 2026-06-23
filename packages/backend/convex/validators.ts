@@ -6,6 +6,81 @@ export const sourceValidator = v.union(
   v.literal("runeProfile"),
 );
 
+export const providerQueueProviderValidator = v.union(
+  v.literal("wiseOldMan"),
+  v.literal("runeProfile"),
+);
+
+export const providerQueueOperationValidator = v.union(
+  v.literal("wiseOldManPlayer"),
+  v.literal("wiseOldManOverview"),
+  v.literal("wiseOldManSkillGains"),
+  v.literal("wiseOldManSkillTimelines"),
+  v.literal("wiseOldManEfficiencyTimelines"),
+  v.literal("runeProfilePlayer"),
+  v.literal("runeProfileCollectionDetail"),
+);
+
+export const providerQueueJobStatusValidator = v.union(
+  v.literal("queued"),
+  v.literal("scheduled"),
+  v.literal("running"),
+  v.literal("succeeded"),
+  v.literal("dead"),
+);
+
+export const providerQueueJobArgsValidator = v.union(
+  v.object({
+    type: v.literal("wiseOldManPlayer"),
+    playerId: v.id("players"),
+    rsn: v.string(),
+    requestId: v.string(),
+  }),
+  v.object({
+    type: v.literal("wiseOldManOverview"),
+    rsn: v.string(),
+  }),
+  v.object({
+    type: v.literal("wiseOldManSkillGains"),
+    rsn: v.string(),
+    period: v.union(
+      v.literal("week"),
+      v.literal("month"),
+      v.literal("quarter"),
+      v.literal("year"),
+    ),
+  }),
+  v.object({
+    type: v.literal("wiseOldManSkillTimelines"),
+    rsn: v.string(),
+    skillKeys: v.array(v.string()),
+  }),
+  v.object({
+    type: v.literal("wiseOldManEfficiencyTimelines"),
+    rsn: v.string(),
+    metrics: v.array(v.union(v.literal("ehp"), v.literal("ehb"))),
+  }),
+  v.object({
+    type: v.literal("runeProfilePlayer"),
+    playerId: v.id("players"),
+    rsn: v.string(),
+    requestId: v.string(),
+  }),
+  v.object({
+    type: v.literal("runeProfileCollectionDetail"),
+    rsn: v.string(),
+  }),
+);
+
+export const providerQueueViewStatusValidator = v.union(
+  v.literal("idle"),
+  v.literal("queued"),
+  v.literal("running"),
+  v.literal("retrying"),
+  v.literal("succeeded"),
+  v.literal("failed"),
+);
+
 export const categoryValidator = v.union(
   v.literal("skills"),
   v.literal("activities"),

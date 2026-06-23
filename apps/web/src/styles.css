@@ -753,7 +753,7 @@ button {
   margin-top: 4px;
 }
 .source-chip {
-  height: 20px;
+  min-height: 20px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -764,6 +764,8 @@ button {
   color: #52606c;
   font-size: 8px;
   font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
 }
 .source-chip i {
   width: 12px;
@@ -776,6 +778,11 @@ button {
 }
 .source-chip.delayed i {
   background: var(--amber);
+}
+.source-chip small {
+  color: #6e7a86;
+  font-size: 8px;
+  font-weight: 700;
 }
 .refresh-copy {
   display: flex;

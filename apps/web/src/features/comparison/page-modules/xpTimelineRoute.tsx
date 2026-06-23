@@ -2,10 +2,11 @@ import XpTimelinePage from "../../../XpTimelinePage";
 import { useComparisonShell } from "../context";
 
 export function XpTimelineRoutePage() {
-  const { comparison, names } = useComparisonShell();
+  const { comparison, names, womQueueCompletionToken } = useComparisonShell();
   return (
     <XpTimelinePage
       names={names}
+      womQueueCompletionToken={womQueueCompletionToken}
       skills={
         comparison?.skills.filter((skill) => skill.key !== "skill.overall") ??
         []

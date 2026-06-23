@@ -3,6 +3,10 @@ import { v } from "convex/values";
 import {
   categoryDataValidator,
   categoryValidator,
+  providerQueueJobArgsValidator,
+  providerQueueJobStatusValidator,
+  providerQueueOperationValidator,
+  providerQueueProviderValidator,
   snapshotStatusValidator,
   sourceValidator,
 } from "./validators";
@@ -156,4 +160,36 @@ export default defineSchema({
     key: v.string(),
     numberValue: v.number(),
   }).index("by_key", ["key"]),
+
+  providerJobs: defineTable({
+    provider: providerQueueProviderValidator,
+    operation: providerQueueOperationValidator,
+    dedupeKey: v.string(),
+    args: providerQueueJobArgsValidator,
+    status: providerQueueJobStatusValidator,
+    priority: v.number(),
+    nextAttemptAt: v.number(),
+    attempts: v.number(),
+    leaseUntil: v.union(v.number(), v.null()),
+    estimatedRunAt: v.union(v.number(), v.null()),
+    startedAt: v.union(v.number(), v.null()),
+    completedAt: v.union(v.number(), v.null()),
+    lastErrorCode: v.union(v.string(), v.null()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_dedupe_key", ["dedupeKey"])
+    .index("by_status_and_next_attempt_at", ["status", "nextAttemptAt"])
+    .index("by_provider_and_status_and_estimated_run_at", [
+      "provider",
+      "status",
+      "estimatedRunAt",
+    ]),
+
+  providerRateLimits: defineTable({
+    provider: providerQueueProviderValidator,
+    nextAvailableAt: v.number(),
+    spacingMs: v.number(),
+    updatedAt: v.number(),
+  }).index("by_provider", ["provider"]),
 });

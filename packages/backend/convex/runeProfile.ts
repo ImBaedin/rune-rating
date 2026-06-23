@@ -1,22 +1,12 @@
 import { normalizeRsn } from "@rune-rating/domain";
-import {
-  fetchRuneProfileCollectionLog,
-  RuneProfileRequestError,
-} from "@rune-rating/sdk-runeprofile";
 import { v } from "convex/values";
 import { internal } from "./_generated/api.js";
 import {
   action,
-  env,
   internalMutation,
   internalQuery,
   query,
 } from "./_generated/server.js";
-import {
-  analyticsDistinctIdForRsn,
-  capturePostHogEvent,
-  durationMs,
-} from "./lib/analytics";
 import { getRefreshCooldownMs } from "./lib/config";
 import { categorySnapshotKey } from "./lib/keys";
 import { findPlayerByRsn } from "./lib/players";
@@ -125,8 +115,18 @@ const collectionSnapshotValue = (
 };
 type CollectionRefreshResult = Array<{
   rsn: string;
-  status: "fresh" | "notConnected" | "rateLimited" | "failed";
+  status:
+    | "fresh"
+    | "queued"
+    | "running"
+    | "retrying"
+    | "notConnected"
+    | "rateLimited"
+    | "failed";
   errorCode: string | null;
+  estimatedRunAt: number | null;
+  retryAt: number | null;
+  position: number | null;
 }>;
 
 export const getCollectionRefreshPlan = internalQuery({
@@ -753,11 +753,17 @@ export const refreshCollectionLog = action({
       rsn: v.string(),
       status: v.union(
         v.literal("fresh"),
+        v.literal("queued"),
+        v.literal("running"),
+        v.literal("retrying"),
         v.literal("notConnected"),
         v.literal("rateLimited"),
         v.literal("failed"),
       ),
       errorCode: v.union(v.string(), v.null()),
+      estimatedRunAt: v.union(v.number(), v.null()),
+      retryAt: v.union(v.number(), v.null()),
+      position: v.union(v.number(), v.null()),
     }),
   ),
   handler: async (ctx, args): Promise<CollectionRefreshResult> => {
@@ -778,6 +784,9 @@ export const refreshCollectionLog = action({
           status: "failed",
           errorCode:
             error instanceof Error ? "invalidRsn" : "invalidCollectionRefresh",
+          estimatedRunAt: null,
+          retryAt: null,
+          position: null,
         });
       }
     }
@@ -788,6 +797,9 @@ export const refreshCollectionLog = action({
           rsn,
           status: "failed",
           errorCode: "tooManyRsns",
+          estimatedRunAt: null,
+          retryAt: null,
+          position: null,
         });
       }
     }
@@ -812,73 +824,54 @@ export const refreshCollectionLog = action({
         rsn: entry.rsn,
         status: entry.status,
         errorCode: entry.errorCode,
+        estimatedRunAt: null,
+        retryAt: null,
+        position: null,
       });
     }
 
     for (const rsn of normalizedRsns) {
       if (!rsnsToRefresh.has(rsn.toLocaleLowerCase())) continue;
-      const startedAt = Date.now();
-      try {
-        const collectionLog = await fetchRuneProfileCollectionLog(rsn, {
-          apiKey: env.RUNEPROFILE_API_KEY,
-          userAgent: "RuneRating/0.1",
-        });
-        const { fetchedAt, ...collectionLogData } = collectionLog;
-        const replaced: boolean = await ctx.runMutation(
-          internal.runeProfile.replaceCollectionLog,
-          {
-            rsn,
-            fetchedAt,
-            collectionLog: collectionLogData,
-          },
-        );
-        results.push({
+      const job: {
+        status:
+          | "idle"
+          | "queued"
+          | "running"
+          | "retrying"
+          | "succeeded"
+          | "failed";
+        estimatedRunAt: number | null;
+        retryAt: number | null;
+        position: number | null;
+        lastErrorCode: string | null;
+      } = await ctx.runMutation(
+        internal.providerQueue.enqueueCollectionDetail,
+        {
           rsn,
-          status: replaced ? ("fresh" as const) : ("notConnected" as const),
-          errorCode: replaced ? null : "notConnected",
-        });
-        await capturePostHogEvent({
-          event: "refresh_result",
-          distinctId: await analyticsDistinctIdForRsn(rsn),
-          properties: {
-            source: "runeProfile",
-            category: "collection_detail",
-            status: replaced ? "fresh" : "notConnected",
-            duration_ms: durationMs(startedAt),
-            error_code: replaced ? null : "notConnected",
-          },
-        });
-      } catch (error) {
-        const requestError =
-          error instanceof RuneProfileRequestError
-            ? error
-            : new RuneProfileRequestError(
-                "failed",
-                error instanceof Error ? error.message : "Unknown failure.",
-              );
-        const status =
-          requestError.code === "notConnected"
+        },
+      );
+      const status =
+        job.status === "succeeded"
+          ? ("fresh" as const)
+          : job.status === "failed" && job.lastErrorCode === "notConnected"
             ? ("notConnected" as const)
-            : requestError.code === "rateLimited"
+            : job.status === "failed" && job.lastErrorCode === "rateLimited"
               ? ("rateLimited" as const)
-              : ("failed" as const);
-        results.push({
-          rsn,
-          status,
-          errorCode: requestError.code,
-        });
-        await capturePostHogEvent({
-          event: "refresh_result",
-          distinctId: await analyticsDistinctIdForRsn(rsn),
-          properties: {
-            source: "runeProfile",
-            category: "collection_detail",
-            status,
-            duration_ms: durationMs(startedAt),
-            error_code: requestError.code,
-          },
-        });
-      }
+              : job.status === "failed"
+                ? ("failed" as const)
+                : job.status === "running"
+                  ? ("running" as const)
+                  : job.status === "retrying"
+                    ? ("retrying" as const)
+                    : ("queued" as const);
+      results.push({
+        rsn,
+        status,
+        errorCode: job.lastErrorCode,
+        estimatedRunAt: job.estimatedRunAt,
+        retryAt: job.retryAt,
+        position: job.position,
+      });
     }
     return results;
   },

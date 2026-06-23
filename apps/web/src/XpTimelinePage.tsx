@@ -208,10 +208,12 @@ export default function XpTimelinePage({
   names,
   currentXp,
   skills,
+  womQueueCompletionToken,
 }: {
   names: [string, string];
   currentXp: CurrentXp;
   skills: SkillSnapshot[];
+  womQueueCompletionToken: number;
 }) {
   const getDashboard = useAction(api.xpTimeline.getDashboard);
   const [leftName, rightName] = names;
@@ -244,7 +246,7 @@ export default function XpTimelinePage({
   );
   const selectedSkillRequestKey =
     selectedSkillKeys === null ? "overall" : selectedSkillKeys.join(",");
-  const requestKey = `${leftName}:${rightName}:${range}:${selectedSkillRequestKey}`;
+  const requestKey = `${leftName}:${rightName}:${range}:${selectedSkillRequestKey}:${womQueueCompletionToken}`;
   const categorySkillKeys = (category: SkillCategory) =>
     skillOptions
       .filter(

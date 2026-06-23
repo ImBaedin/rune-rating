@@ -26,12 +26,13 @@ type EfficiencyTimelines = FunctionReturnType<
 >;
 
 export function EfficiencyRoutePage() {
-  const { efficiency, names } = useComparisonShell();
+  const { efficiency, names, womQueueCompletionToken } = useComparisonShell();
   return (
     <EfficiencyPage
       comparison={efficiency}
       isCurrentLoading={efficiency === undefined}
       names={names}
+      womQueueCompletionToken={womQueueCompletionToken}
     />
   );
 }
@@ -318,10 +319,12 @@ function EfficiencyPage({
   comparison,
   isCurrentLoading,
   names,
+  womQueueCompletionToken,
 }: {
   comparison: EfficiencyComparison | undefined;
   isCurrentLoading: boolean;
   names: [string, string];
+  womQueueCompletionToken: number;
 }) {
   const getEfficiencyTimelines = useAction(
     api.wiseOldMan.getEfficiencyTimelines,
@@ -336,7 +339,7 @@ function EfficiencyPage({
     key: string;
     isLoading: boolean;
   }>({ data: null, error: null, key: "", isLoading: true });
-  const requestKey = `${names[0]}:${names[1]}:${range}`;
+  const requestKey = `${names[0]}:${names[1]}:${range}:${womQueueCompletionToken}`;
 
   useEffect(() => {
     let ignored = false;

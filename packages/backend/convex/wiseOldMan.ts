@@ -364,16 +364,19 @@ export const getOverviewHistory = action({
       const now = Date.now();
       if (cache.fetchedAt !== null) {
         if (cache.refreshAllowedAt <= now && cache.requestId === null) {
-          await ctx.scheduler.runAfter(
-            0,
-            internal.wiseOldMan.refreshOverviewCache,
-            { rsn },
+          await ctx.runMutation(
+            internal.providerQueue.enqueueWiseOldManOverview,
+            {
+              rsn,
+            },
           );
         }
         return projectPeriod(cache, args.period);
       }
 
-      await ctx.runAction(internal.wiseOldMan.refreshOverviewCache, { rsn });
+      await ctx.runMutation(internal.providerQueue.enqueueWiseOldManOverview, {
+        rsn,
+      });
       const refreshed: CacheValue = await ctx.runQuery(
         internal.wiseOldMan.getOverviewCache,
         { rsn },
@@ -656,19 +659,21 @@ export const getSkillGains = action({
       const now = Date.now();
       if (cache.fetchedAt !== null) {
         if (cache.refreshAllowedAt <= now && cache.requestId === null) {
-          await ctx.scheduler.runAfter(
-            0,
-            internal.wiseOldMan.refreshSkillGainsCache,
+          await ctx.runMutation(
+            internal.providerQueue.enqueueWiseOldManSkillGains,
             { rsn, period: args.period },
           );
         }
         return skillGainsCacheValue(cache, rsn);
       }
 
-      await ctx.runAction(internal.wiseOldMan.refreshSkillGainsCache, {
-        rsn,
-        period: args.period,
-      });
+      await ctx.runMutation(
+        internal.providerQueue.enqueueWiseOldManSkillGains,
+        {
+          rsn,
+          period: args.period,
+        },
+      );
       return await ctx.runQuery(internal.wiseOldMan.getSkillGainsCache, {
         rsn,
         period: args.period,
@@ -1175,16 +1180,21 @@ export const getSkillTimelines = action({
         .map((cache) => cache.skillKey);
 
       if (coldSkillKeys.length > 0) {
-        await ctx.runAction(internal.wiseOldMan.refreshSkillTimelineCaches, {
-          rsn,
-          skillKeys: coldSkillKeys,
-        });
+        await ctx.runMutation(
+          internal.providerQueue.enqueueWiseOldManSkillTimelines,
+          {
+            rsn,
+            skillKeys: coldSkillKeys,
+          },
+        );
       }
       if (staleSkillKeys.length > 0) {
-        await ctx.scheduler.runAfter(
-          0,
-          internal.wiseOldMan.refreshSkillTimelineCaches,
-          { rsn, skillKeys: staleSkillKeys },
+        await ctx.runMutation(
+          internal.providerQueue.enqueueWiseOldManSkillTimelines,
+          {
+            rsn,
+            skillKeys: staleSkillKeys,
+          },
         );
       }
 
@@ -1254,19 +1264,21 @@ export const getSkillTimeline = action({
       const now = Date.now();
       if (cache.fetchedAt !== null) {
         if (cache.refreshAllowedAt <= now && cache.requestId === null) {
-          await ctx.scheduler.runAfter(
-            0,
-            internal.wiseOldMan.refreshSkillTimelineCaches,
+          await ctx.runMutation(
+            internal.providerQueue.enqueueWiseOldManSkillTimelines,
             { rsn, skillKeys: [args.skillKey] },
           );
         }
         return projectSkillTimeline(cache, args.period);
       }
 
-      await ctx.runAction(internal.wiseOldMan.refreshSkillTimelineCaches, {
-        rsn,
-        skillKeys: [args.skillKey],
-      });
+      await ctx.runMutation(
+        internal.providerQueue.enqueueWiseOldManSkillTimelines,
+        {
+          rsn,
+          skillKeys: [args.skillKey],
+        },
+      );
       const refreshedCaches: SkillTimelineCacheState[] = await ctx.runQuery(
         internal.wiseOldMan.getSkillTimelineCacheStates,
         { rsn, skillKeys: [args.skillKey] },
@@ -1687,15 +1699,14 @@ export const getEfficiencyTimelines = action({
         .map((cache) => cache.metric);
 
       if (coldMetrics.length > 0) {
-        await ctx.runAction(
-          internal.wiseOldMan.refreshEfficiencyTimelineCaches,
+        await ctx.runMutation(
+          internal.providerQueue.enqueueWiseOldManEfficiencyTimelines,
           { rsn, metrics: coldMetrics },
         );
       }
       if (staleMetrics.length > 0) {
-        await ctx.scheduler.runAfter(
-          0,
-          internal.wiseOldMan.refreshEfficiencyTimelineCaches,
+        await ctx.runMutation(
+          internal.providerQueue.enqueueWiseOldManEfficiencyTimelines,
           { rsn, metrics: staleMetrics },
         );
       }

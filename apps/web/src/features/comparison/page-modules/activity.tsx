@@ -37,8 +37,13 @@ import {
 type ActivityDashboard = FunctionReturnType<typeof api.xpTimeline.getDashboard>;
 
 export function ActivityRoutePage() {
-  const { names } = useComparisonShell();
-  return <ActivityPage names={names} />;
+  const { names, womQueueCompletionToken } = useComparisonShell();
+  return (
+    <ActivityPage
+      names={names}
+      womQueueCompletionToken={womQueueCompletionToken}
+    />
+  );
 }
 
 type ActivityRange = EfficiencyRange;
@@ -174,7 +179,13 @@ function activitySignals(
   ];
 }
 
-function ActivityPage({ names }: { names: [string, string] }) {
+function ActivityPage({
+  names,
+  womQueueCompletionToken,
+}: {
+  names: [string, string];
+  womQueueCompletionToken: number;
+}) {
   const getDashboard = useAction(api.xpTimeline.getDashboard);
   const [range, setRange] = useState<ActivityRange>("30d");
   const [result, setResult] = useState<{
@@ -183,7 +194,7 @@ function ActivityPage({ names }: { names: [string, string] }) {
     key: string;
     isLoading: boolean;
   }>({ data: null, error: null, key: "", isLoading: true });
-  const requestKey = `${names[0]}:${names[1]}:${range}:activity`;
+  const requestKey = `${names[0]}:${names[1]}:${range}:activity:${womQueueCompletionToken}`;
 
   useEffect(() => {
     let ignored = false;

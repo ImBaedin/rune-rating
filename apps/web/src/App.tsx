@@ -75,6 +75,39 @@ const hasActiveRefresh = (profile: PlayerProfile | undefined) =>
     activeRefreshStatuses.has(state?.status ?? ""),
   );
 
+const activeProviderQueueStatuses = new Set(["queued", "running", "retrying"]);
+
+function formatQueueDuration(timestamp: number, now: number) {
+  const seconds = Math.max(0, Math.ceil((timestamp - now) / 1_000));
+  if (seconds < 60) return `${seconds}s`;
+  const minutes = Math.ceil(seconds / 60);
+  if (minutes < 60) return `${minutes}m`;
+  const hours = Math.floor(minutes / 60);
+  const remainder = minutes % 60;
+  return remainder === 0 ? `${hours}h` : `${hours}h ${remainder}m`;
+}
+
+function providerQueueDetail(
+  status:
+    | {
+        status: string;
+        estimatedRunAt: number | null;
+        retryAt: number | null;
+      }
+    | undefined,
+  now: number,
+) {
+  if (!status || !activeProviderQueueStatuses.has(status.status)) return null;
+  if (status.status === "running") return "running";
+  if (status.status === "retrying" && status.retryAt !== null) {
+    return `retry in ${formatQueueDuration(status.retryAt, now)}`;
+  }
+  if (status.estimatedRunAt !== null) {
+    return `in ${formatQueueDuration(status.estimatedRunAt, now)}`;
+  }
+  return "queued";
+}
+
 const snapshotRefreshKey = (
   rsn: string,
   profile: PlayerProfile | undefined,
@@ -152,6 +185,52 @@ export function ComparisonShell({
   });
   const requestRefresh = useMutation(api.refresh.request);
   const getOverviewHistory = useAction(api.wiseOldMan.getOverviewHistory);
+  const providerQueueStatuses = useQuery(
+    api.providerQueue.getProviderStatuses,
+    {
+      rsns,
+    },
+  );
+  const hasActiveProviderQueue =
+    providerQueueStatuses?.some((status) =>
+      activeProviderQueueStatuses.has(status.status),
+    ) ?? false;
+  const [queueNow, setQueueNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (!hasActiveProviderQueue) return;
+    setQueueNow(Date.now());
+    const interval = window.setInterval(() => setQueueNow(Date.now()), 1_000);
+    return () => window.clearInterval(interval);
+  }, [hasActiveProviderQueue]);
+  const womQueueStatus = providerQueueStatuses?.find(
+    (status) => status.provider === "wiseOldMan",
+  );
+  const runeProfileQueueStatus = providerQueueStatuses?.find(
+    (status) => status.provider === "runeProfile",
+  );
+  const rsnPairKey = rsns.map((rsn) => normalizeRsn(rsn)).join("|");
+  const [womQueueCompletionToken, setWomQueueCompletionToken] = useState(0);
+  const lastObservedWomCompletion = useRef<{
+    key: string;
+    completedAt: number | null;
+  } | null>(null);
+  useEffect(() => {
+    const completedAt = womQueueStatus?.completedAt ?? null;
+    const observed = lastObservedWomCompletion.current;
+    if (observed?.key !== rsnPairKey) {
+      lastObservedWomCompletion.current = { key: rsnPairKey, completedAt };
+      return;
+    }
+    if (completedAt !== null && completedAt !== observed.completedAt) {
+      setWomQueueCompletionToken((token) => token + 1);
+    }
+    lastObservedWomCompletion.current = { key: rsnPairKey, completedAt };
+  }, [rsnPairKey, womQueueStatus?.completedAt]);
+  const womQueueDetail = providerQueueDetail(womQueueStatus, queueNow);
+  const runeProfileQueueDetail = providerQueueDetail(
+    runeProfileQueueStatus,
+    queueNow,
+  );
   const isRefreshing = [leftProfile, rightProfile].some((profile) =>
     hasActiveRefresh(profile),
   );
@@ -200,6 +279,7 @@ export function ComparisonShell({
       isOverviewHistoryLoading: historyResult.isLoading,
       historyPeriod,
       setHistoryPeriod,
+      womQueueCompletionToken,
     }),
     [
       comparison,
@@ -213,8 +293,10 @@ export function ComparisonShell({
       rsns,
       runeProfile,
       runeProfileUnavailableMessage,
+      womQueueCompletionToken,
     ],
   );
+  const overviewHistoryRequestKey = `${rsns[0]}:${rsns[1]}:${historyPeriod}:${womQueueCompletionToken}`;
 
   useEffect(() => {
     setDraftRsns(rsns);
@@ -300,6 +382,7 @@ export function ComparisonShell({
   }, [leftProfile, requestRefresh, rightProfile, rsns, staleCheckNow]);
 
   useEffect(() => {
+    const requestKey = overviewHistoryRequestKey;
     if (activeView !== "overview") {
       setHistoryResult({ data: null, error: null, isLoading: false });
       return;
@@ -312,7 +395,7 @@ export function ComparisonShell({
       period: historyPeriod,
     })
       .then((result) => {
-        if (!ignored)
+        if (!ignored && requestKey === overviewHistoryRequestKey)
           setHistoryResult({ data: result, error: null, isLoading: false });
       })
       .catch((error) => {
@@ -330,7 +413,13 @@ export function ComparisonShell({
     return () => {
       ignored = true;
     };
-  }, [activeView, getOverviewHistory, historyPeriod, rsns]);
+  }, [
+    activeView,
+    getOverviewHistory,
+    historyPeriod,
+    overviewHistoryRequestKey,
+    rsns,
+  ]);
 
   const refresh = async (nextRsns = rsns) => {
     setRefreshError(null);
@@ -437,8 +526,12 @@ export function ComparisonShell({
           onRefresh={handleManualRefresh}
           isRefreshing={isRefreshing}
           comparison={comparison}
-          womStatus={womStatus}
-          runeProfileStatus={runeProfileStatus}
+          womStatus={womQueueDetail ? "delayed" : womStatus}
+          runeProfileStatus={
+            runeProfileQueueDetail ? "delayed" : runeProfileStatus
+          }
+          womDetail={womQueueDetail}
+          runeProfileDetail={runeProfileQueueDetail}
         />
         <div
           className={`content ${activeView === "skills" ? "skills-content" : ""} ${activeView === "timeline" ? "xp-content" : ""} ${activeView === "efficiency" ? "efficiency-content" : ""}`}

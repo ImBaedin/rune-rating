@@ -321,14 +321,18 @@ export const completeHiscores = internalMutation({
       displayRsn: args.displayRsn,
       lastSnapshotAt: args.fetchedAt,
     });
-    await ctx.scheduler.runAfter(0, internal.sources.wiseOldMan.refreshPlayer, {
-      playerId: args.playerId,
-      rsn: args.displayRsn,
-      requestId: args.requestId,
-    });
     await ctx.scheduler.runAfter(
       0,
-      internal.sources.runeProfile.refreshPlayer,
+      internal.providerQueue.enqueueWiseOldManPlayer,
+      {
+        playerId: args.playerId,
+        rsn: args.displayRsn,
+        requestId: args.requestId,
+      },
+    );
+    await ctx.scheduler.runAfter(
+      0,
+      internal.providerQueue.enqueueRuneProfilePlayer,
       {
         playerId: args.playerId,
         rsn: args.displayRsn,

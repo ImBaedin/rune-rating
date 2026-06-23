@@ -79,6 +79,14 @@ const mutedTabColor = (color: string) => {
 const ownedLabel = (owned: boolean | null) =>
   owned === null ? "Unavailable" : owned ? "Owned" : "Missing";
 
+const formatQueueWait = (targetAt: number | null, now: number) => {
+  if (targetAt === null) return "soon";
+  const seconds = Math.max(0, Math.ceil((targetAt - now) / 1_000));
+  if (seconds < 60) return `~${seconds}s`;
+  const minutes = Math.ceil(seconds / 60);
+  return `~${minutes}m`;
+};
+
 const wikiItemIconUrl = (label: string) =>
   `https://oldschool.runescape.wiki/w/Special:Redirect/file/${encodeURIComponent(
     `${label.trim()}.png`,
@@ -99,9 +107,14 @@ function CollectionsPage() {
     leftRsn: names[0],
     rightRsn: names[1],
   });
+  const detailQueueStatuses = useQuery(
+    api.providerQueue.getCollectionDetailStatuses,
+    { rsns: names },
+  );
   const refreshCollectionLog = useAction(api.runeProfile.refreshCollectionLog);
   const requestedDetails = useRef(new Set<string>());
-  const [detailStatus, setDetailStatus] = useState<string | null>(null);
+  const [detailError, setDetailError] = useState<string | null>(null);
+  const [queueNow, setQueueNow] = useState(() => Date.now());
   const [tabFilter, setTabFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [search, setSearch] = useState("");
@@ -116,11 +129,14 @@ function CollectionsPage() {
     if (comparison === undefined || hasDetailedData) return;
     if (requestedDetails.current.has(requestKey)) return;
     requestedDetails.current.add(requestKey);
-    setDetailStatus("Loading detailed collection log data...");
+    setDetailError(null);
     void refreshCollectionLog({ rsns: names })
       .then((results) => {
-        const failures = results.filter((result) => result.status !== "fresh");
-        setDetailStatus(
+        const failures = results.filter(
+          (result) =>
+            !["fresh", "queued", "running", "retrying"].includes(result.status),
+        );
+        setDetailError(
           failures.length === 0
             ? null
             : `Detailed collection log unavailable for ${failures
@@ -129,13 +145,55 @@ function CollectionsPage() {
         );
       })
       .catch((error) => {
-        setDetailStatus(
+        setDetailError(
           error instanceof Error
             ? error.message
             : "Detailed collection log refresh failed.",
         );
       });
   }, [comparison, hasDetailedData, names, refreshCollectionLog, requestKey]);
+
+  const hasActiveDetailQueue = detailQueueStatuses?.some((status) =>
+    ["queued", "retrying"].includes(status.status),
+  );
+
+  useEffect(() => {
+    if (!hasActiveDetailQueue) return;
+    const interval = window.setInterval(() => setQueueNow(Date.now()), 1_000);
+    return () => window.clearInterval(interval);
+  }, [hasActiveDetailQueue]);
+
+  const detailQueueNotice = useMemo(() => {
+    if (hasDetailedData) return null;
+    const active = detailQueueStatuses?.find((status) =>
+      ["queued", "running", "retrying", "failed"].includes(status.status),
+    );
+    if (!active) return null;
+    if (active.status === "running") {
+      return "Refreshing detailed collection log data...";
+    }
+    if (active.status === "retrying") {
+      return `RuneProfile collection detail retrying in ${formatQueueWait(
+        active.retryAt,
+        queueNow,
+      )}.`;
+    }
+    if (active.status === "failed") {
+      return `Detailed collection log refresh failed${
+        active.lastErrorCode ? `: ${active.lastErrorCode}` : ""
+      }.`;
+    }
+    return `Detailed collection log queued${
+      active.position ? ` #${active.position}` : ""
+    } - starts in ${formatQueueWait(active.estimatedRunAt, queueNow)}.`;
+  }, [detailQueueStatuses, hasDetailedData, queueNow]);
+
+  const detailNotice = detailError ?? detailQueueNotice;
+  const detailNoticeTone = detailError
+    ? "warning"
+    : detailQueueNotice?.includes("failed")
+      ? "warning"
+      : "info";
 
   const isLoading = runeProfile === undefined || comparison === undefined;
   const sourceStatus = [leftProfile, rightProfile].some(
@@ -232,12 +290,8 @@ function CollectionsPage() {
       {runeProfileUnavailableMessage ? (
         <DataNotice>{runeProfileUnavailableMessage}</DataNotice>
       ) : null}
-      {detailStatus ? (
-        <DataNotice
-          tone={detailStatus.startsWith("Loading") ? "info" : "warning"}
-        >
-          {detailStatus}
-        </DataNotice>
+      {detailNotice ? (
+        <DataNotice tone={detailNoticeTone}>{detailNotice}</DataNotice>
       ) : null}
 
       <section className="collections-kpis" aria-label="Collection log summary">

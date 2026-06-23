@@ -30,6 +30,7 @@ export type ComparisonShellContextValue = {
   isOverviewHistoryLoading: boolean;
   historyPeriod: HistoryPeriod;
   setHistoryPeriod: (period: HistoryPeriod) => void;
+  womQueueCompletionToken: number;
 };
 
 export const ComparisonShellContext =

@@ -11,6 +11,7 @@ const modules = {
   "./analytics.ts": () => import("../convex/analytics"),
   "./comparisons.ts": () => import("../convex/comparisons"),
   "./players.ts": () => import("../convex/players"),
+  "./providerQueue.ts": () => import("../convex/providerQueue"),
   "./refresh.ts": () => import("../convex/refresh"),
   "./runeRating.ts": () => import("../convex/runeRating"),
   "./runeProfile.ts": () => import("../convex/runeProfile"),
@@ -222,6 +223,79 @@ const getCollectionRefreshPlan = makeFunctionReference<
     errorCode: string | null;
   }>
 >("runeProfile:getCollectionRefreshPlan");
+
+const refreshCollectionLog = makeFunctionReference<
+  "action",
+  { rsns: string[] },
+  Array<{
+    rsn: string;
+    status:
+      | "fresh"
+      | "queued"
+      | "running"
+      | "retrying"
+      | "notConnected"
+      | "rateLimited"
+      | "failed";
+    errorCode: string | null;
+    estimatedRunAt: number | null;
+    retryAt: number | null;
+    position: number | null;
+  }>
+>("runeProfile:refreshCollectionLog");
+
+const enqueueCollectionDetail = makeFunctionReference<
+  "mutation",
+  { rsn: string; priority?: number },
+  {
+    status: "idle" | "queued" | "running" | "retrying" | "succeeded" | "failed";
+    position: number | null;
+    estimatedRunAt: number | null;
+  }
+>("providerQueue:enqueueCollectionDetail");
+
+const enqueueWiseOldManPlayer = makeFunctionReference<
+  "mutation",
+  { playerId: string; rsn: string; requestId: string; priority?: number },
+  string
+>("providerQueue:enqueueWiseOldManPlayer");
+
+const enqueueRuneProfilePlayer = makeFunctionReference<
+  "mutation",
+  { playerId: string; rsn: string; requestId: string; priority?: number },
+  string
+>("providerQueue:enqueueRuneProfilePlayer");
+
+const getProviderStatuses = makeFunctionReference<
+  "query",
+  { rsns: string[] },
+  Array<{
+    provider: "wiseOldMan" | "runeProfile";
+    operation: string | null;
+    status: "idle" | "queued" | "running" | "retrying" | "succeeded" | "failed";
+    position: number | null;
+    estimatedRunAt: number | null;
+    retryAt: number | null;
+    lastErrorCode: string | null;
+  }>
+>("providerQueue:getProviderStatuses");
+
+const pumpProviderQueue = makeFunctionReference<"mutation", {}, number>(
+  "providerQueue:pump",
+);
+
+const getCollectionDetailStatuses = makeFunctionReference<
+  "query",
+  { rsns: string[] },
+  Array<{
+    rsn: string;
+    status: "idle" | "queued" | "running" | "retrying" | "succeeded" | "failed";
+    position: number | null;
+    estimatedRunAt: number | null;
+    retryAt: number | null;
+    lastErrorCode: string | null;
+  }>
+>("providerQueue:getCollectionDetailStatuses");
 
 const getCollectionComparison = makeFunctionReference<
   "query",
@@ -718,6 +792,146 @@ describe("skills comparison", () => {
 });
 
 describe("collection log comparison", () => {
+  test("queues snapshot provider refreshes with provider-specific costs", async () => {
+    const t = convexTest({ schema, modules });
+    const playerId = await t.run(async (ctx) =>
+      ctx.db.insert("players", {
+        normalizedRsn: "queue snap",
+        displayRsn: "Queue Snap",
+        createdAt: Date.now(),
+        lastRequestedAt: Date.now(),
+        lastSnapshotAt: null,
+        refreshAllowedAt: Date.now(),
+      }),
+    );
+
+    await t.mutation(enqueueWiseOldManPlayer, {
+      playerId,
+      rsn: "Queue Snap",
+      requestId: "request-wom",
+    });
+    await t.mutation(enqueueRuneProfilePlayer, {
+      playerId,
+      rsn: "Queue Snap",
+      requestId: "request-rp",
+    });
+
+    expect(await t.mutation(pumpProviderQueue, {})).toBe(2);
+
+    const { jobs, rates } = await t.run(async (ctx) => ({
+      jobs: await ctx.db.query("providerJobs").collect(),
+      rates: await ctx.db.query("providerRateLimits").collect(),
+    }));
+    const womJob = jobs.find((job) => job.provider === "wiseOldMan");
+    const runeProfileJob = jobs.find((job) => job.provider === "runeProfile");
+    const womRate = rates.find((rate) => rate.provider === "wiseOldMan");
+    const runeProfileRate = rates.find(
+      (rate) => rate.provider === "runeProfile",
+    );
+
+    expect(womJob?.status).toBe("scheduled");
+    expect(runeProfileJob?.status).toBe("scheduled");
+    expect(womRate?.spacingMs).toBe(700);
+    expect(runeProfileRate?.spacingMs).toBe(600);
+    expect(womRate?.nextAvailableAt).toBe((womJob?.estimatedRunAt ?? 0) + 700);
+    expect(runeProfileRate?.nextAvailableAt).toBe(
+      (runeProfileJob?.estimatedRunAt ?? 0) + 2_400,
+    );
+
+    expect(
+      await t.query(getProviderStatuses, { rsns: ["Queue Snap"] }),
+    ).toMatchObject([
+      {
+        provider: "wiseOldMan",
+        operation: "wiseOldManPlayer",
+        status: "queued",
+        estimatedRunAt: womJob?.estimatedRunAt,
+      },
+      {
+        provider: "runeProfile",
+        operation: "runeProfilePlayer",
+        status: "queued",
+        estimatedRunAt: runeProfileJob?.estimatedRunAt,
+      },
+    ]);
+  });
+
+  test("dedupes queued collection detail jobs and reserves provider slots", async () => {
+    const t = convexTest({ schema, modules });
+
+    expect(
+      await t.mutation(enqueueCollectionDetail, { rsn: "Queue Player" }),
+    ).toMatchObject({ status: "queued" });
+    expect(
+      await t.mutation(enqueueCollectionDetail, { rsn: "queue player" }),
+    ).toMatchObject({ status: "queued" });
+
+    expect(
+      await t.run(async (ctx) => await ctx.db.query("providerJobs").collect()),
+    ).toHaveLength(1);
+
+    expect(await t.mutation(pumpProviderQueue, {})).toBe(1);
+
+    const { job, rate } = await t.run(async (ctx) => {
+      const job = await ctx.db.query("providerJobs").first();
+      const rate = await ctx.db.query("providerRateLimits").first();
+      if (!job || !rate) throw new Error("Expected queued provider state.");
+      return { job, rate };
+    });
+    expect(job.status).toBe("scheduled");
+    expect(job.estimatedRunAt).not.toBeNull();
+    expect(rate.spacingMs).toBe(600);
+    expect(rate.nextAvailableAt).toBe((job.estimatedRunAt ?? 0) + 600);
+
+    expect(
+      await t.query(getCollectionDetailStatuses, { rsns: ["Queue Player"] }),
+    ).toMatchObject([
+      {
+        status: "queued",
+        position: 1,
+        estimatedRunAt: job.estimatedRunAt,
+      },
+    ]);
+  });
+
+  test("collection detail refresh enqueues work when only the summary is fresh", async () => {
+    const t = convexTest({ schema, modules });
+    const fetchedAt = Date.now();
+    await t.run(async (ctx) => {
+      const playerId = await ctx.db.insert("players", {
+        normalizedRsn: "queue detail",
+        displayRsn: "Queue Detail",
+        createdAt: fetchedAt,
+        lastRequestedAt: fetchedAt,
+        lastSnapshotAt: fetchedAt,
+        refreshAllowedAt: fetchedAt + 60 * 60 * 1_000,
+      });
+      await ctx.db.insert("categorySnapshots", {
+        key: `${playerId}:collection:summary`,
+        playerId,
+        source: "runeProfile",
+        category: "collection",
+        segment: "summary",
+        fetchedAt,
+        completeness: "complete",
+        data: { type: "collection", obtained: 1, total: 10 },
+      });
+    });
+
+    expect(
+      await t.action(refreshCollectionLog, { rsns: ["Queue Detail"] }),
+    ).toMatchObject([
+      {
+        status: "queued",
+        errorCode: null,
+        position: 1,
+      },
+    ]);
+    expect(
+      await t.run(async (ctx) => await ctx.db.query("providerJobs").collect()),
+    ).toHaveLength(1);
+  });
+
   test("refreshes collection detail when only the summary is fresh", async () => {
     const t = convexTest({ schema, modules });
     const fetchedAt = Date.now();

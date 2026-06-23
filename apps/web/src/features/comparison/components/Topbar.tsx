@@ -21,6 +21,8 @@ export function Topbar({
   comparison,
   womStatus,
   runeProfileStatus,
+  womDetail,
+  runeProfileDetail,
 }: {
   onOpenNavigation: () => void;
   rsns: [string, string];
@@ -39,6 +41,8 @@ export function Topbar({
     | undefined;
   womStatus: "live" | "delayed" | "off";
   runeProfileStatus: "live" | "delayed" | "off";
+  womDetail: string | null;
+  runeProfileDetail: string | null;
 }) {
   return (
     <header className="topbar">
@@ -89,8 +93,16 @@ export function Topbar({
           <span className="eyebrow">Source health</span>
           <div className="health-row">
             <ShellSourceChip label="Hiscores" status="live" />
-            <ShellSourceChip label="Wise Old Man" status={womStatus} />
-            <ShellSourceChip label="RuneProfile" status={runeProfileStatus} />
+            <ShellSourceChip
+              label="Wise Old Man"
+              status={womStatus}
+              detail={womDetail}
+            />
+            <ShellSourceChip
+              label="RuneProfile"
+              status={runeProfileStatus}
+              detail={runeProfileDetail}
+            />
           </div>
         </div>
         <div className="refresh-copy">

@@ -16,6 +16,7 @@ import type * as lib_keys from "../lib/keys.js";
 import type * as lib_players from "../lib/players.js";
 import type * as players from "../players.js";
 import type * as policies_refresh from "../policies/refresh.js";
+import type * as providerQueue from "../providerQueue.js";
 import type * as refresh from "../refresh.js";
 import type * as runeProfile from "../runeProfile.js";
 import type * as runeRating from "../runeRating.js";
@@ -42,6 +43,7 @@ declare const fullApi: ApiFromModules<{
   "lib/players": typeof lib_players;
   players: typeof players;
   "policies/refresh": typeof policies_refresh;
+  providerQueue: typeof providerQueue;
   refresh: typeof refresh;
   runeProfile: typeof runeProfile;
   runeRating: typeof runeRating;
