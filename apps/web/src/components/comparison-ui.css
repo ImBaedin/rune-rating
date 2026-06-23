@@ -59,6 +59,7 @@
 }
 
 .rr-page-header-controls {
+  min-width: 0;
   flex-wrap: wrap;
   gap: 10px;
   padding-top: 12px;
@@ -570,13 +571,33 @@
 }
 
 @media (max-width: 760px) {
+  .rr-page-header {
+    padding: 12px;
+  }
+
+  .rr-page-header,
+  .rr-page-header-main,
+  .rr-page-header-controls {
+    min-width: 0;
+  }
+
   .rr-page-header-main {
     align-items: flex-start;
     flex-direction: column;
+    gap: 8px;
+  }
+
+  .rr-page-header h1 {
+    font-size: 21px;
   }
 
   .rr-page-header-meta {
     justify-content: flex-start;
+  }
+
+  .rr-page-header-controls {
+    width: 100%;
+    gap: 8px;
   }
 
   .rr-segmented,
@@ -587,6 +608,12 @@
 
   .rr-segmented {
     overflow-x: auto;
+  }
+
+  .rr-segmented button {
+    min-width: 0;
+    flex: 1 0 auto;
+    padding: 0 10px;
   }
 
   .rr-pagination {

@@ -630,7 +630,6 @@ function TimelineChart({
       <div className="xp-rechart-wrap">
         <ResponsiveContainer
           height="100%"
-          initialDimension={{ width: 520, height: 218 }}
           minHeight={0}
           minWidth={0}
           width="100%"
@@ -740,7 +739,6 @@ function GapChart({
       <div className="xp-rechart-wrap gap">
         <ResponsiveContainer
           height="100%"
-          initialDimension={{ width: 520, height: 254 }}
           minHeight={0}
           minWidth={0}
           width="100%"
@@ -881,7 +879,6 @@ function DailyGains({
       <div className="xp-rechart-wrap daily">
         <ResponsiveContainer
           height="100%"
-          initialDimension={{ width: 520, height: 188 }}
           minHeight={0}
           minWidth={0}
           width="100%"

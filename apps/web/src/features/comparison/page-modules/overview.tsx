@@ -563,7 +563,6 @@ function XpTimeline({
         <div className="chart-wrap">
           <ResponsiveContainer
             height="100%"
-            initialDimension={{ width: 620, height: 220 }}
             minHeight={0}
             minWidth={0}
             width="100%"
@@ -905,7 +904,6 @@ function RecentActivity({
       <div className="bar-chart">
         <ResponsiveContainer
           height="100%"
-          initialDimension={{ width: 280, height: 98 }}
           minHeight={0}
           minWidth={0}
           width="100%"

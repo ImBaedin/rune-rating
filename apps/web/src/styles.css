@@ -373,6 +373,7 @@ button {
 }
 .landing-page {
   position: relative;
+  width: 100%;
   min-height: 100dvh;
   overflow: hidden auto;
   display: grid;
@@ -419,6 +420,7 @@ button {
 }
 .landing-hero {
   width: min(100%, 760px);
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -567,6 +569,7 @@ button {
 }
 .landing-preview {
   width: min(100%, 480px);
+  min-width: 0;
   display: grid;
   gap: 12px;
   justify-self: end;
@@ -1063,7 +1066,7 @@ button {
 }
 .top-grid {
   display: grid;
-  grid-template-columns: minmax(580px, 2.1fr) minmax(225px, 0.8fr) minmax(
+  grid-template-columns: minmax(0, 2.1fr) minmax(225px, 0.8fr) minmax(
       225px,
       0.8fr
     );
@@ -1345,7 +1348,7 @@ button {
 }
 .lower-grid {
   display: grid;
-  grid-template-columns: minmax(520px, 1.45fr) minmax(220px, 0.55fr) minmax(
+  grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.55fr) minmax(
       300px,
       0.75fr
     );
@@ -1916,7 +1919,8 @@ footer {
 }
 .xp-metric-select {
   position: relative;
-  z-index: 30;
+  z-index: 12;
+  min-width: 0;
   flex: 0 0 auto;
   padding: 0;
   border: 0;
@@ -1964,7 +1968,7 @@ footer {
 .xp-metric-menu {
   position: absolute;
   top: calc(100% + 5px);
-  left: 0;
+  right: 0;
   width: 292px;
   padding: 7px;
   border: 1px solid #cfd8e1;
@@ -2678,7 +2682,7 @@ footer {
 }
 .activity-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 8px;
 }
 .activity-kpi {
@@ -3500,7 +3504,7 @@ footer {
 }
 .skills-dashboard-grid {
   display: grid;
-  grid-template-columns: minmax(450px, 1.08fr) minmax(500px, 1.32fr) minmax(
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1.32fr) minmax(
       215px,
       0.55fr
     );
@@ -3884,10 +3888,9 @@ footer {
 }
 .skills-bottom-grid {
   display: grid;
-  grid-template-columns: minmax(350px, 0.85fr) minmax(430px, 1.1fr) minmax(
-      380px,
-      1fr
-    );
+  grid-template-columns:
+    minmax(0, 0.85fr) minmax(0, 1.1fr)
+    minmax(0, 1fr);
   gap: 10px;
   align-items: start;
   margin-top: 10px;
@@ -4375,7 +4378,7 @@ footer {
     display: none;
   }
   .content {
-    padding: 10px;
+    padding: 10px 8px;
   }
   .hero-grid,
   .top-grid,
@@ -4441,6 +4444,7 @@ footer {
   }
   .chart-wrap {
     min-height: 215px;
+    height: 215px;
     padding: 14px 10px 20px 35px;
   }
   .line-chart {
@@ -4566,20 +4570,71 @@ footer {
   .skills-detail-scroll {
     min-height: 0;
     max-height: none;
-    height: 410px;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: visible;
   }
   .skills-detail-table {
-    min-width: 700px;
+    min-width: 0;
+    table-layout: fixed;
+  }
+  .skills-detail-table th,
+  .skills-detail-table td {
+    padding: 7px 4px;
+    font-size: 7px;
+    white-space: normal;
   }
   .skills-detail-table th:first-child,
   .skills-detail-table td:first-child {
-    background: white;
+    position: static;
+    box-shadow: none;
   }
-  .skills-detail-table th:first-child {
-    background: #f7f8fa;
+  .skills-detail-table th:nth-child(1) {
+    width: 29%;
   }
-  .skill-category-row td:first-child {
-    background: #eef2f5;
+  .skills-detail-table th:nth-child(2),
+  .skills-detail-table th:nth-child(3) {
+    width: 25%;
+  }
+  .skills-detail-table th:nth-child(4) {
+    width: 21%;
+  }
+  .skills-detail-table th:nth-child(5),
+  .skills-detail-table th:nth-child(6),
+  .skills-detail-table td:nth-child(5),
+  .skills-detail-table td:nth-child(6) {
+    display: none;
+  }
+  .skills-detail-table td:first-child {
+    padding-left: 7px;
+  }
+  .skills-detail-table td:first-child strong,
+  .skills-detail-table td:first-child small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .skills-detail-table td:nth-child(2),
+  .skills-detail-table td:nth-child(3),
+  .skills-detail-table td:nth-child(4) {
+    overflow-wrap: anywhere;
+  }
+  .skills-detail-table td:nth-child(2) strong,
+  .skills-detail-table td:nth-child(3) strong {
+    font-size: 10px;
+  }
+  .skills-detail-table td small {
+    font-size: 6px;
+    white-space: normal;
+  }
+  .skills-detail-table .skill-icon {
+    width: 17px;
+    height: 17px;
+    margin-right: 3px;
+  }
+  .skills-detail-table .osrs-skill-icon {
+    width: 12px;
+    height: 12px;
   }
   .skill-momentum-panel > svg {
     height: 145px;
@@ -4686,6 +4741,49 @@ footer {
   .efficiency-forecast strong {
     grid-column: 2;
   }
+  .activity-kpi-grid,
+  .activity-main-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+  }
+  .activity-heatmap-panel,
+  .activity-signals-panel,
+  .activity-bars-panel,
+  .activity-events-panel {
+    grid-column: auto;
+  }
+  .activity-kpi {
+    min-height: 86px;
+    padding: 11px;
+  }
+  .activity-kpi strong {
+    font-size: 18px;
+  }
+  .activity-kpi svg {
+    width: 34px;
+    height: 34px;
+    padding: 8px;
+  }
+  .activity-heatmap-panel {
+    min-height: 0;
+  }
+  .activity-heatmap {
+    padding: 9px;
+  }
+  .activity-panel-note {
+    display: none;
+  }
+  .activity-bars-wrap {
+    height: 224px;
+    min-height: 224px;
+  }
+  .activity-event {
+    grid-template-columns: 8px minmax(0, 1fr);
+  }
+  .activity-event b {
+    grid-column: 2;
+    justify-self: start;
+  }
 }
 
 @media (max-height: 760px) and (min-width: 1101px) {
@@ -4741,6 +4839,32 @@ footer {
   }
   .xp-range .custom-range {
     min-width: 105px;
+  }
+  .xp-metric-select {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+  .xp-toolbar-select {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+  }
+  .xp-toolbar-select strong {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .xp-metric-menu {
+    right: 0;
+    left: auto;
+    width: min(292px, calc(100vw - 40px));
+    max-height: min(520px, calc(100dvh - 150px));
+    overflow-y: auto;
+  }
+  .xp-metric-options,
+  .xp-metric-skill-list {
+    grid-template-columns: minmax(0, 1fr);
   }
   .xp-kpi-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4883,6 +5007,7 @@ footer {
 }
 
 .rating-workbench {
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   display: grid;
@@ -4893,6 +5018,7 @@ footer {
 
 .rating-control-panel,
 .rating-card-stage {
+  min-width: 0;
   border: 1px solid rgba(244, 240, 232, 0.14);
   border-radius: 8px;
   background:
@@ -5455,6 +5581,7 @@ footer {
 .share-card-preview {
   position: relative;
   overflow: hidden;
+  min-width: 0;
   min-height: 680px;
   border-radius: 8px;
   border: 1px solid rgba(244, 240, 232, 0.16);
@@ -5759,6 +5886,11 @@ footer {
     flex-direction: column;
   }
 
+  .rating-nav-link {
+    width: 100%;
+    justify-content: center;
+  }
+
   .rating-workbench {
     gap: 12px;
   }
@@ -5785,7 +5917,7 @@ footer {
   }
 
   .share-card-preview {
-    min-height: 720px;
+    min-height: 0;
   }
 
   .share-card-identity,
@@ -5805,5 +5937,81 @@ footer {
 
   .rating-card-actions button {
     flex: 1 1 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-page {
+    padding-inline: 10px;
+  }
+
+  .landing-copy h1 {
+    font-size: clamp(44px, 16vw, 56px);
+  }
+
+  .landing-rating-card {
+    padding: 18px;
+  }
+
+  .landing-rating-card p {
+    font-size: clamp(70px, 24vw, 92px);
+  }
+
+  .rating-page {
+    padding: 10px;
+  }
+
+  .rating-control-panel,
+  .rating-card-stage {
+    padding: 12px;
+  }
+
+  .rating-control-panel h1 {
+    font-size: clamp(30px, 12vw, 42px);
+    letter-spacing: -1.1px;
+  }
+
+  .rating-system-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .rating-system-card img {
+    width: 100%;
+    max-width: 190px;
+  }
+
+  .share-card-topline,
+  .share-card-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .share-card-identity img {
+    width: 96px;
+  }
+
+  .share-card-identity h2,
+  .share-card-preview.empty h2 {
+    font-size: clamp(28px, 12vw, 44px);
+    letter-spacing: -1px;
+  }
+
+  .share-card-score strong {
+    font-size: clamp(58px, 24vw, 86px);
+    letter-spacing: -2.8px;
+  }
+
+  .share-card-footer {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin-top: 22px;
+  }
+
+  .empty-card-mark {
+    width: 124px;
+    height: 124px;
   }
 }
