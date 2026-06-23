@@ -26,7 +26,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useComparisonShell } from "../App";
 import {
   ComparisonKpiCard,
   DataNotice,
@@ -37,6 +36,8 @@ import {
   SelectField,
   SourceChip,
 } from "../components/comparison-ui";
+import { useComparisonShell } from "../features/comparison/context";
+import { formatCountOf, formatValue } from "../features/comparison/formatters";
 import "./AchievementDiariesPage.css";
 
 type CategoryResult = FunctionReturnType<typeof api.runeProfile.getCategory>;
@@ -59,8 +60,6 @@ const tierTotals: Record<Tier, number> = {
   Hard: 4,
   Elite: 4,
 };
-
-const fmt = new Intl.NumberFormat("en-US");
 
 export default function AchievementDiariesPage() {
   const { names, runeProfile, runeProfileUnavailableMessage } =
@@ -574,13 +573,12 @@ function formatDiaryPrimaryValue(
   );
   if (available.length === 0) return "—";
   const value = Math.max(...available);
-  return max ? `${fmt.format(value)} of ${fmt.format(max)}` : fmt.format(value);
+  return formatCountOf(value, max);
 }
 
 function formatDiaryCardValue(value: number | null, max?: number) {
   if (value === null) return "Unavailable";
-  if (!max) return fmt.format(value);
-  return `${fmt.format(value)} of ${fmt.format(max)}`;
+  return formatCountOf(value, max);
 }
 
 function CompletionDonut({
@@ -757,8 +755,8 @@ function SignalRow({
         <strong>{label}</strong>
         <small>{detail}</small>
       </span>
-      <b className="ad-left">{left === null ? "-" : fmt.format(left)}</b>
-      <b className="ad-right">{right === null ? "-" : fmt.format(right)}</b>
+      <b className="ad-left">{left === null ? "-" : formatValue(left)}</b>
+      <b className="ad-right">{right === null ? "-" : formatValue(right)}</b>
     </div>
   );
 }

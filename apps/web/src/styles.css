@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=IBM+Plex+Mono:wght@500;600;700&display=swap");
 
 :root {
   --canvas: #f2f4f7;
@@ -284,19 +285,11 @@ button {
 }
 .mini-avatar.blue,
 .avatar.blue {
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--blue) 68%, white),
-    var(--blue)
-  );
+  background: var(--blue);
 }
 .mini-avatar.green,
 .avatar.green {
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--green) 68%, white),
-    var(--green)
-  );
+  background: var(--green);
 }
 .search-content {
   min-width: 0;
@@ -366,6 +359,352 @@ button {
   margin: 0;
   color: var(--muted);
   line-height: 1.65;
+}
+.faulty-terminal-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.faulty-terminal-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.landing-page {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 480px);
+  align-items: center;
+  gap: 42px;
+  padding: 42px;
+  background:
+    linear-gradient(
+      110deg,
+      rgba(6, 9, 10, 0.97) 0%,
+      rgba(8, 13, 14, 0.9) 48%,
+      rgba(7, 10, 11, 0.74) 100%
+    ),
+    #070909;
+  color: #f6efe4;
+  isolation: isolate;
+}
+.landing-background,
+.landing-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+.landing-background {
+  z-index: -3;
+  background: #070909;
+}
+.landing-vignette {
+  z-index: -2;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 9, 9, 0.96),
+      rgba(7, 9, 9, 0.7) 48%,
+      rgba(7, 9, 9, 0.2)
+    ),
+    linear-gradient(
+      0deg,
+      rgba(7, 9, 9, 0.92),
+      transparent 38%,
+      rgba(7, 9, 9, 0.58)
+    );
+}
+.landing-hero {
+  width: min(100%, 760px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  padding-left: clamp(0px, 4rem, 70px);
+}
+.landing-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff9ef;
+  font:
+    800 18px "Manrope",
+    sans-serif;
+  letter-spacing: 0;
+}
+.landing-brand-mark {
+  width: 31px;
+  height: 31px;
+}
+.landing-brand-mark span {
+  border-color: #fff4df;
+  box-shadow: 0 0 18px rgba(230, 163, 117, 0.3);
+}
+.landing-copy {
+  display: grid;
+  gap: 14px;
+}
+.landing-kicker {
+  margin: 0;
+  color: #e6a375;
+  font:
+    700 11px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+.landing-copy h1 {
+  margin: 0;
+  color: #fff4df;
+  font:
+    700 92px / 0.9 "Cormorant Garamond",
+    Georgia,
+    serif;
+  letter-spacing: 0;
+  text-shadow: 0 18px 52px rgba(230, 163, 117, 0.22);
+}
+.landing-copy p:not(.landing-kicker) {
+  max-width: 550px;
+  margin: 0;
+  color: #cfc3b3;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.landing-search {
+  width: min(100%, 510px);
+  display: grid;
+  gap: 10px;
+}
+.landing-search label {
+  color: #fff4df;
+  font:
+    700 13px "IBM Plex Mono",
+    monospace;
+}
+.landing-search-row {
+  height: 58px;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 8px 7px 18px;
+  border: 1px solid rgba(230, 163, 117, 0.36);
+  border-radius: 8px;
+  background: rgba(9, 13, 13, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 244, 223, 0.08),
+    0 22px 64px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(16px);
+}
+.landing-search-row > svg {
+  color: #e6a375;
+}
+.landing-search-row input {
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff8eb;
+  font:
+    700 18px "DM Sans",
+    sans-serif;
+}
+.landing-search-row input::placeholder {
+  color: rgba(246, 239, 228, 0.45);
+}
+.landing-search-row button,
+.landing-compare {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.landing-search-row button {
+  width: 42px;
+  height: 42px;
+  background: #e6a375;
+  color: #1a100b;
+}
+.landing-search-row button svg {
+  color: currentColor;
+  stroke-width: 2.35;
+}
+.landing-search-row button:hover,
+.landing-compare:hover {
+  transform: translateY(-1px);
+}
+.landing-error {
+  margin: 0;
+  color: #ffc9b6;
+  font:
+    700 12px "IBM Plex Mono",
+    monospace;
+}
+.landing-compare {
+  min-height: 44px;
+  gap: 10px;
+  padding: 0 16px;
+  border: 1px solid rgba(133, 188, 177, 0.34);
+  background: rgba(10, 35, 32, 0.46);
+  color: #d8fff5;
+  font:
+    700 13px "IBM Plex Mono",
+    monospace;
+}
+.landing-compare:hover {
+  border-color: rgba(133, 188, 177, 0.68);
+  background: rgba(18, 55, 49, 0.68);
+}
+.landing-preview {
+  width: min(100%, 480px);
+  display: grid;
+  gap: 12px;
+  justify-self: end;
+  margin-right: clamp(0px, 3rem, 50px);
+}
+.landing-rating-card,
+.landing-tier-strip {
+  border: 1px solid rgba(255, 244, 223, 0.14);
+  border-radius: 8px;
+  background: rgba(9, 12, 12, 0.66);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 26px 70px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(18px);
+}
+.landing-rating-card {
+  display: grid;
+  gap: 26px;
+  padding: 24px;
+}
+.landing-rating-card div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.landing-rating-card span,
+.landing-rating-card small,
+.landing-tier-strip span {
+  color: #9fb6af;
+  font:
+    700 11px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.landing-rating-card strong {
+  color: #e6a375;
+  font:
+    700 18px "IBM Plex Mono",
+    monospace;
+}
+.landing-rating-card p {
+  margin: 0;
+  color: #fff4df;
+  font:
+    700 118px / 0.8 "Cormorant Garamond",
+    Georgia,
+    serif;
+  letter-spacing: 0;
+}
+.landing-rating-card p.landing-rating-pending {
+  color: rgba(255, 244, 223, 0.56);
+}
+.landing-rating-card small {
+  max-width: 280px;
+  line-height: 1.7;
+  text-transform: none;
+}
+.landing-tier-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  overflow: hidden;
+}
+.landing-tier-strip div {
+  min-height: 86px;
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  padding: 16px;
+  border-left: 1px solid rgba(255, 244, 223, 0.1);
+}
+.landing-tier-strip div:first-child {
+  border-left: 0;
+}
+.landing-tier-strip strong {
+  color: #fff4df;
+  font:
+    700 24px "IBM Plex Mono",
+    monospace;
+}
+@media (max-width: 980px) {
+  .landing-page {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 34px;
+    padding: 28px 22px 34px;
+  }
+  .landing-hero {
+    width: 100%;
+    padding-left: 0;
+  }
+  .landing-copy h1 {
+    font-size: 74px;
+  }
+  .landing-preview {
+    width: 100%;
+    justify-self: stretch;
+    margin-right: 0;
+  }
+}
+@media (max-width: 560px) {
+  .landing-page {
+    padding: 20px 14px 24px;
+  }
+  .landing-hero {
+    gap: 22px;
+  }
+  .landing-copy h1 {
+    font-size: 56px;
+  }
+  .landing-copy p:not(.landing-kicker) {
+    font-size: 14px;
+  }
+  .landing-search-row {
+    height: auto;
+    min-height: 56px;
+    grid-template-columns: 20px minmax(0, 1fr) 40px;
+    gap: 9px;
+    padding-left: 14px;
+  }
+  .landing-search-row input {
+    font-size: 16px;
+  }
+  .landing-tier-strip {
+    grid-template-columns: 1fr;
+  }
+  .landing-tier-strip div {
+    min-height: 70px;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 244, 223, 0.1);
+  }
+  .landing-tier-strip div:first-child {
+    border-top: 0;
+  }
+  .landing-rating-card p {
+    font-size: 92px;
+  }
 }
 .spin {
   animation: spin 0.9s linear infinite;
@@ -1028,6 +1367,17 @@ button {
   font-weight: 700;
   text-decoration: none;
 }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
 .table-scroll {
   overflow-x: auto;
 }
@@ -1050,6 +1400,16 @@ th {
   text-align: right;
   text-transform: uppercase;
   letter-spacing: 0.45px;
+}
+th.player-column {
+  min-width: 0;
+}
+th.player-column > span {
+  display: block;
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 th:first-child,
 td:first-child {
@@ -1089,11 +1449,13 @@ td:first-child {
   height: 22px;
   display: inline-grid;
   place-items: center;
+  overflow: hidden;
   border-radius: 50%;
   color: white;
   font-size: 6.5px;
   font-weight: 800;
   line-height: 1;
+  white-space: nowrap;
 }
 .winner.blue {
   background: var(--blue);
@@ -4484,17 +4846,12 @@ footer {
 .rating-brand-mark {
   width: 31px;
   height: 31px;
-  border: 1px solid rgba(244, 240, 232, 0.28);
-  background:
-    linear-gradient(
-      135deg,
-      transparent 42%,
-      rgba(244, 240, 232, 0.8) 43% 56%,
-      transparent 57%
-    ),
-    linear-gradient(145deg, #3976e8, #4d8f6f);
-  transform: rotate(45deg);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+  flex: 0 0 auto;
+}
+
+.rating-brand-mark span {
+  border-color: #fff4df;
+  box-shadow: 0 0 18px rgba(230, 163, 117, 0.22);
 }
 
 .rating-toolbar-actions {

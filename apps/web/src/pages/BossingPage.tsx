@@ -20,7 +20,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useComparisonShell } from "../App";
 import { getBossIconUrls } from "../bossIcons";
 import {
   ComparisonKpiCard,
@@ -33,6 +32,12 @@ import {
   SelectField,
   SourceChip,
 } from "../components/comparison-ui";
+import { useComparisonShell } from "../features/comparison/context";
+import {
+  formatValue as formatNumber,
+  formatRank,
+  formatSigned,
+} from "../features/comparison/formatters";
 import "./BossingPage.css";
 
 type ActivitiesComparison = FunctionReturnType<
@@ -60,7 +65,6 @@ type Kpi = {
   tone: "blue" | "green" | "purple" | "orange";
 };
 
-const fmt = new Intl.NumberFormat("en-US");
 const raidNamePatterns = [
   "Chambers of Xeric",
   "Theatre of Blood",
@@ -68,19 +72,6 @@ const raidNamePatterns = [
 ];
 const chartLimitOptions = [8, 10, 15];
 const pageSize = 16;
-
-const formatNumber = (value: number | null | undefined) =>
-  value === null || value === undefined ? "—" : fmt.format(value);
-
-const formatSigned = (value: number | null | undefined, suffix = "") =>
-  value === null || value === undefined
-    ? "—"
-    : `${value > 0 ? "+" : ""}${fmt.format(value)}${suffix}`;
-
-const formatRank = (value: number | null | undefined) =>
-  value === null || value === undefined
-    ? "Unranked"
-    : `Rank ${fmt.format(value)}`;
 
 const isRaidName = (name: string) =>
   raidNamePatterns.some((pattern) => name.includes(pattern));

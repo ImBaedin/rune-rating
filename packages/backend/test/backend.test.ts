@@ -212,6 +212,17 @@ const replaceCollectionLog = makeFunctionReference<
   boolean
 >("runeProfile:replaceCollectionLog");
 
+const getCollectionRefreshPlan = makeFunctionReference<
+  "query",
+  { rsns: string[] },
+  Array<{
+    rsn: string;
+    shouldRefresh: boolean;
+    status: "fresh" | "notConnected";
+    errorCode: string | null;
+  }>
+>("runeProfile:getCollectionRefreshPlan");
+
 const getCollectionComparison = makeFunctionReference<
   "query",
   { leftRsn: string; rightRsn: string },
@@ -707,6 +718,58 @@ describe("skills comparison", () => {
 });
 
 describe("collection log comparison", () => {
+  test("refreshes collection detail when only the summary is fresh", async () => {
+    const t = convexTest({ schema, modules });
+    const fetchedAt = Date.now();
+    const playerId = await t.run(async (ctx) => {
+      const playerId = await ctx.db.insert("players", {
+        normalizedRsn: "summary only",
+        displayRsn: "Summary Only",
+        createdAt: fetchedAt,
+        lastRequestedAt: fetchedAt,
+        lastSnapshotAt: fetchedAt,
+        refreshAllowedAt: fetchedAt + 60 * 60 * 1_000,
+      });
+      await ctx.db.insert("categorySnapshots", {
+        key: `${playerId}:collection:summary`,
+        playerId,
+        source: "runeProfile",
+        category: "collection",
+        segment: "summary",
+        fetchedAt,
+        completeness: "complete",
+        data: { type: "collection", obtained: 1, total: 10 },
+      });
+      return playerId;
+    });
+
+    expect(
+      await t.query(getCollectionRefreshPlan, { rsns: ["Summary Only"] }),
+    ).toMatchObject([{ shouldRefresh: true }]);
+
+    await t.run(async (ctx) => {
+      await ctx.db.insert("canonicalItems", {
+        key: `${playerId}:collection:collection.Bosses.Abyssal Sire.13262`,
+        playerId,
+        source: "runeProfile",
+        category: "collection",
+        revision: String(fetchedAt),
+        itemKey: "collection.Bosses.Abyssal Sire.13262",
+        label: "Abyssal orphan",
+        group: "Bosses",
+        state: "Abyssal Sire",
+        completed: true,
+        current: 1,
+        total: null,
+        points: 13262,
+      });
+    });
+
+    expect(
+      await t.query(getCollectionRefreshPlan, { rsns: ["Summary Only"] }),
+    ).toMatchObject([{ shouldRefresh: false }]);
+  });
+
   test("stores detailed collection rows and compares page and item gaps", async () => {
     const t = convexTest({ schema, modules });
     await t.mutation(requestRefresh, { rsns: ["Left", "Right"] });

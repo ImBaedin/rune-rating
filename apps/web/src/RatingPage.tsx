@@ -32,6 +32,7 @@ import {
   scoreBucket,
 } from "./analytics";
 import { BaseDialog } from "./components/BaseDialog";
+import { comparisonPath, defaultRsns } from "./features/comparison/navigation";
 import {
   ratingSystemImage,
   tierColorsFor,
@@ -267,6 +268,7 @@ export function RatingPage() {
   const navigate = useNavigate();
   const search = useSearch({ from: "/rating" });
   const initialRsn = optionalRsn(search.rsn);
+  const defaultCompareHref = comparisonPath("overview", defaultRsns);
   const [draftRsn, setDraftRsn] = useState(initialRsn ?? "");
   const [submittedRsn, setSubmittedRsn] = useState(initialRsn ?? "");
   const [requestError, setRequestError] = useState<string | null>(null);
@@ -436,15 +438,15 @@ export function RatingPage() {
     <main className="rating-page">
       <section className="rating-toolbar">
         <a href="/" className="rating-brand-link">
-          <span className="rating-brand-mark" />
+          <span className="brand-mark rating-brand-mark" aria-hidden="true">
+            <span />
+            <span />
+          </span>
           <span>RuneRating</span>
         </a>
         <div className="rating-toolbar-actions">
-          <a href="/" className="rating-nav-link">
+          <a href={defaultCompareHref} className="rating-nav-link">
             Compare players
-          </a>
-          <a className="rating-nav-link" href="#card">
-            Card
           </a>
         </div>
       </section>

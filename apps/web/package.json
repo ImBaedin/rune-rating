@@ -20,6 +20,7 @@
     "@tanstack/react-start": "^1.168.25",
     "convex": "^1.41.0",
     "lucide-react": "^0.468.0",
+    "ogl": "^1.0.11",
     "posthog-js": "^1.392.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

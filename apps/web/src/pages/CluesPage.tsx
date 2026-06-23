@@ -19,7 +19,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useComparisonShell } from "../App";
 import {
   ComparisonKpiCard,
   DataNotice,
@@ -30,6 +29,13 @@ import {
   sideLabel,
   sideTone,
 } from "../components/comparison-ui";
+import { useComparisonShell } from "../features/comparison/context";
+import {
+  formatCompact,
+  formatLead,
+  formatValue as formatNumber,
+  formatDelta as formatSigned,
+} from "../features/comparison/formatters";
 import "./CluesPage.css";
 
 type ActivitiesComparison = FunctionReturnType<
@@ -44,12 +50,6 @@ type ClueRow = ActivityRow & {
   label: string;
   tone: string;
 };
-
-const fmt = new Intl.NumberFormat("en-US");
-const compactFmt = new Intl.NumberFormat("en-US", {
-  notation: "compact",
-  maximumFractionDigits: 1,
-});
 
 const playerColors = {
   left: "var(--blue)",
@@ -76,21 +76,6 @@ const tierOrder = new Map(clueTiers.map((tier, index) => [tier.key, index]));
 function tierFromName(name: string): TierKey | null {
   const match = name.match(/\((beginner|easy|medium|hard|elite|master)\)/i);
   return (match?.[1]?.toLowerCase() as TierKey) ?? null;
-}
-
-function formatNumber(value: number | null | undefined) {
-  return value === null || value === undefined ? "—" : fmt.format(value);
-}
-
-function formatSigned(value: number | null | undefined) {
-  if (value === null || value === undefined) return "—";
-  return `${value > 0 ? "+" : ""}${fmt.format(value)}`;
-}
-
-function formatLead(value: number | null | undefined) {
-  if (value === null || value === undefined) return "—";
-  if (value === 0) return "0";
-  return `+${fmt.format(Math.abs(value))}`;
 }
 
 function rankGap(row: ClueRow) {
@@ -226,7 +211,7 @@ function CluesPage() {
                     minTickGap={8}
                   />
                   <YAxis
-                    tickFormatter={(value) => compactFmt.format(Number(value))}
+                    tickFormatter={(value) => formatCompact(Number(value))}
                     tickLine={false}
                     axisLine={false}
                     width={42}

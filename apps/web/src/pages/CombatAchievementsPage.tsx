@@ -4,7 +4,6 @@ import type { FunctionReturnType } from "convex/server";
 import { BadgeCheck, Medal, Swords, Target, Trophy } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-import { useComparisonShell } from "../App";
 import { captureAnalytics, countBucket, hashRsnPair } from "../analytics";
 import {
   ComparisonKpiCard,
@@ -20,6 +19,12 @@ import {
   sideLabel,
   sideTone,
 } from "../components/comparison-ui";
+import { useComparisonShell } from "../features/comparison/context";
+import {
+  formatValue as formatNumber,
+  formatPercent,
+  formatSigned,
+} from "../features/comparison/formatters";
 import "./CombatAchievementsPage.css";
 
 type CategoryResult = FunctionReturnType<typeof api.runeProfile.getCategory>;
@@ -66,8 +71,6 @@ type CompletionRow = {
   delta: number | null;
 };
 
-const fmt = new Intl.NumberFormat("en-US");
-const pctFmt = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
 const combatTiers: TierName[] = [
   "Easy",
   "Medium",
@@ -116,17 +119,6 @@ const mutedGroupColor = (color: string) => {
     Math.round(channel + (255 - channel) * 0.78);
   return `rgb(${blend((value >> 16) & 255)}, ${blend((value >> 8) & 255)}, ${blend(value & 255)})`;
 };
-
-const formatNumber = (value: number | null | undefined) =>
-  value === null || value === undefined ? "—" : fmt.format(value);
-
-const formatPercent = (value: number | null | undefined) =>
-  value === null || value === undefined ? "—" : `${pctFmt.format(value)}%`;
-
-const formatSigned = (value: number | null | undefined, suffix = "") =>
-  value === null || value === undefined
-    ? "—"
-    : `${value > 0 ? "+" : ""}${fmt.format(Object.is(value, -0) ? 0 : value)}${suffix}`;
 
 const deltaClass = (value: number | null | undefined) =>
   value === null || value === undefined || value === 0
@@ -1038,7 +1030,7 @@ function CompletionWheel({
   return (
     <div className="ca-wheel-layout">
       <div className="ca-wheel">
-        <ResponsiveContainer width="100%" height={260}>
+        <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={leftSlices}

@@ -22,7 +22,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useComparisonShell } from "../App";
 import { captureAnalytics, countBucket, hashRsnPair } from "../analytics";
 import {
   ComparisonKpiCard,
@@ -38,6 +37,12 @@ import {
   sideLabel,
   sideTone,
 } from "../components/comparison-ui";
+import { useComparisonShell } from "../features/comparison/context";
+import {
+  formatValue as formatNumber,
+  formatPercent,
+  formatSigned,
+} from "../features/comparison/formatters";
 import "./CollectionsPage.css";
 
 type CollectionComparison = FunctionReturnType<
@@ -48,8 +53,6 @@ type CollectionPage = CollectionTab["pages"][number] & { tab: string };
 type CollectionItem = CollectionComparison["items"][number];
 type StatusFilter = "all" | "different" | "one-sided" | "left" | "right";
 
-const fmt = new Intl.NumberFormat("en-US");
-const pctFmt = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
 const itemPreviewLimit = 5;
 const tabColors = [
   "#3976e8",
@@ -72,17 +75,6 @@ const mutedTabColor = (color: string) => {
     Math.round(channel + (255 - channel) * 0.78);
   return `rgb(${blend((value >> 16) & 255)}, ${blend((value >> 8) & 255)}, ${blend(value & 255)})`;
 };
-
-const formatNumber = (value: number | null | undefined) =>
-  value === null || value === undefined ? "—" : fmt.format(value);
-
-const formatSigned = (value: number | null | undefined, suffix = "") =>
-  value === null || value === undefined
-    ? "—"
-    : `${value > 0 ? "+" : ""}${fmt.format(Object.is(value, -0) ? 0 : value)}${suffix}`;
-
-const formatPercent = (value: number | null | undefined) =>
-  value === null || value === undefined ? "—" : `${pctFmt.format(value)}%`;
 
 const ownedLabel = (owned: boolean | null) =>
   owned === null ? "Unavailable" : owned ? "Owned" : "Missing";

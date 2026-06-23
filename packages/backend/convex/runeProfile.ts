@@ -165,7 +165,16 @@ export const getCollectionRefreshPlan = internalQuery({
           ),
         )
         .unique();
-      const isFresh = summary !== null && now - summary.fetchedAt < cooldownMs;
+      const detailRows = await ctx.db
+        .query("canonicalItems")
+        .withIndex("by_player_and_category", (index) =>
+          index.eq("playerId", player._id).eq("category", "collection"),
+        )
+        .take(1);
+      const isFresh =
+        summary !== null &&
+        now - summary.fetchedAt < cooldownMs &&
+        detailRows.length > 0;
       plan.push({
         rsn,
         shouldRefresh: !isFresh,

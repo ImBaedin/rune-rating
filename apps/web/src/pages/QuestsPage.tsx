@@ -19,7 +19,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useComparisonShell } from "../App";
 import { captureAnalytics, countBucket, hashRsnPair } from "../analytics";
 import {
   CheckboxField,
@@ -36,6 +35,11 @@ import {
   SelectField,
   SourceChip,
 } from "../components/comparison-ui";
+import { useComparisonShell } from "../features/comparison/context";
+import {
+  formatValue as formatNumber,
+  formatDelta as signed,
+} from "../features/comparison/formatters";
 import "./QuestsPage.css";
 
 type QuestCategory = FunctionReturnType<typeof api.runeProfile.getCategory>;
@@ -52,7 +56,6 @@ type QuestRow = {
   right: QuestItem | null;
 };
 
-const fmt = new Intl.NumberFormat("en-US");
 const pageSize = 25;
 const groupLabels: Record<string, string> = {
   free: "Free",
@@ -78,12 +81,6 @@ const isIncomplete = (item: QuestItem | null) => item?.completed === false;
 const stateLabel = (state: string | null | undefined) =>
   state ? (statusLabels[state] ?? state.replaceAll("_", " ")) : "Unavailable";
 const groupLabel = (group: string) => groupLabels[group] ?? group;
-const formatNumber = (value: number | null | undefined) =>
-  value === null || value === undefined ? "—" : fmt.format(value);
-const signed = (value: number | null | undefined) =>
-  value === null || value === undefined
-    ? "—"
-    : `${value > 0 ? "+" : ""}${fmt.format(value)}`;
 const pointBandKey = (points: number | null) =>
   points === null ? "0" : (String(Math.min(points, 5)) as PointFilter);
 

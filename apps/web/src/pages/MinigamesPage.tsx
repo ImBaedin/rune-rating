@@ -12,7 +12,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useComparisonShell } from "../App";
 import {
   ComparisonKpiCard,
   DataNotice,
@@ -23,6 +22,11 @@ import {
   PlayerPairLine,
   SourceChip,
 } from "../components/comparison-ui";
+import { useComparisonShell } from "../features/comparison/context";
+import {
+  formatDelta,
+  formatValue as formatNumber,
+} from "../features/comparison/formatters";
 import "./MinigamesPage.css";
 
 type ActivitiesComparison = FunctionReturnType<
@@ -34,16 +38,6 @@ type MinigameRow = ActivityRow & {
   scoreGap: number | null;
   rankGap: number | null;
 };
-
-const fmt = new Intl.NumberFormat("en-US");
-
-const formatNumber = (value: number | null | undefined) =>
-  value === null || value === undefined ? "—" : fmt.format(value);
-
-const formatDelta = (value: number | null | undefined) =>
-  value === null || value === undefined
-    ? "—"
-    : `${value > 0 ? "+" : ""}${fmt.format(Object.is(value, -0) ? 0 : value)}`;
 
 const leaderLabel = (leader: Leader, names: [string, string]) => {
   if (leader === "left") return names[0];

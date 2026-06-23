@@ -162,13 +162,14 @@
               <li><strong class="text-slateInk">Backend hardening:</strong> collection refresh is capped, normalized, cooldown-aware, and uses typed RuneProfile env.</li>
               <li><strong class="text-slateInk">Chart warnings:</strong> Combat Achievements and Minigames charts now use explicit ResponsiveContainer heights.</li>
               <li><strong class="text-slateInk">Stale scaffold docs:</strong> root, web, backend, and UI README files no longer describe the app as unimplemented.</li>
+              <li><strong class="text-slateInk">Frontend extraction:</strong> comparison shell navigation, player search, source status chips, lookup history, route helpers, player identity, comparison context, common formatters, and comparison route pages were pulled into feature modules.</li>
             </ul>
           </div>
           <div>
             <p class="text-xs font-semibold uppercase tracking-[0.18em] text-warning">Left for review</p>
             <ul class="mt-3 space-y-2 text-sm leading-6 text-muted">
               <li><strong class="text-slateInk">Collection refresh architecture:</strong> full integration into the main refresh queue remains a backend design pass.</li>
-              <li><strong class="text-slateInk">Frontend/backend structure:</strong> large module splits were intentionally left alone.</li>
+              <li><strong class="text-slateInk">Frontend/backend structure:</strong> the comparison shell and route pages are split; remaining structure work is now broader shared UI/data-hook extraction and backend module sequencing.</li>
               <li><strong class="text-slateInk">Collection mobile chart labels:</strong> this needs product/design review before choosing list versus chart behavior.</li>
               <li><strong class="text-slateInk">Web smoke tests:</strong> skipped per instruction for this pass.</li>
               <li><strong class="text-slateInk">Launch docs:</strong> a fuller public setup/deployment guide still needs owner input.</li>
@@ -565,7 +566,7 @@
             </div>
           </article>
 
-          <article id="app-monolith" class="finding p-5 sm:p-6" data-priority="p2" data-area="frontend architecture code-quality" data-title="app tsx 5052 lines empty ui package">
+          <article id="app-monolith" class="finding p-5 sm:p-6" data-priority="p2" data-area="frontend architecture code-quality" data-title="app tsx 4617 lines first extraction complete">
             <div class="grid gap-4 lg:grid-cols-[180px_1fr]">
               <aside>
                 <span class="inline-flex rounded-md bg-blue px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">P2</span>
@@ -575,15 +576,19 @@
               <div>
                 <h3 class="text-xl font-semibold"><code>App.tsx</code> is carrying too many product surfaces.</h3>
                 <p class="mt-2 text-sm leading-6 text-muted">
-                  The main app file is over 5,000 lines and exports the shell, route pages, page widgets,
-                  cards, charts, controls, and data adapters. Meanwhile <code>packages/ui</code> exists but
-                  has no implementation.
+                  The objective comparison extraction is complete: shell navigation, topbar search, source
+                  health chips, route helpers, lookup history, player identity, comparison context, route
+                  page components, and common number/date formatters now live under
+                  <code>apps/web/src/features/comparison</code>. The category pages consume the new context
+                  and formatters. The main app file now carries the comparison shell only, and comparison
+                  route pages are split into focused route modules.
                 </p>
                 <details class="mt-4 rounded-md border border-line bg-cloud p-4">
                   <summary class="cursor-pointer font-semibold">Evidence and fix</summary>
                   <div class="mt-4 space-y-3 text-sm leading-6 text-muted">
-                    <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/App.tsx</code> is 5,052 lines; route files import page components from it; <code>packages/ui</code> contains only docs/package metadata.</p>
-                    <p><strong class="text-slateInk">Fix:</strong> split by feature first: <code>comparison/shell</code>, <code>overview</code>, <code>skills</code>, <code>efficiency</code>, and <code>activity</code>. Then promote stable primitives like source chips, empty states, loading cards, search fields, stat rows, and panel headers into a real shared UI package or local component folder.</p>
+                    <p><strong class="text-slateInk">Code refs:</strong> <code>apps/web/src/App.tsx</code> is now 461 lines; <code>apps/web/src/features/comparison/pages.tsx</code> is a 6-line route-facing barrel; <code>apps/web/src/features/comparison/page-modules/overview.tsx</code>, <code>skills.tsx</code>, <code>xpTimelineRoute.tsx</code>, <code>efficiency.tsx</code>, <code>activity.tsx</code>, and <code>shared.tsx</code> now own the comparison route surfaces and shared page helpers. <code>context.tsx</code>, <code>navigation.ts</code>, <code>formatters.ts</code>, <code>lookupHistory.ts</code>, <code>playerIdentity.ts</code>, and <code>components/*</code> own the extracted comparison shell logic. Category pages import <code>useComparisonShell</code> from the feature context now. The only remaining route import from <code>App.tsx</code> is the comparison shell route.</p>
+                    <p><strong class="text-slateInk">Remaining review:</strong> promote stable primitives like source chips, empty states, loading cards, search fields, stat rows, and panel headers into a real shared UI package or local component folder when the design system boundary is clearer.</p>
+                    <p><strong class="text-slateInk">Data transformations:</strong> pull repeated formatting, mapping, grouping, sorting, and chart-shaping logic out of page components into named hooks or utilities. Keep provider-specific response handling inside the SDK/backend boundary so web components only consume canonical RuneRating models.</p>
                   </div>
                 </details>
               </div>
@@ -732,8 +737,8 @@
               </tr>
               <tr>
                 <td class="px-4 py-3 font-mono">combat-achievements, minigames</td>
-                <td class="px-4 py-3"><span class="rounded-md bg-warning/10 px-2 py-1 font-semibold text-warning">Renders with warning</span></td>
-                <td class="px-4 py-3 text-muted">Recharts warns about negative/zero dimensions before chart settles.</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-teal/10 px-2 py-1 font-semibold text-teal">Renders</span></td>
+                <td class="px-4 py-3 text-muted">Responsive chart containers now have explicit heights.</td>
               </tr>
               <tr>
                 <td class="px-4 py-3 font-mono">collections</td>
@@ -752,8 +757,8 @@
               </tr>
               <tr>
                 <td class="px-4 py-3 font-mono">invalid RSN routes</td>
-                <td class="px-4 py-3"><span class="rounded-md bg-danger/10 px-2 py-1 font-semibold text-danger">Broken</span></td>
-                <td class="px-4 py-3 text-muted">Raw Convex error boundary and stack trace.</td>
+                <td class="px-4 py-3"><span class="rounded-md bg-teal/10 px-2 py-1 font-semibold text-teal">Handled</span></td>
+                <td class="px-4 py-3 text-muted">Compare routes show safe invalid-RSN UI; rating search params drop invalid RSNs before querying.</td>
               </tr>
             </tbody>
           </table>
@@ -767,18 +772,18 @@
           <article class="rounded-lg border border-danger/25 bg-danger/5 p-5">
             <p class="text-sm font-semibold text-danger">Batch 1: launch blockers</p>
             <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-muted">
-              <li>Validate RSNs in routes/search before Convex calls.</li>
-              <li>Add route/root error UI that hides internal stack traces.</li>
-              <li>Move collection detail refresh into a cooldown/claim flow with argument caps.</li>
+              <li><strong class="text-slateInk">Done:</strong> validate RSNs in routes/search before Convex calls.</li>
+              <li><strong class="text-slateInk">Done:</strong> add route/root error UI that hides internal stack traces.</li>
+              <li><strong class="text-slateInk">Partially done:</strong> collection detail refresh now has caps and cooldown checks; full queue integration remains a backend design pass.</li>
             </ol>
           </article>
           <article class="rounded-lg border border-warning/25 bg-warning/5 p-5">
             <p class="text-sm font-semibold text-warning">Batch 2: high-confidence polish</p>
             <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-muted">
-              <li>Remove production mock player fallbacks.</li>
-              <li>Switch RuneProfile env access to typed Convex env.</li>
-              <li>Fix mobile drawer focus isolation and visible focus states.</li>
-              <li>Replace route-changing buttons with links.</li>
+              <li><strong class="text-slateInk">Done:</strong> remove production mock player fallbacks.</li>
+              <li><strong class="text-slateInk">Done:</strong> switch RuneProfile env access to typed Convex env.</li>
+              <li><strong class="text-slateInk">Done:</strong> fix mobile drawer focus isolation and visible focus states.</li>
+              <li><strong class="text-slateInk">Done:</strong> replace route-changing buttons with links.</li>
             </ol>
           </article>
           <article class="rounded-lg border border-blue/25 bg-blue/5 p-5">
@@ -786,8 +791,8 @@
             <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-muted">
               <li>Add Playwright route smoke tests for desktop/mobile.</li>
               <li>Add invalid-RSN tests to web and backend behavior.</li>
-              <li>Stabilize chart dimensions and mobile collection labels.</li>
-              <li>Split <code>App.tsx</code> along feature boundaries.</li>
+              <li><strong class="text-slateInk">Partially done:</strong> chart dimensions are stabilized; mobile collection labels still need product/design review.</li>
+              <li><strong class="text-slateInk">Started:</strong> comparison shell/helpers are extracted; next split page widgets and shared transformations into hooks/utilities.</li>
             </ol>
           </article>
         </div>
@@ -809,10 +814,10 @@
           <article class="rounded-lg border border-line bg-cloud p-4">
             <p class="font-semibold">Verification commands</p>
             <ul class="mt-3 space-y-2 text-sm leading-6 text-muted">
-              <li><code>bun run typecheck</code>: passed after the fix pass.</li>
-              <li><code>bun run lint</code>: passed after the fix pass.</li>
-              <li><code>bun run build</code>: passed after the fix pass, with the existing dependency and chunk-size warnings still present.</li>
-              <li><code>npx -y react-doctor@latest . --verbose --diff</code>: ran and reported broader pre-existing React architecture/performance findings left for review.</li>
+              <li><code>bun run typecheck</code>: passed after the comparison page-module split.</li>
+              <li><code>bun run lint</code>: passed after the comparison page-module split.</li>
+              <li><code>bun run build</code>: passed after the comparison page-module split, with the existing dependency and chunk-size warnings still present.</li>
+              <li><code>npx -y react-doctor@latest . --verbose --diff</code>: ran after the split and reported 72 broader changed-file React findings left for review, including effect dependency/state synchronization work, eager Recharts loading, large components, JSX-prop churn, array-iteration cleanup, and native semantics opportunities.</li>
               <li><code>bun run test</code>: not rerun in the fix pass per instruction; it passed during the original audit, with the web package placeholder noted.</li>
             </ul>
           </article>
