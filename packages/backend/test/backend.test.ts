@@ -280,9 +280,26 @@ const getProviderStatuses = makeFunctionReference<
   }>
 >("providerQueue:getProviderStatuses");
 
-const pumpProviderQueue = makeFunctionReference<"mutation", {}, number>(
-  "providerQueue:pump",
-);
+const pumpProviderQueue = makeFunctionReference<
+  "mutation",
+  Record<string, never>,
+  number
+>("providerQueue:pump");
+
+const markRunningProviderJob = makeFunctionReference<
+  "mutation",
+  { jobId: string },
+  {
+    _id: string;
+    startedAt: number;
+  } | null
+>("providerQueue:markRunning");
+
+const completeProviderJob = makeFunctionReference<
+  "mutation",
+  { jobId: string; startedAt: number },
+  null
+>("providerQueue:completeJob");
 
 const getCollectionDetailStatuses = makeFunctionReference<
   "query",
@@ -930,6 +947,46 @@ describe("collection log comparison", () => {
     expect(
       await t.run(async (ctx) => await ctx.db.query("providerJobs").collect()),
     ).toHaveLength(1);
+  });
+
+  test("reclaims expired running jobs and ignores stale completions", async () => {
+    const t = convexTest({ schema, modules });
+
+    await t.mutation(enqueueCollectionDetail, { rsn: "Lease Player" });
+    await t.mutation(pumpProviderQueue, {});
+    const scheduledJob = await t.run(async (ctx) => {
+      const job = await ctx.db.query("providerJobs").first();
+      if (!job) throw new Error("Expected provider job.");
+      return job;
+    });
+    const runningJob = await t.mutation(markRunningProviderJob, {
+      jobId: scheduledJob._id,
+    });
+    if (!runningJob) throw new Error("Expected running provider job.");
+
+    await t.run(async (ctx) => {
+      await ctx.db.patch(scheduledJob._id, { leaseUntil: Date.now() - 1 });
+    });
+    await t.mutation(pumpProviderQueue, {});
+
+    const reclaimedJob = await t.run(async (ctx) => {
+      const job = await ctx.db.get(scheduledJob._id);
+      if (!job) throw new Error("Expected reclaimed provider job.");
+      return job;
+    });
+    expect(reclaimedJob).toMatchObject({
+      status: "queued",
+      attempts: 1,
+      lastErrorCode: "timeout",
+    });
+
+    await t.mutation(completeProviderJob, {
+      jobId: scheduledJob._id,
+      startedAt: runningJob.startedAt,
+    });
+    expect(
+      await t.run(async (ctx) => (await ctx.db.get(scheduledJob._id))?.status),
+    ).toBe("queued");
   });
 
   test("refreshes collection detail when only the summary is fresh", async () => {

@@ -182,6 +182,12 @@ function queueMessage(status: QueueViewStatus) {
   }
 }
 
+function isActiveQueuedJob(job: QueueJob, now: number) {
+  if (job.status === "queued") return true;
+  if (job.status !== "scheduled" && job.status !== "running") return false;
+  return job.leaseUntil === null || job.leaseUntil >= now;
+}
+
 async function queuePosition(ctx: { db: QueryCtx["db"] }, job: QueueJob) {
   if (job.status !== "queued" && job.status !== "scheduled") return null;
   const [queued, scheduled] = await Promise.all([
@@ -397,12 +403,7 @@ async function enqueueProviderJob(
     .withIndex("by_dedupe_key", (index) => index.eq("dedupeKey", dedupeKey))
     .unique();
 
-  if (
-    existing &&
-    (existing.status === "queued" ||
-      existing.status === "scheduled" ||
-      existing.status === "running")
-  ) {
+  if (existing && isActiveQueuedJob(existing, now)) {
     return existing._id;
   }
 
@@ -436,6 +437,45 @@ async function enqueueProviderJob(
 
   await ctx.scheduler.runAfter(0, internal.providerQueue.pump, {});
   return jobId;
+}
+
+async function reclaimExpiredLeases(ctx: MutationCtx, now: number) {
+  const [scheduled, running] = await Promise.all([
+    ctx.db
+      .query("providerJobs")
+      .withIndex("by_status_and_next_attempt_at", (index) =>
+        index.eq("status", "scheduled"),
+      )
+      .take(MAX_JOBS_PER_PUMP),
+    ctx.db
+      .query("providerJobs")
+      .withIndex("by_status_and_next_attempt_at", (index) =>
+        index.eq("status", "running"),
+      )
+      .take(MAX_JOBS_PER_PUMP),
+  ]);
+  const expiredJobs = [...scheduled, ...running].filter(
+    (job) => job.leaseUntil !== null && job.leaseUntil < now,
+  );
+
+  for (const job of expiredJobs) {
+    const attempts = job.attempts + 1;
+    const retry = attempts < MAX_ATTEMPTS ? now + TIMEOUT_BACKOFF_MS : null;
+    await ctx.db.patch(job._id, {
+      status: retry === null ? "dead" : "queued",
+      attempts,
+      nextAttemptAt: retry ?? now,
+      leaseUntil: null,
+      estimatedRunAt: null,
+      lastErrorCode: "timeout",
+      updatedAt: now,
+    });
+    if (retry !== null) {
+      await ctx.scheduler.runAt(retry, internal.providerQueue.pump, {});
+    }
+  }
+
+  return expiredJobs.length;
 }
 
 export const enqueueCollectionDetail = internalMutation({
@@ -572,6 +612,8 @@ export const pump = internalMutation({
   returns: v.number(),
   handler: async (ctx) => {
     const now = Date.now();
+    await reclaimExpiredLeases(ctx, now);
+
     const jobs = await ctx.db
       .query("providerJobs")
       .withIndex("by_status_and_next_attempt_at", (index) =>
@@ -595,6 +637,11 @@ export const pump = internalMutation({
       await ctx.scheduler.runAt(runAt, internal.providerQueue.runJob, {
         jobId: job._id,
       });
+      await ctx.scheduler.runAt(
+        runAt + JOB_LEASE_MS,
+        internal.providerQueue.pump,
+        {},
+      );
     }
 
     if (jobs.length === MAX_JOBS_PER_PUMP) {
@@ -613,6 +660,7 @@ export const markRunning = internalMutation({
       provider: providerQueueProviderValidator,
       operation: providerQueueOperationValidator,
       args: providerQueueJobArgsValidator,
+      startedAt: v.number(),
     }),
     v.null(),
   ),
@@ -621,10 +669,11 @@ export const markRunning = internalMutation({
     if (job?.status !== "scheduled") return null;
     if (job.leaseUntil !== null && job.leaseUntil < Date.now()) return null;
 
+    const startedAt = Date.now();
     await ctx.db.patch(job._id, {
       status: "running",
-      startedAt: Date.now(),
-      updatedAt: Date.now(),
+      startedAt,
+      updatedAt: startedAt,
     });
 
     return {
@@ -632,17 +681,21 @@ export const markRunning = internalMutation({
       provider: job.provider,
       operation: job.operation,
       args: job.args,
+      startedAt,
     };
   },
 });
 
 export const completeJob = internalMutation({
-  args: { jobId: v.id("providerJobs") },
+  args: { jobId: v.id("providerJobs"), startedAt: v.number() },
   returns: v.null(),
   handler: async (ctx, args) => {
     const now = Date.now();
     const job = await ctx.db.get(args.jobId);
     if (!job) return null;
+    if (job.status !== "running" || job.startedAt !== args.startedAt) {
+      return null;
+    }
     await ctx.db.patch(job._id, {
       status: "succeeded",
       leaseUntil: null,
@@ -658,6 +711,7 @@ export const completeJob = internalMutation({
 export const failJob = internalMutation({
   args: {
     jobId: v.id("providerJobs"),
+    startedAt: v.number(),
     errorCode: v.string(),
     retryAfterMs: v.union(v.number(), v.null()),
     retryable: v.boolean(),
@@ -667,6 +721,9 @@ export const failJob = internalMutation({
     const now = Date.now();
     const job = await ctx.db.get(args.jobId);
     if (!job) return null;
+    if (job.status !== "running" || job.startedAt !== args.startedAt) {
+      return null;
+    }
 
     const attempts = job.attempts + 1;
     const retry =
@@ -725,6 +782,39 @@ function providerError(error: unknown) {
   return runeProfileError(error);
 }
 
+async function captureQueuedRefreshResult({
+  rsn,
+  provider,
+  operation,
+  startedAt,
+  status,
+  errorCode,
+}: {
+  rsn: string;
+  provider: Provider;
+  operation: Operation;
+  startedAt: number;
+  status: "fresh" | "notConnected" | "rateLimited" | "failed";
+  errorCode: string | null;
+}) {
+  try {
+    await capturePostHogEvent({
+      event: "refresh_result",
+      distinctId: await analyticsDistinctIdForRsn(rsn),
+      properties: {
+        source: provider,
+        category: operation,
+        status,
+        duration_ms: durationMs(startedAt),
+        error_code: errorCode,
+        queued: true,
+      },
+    });
+  } catch (error) {
+    console.warn("Failed to capture queued provider analytics.", error);
+  }
+}
+
 export const runJob = internalAction({
   args: { jobId: v.id("providerJobs") },
   returns: v.null(),
@@ -734,12 +824,14 @@ export const runJob = internalAction({
       provider: Provider;
       operation: Operation;
       args: JobArgs;
+      startedAt: number;
     } | null = await ctx.runMutation(internal.providerQueue.markRunning, {
       jobId: args.jobId,
     });
     if (!job) return null;
 
-    const startedAt = Date.now();
+    const startedAt = job.startedAt;
+    let collectionDetailSuccessRsn: string | null = null;
     try {
       switch (job.args.type) {
         case "wiseOldManPlayer":
@@ -802,55 +894,53 @@ export const runJob = internalAction({
           if (!replaced) {
             await ctx.runMutation(internal.providerQueue.failJob, {
               jobId: job._id,
+              startedAt: job.startedAt,
               errorCode: "notConnected",
               retryAfterMs: null,
               retryable: false,
             });
             return null;
           }
-          await capturePostHogEvent({
-            event: "refresh_result",
-            distinctId: await analyticsDistinctIdForRsn(job.args.rsn),
-            properties: {
-              source: "runeProfile",
-              category: "collection_detail",
-              status: "fresh",
-              duration_ms: durationMs(startedAt),
-              error_code: null,
-              queued: true,
-            },
-          });
+          collectionDetailSuccessRsn = job.args.rsn;
           break;
         }
       }
 
       await ctx.runMutation(internal.providerQueue.completeJob, {
         jobId: job._id,
+        startedAt: job.startedAt,
       });
+      if (collectionDetailSuccessRsn !== null) {
+        await captureQueuedRefreshResult({
+          rsn: collectionDetailSuccessRsn,
+          provider: job.provider,
+          operation: job.operation,
+          startedAt,
+          status: "fresh",
+          errorCode: null,
+        });
+      }
     } catch (error) {
       const requestError = providerError(error);
       await ctx.runMutation(internal.providerQueue.failJob, {
         jobId: job._id,
+        startedAt: job.startedAt,
         errorCode: requestError.code,
         retryAfterMs: requestError.retryAfterMs,
         retryable: requestError.retryable,
       });
-      await capturePostHogEvent({
-        event: "refresh_result",
-        distinctId: await analyticsDistinctIdForRsn(job.args.rsn),
-        properties: {
-          source: job.provider,
-          category: job.operation,
-          status:
-            requestError.code === "notConnected"
-              ? "notConnected"
-              : requestError.code === "rateLimited"
-                ? "rateLimited"
-                : "failed",
-          duration_ms: durationMs(startedAt),
-          error_code: requestError.code,
-          queued: true,
-        },
+      await captureQueuedRefreshResult({
+        rsn: job.args.rsn,
+        provider: job.provider,
+        operation: job.operation,
+        startedAt,
+        status:
+          requestError.code === "notConnected"
+            ? "notConnected"
+            : requestError.code === "rateLimited"
+              ? "rateLimited"
+              : "failed",
+        errorCode: requestError.code,
       });
     }
     return null;
