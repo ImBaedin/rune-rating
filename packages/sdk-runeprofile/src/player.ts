@@ -142,11 +142,39 @@ export type RuneProfileSnapshot = {
   combatAchievementTiers: z.infer<typeof combatTierSchema>[];
   combatAchievementPoints: number;
   combatAchievementTierReached: string | null;
+  combatAchievementsValid: boolean;
   collectionSummary: z.infer<typeof summarySchema>["collectionLog"];
 };
 export type RuneProfileCollectionLog = z.infer<
   typeof collectionLogResponseSchema
 >;
+
+function assertCompleteCombatAchievements(
+  tiers: z.infer<typeof combatTierSchema>[],
+  tasks: z.infer<typeof combatTaskSchema>[],
+  totalPoints: number,
+): boolean {
+  const totalTasks = tiers.reduce((total, tier) => total + tier.total, 0);
+  const completedTiers = tiers.reduce(
+    (total, tier) => total + tier.completed,
+    0,
+  );
+  const completedTaskCount = tasks.filter((task) => task.completed).length;
+  if (tiers.length === 0 || totalTasks === 0 || tasks.length === 0) {
+    throw new RuneProfileRequestError(
+      "invalidResponse",
+      "RuneProfile combat achievements response was incomplete.",
+    );
+  }
+
+  return completedTiers === 0 || (completedTaskCount > 0 && totalPoints > 0);
+}
+
+function combatAchievementPointsFromTiers(
+  tiers: z.infer<typeof combatTierSchema>[],
+) {
+  return tiers.reduce((total, tier) => total + tier.completed * tier.id, 0);
+}
 
 function retryAfterMs(response: Response): number | null {
   const retryAfter = response.headers.get("retry-after");
@@ -238,6 +266,11 @@ export async function fetchRuneProfilePlayer(
     }
     throw error;
   }
+  const combatAchievementsValid = assertCompleteCombatAchievements(
+    summary.combatAchievements,
+    combatTasks.data,
+    combatTasks.totalPoints,
+  );
 
   return {
     displayRsn: summary.username,
@@ -249,8 +282,12 @@ export async function fetchRuneProfilePlayer(
     diarySummary: summary.achievementDiaries,
     combatAchievementTasks: combatTasks.data,
     combatAchievementTiers: summary.combatAchievements,
-    combatAchievementPoints: combatTasks.totalPoints,
+    combatAchievementPoints:
+      combatTasks.totalPoints > 0
+        ? combatTasks.totalPoints
+        : combatAchievementPointsFromTiers(summary.combatAchievements),
     combatAchievementTierReached: combatTasks.tierReached,
+    combatAchievementsValid,
     collectionSummary: summary.collectionLog,
   };
 }

@@ -175,6 +175,16 @@ export const combatAchievementsDataValidator = v.object({
   total: v.number(),
   points: v.number(),
   tierReached: v.union(v.string(), v.null()),
+  tiers: v.optional(
+    v.array(
+      v.object({
+        id: v.number(),
+        name: v.string(),
+        completed: v.number(),
+        total: v.number(),
+      }),
+    ),
+  ),
 });
 
 export const collectionDataValidator = v.object({

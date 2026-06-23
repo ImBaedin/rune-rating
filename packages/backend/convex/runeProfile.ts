@@ -11,6 +11,12 @@ import { getRefreshCooldownMs } from "./lib/config";
 import { categorySnapshotKey } from "./lib/keys";
 import { findPlayerByRsn } from "./lib/players";
 import {
+  collectionItemComparisonKey,
+  collectionLeader,
+  collectionRefreshStatusFromQueueJob,
+  collectionSnapshotValue,
+} from "./runeProfileCollectionTransforms";
+import {
   canonicalItemValidator,
   categoryDataValidator,
   comparisonLeaderValidator,
@@ -84,35 +90,6 @@ const collectionItemComparisonValidator = v.object({
   leader: comparisonLeaderValidator,
 });
 
-const percent = (obtained: number, total: number) =>
-  total === 0 ? 0 : (obtained / total) * 100;
-
-const collectionLeader = (delta: number | null) => {
-  if (delta === null) return "indeterminate" as const;
-  if (delta > 0) return "left" as const;
-  if (delta < 0) return "right" as const;
-  return "tie" as const;
-};
-
-const collectionSnapshotValue = (
-  snapshot:
-    | {
-        fetchedAt: number;
-        data: { type: string; obtained?: number; total?: number };
-      }
-    | null
-    | undefined,
-) => {
-  if (snapshot?.data.type !== "collection") return null;
-  const obtained = snapshot.data.obtained ?? 0;
-  const total = snapshot.data.total ?? 0;
-  return {
-    fetchedAt: snapshot.fetchedAt,
-    obtained,
-    total,
-    percent: percent(obtained, total),
-  };
-};
 type CollectionRefreshResult = Array<{
   rsn: string;
   status:
@@ -128,6 +105,31 @@ type CollectionRefreshResult = Array<{
   retryAt: number | null;
   position: number | null;
 }>;
+
+function combatSnapshotLooksInvalid(summary: {
+  type: string;
+  completed?: number;
+  points?: number;
+}) {
+  return (
+    summary.type === "combatAchievements" &&
+    (summary.completed ?? 0) > 0 &&
+    (summary.points ?? 0) === 0
+  );
+}
+
+function combatItemsMismatchSummary(
+  summary: { type: string; completed?: number; points?: number },
+  items: Array<{ completed: boolean | null }>,
+) {
+  if (summary.type !== "combatAchievements") return false;
+  const completedItems = items.filter((item) => item.completed === true).length;
+  const completed = summary.completed ?? 0;
+  return (
+    (items.length > 0 && completed > 0 && completedItems === 0) ||
+    (completed > 0 && (summary.points ?? 0) === 0)
+  );
+}
 
 export const getCollectionRefreshPlan = internalQuery({
   args: { rsns: v.array(v.string()) },
@@ -263,6 +265,7 @@ export const getDashboard = query({
         quests?.data.type !== "quests" ||
         diaries?.data.type !== "diaries" ||
         combatAchievements?.data.type !== "combatAchievements" ||
+        combatSnapshotLooksInvalid(combatAchievements.data) ||
         collection?.data.type !== "collection"
       ) {
         return null;
@@ -326,10 +329,13 @@ export const getCategory = query({
         index.eq("playerId", player._id).eq("category", args.category),
       )
       .collect();
+    const categoryItems = combatItemsMismatchSummary(snapshot.data, items)
+      ? []
+      : items;
     return {
       fetchedAt: snapshot.fetchedAt,
       summary: snapshot.data,
-      items: items.map((item) => ({
+      items: categoryItems.map((item) => ({
         key: item.itemKey,
         label: item.label,
         group: item.group,
@@ -484,10 +490,7 @@ export const getCollectionComparison = query({
       >();
       for (const item of itemRows) {
         const itemId = item.points;
-        const itemKey =
-          itemId === null
-            ? `collection.item.${item.label.toLocaleLowerCase()}`
-            : `collection.item.${itemId}`;
+        const itemKey = collectionItemComparisonKey(item);
         const existing = items.get(itemKey);
         if (existing) {
           if (!existing.tabs.includes(item.group))
@@ -850,20 +853,7 @@ export const refreshCollectionLog = action({
           rsn,
         },
       );
-      const status =
-        job.status === "succeeded"
-          ? ("fresh" as const)
-          : job.status === "failed" && job.lastErrorCode === "notConnected"
-            ? ("notConnected" as const)
-            : job.status === "failed" && job.lastErrorCode === "rateLimited"
-              ? ("rateLimited" as const)
-              : job.status === "failed"
-                ? ("failed" as const)
-                : job.status === "running"
-                  ? ("running" as const)
-                  : job.status === "retrying"
-                    ? ("retrying" as const)
-                    : ("queued" as const);
+      const status = collectionRefreshStatusFromQueueJob(job);
       results.push({
         rsn,
         status,

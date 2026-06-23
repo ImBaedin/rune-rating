@@ -51,6 +51,16 @@ const responses: Record<string, unknown> = {
         monster: "Boss",
         completed: true,
       },
+      {
+        index: 2,
+        tierId: 1,
+        tierName: "Easy",
+        name: "Other task",
+        description: "Do another task",
+        type: "Mechanical",
+        monster: "Boss",
+        completed: false,
+      },
     ],
   },
   "/accounts/Fixture/collection-log": {
@@ -107,6 +117,7 @@ describe("fetchRuneProfilePlayer", () => {
       questSummary: { completed: 1 },
       collectionSummary: { obtained: 10 },
       combatAchievementPoints: 1,
+      combatAchievementsValid: true,
     });
     expect(snapshot.quests).toHaveLength(1);
     expect(snapshot.providerUpdatedAt).toBeFinite();
@@ -137,6 +148,63 @@ describe("fetchRuneProfilePlayer", () => {
     ).rejects.toMatchObject({
       code: "invalidResponse",
     } satisfies Partial<RuneProfileRequestError>);
+  });
+
+  test("rejects incomplete combat achievement payloads", async () => {
+    expect(
+      fetchRuneProfilePlayer("Fixture", {
+        fetch: async (input) => {
+          const path = new URL(input.toString()).pathname.replace("/v1", "");
+          return Response.json(
+            path === "/accounts/Fixture/combat-achievements/tasks"
+              ? { totalPoints: 0, tierReached: null, data: [] }
+              : responses[path],
+          );
+        },
+      }),
+    ).rejects.toMatchObject({
+      code: "invalidResponse",
+    } satisfies Partial<RuneProfileRequestError>);
+  });
+
+  test("flags combat achievement completion mismatches", async () => {
+    const snapshot = await fetchRuneProfilePlayer("Fixture", {
+      fetch: async (input) => {
+        const path = new URL(input.toString()).pathname.replace("/v1", "");
+        return Response.json(
+          path === "/accounts/Fixture/combat-achievements/tasks"
+            ? {
+                totalPoints: 0,
+                tierReached: null,
+                data: [
+                  {
+                    index: 1,
+                    tierId: 1,
+                    tierName: "Easy",
+                    name: "Task",
+                    description: "Do the task",
+                    type: "Mechanical",
+                    monster: "Boss",
+                    completed: false,
+                  },
+                  {
+                    index: 2,
+                    tierId: 1,
+                    tierName: "Easy",
+                    name: "Other task",
+                    description: "Do another task",
+                    type: "Mechanical",
+                    monster: "Boss",
+                    completed: false,
+                  },
+                ],
+              }
+            : responses[path],
+        );
+      },
+    });
+
+    expect(snapshot.combatAchievementsValid).toBe(false);
   });
 });
 

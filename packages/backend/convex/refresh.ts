@@ -48,6 +48,17 @@ const runeProfileCategories = [
   "collection",
 ] as const;
 
+function hasInvalidResponseFailure(
+  states: Array<{ status: string; errorCode: string | null } | null>,
+) {
+  return states.some(
+    (state) =>
+      state?.status === "failed" &&
+      (state.errorCode === "invalidResponse" ||
+        state.errorCode === "granularInvalid"),
+  );
+}
+
 async function finalizeRefreshIfTerminal(
   ctx: MutationCtx,
   playerId: Parameters<typeof snapshotStateKey>[0],
@@ -107,7 +118,11 @@ export const request = mutation({
             .unique(),
         ),
       );
-      if (player.refreshAllowedAt > now && sourceStates.every(Boolean)) {
+      if (
+        player.refreshAllowedAt > now &&
+        sourceStates.every(Boolean) &&
+        !hasInvalidResponseFailure(sourceStates)
+      ) {
         await ctx.scheduler.runAfter(0, internal.analytics.capture, {
           event: "refresh_request_result",
           distinctId: await analyticsDistinctIdForRsn(rsn),
@@ -572,6 +587,28 @@ const combatTaskValidator = v.object({
   completed: v.boolean(),
 });
 
+function combatAchievementSummary({
+  tiers,
+  tasks,
+  points,
+}: {
+  tiers: Array<{ id: number; name: string; completed: number; total: number }>;
+  tasks: Array<{ completed: boolean; tierId: number }>;
+  points: number;
+}) {
+  const completed = tiers.reduce((total, tier) => total + tier.completed, 0);
+  const total = tiers.reduce((sum, tier) => sum + tier.total, 0);
+  if (total === 0 || tasks.length === 0 || points === 0) {
+    return null;
+  }
+  return {
+    completed,
+    total,
+    points,
+    tiers,
+  };
+}
+
 export const completeRuneProfile = internalMutation({
   args: {
     playerId: v.id("players"),
@@ -599,6 +636,7 @@ export const completeRuneProfile = internalMutation({
     combatAchievementTiers: v.array(combatTierValidator),
     combatAchievementPoints: v.number(),
     combatAchievementTierReached: v.union(v.string(), v.null()),
+    combatAchievementsValid: v.boolean(),
     collectionSummary: v.object({
       obtained: v.number(),
       total: v.number(),
@@ -620,14 +658,15 @@ export const completeRuneProfile = internalMutation({
       (total, area) => total + area.total,
       0,
     );
-    const combatCompleted = args.combatAchievementTiers.reduce(
-      (total, tier) => total + tier.completed,
-      0,
-    );
-    const combatTotal = args.combatAchievementTiers.reduce(
-      (total, tier) => total + tier.total,
-      0,
-    );
+    const combatSummary = combatAchievementSummary({
+      tiers: args.combatAchievementTiers,
+      tasks: args.combatAchievementTasks,
+      points: args.combatAchievementPoints,
+    });
+    const hasCombatAchievementSummary = combatSummary !== null;
+    const hasValidCombatAchievementDetail =
+      args.combatAchievementsValid && combatSummary !== null;
+
     const snapshots = [
       {
         category: "quests" as const,
@@ -643,17 +682,22 @@ export const completeRuneProfile = internalMutation({
           total: diaryTotal,
         },
       },
-      {
-        category: "combatAchievements" as const,
-        segment: "all",
-        data: {
-          type: "combatAchievements" as const,
-          completed: combatCompleted,
-          total: combatTotal,
-          points: args.combatAchievementPoints,
-          tierReached: args.combatAchievementTierReached,
-        },
-      },
+      ...(combatSummary === null
+        ? []
+        : [
+            {
+              category: "combatAchievements" as const,
+              segment: "all",
+              data: {
+                type: "combatAchievements" as const,
+                completed: combatSummary.completed,
+                total: combatSummary.total,
+                points: combatSummary.points,
+                tierReached: args.combatAchievementTierReached,
+                tiers: combatSummary.tiers,
+              },
+            },
+          ]),
       {
         category: "collection" as const,
         segment: "summary",
@@ -715,24 +759,25 @@ export const completeRuneProfile = internalMutation({
           points: null,
         })),
       ),
-      ...args.combatAchievementTasks.map((task) => ({
-        category: "combatAchievements" as const,
-        itemKey: `combatAchievement.${task.index}`,
-        label: task.name,
-        group: task.monster || task.tierName,
-        state: task.type,
-        completed: task.completed,
-        current: null,
-        total: null,
-        points: task.tierId,
-      })),
+      ...(hasValidCombatAchievementDetail
+        ? args.combatAchievementTasks.map((task) => ({
+            category: "combatAchievements" as const,
+            itemKey: `combatAchievement.${task.index}`,
+            label: task.name,
+            group: task.monster || task.tierName,
+            state: task.type,
+            completed: task.completed,
+            current: null,
+            total: null,
+            points: task.tierId,
+          }))
+        : []),
     ];
 
-    for (const category of [
-      "quests",
-      "diaries",
-      "combatAchievements",
-    ] as const) {
+    const itemCategories = hasValidCombatAchievementDetail
+      ? (["quests", "diaries", "combatAchievements"] as const)
+      : (["quests", "diaries"] as const);
+    for (const category of itemCategories) {
       const previous = await ctx.db
         .query("canonicalItems")
         .withIndex("by_player_and_category", (index) =>
@@ -763,9 +808,23 @@ export const completeRuneProfile = internalMutation({
         .unique();
       if (state?.requestId === args.requestId) {
         await ctx.db.patch(state._id, {
-          status: "fresh",
-          lastSuccessAt: args.fetchedAt,
-          errorCode: null,
+          status:
+            category === "combatAchievements" &&
+            !hasValidCombatAchievementDetail
+              ? "failed"
+              : "fresh",
+          lastSuccessAt:
+            category === "combatAchievements" &&
+            !hasValidCombatAchievementDetail
+              ? state.lastSuccessAt
+              : args.fetchedAt,
+          errorCode:
+            category === "combatAchievements" && !hasCombatAchievementSummary
+              ? "invalidResponse"
+              : category === "combatAchievements" &&
+                  !hasValidCombatAchievementDetail
+                ? "granularInvalid"
+                : null,
         });
       }
     }

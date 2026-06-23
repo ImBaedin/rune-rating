@@ -34,20 +34,30 @@ export const refreshPlayer = internalAction({
         apiKey: env.RUNEPROFILE_API_KEY,
         userAgent: "RuneRating/0.1",
       });
-      await ctx.runMutation(internal.refresh.completeRuneProfile, {
-        playerId: args.playerId,
-        requestId: args.requestId,
-        fetchedAt: snapshot.fetchedAt,
-        quests: snapshot.quests,
-        questSummary: snapshot.questSummary,
-        diaries: snapshot.diaries,
-        diarySummary: snapshot.diarySummary,
-        combatAchievementTasks: snapshot.combatAchievementTasks,
-        combatAchievementTiers: snapshot.combatAchievementTiers,
-        combatAchievementPoints: snapshot.combatAchievementPoints,
-        combatAchievementTierReached: snapshot.combatAchievementTierReached,
-        collectionSummary: snapshot.collectionSummary,
-      });
+      const completed: boolean = await ctx.runMutation(
+        internal.refresh.completeRuneProfile,
+        {
+          playerId: args.playerId,
+          requestId: args.requestId,
+          fetchedAt: snapshot.fetchedAt,
+          quests: snapshot.quests,
+          questSummary: snapshot.questSummary,
+          diaries: snapshot.diaries,
+          diarySummary: snapshot.diarySummary,
+          combatAchievementTasks: snapshot.combatAchievementTasks,
+          combatAchievementTiers: snapshot.combatAchievementTiers,
+          combatAchievementPoints: snapshot.combatAchievementPoints,
+          combatAchievementTierReached: snapshot.combatAchievementTierReached,
+          combatAchievementsValid: snapshot.combatAchievementsValid,
+          collectionSummary: snapshot.collectionSummary,
+        },
+      );
+      if (!completed) {
+        throw new RuneProfileRequestError(
+          "invalidResponse",
+          "RuneProfile snapshot could not be committed.",
+        );
+      }
       await capturePostHogEvent({
         event: "refresh_result",
         distinctId: await analyticsDistinctIdForRsn(args.rsn),

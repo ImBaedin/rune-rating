@@ -153,8 +153,13 @@ export default function CombatAchievementsPage() {
   );
   const focusedTypeGapRows = model.typeGapRows;
   const completionRows = useMemo(
-    () => buildCompletionRows(model.taskPairs, completionGrouping),
-    [completionGrouping, model.taskPairs],
+    () =>
+      buildCompletionRows(
+        model.taskPairs,
+        completionGrouping,
+        model.summaryCompletionRows,
+      ),
+    [completionGrouping, model.summaryCompletionRows, model.taskPairs],
   );
   const isLoading =
     runeProfile === undefined ||
@@ -491,16 +496,25 @@ function buildCombatModel(
 ) {
   const leftSummary = combatSummary(left);
   const rightSummary = combatSummary(right);
-  const leftAvailable = leftSummary !== null;
-  const rightAvailable = rightSummary !== null;
-  const hasComparableTasks = leftAvailable && rightAvailable;
+  const leftDetailAvailable = (left?.items.length ?? 0) > 0;
+  const rightDetailAvailable = (right?.items.length ?? 0) > 0;
+  const hasComparableTasks = leftDetailAvailable && rightDetailAvailable;
   const taskPairs = normalizeTaskPairs(
     buildTaskPairs(left?.items ?? [], right?.items ?? []),
-    leftAvailable,
-    rightAvailable,
+    leftDetailAvailable,
+    rightDetailAvailable,
   );
-  const tierRows = combatTiers.map((tier) =>
-    summarizeTier(tier, taskPairs, leftAvailable, rightAvailable),
+  const taskTierRows = combatTiers.map((tier) =>
+    summarizeTier(tier, taskPairs, leftDetailAvailable, rightDetailAvailable),
+  );
+  const summaryTierRows = buildSummaryTierRows(
+    leftSummary,
+    rightSummary,
+    taskTierRows,
+  );
+  const tierRows = summaryTierRows ?? taskTierRows;
+  const summaryCompletionRows = summaryTierRows?.map((tier) =>
+    completionRowFromTierSummary(tier),
   );
   const pointDelta =
     leftSummary && rightSummary
@@ -567,6 +581,7 @@ function buildCombatModel(
     taskPairs,
     taskTypes,
     tierRows,
+    summaryCompletionRows,
     typeGapRows,
     typeGapRowsByTier,
     swingTasks,
@@ -625,6 +640,95 @@ function combatSummary(category: CategoryResult | undefined) {
     : null;
 }
 
+function combatTierSummary(summary: CombatSummary | null, tier: TierName) {
+  return summary?.tiers?.find((entry) => entry.name === tier) ?? null;
+}
+
+function buildSummaryTierRows(
+  left: CombatSummary | null,
+  right: CombatSummary | null,
+  fallbackRows: ReturnType<typeof summarizeTier>[],
+) {
+  const hasTierSummaries = Boolean(left?.tiers?.length || right?.tiers?.length);
+  if (!hasTierSummaries) return null;
+
+  return combatTiers.map((tier, index) => {
+    const leftTier = combatTierSummary(left, tier);
+    const rightTier = combatTierSummary(right, tier);
+    const fallback = fallbackRows[index];
+    const tierValue = tierValues[tier];
+    const totalTasks = Math.max(
+      leftTier?.total ?? 0,
+      rightTier?.total ?? 0,
+      fallback?.totalTasks ?? 0,
+    );
+    const totalPoints = totalTasks * tierValue;
+    const leftCompleted = leftTier
+      ? leftTier.completed
+      : (fallback?.leftCompleted ?? null);
+    const rightCompleted = rightTier
+      ? rightTier.completed
+      : (fallback?.rightCompleted ?? null);
+    const leftPoints = leftTier
+      ? leftTier.completed * tierValue
+      : (fallback?.leftPoints ?? null);
+    const rightPoints = rightTier
+      ? rightTier.completed * tierValue
+      : (fallback?.rightPoints ?? null);
+    const hasOnlyTaskDetail = !leftTier && !rightTier;
+
+    return {
+      tier,
+      tierValue,
+      totalTasks,
+      totalPoints,
+      leftOnlyTasks: hasOnlyTaskDetail
+        ? (fallback?.leftOnlyTasks ?? null)
+        : null,
+      rightOnlyTasks: hasOnlyTaskDetail
+        ? (fallback?.rightOnlyTasks ?? null)
+        : null,
+      leftCompleted,
+      rightCompleted,
+      leftRemaining:
+        leftCompleted === null ? null : Math.max(0, totalTasks - leftCompleted),
+      rightRemaining:
+        rightCompleted === null
+          ? null
+          : Math.max(0, totalTasks - rightCompleted),
+      leftPoints,
+      rightPoints,
+      pointDelta:
+        leftPoints === null || rightPoints === null
+          ? null
+          : leftPoints - rightPoints,
+      leftPercent: percent(leftCompleted, totalTasks),
+      rightPercent: percent(rightCompleted, totalTasks),
+    };
+  });
+}
+
+function completionRowFromTierSummary(
+  tier: NonNullable<ReturnType<typeof buildSummaryTierRows>>[number],
+): CompletionRow {
+  return {
+    key: tier.tier,
+    label: tier.tier,
+    color: tierColors[tier.tier],
+    total: tier.totalTasks,
+    leftCompleted: tier.leftCompleted,
+    rightCompleted: tier.rightCompleted,
+    leftRemaining: tier.leftRemaining,
+    rightRemaining: tier.rightRemaining,
+    leftPercent: tier.leftPercent,
+    rightPercent: tier.rightPercent,
+    delta:
+      tier.leftCompleted === null || tier.rightCompleted === null
+        ? null
+        : tier.leftCompleted - tier.rightCompleted,
+  };
+}
+
 function taskPointDelta(task: TaskPair) {
   if (task.leftCompleted === null || task.rightCompleted === null) return null;
   return (
@@ -674,7 +778,12 @@ function buildTypeGapRows(
 function buildCompletionRows(
   tasks: TaskPair[],
   grouping: CompletionGrouping,
+  summaryRows: CompletionRow[] | undefined,
 ): CompletionRow[] {
+  if (summaryRows && (grouping === "tier" || tasks.length === 0)) {
+    return summaryRows.filter((row) => row.total > 0);
+  }
+
   if (grouping === "tier") {
     return combatTiers
       .map((tier) =>

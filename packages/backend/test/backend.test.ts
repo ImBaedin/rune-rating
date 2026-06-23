@@ -130,6 +130,7 @@ const completeRuneProfile = makeFunctionReference<
     }>;
     combatAchievementPoints: number;
     combatAchievementTierReached: string | null;
+    combatAchievementsValid: boolean;
     collectionSummary: { obtained: number; total: number };
   },
   boolean
@@ -157,6 +158,15 @@ const getProfile = makeFunctionReference<
   { rsn: string },
   { lastSnapshotAt: number | null; snapshotStaleAt: number | null } | null
 >("players:getProfile");
+
+const getRuneProfileCategory = makeFunctionReference<
+  "query",
+  { rsn: string; category: "combatAchievements" },
+  {
+    summary: { type: string; completed?: number; points?: number };
+    items: Array<{ completed: boolean | null }>;
+  } | null
+>("runeProfile:getCategory");
 
 const getRuneRating = makeFunctionReference<
   "query",
@@ -514,13 +524,10 @@ async function completeRatingFixtures(
         completed: true,
       },
     ],
-    combatAchievementTiers: [
-      { id: 1, name: "Easy", completed: 10, total: 10 },
-      { id: 2, name: "Medium", completed: 30, total: 30 },
-      { id: 3, name: "Hard", completed: 40, total: 50 },
-    ],
-    combatAchievementPoints: 620,
+    combatAchievementTiers: [{ id: 1, name: "Elite", completed: 1, total: 1 }],
+    combatAchievementPoints: 5,
     combatAchievementTierReached: "Elite",
+    combatAchievementsValid: true,
     collectionSummary: { obtained: 900, total: 1_600 },
   });
 }
@@ -654,6 +661,7 @@ describe("refresh orchestration", () => {
         ],
         combatAchievementPoints: 1,
         combatAchievementTierReached: "Easy",
+        combatAchievementsValid: true,
         collectionSummary: { obtained: 1, total: 10 },
       }),
     ).toBe(true);
@@ -684,6 +692,156 @@ describe("refresh orchestration", () => {
       lastSnapshotAt: fetchedAt,
       snapshotStaleAt: fetchedAt + 60 * 60 * 1_000,
     });
+  });
+
+  test("rejects inconsistent RuneProfile combat achievements", async () => {
+    const t = convexTest({ schema, modules });
+    await t.mutation(requestRefresh, { rsns: ["Bad Combat"] });
+    const { player, lease } = await currentLease(t);
+    const fetchedAt = Date.now();
+
+    await t.mutation(completeHiscores, {
+      playerId: player._id,
+      requestId: lease.requestId,
+      displayRsn: "Bad Combat",
+      fetchedAt,
+      skills: [skill("Overall", 100, 1_000_000, 50)],
+      activities: [],
+    });
+    await t.mutation(completeWiseOldMan, {
+      playerId: player._id,
+      requestId: lease.requestId,
+      fetchedAt,
+      accountType: "regular",
+      accountBuild: "main",
+      combatLevel: 100,
+      ehp: 50,
+      ehb: 10,
+      timeToMax: 500,
+      timeTo200m: 10_000,
+    });
+    await t.run(async (ctx) => {
+      await ctx.db.insert("canonicalItems", {
+        key: `${player._id}:combatAchievements:combatAchievement.stale`,
+        playerId: player._id,
+        source: "runeProfile",
+        category: "combatAchievements",
+        revision: "previous-valid-refresh",
+        itemKey: "combatAchievement.stale",
+        label: "Stale Fixture Task",
+        group: "Easy",
+        state: "Mechanical",
+        completed: false,
+        current: null,
+        total: null,
+        points: 1,
+      });
+    });
+
+    expect(
+      await t.mutation(completeRuneProfile, {
+        playerId: player._id,
+        requestId: lease.requestId,
+        fetchedAt,
+        quests: [
+          {
+            id: 1,
+            name: "Fixture Quest",
+            points: 1,
+            type: "members",
+            state: "finished",
+          },
+        ],
+        questSummary: {
+          completed: 1,
+          started: 0,
+          notStarted: 0,
+          total: 1,
+          totalPoints: 1,
+          earnedPoints: 1,
+        },
+        diaries: [
+          {
+            areaId: 1,
+            area: "Ardougne",
+            tiers: [{ tier: "Easy", completed: 1, total: 1 }],
+          },
+        ],
+        diarySummary: [{ areaId: 1, area: "Ardougne", completed: 1, total: 1 }],
+        combatAchievementTasks: [
+          {
+            index: 1,
+            tierId: 1,
+            tierName: "Easy",
+            name: "Fixture Task",
+            description: "Complete the fixture.",
+            type: "Mechanical",
+            monster: "Fixture Boss",
+            completed: false,
+          },
+        ],
+        combatAchievementTiers: [
+          { id: 1, name: "Easy", completed: 1, total: 1 },
+        ],
+        combatAchievementPoints: 1,
+        combatAchievementTierReached: null,
+        combatAchievementsValid: false,
+        collectionSummary: { obtained: 1, total: 10 },
+      }),
+    ).toBe(true);
+
+    expect(
+      await t.run(async (ctx) => {
+        const [snapshot] = await ctx.db
+          .query("categorySnapshots")
+          .withIndex("by_player_and_category", (index) =>
+            index
+              .eq("playerId", player._id)
+              .eq("category", "combatAchievements"),
+          )
+          .take(1);
+        return snapshot?.data;
+      }),
+    ).toMatchObject({
+      completed: 1,
+      points: 1,
+      total: 1,
+      type: "combatAchievements",
+    });
+    expect(
+      await t.run(
+        async (ctx) =>
+          await ctx.db
+            .query("canonicalItems")
+            .withIndex("by_player_and_category", (index) =>
+              index
+                .eq("playerId", player._id)
+                .eq("category", "combatAchievements"),
+            )
+            .take(1),
+      ),
+    ).toHaveLength(1);
+    expect(
+      await t.query(getRuneProfileCategory, {
+        rsn: "Bad Combat",
+        category: "combatAchievements",
+      }),
+    ).toMatchObject({
+      summary: { completed: 1, points: 1, type: "combatAchievements" },
+      items: [],
+    });
+    expect(await t.query(getProfile, { rsn: "Bad Combat" })).toMatchObject({
+      questsState: { status: "fresh" },
+      diariesState: { status: "fresh" },
+      combatAchievementsState: {
+        status: "failed",
+        errorCode: "granularInvalid",
+      },
+      collectionState: { status: "fresh" },
+    });
+    expect(
+      await t.mutation(requestRefresh, { rsns: ["Bad Combat"] }),
+    ).toMatchObject([{ status: "scheduled" }]);
   });
 });
 

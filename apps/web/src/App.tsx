@@ -127,6 +127,25 @@ const snapshotRefreshKey = (
   return `${rsn.trim().toLocaleLowerCase()}:${profile.lastSnapshotAt}`;
 };
 
+const invalidCombatRefreshKey = (
+  rsn: string,
+  profile: PlayerProfile | undefined,
+) => {
+  const state = profile?.combatAchievementsState;
+  if (
+    !profile ||
+    !state ||
+    state.status !== "failed" ||
+    (state.errorCode !== "invalidResponse" &&
+      state.errorCode !== "granularInvalid") ||
+    hasActiveRefresh(profile)
+  ) {
+    return null;
+  }
+
+  return `${rsn.trim().toLocaleLowerCase()}:combat-invalid:${state.lastSuccessAt ?? "none"}`;
+};
+
 export function ComparisonShell({
   routeRsns,
   children,
@@ -356,7 +375,9 @@ export function ComparisonShell({
     const staleEntries = profileEntries
       .map((entry) => ({
         ...entry,
-        key: snapshotRefreshKey(entry.rsn, entry.profile, staleCheckNow),
+        key:
+          invalidCombatRefreshKey(entry.rsn, entry.profile) ??
+          snapshotRefreshKey(entry.rsn, entry.profile, staleCheckNow),
       }))
       .filter(
         (entry): entry is (typeof profileEntries)[number] & { key: string } =>
