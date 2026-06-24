@@ -1,17 +1,19 @@
 import { Link } from "@tanstack/react-router";
-import { X } from "lucide-react";
+import { ArrowUpRight, Sparkles, X } from "lucide-react";
 import { type AppView, navGroups, navViewByLabel } from "../navigation";
 
 export function Sidebar({
   isOpen,
   onClose,
   skillCount,
+  primaryRsn,
   getPath,
   onNavigate,
 }: {
   isOpen: boolean;
   onClose: () => void;
   skillCount: number | null;
+  primaryRsn: string;
   getPath: (view: AppView) => string;
   onNavigate: () => void;
 }) {
@@ -63,6 +65,22 @@ export function Sidebar({
           </div>
         ))}
       </nav>
+
+      <Link
+        to="/rating"
+        search={{ rsn: primaryRsn }}
+        className="rating-callout"
+        onClick={onNavigate}
+      >
+        <span className="rating-callout-icon">
+          <Sparkles size={16} strokeWidth={1.9} />
+        </span>
+        <span className="rating-callout-copy">
+          <small>Main RuneRating</small>
+          <strong>{primaryRsn}</strong>
+        </span>
+        <ArrowUpRight size={16} strokeWidth={1.9} />
+      </Link>
     </aside>
   );
 }

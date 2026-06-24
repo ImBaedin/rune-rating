@@ -59,6 +59,7 @@ button {
   border-right: 1px solid #0d151c;
 }
 .sidebar nav {
+  flex: 1;
   min-height: 0;
   overflow-y: auto;
   scrollbar-width: thin;
@@ -176,6 +177,95 @@ button {
   margin-left: auto;
   color: #718493;
   font-size: 9px;
+}
+.rating-callout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 16px;
+  align-items: center;
+  gap: 8px;
+  min-height: 68px;
+  margin-top: 12px;
+  padding: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(143, 182, 215, 0.2);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(91, 156, 255, 0.2), transparent 48%),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.03)
+    );
+  color: #edf5fb;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 24px rgba(6, 12, 18, 0.16);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+.rating-callout::before {
+  content: "";
+  position: absolute;
+  inset: auto 12px 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(111, 170, 255, 0.75),
+    transparent
+  );
+}
+.rating-callout:hover {
+  border-color: rgba(143, 182, 215, 0.38);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 16px 30px rgba(6, 12, 18, 0.22);
+  transform: translateY(-1px);
+}
+.rating-callout:focus-visible {
+  outline: 2px solid #8fb6d7;
+  outline-offset: 2px;
+}
+.rating-callout-icon {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #9fc6ff;
+}
+.rating-callout-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+.rating-callout-copy small {
+  color: #8da0af;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+.rating-callout-copy strong {
+  overflow: hidden;
+  color: #fff;
+  font:
+    800 13px "Manrope",
+    sans-serif;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rating-callout > svg {
+  color: #a9bac7;
 }
 .workspace {
   height: 100%;

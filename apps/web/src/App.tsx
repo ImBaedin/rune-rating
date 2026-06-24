@@ -514,6 +514,7 @@ export function ComparisonShell({
           comparison?.skills.filter((skill) => skill.key !== "skill.overall")
             .length ?? null
         }
+        primaryRsn={displayRsns[0]}
         getPath={(view) => comparisonPath(view, rsns)}
         onNavigate={() => setIsNavigationOpen(false)}
       />
