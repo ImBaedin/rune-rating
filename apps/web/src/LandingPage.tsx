@@ -7,7 +7,12 @@ import { ArrowRight, Search, Swords } from "lucide-react";
 import { type FormEvent, memo, useEffect, useRef, useState } from "react";
 import { capturePageView } from "./analytics";
 import { FaultyTerminal } from "./components/FaultyTerminal";
-import { comparisonPath, defaultRsns } from "./features/comparison/navigation";
+import {
+  fallbackExampleRsn,
+  randomCompareRsns,
+  randomExampleRsn,
+} from "./exampleRsns";
+import { comparisonPath } from "./features/comparison/navigation";
 
 type RuneRatingResult = FunctionReturnType<typeof api.runeRating.get>;
 type RuneRatingCard = Extract<RuneRatingResult, { status: "ready" }>["card"];
@@ -18,23 +23,8 @@ const featuredStats = [
   ["Adamant", "650"],
 ] as const;
 
-const defaultExampleRsn = "IronBaedin";
-const exampleRsns = [
-  defaultExampleRsn,
-  "GIM Wamuu",
-  "Starmie Iron",
-  "A ID EN",
-] as const;
-const compareHref = comparisonPath("overview", defaultRsns);
 const landingTerminalGrid: [number, number] = [2.4, 1.05];
 const activeStatuses = new Set(["scheduled", "refreshing"]);
-
-function randomExampleRsn() {
-  return (
-    exampleRsns[Math.floor(Math.random() * exampleRsns.length)] ??
-    defaultExampleRsn
-  );
-}
 
 function hasActiveRefresh(result: RuneRatingResult | undefined) {
   if (!result || !("sources" in result)) return false;
@@ -45,6 +35,10 @@ function hasActiveRefresh(result: RuneRatingResult | undefined) {
 }
 
 export function LandingPage() {
+  const [compareHref] = useState(() =>
+    comparisonPath("overview", randomCompareRsns()),
+  );
+
   useEffect(() => {
     capturePageView({ page: "landing" });
   }, []);
@@ -155,7 +149,7 @@ function LandingSearch() {
 }
 
 function LandingPreview() {
-  const [exampleRsn, setExampleRsn] = useState(defaultExampleRsn);
+  const [exampleRsn, setExampleRsn] = useState<string>(fallbackExampleRsn);
   const requestedRsns = useRef<Set<string> | null>(null);
   const requestRefresh = useMutation(api.refresh.request);
   const rating = useQuery(api.runeRating.get, { rsn: exampleRsn });

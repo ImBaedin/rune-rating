@@ -32,7 +32,8 @@ import {
   scoreBucket,
 } from "./analytics";
 import { BaseDialog } from "./components/BaseDialog";
-import { comparisonPath, defaultRsns } from "./features/comparison/navigation";
+import { randomCompareRsns } from "./exampleRsns";
+import { comparisonPath } from "./features/comparison/navigation";
 import {
   ratingSystemImage,
   tierColorsFor,
@@ -268,7 +269,9 @@ export function RatingPage() {
   const navigate = useNavigate();
   const search = useSearch({ from: "/rating" });
   const initialRsn = optionalRsn(search.rsn);
-  const defaultCompareHref = comparisonPath("overview", defaultRsns);
+  const [defaultCompareHref] = useState(() =>
+    comparisonPath("overview", randomCompareRsns()),
+  );
   const [draftRsn, setDraftRsn] = useState(initialRsn ?? "");
   const [submittedRsn, setSubmittedRsn] = useState(initialRsn ?? "");
   const [requestError, setRequestError] = useState<string | null>(null);

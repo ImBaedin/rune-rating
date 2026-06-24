@@ -28,8 +28,6 @@ export type AppView =
   | "minigames"
   | "collections";
 
-export const defaultRsns: [string, string] = ["Lynx Titan", "Hey Jase"];
-
 export const navGroups: { label?: string; items: [string, LucideIcon][] }[] = [
   {
     items: [
