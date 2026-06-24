@@ -1,5 +1,5 @@
 [build]
-  command = "bun run build:web"
+  command = "bun run build:netlify"
   publish = "apps/web/dist/client"
 
 [build.environment]

@@ -13,7 +13,8 @@
 		"lint": "turbo run lint && biome check .",
 		"typecheck": "turbo run typecheck",
 		"test": "turbo run test",
-		"build:web": "bun run --filter @rune-rating/web build"
+		"build:web": "bun run --filter @rune-rating/web build",
+		"build:netlify": "bun --cwd packages/backend convex deploy --cmd \"bun --cwd ../.. run --filter @rune-rating/web build\" --cmd-url-env-var-name VITE_CONVEX_URL"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.0",
