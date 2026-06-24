@@ -1,8 +1,10 @@
 import { normalizeRsn } from "@rune-rating/domain";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { ComparisonShell } from "../../../App";
+import { compareHead } from "../../../features/og/meta";
 
 export const Route = createFileRoute("/compare/$leftRsn/$rightRsn")({
+  head: ({ params }) => compareHead(params.leftRsn, params.rightRsn),
   component: CompareShellRoute,
 });
 

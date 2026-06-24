@@ -11,8 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RatingRouteImport } from './routes/rating'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OgRatingDotpngRouteImport } from './routes/og/rating[.]png'
+import { Route as OgRatingRsnRouteImport } from './routes/og/rating/$rsn'
 import { Route as CompareLeftRsnRightRsnRouteImport } from './routes/compare/$leftRsn/$rightRsn'
 import { Route as CompareLeftRsnRightRsnIndexRouteImport } from './routes/compare/$leftRsn/$rightRsn/index'
+import { Route as OgCompareLeftRsnRightRsnRouteImport } from './routes/og/compare/$leftRsn/$rightRsn'
 import { Route as CompareLeftRsnRightRsnXpTimelineRouteImport } from './routes/compare/$leftRsn/$rightRsn/xp-timeline'
 import { Route as CompareLeftRsnRightRsnSkillsRouteImport } from './routes/compare/$leftRsn/$rightRsn/skills'
 import { Route as CompareLeftRsnRightRsnQuestsRouteImport } from './routes/compare/$leftRsn/$rightRsn/quests'
@@ -35,6 +38,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OgRatingDotpngRoute = OgRatingDotpngRouteImport.update({
+  id: '/og/rating.png',
+  path: '/og/rating.png',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OgRatingRsnRoute = OgRatingRsnRouteImport.update({
+  id: '/og/rating/$rsn',
+  path: '/og/rating/$rsn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompareLeftRsnRightRsnRoute = CompareLeftRsnRightRsnRouteImport.update({
   id: '/compare/$leftRsn/$rightRsn',
   path: '/compare/$leftRsn/$rightRsn',
@@ -45,6 +58,12 @@ const CompareLeftRsnRightRsnIndexRoute =
     id: '/',
     path: '/',
     getParentRoute: () => CompareLeftRsnRightRsnRoute,
+  } as any)
+const OgCompareLeftRsnRightRsnRoute =
+  OgCompareLeftRsnRightRsnRouteImport.update({
+    id: '/og/compare/$leftRsn/$rightRsn',
+    path: '/og/compare/$leftRsn/$rightRsn',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const CompareLeftRsnRightRsnXpTimelineRoute =
   CompareLeftRsnRightRsnXpTimelineRouteImport.update({
@@ -116,7 +135,9 @@ const CompareLeftRsnRightRsnAchievementDiariesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/rating': typeof RatingRoute
+  '/og/rating.png': typeof OgRatingDotpngRoute
   '/compare/$leftRsn/$rightRsn': typeof CompareLeftRsnRightRsnRouteWithChildren
+  '/og/rating/$rsn': typeof OgRatingRsnRoute
   '/compare/$leftRsn/$rightRsn/achievement-diaries': typeof CompareLeftRsnRightRsnAchievementDiariesRoute
   '/compare/$leftRsn/$rightRsn/activity': typeof CompareLeftRsnRightRsnActivityRoute
   '/compare/$leftRsn/$rightRsn/bossing': typeof CompareLeftRsnRightRsnBossingRoute
@@ -128,11 +149,14 @@ export interface FileRoutesByFullPath {
   '/compare/$leftRsn/$rightRsn/quests': typeof CompareLeftRsnRightRsnQuestsRoute
   '/compare/$leftRsn/$rightRsn/skills': typeof CompareLeftRsnRightRsnSkillsRoute
   '/compare/$leftRsn/$rightRsn/xp-timeline': typeof CompareLeftRsnRightRsnXpTimelineRoute
+  '/og/compare/$leftRsn/$rightRsn': typeof OgCompareLeftRsnRightRsnRoute
   '/compare/$leftRsn/$rightRsn/': typeof CompareLeftRsnRightRsnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/rating': typeof RatingRoute
+  '/og/rating.png': typeof OgRatingDotpngRoute
+  '/og/rating/$rsn': typeof OgRatingRsnRoute
   '/compare/$leftRsn/$rightRsn/achievement-diaries': typeof CompareLeftRsnRightRsnAchievementDiariesRoute
   '/compare/$leftRsn/$rightRsn/activity': typeof CompareLeftRsnRightRsnActivityRoute
   '/compare/$leftRsn/$rightRsn/bossing': typeof CompareLeftRsnRightRsnBossingRoute
@@ -144,13 +168,16 @@ export interface FileRoutesByTo {
   '/compare/$leftRsn/$rightRsn/quests': typeof CompareLeftRsnRightRsnQuestsRoute
   '/compare/$leftRsn/$rightRsn/skills': typeof CompareLeftRsnRightRsnSkillsRoute
   '/compare/$leftRsn/$rightRsn/xp-timeline': typeof CompareLeftRsnRightRsnXpTimelineRoute
+  '/og/compare/$leftRsn/$rightRsn': typeof OgCompareLeftRsnRightRsnRoute
   '/compare/$leftRsn/$rightRsn': typeof CompareLeftRsnRightRsnIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/rating': typeof RatingRoute
+  '/og/rating.png': typeof OgRatingDotpngRoute
   '/compare/$leftRsn/$rightRsn': typeof CompareLeftRsnRightRsnRouteWithChildren
+  '/og/rating/$rsn': typeof OgRatingRsnRoute
   '/compare/$leftRsn/$rightRsn/achievement-diaries': typeof CompareLeftRsnRightRsnAchievementDiariesRoute
   '/compare/$leftRsn/$rightRsn/activity': typeof CompareLeftRsnRightRsnActivityRoute
   '/compare/$leftRsn/$rightRsn/bossing': typeof CompareLeftRsnRightRsnBossingRoute
@@ -162,6 +189,7 @@ export interface FileRoutesById {
   '/compare/$leftRsn/$rightRsn/quests': typeof CompareLeftRsnRightRsnQuestsRoute
   '/compare/$leftRsn/$rightRsn/skills': typeof CompareLeftRsnRightRsnSkillsRoute
   '/compare/$leftRsn/$rightRsn/xp-timeline': typeof CompareLeftRsnRightRsnXpTimelineRoute
+  '/og/compare/$leftRsn/$rightRsn': typeof OgCompareLeftRsnRightRsnRoute
   '/compare/$leftRsn/$rightRsn/': typeof CompareLeftRsnRightRsnIndexRoute
 }
 export interface FileRouteTypes {
@@ -169,7 +197,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/rating'
+    | '/og/rating.png'
     | '/compare/$leftRsn/$rightRsn'
+    | '/og/rating/$rsn'
     | '/compare/$leftRsn/$rightRsn/achievement-diaries'
     | '/compare/$leftRsn/$rightRsn/activity'
     | '/compare/$leftRsn/$rightRsn/bossing'
@@ -181,11 +211,14 @@ export interface FileRouteTypes {
     | '/compare/$leftRsn/$rightRsn/quests'
     | '/compare/$leftRsn/$rightRsn/skills'
     | '/compare/$leftRsn/$rightRsn/xp-timeline'
+    | '/og/compare/$leftRsn/$rightRsn'
     | '/compare/$leftRsn/$rightRsn/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/rating'
+    | '/og/rating.png'
+    | '/og/rating/$rsn'
     | '/compare/$leftRsn/$rightRsn/achievement-diaries'
     | '/compare/$leftRsn/$rightRsn/activity'
     | '/compare/$leftRsn/$rightRsn/bossing'
@@ -197,12 +230,15 @@ export interface FileRouteTypes {
     | '/compare/$leftRsn/$rightRsn/quests'
     | '/compare/$leftRsn/$rightRsn/skills'
     | '/compare/$leftRsn/$rightRsn/xp-timeline'
+    | '/og/compare/$leftRsn/$rightRsn'
     | '/compare/$leftRsn/$rightRsn'
   id:
     | '__root__'
     | '/'
     | '/rating'
+    | '/og/rating.png'
     | '/compare/$leftRsn/$rightRsn'
+    | '/og/rating/$rsn'
     | '/compare/$leftRsn/$rightRsn/achievement-diaries'
     | '/compare/$leftRsn/$rightRsn/activity'
     | '/compare/$leftRsn/$rightRsn/bossing'
@@ -214,13 +250,17 @@ export interface FileRouteTypes {
     | '/compare/$leftRsn/$rightRsn/quests'
     | '/compare/$leftRsn/$rightRsn/skills'
     | '/compare/$leftRsn/$rightRsn/xp-timeline'
+    | '/og/compare/$leftRsn/$rightRsn'
     | '/compare/$leftRsn/$rightRsn/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RatingRoute: typeof RatingRoute
+  OgRatingDotpngRoute: typeof OgRatingDotpngRoute
   CompareLeftRsnRightRsnRoute: typeof CompareLeftRsnRightRsnRouteWithChildren
+  OgRatingRsnRoute: typeof OgRatingRsnRoute
+  OgCompareLeftRsnRightRsnRoute: typeof OgCompareLeftRsnRightRsnRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -239,6 +279,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/og/rating.png': {
+      id: '/og/rating.png'
+      path: '/og/rating.png'
+      fullPath: '/og/rating.png'
+      preLoaderRoute: typeof OgRatingDotpngRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/og/rating/$rsn': {
+      id: '/og/rating/$rsn'
+      path: '/og/rating/$rsn'
+      fullPath: '/og/rating/$rsn'
+      preLoaderRoute: typeof OgRatingRsnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compare/$leftRsn/$rightRsn': {
       id: '/compare/$leftRsn/$rightRsn'
       path: '/compare/$leftRsn/$rightRsn'
@@ -252,6 +306,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/compare/$leftRsn/$rightRsn/'
       preLoaderRoute: typeof CompareLeftRsnRightRsnIndexRouteImport
       parentRoute: typeof CompareLeftRsnRightRsnRoute
+    }
+    '/og/compare/$leftRsn/$rightRsn': {
+      id: '/og/compare/$leftRsn/$rightRsn'
+      path: '/og/compare/$leftRsn/$rightRsn'
+      fullPath: '/og/compare/$leftRsn/$rightRsn'
+      preLoaderRoute: typeof OgCompareLeftRsnRightRsnRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/compare/$leftRsn/$rightRsn/xp-timeline': {
       id: '/compare/$leftRsn/$rightRsn/xp-timeline'
@@ -377,7 +438,10 @@ const CompareLeftRsnRightRsnRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RatingRoute: RatingRoute,
+  OgRatingDotpngRoute: OgRatingDotpngRoute,
   CompareLeftRsnRightRsnRoute: CompareLeftRsnRightRsnRouteWithChildren,
+  OgRatingRsnRoute: OgRatingRsnRoute,
+  OgCompareLeftRsnRightRsnRoute: OgCompareLeftRsnRightRsnRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -22,7 +22,7 @@ const defaultExampleRsn = "IronBaedin";
 const exampleRsns = [
   defaultExampleRsn,
   "GIM Wamuu",
-  "A I D E N",
+  "Starmie Iron",
   "A ID EN",
 ] as const;
 const compareHref = comparisonPath("overview", defaultRsns);
