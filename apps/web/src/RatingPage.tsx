@@ -29,6 +29,7 @@ import {
   captureAnalytics,
   capturePageView,
   hashRsn,
+  lookupRsnHashField,
   scoreBucket,
 } from "./analytics";
 import { BaseDialog } from "./components/BaseDialog";
@@ -318,6 +319,7 @@ export function RatingPage() {
       capturePageView({
         page: "rating",
         rsn_hash: rsnHash,
+        ...lookupRsnHashField(rsnHash),
         status: "initial",
       });
     });
@@ -346,6 +348,7 @@ export function RatingPage() {
     void hashRsn(submittedRsn).then((rsnHash) => {
       captureAnalytics("rune_rating_ready", {
         rsn_hash: rsnHash,
+        ...lookupRsnHashField(rsnHash),
         score_bucket: scoreBucket(rating.card.score),
         tier: rating.card.tier,
         formula_version: rating.card.formulaVersion,
@@ -375,6 +378,7 @@ export function RatingPage() {
     void hashRsn(next).then((rsnHash) => {
       captureAnalytics("rune_rating_requested", {
         rsn_hash: rsnHash,
+        ...lookupRsnHashField(rsnHash),
         entry_source: initialRsn ? "url" : "form",
         prior_status: rating?.status ?? "idle",
         source_statuses: ratingSourceStatusSummary(ratingSources),
@@ -403,6 +407,7 @@ export function RatingPage() {
           status: rating?.status ?? "idle",
           score_tier_if_available: card?.tier ?? null,
           rsn_hash: rsnHash,
+          ...lookupRsnHashField(rsnHash),
         });
       });
     }
@@ -421,6 +426,7 @@ export function RatingPage() {
           status: rating?.status ?? "idle",
           score_tier_if_available: card?.tier ?? null,
           rsn_hash: rsnHash,
+          ...lookupRsnHashField(rsnHash),
         });
       });
     }
@@ -576,6 +582,7 @@ export function RatingPage() {
                     status: rating?.status ?? "idle",
                     score_tier_if_available: card.tier,
                     rsn_hash: rsnHash,
+                    ...lookupRsnHashField(rsnHash),
                   });
                 });
                 void downloadCardPng(card);

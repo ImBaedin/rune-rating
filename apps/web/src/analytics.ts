@@ -87,6 +87,17 @@ export async function hashRsnPair(rsns: readonly [string, string]) {
   return [await hashRsn(rsns[0]), await hashRsn(rsns[1])] as const;
 }
 
+export function lookupRsnHashField(rsnHash: string) {
+  return { lookup_rsn_hashes: rsnHash };
+}
+
+export function lookupRsnPairHashField(
+  leftRsnHash: string,
+  rightRsnHash: string,
+) {
+  return { lookup_rsn_hashes: `${leftRsnHash}|${rightRsnHash}` };
+}
+
 export function countBucket(value: number) {
   if (value <= 0) return "0";
   if (value <= 5) return "1-5";

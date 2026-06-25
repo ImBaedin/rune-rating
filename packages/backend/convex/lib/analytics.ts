@@ -68,6 +68,66 @@ export function durationMs(startedAt: number) {
   return Math.max(0, Date.now() - startedAt);
 }
 
+export async function withProviderRequestAnalytics<T>(
+  {
+    rsn,
+    source,
+    endpoint,
+    properties,
+  }: {
+    rsn: string;
+    source: "hiscores" | "wiseOldMan" | "runeProfile";
+    endpoint: string;
+    properties?: AnalyticsProperties;
+  },
+  request: () => Promise<T>,
+) {
+  const startedAt = Date.now();
+  try {
+    const result = await request();
+    await capturePostHogEvent({
+      event: "provider_request_result",
+      distinctId: await analyticsDistinctIdForRsn(rsn),
+      properties: {
+        source,
+        endpoint,
+        status: "success",
+        duration_ms: durationMs(startedAt),
+        error_code: null,
+        ...properties,
+      },
+    });
+    return result;
+  } catch (error) {
+    const errorCode = providerRequestErrorCode(error);
+    await capturePostHogEvent({
+      event: "provider_request_result",
+      distinctId: await analyticsDistinctIdForRsn(rsn),
+      properties: {
+        source,
+        endpoint,
+        status: errorCode === "rateLimited" ? "rateLimited" : "failed",
+        duration_ms: durationMs(startedAt),
+        error_code: errorCode,
+        ...properties,
+      },
+    });
+    throw error;
+  }
+}
+
+function providerRequestErrorCode(error: unknown) {
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    typeof error.code === "string"
+  ) {
+    return error.code;
+  }
+  return "failed";
+}
+
 async function hashString(value: string) {
   const bytes = new TextEncoder().encode(value);
   const digest = await crypto.subtle.digest("SHA-256", bytes);

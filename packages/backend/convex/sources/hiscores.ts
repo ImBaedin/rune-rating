@@ -6,6 +6,7 @@ import {
   analyticsDistinctIdForRsn,
   capturePostHogEvent,
   durationMs,
+  withProviderRequestAnalytics,
 } from "../lib/analytics";
 
 export const refreshPlayer = internalAction({
@@ -24,9 +25,17 @@ export const refreshPlayer = internalAction({
     if (!ownsLease) return null;
 
     try {
-      const snapshot = await fetchHiscores(args.rsn, {
-        userAgent: "RuneRating",
-      });
+      const snapshot = await withProviderRequestAnalytics(
+        {
+          rsn: args.rsn,
+          source: "hiscores",
+          endpoint: "player_hiscores",
+        },
+        () =>
+          fetchHiscores(args.rsn, {
+            userAgent: "RuneRating",
+          }),
+      );
       await ctx.runMutation(internal.refresh.completeHiscores, {
         playerId: args.playerId,
         requestId: args.requestId,

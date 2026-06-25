@@ -19,7 +19,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { captureAnalytics, countBucket, hashRsnPair } from "../analytics";
+import {
+  captureAnalytics,
+  countBucket,
+  hashRsnPair,
+  lookupRsnPairHashField,
+} from "../analytics";
 import {
   CheckboxField,
   ComparisonKpiCard,
@@ -252,6 +257,7 @@ function QuestsPage() {
           expanded_results: false,
           left_rsn_hash: leftRsnHash,
           right_rsn_hash: rightRsnHash,
+          ...lookupRsnPairHashField(leftRsnHash, rightRsnHash),
         });
       });
     }, 800);

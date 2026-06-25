@@ -15,6 +15,7 @@ import type * as lib_canonicalItems from "../lib/canonicalItems.js";
 import type * as lib_config from "../lib/config.js";
 import type * as lib_keys from "../lib/keys.js";
 import type * as lib_players from "../lib/players.js";
+import type * as lib_wiseOldManEfficiency from "../lib/wiseOldManEfficiency.js";
 import type * as players from "../players.js";
 import type * as policies_refresh from "../policies/refresh.js";
 import type * as providerQueue from "../providerQueue.js";
@@ -51,6 +52,7 @@ declare const fullApi: ApiFromModules<{
   "lib/config": typeof lib_config;
   "lib/keys": typeof lib_keys;
   "lib/players": typeof lib_players;
+  "lib/wiseOldManEfficiency": typeof lib_wiseOldManEfficiency;
   players: typeof players;
   "policies/refresh": typeof policies_refresh;
   providerQueue: typeof providerQueue;

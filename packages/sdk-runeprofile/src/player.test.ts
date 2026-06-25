@@ -8,6 +8,8 @@ import {
 const responses: Record<string, unknown> = {
   "/accounts/Fixture": {
     username: "Fixture",
+    accountType: { id: 4, key: "group_ironman", name: "Group Ironman" },
+    groupName: "Fixture Group",
     quests: {
       completed: 1,
       started: 0,
@@ -114,6 +116,8 @@ describe("fetchRuneProfilePlayer", () => {
 
     expect(snapshot).toMatchObject({
       displayRsn: "Fixture",
+      accountType: { key: "group_ironman", name: "Group Ironman" },
+      groupName: "Fixture Group",
       questSummary: { completed: 1 },
       collectionSummary: { obtained: 10 },
       combatAchievementPoints: 1,

@@ -57,32 +57,41 @@ type TimelineComparison = {
 const questPercentage = (value: number, total: number | undefined) =>
   `${total ? (value / total) * 100 : 0}%`;
 
-const highlights: [LucideIcon, string, string, string][] = [
-  [
-    Activity,
-    "More active recently",
-    "Recent Wise Old Man snapshots show the stronger XP trend.",
-    "blue",
-  ],
-  [
-    Gauge,
-    "More efficient",
-    "Efficiency is based on current Wise Old Man EHP and EHB.",
-    "green",
-  ],
-  [
-    BookOpen,
-    "Ahead in questing",
-    "RuneProfile quest points decide this comparison.",
-    "blue",
-  ],
-  [
-    Swords,
-    "Stronger combat profile",
-    "Combat level comes from Wise Old Man.",
-    "blue",
-  ],
+type HighlightConfig = {
+  icon: LucideIcon;
+  title: string;
+  fallbackCopy: string;
+};
+
+type HighlightTone = "left" | "right" | "neutral";
+
+const highlights: HighlightConfig[] = [
+  {
+    icon: Activity,
+    title: "More active recently",
+    fallbackCopy: "Recent Wise Old Man snapshots show the stronger XP trend.",
+  },
+  {
+    icon: Gauge,
+    title: "More efficient",
+    fallbackCopy: "Efficiency is based on current Wise Old Man EHP and EHB.",
+  },
+  {
+    icon: BookOpen,
+    title: "Ahead in questing",
+    fallbackCopy: "RuneProfile quest points decide this comparison.",
+  },
+  {
+    icon: Swords,
+    title: "Stronger combat profile",
+    fallbackCopy: "Combat level comes from Wise Old Man.",
+  },
 ];
+
+function toneFromDelta(delta: number | null): HighlightTone {
+  if (delta === null || delta === 0) return "neutral";
+  return delta > 0 ? "left" : "right";
+}
 
 export function OverviewPage() {
   const {
@@ -834,21 +843,34 @@ function Highlights({
           ? "Both players have the same current combat level."
           : `${combatDelta > 0 ? names[0] : names[1]} leads by ${Math.abs(combatDelta).toFixed(1)} combat levels.`,
   };
+  const toneByTitle: Record<string, HighlightTone> = {
+    "More active recently": toneFromDelta(activityDelta),
+    "More efficient": toneFromDelta(ehpDelta),
+    "Ahead in questing": toneFromDelta(questPointDelta),
+    "Stronger combat profile": toneFromDelta(combatDelta),
+  };
 
   return (
     <article className="panel highlights-panel" aria-busy={isLoading}>
       <PanelHeader title="Comparison highlights" eyebrow="Generated summary" />
       <div className="highlight-list">
-        {highlights.map(([Icon, title, fallbackCopy, accent]) => {
+        {highlights.map(({ icon: Icon, title, fallbackCopy }) => {
           const isRuneProfileHighlight = title === "Ahead in questing";
           const isUnavailable =
             isRuneProfileHighlight && unavailableMessage !== null;
+          const tone = isUnavailable ? "neutral" : toneByTitle[title];
           return (
             <div
-              className={`highlight ${isUnavailable ? "highlight-unavailable" : ""}`}
+              className={[
+                "highlight",
+                `highlight-${tone}`,
+                isUnavailable ? "highlight-unavailable" : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
               key={title}
             >
-              <span className={`highlight-icon ${accent}`}>
+              <span className="highlight-icon">
                 <Icon size={15} />
               </span>
               <span>

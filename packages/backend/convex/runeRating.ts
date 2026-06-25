@@ -2,6 +2,10 @@ import { v } from "convex/values";
 import { query } from "./_generated/server.js";
 import { categorySnapshotKey, snapshotStateKey } from "./lib/keys";
 import { findPlayerByRsn } from "./lib/players";
+import {
+  calculateAdjustedEfficiency,
+  shouldUseIronmanEfficiencyRates,
+} from "./lib/wiseOldManEfficiency";
 import { snapshotStatusValidator } from "./validators";
 
 const tierNames = [
@@ -77,6 +81,9 @@ const ratingCardValidator = v.object({
   collectionTotal: v.number(),
   ehp: v.number(),
   ehb: v.number(),
+  adjustedEhp: v.union(v.number(), v.null()),
+  adjustedEhb: v.union(v.number(), v.null()),
+  efficiencyRateType: v.union(v.literal("ironman"), v.null()),
   pillars: v.array(pillarValidator),
   prestigeStats: v.array(prestigeStatValidator),
   sources: v.array(sourceStateValidator),
@@ -123,6 +130,13 @@ type SourceState = {
   lastSuccessAt: number | null;
   errorCode: string | null;
 };
+
+function accountTypeLabel(
+  player: { accountTypeName?: string; accountTypeKey?: string },
+  fallback: string,
+) {
+  return player.accountTypeName ?? player.accountTypeKey ?? fallback;
+}
 
 const clamp = (value: number, min = 0, max = 1) =>
   Math.min(max, Math.max(min, Number.isFinite(value) ? value : 0));
@@ -231,6 +245,7 @@ export const get = query({
       diariesSnapshot,
       combatAchievementsSnapshot,
       collectionSnapshot,
+      ironmanEfficiencyRates,
     ] = await Promise.all([
       ctx.db
         .query("snapshotStates")
@@ -339,6 +354,10 @@ export const get = query({
             categorySnapshotKey(player._id, "collection", "summary"),
           ),
         )
+        .unique(),
+      ctx.db
+        .query("wiseOldManEfficiencyRates")
+        .withIndex("by_key", (index) => index.eq("key", "ironman"))
         .unique(),
     ]);
 
@@ -500,9 +519,25 @@ export const get = query({
       clamp(Math.log1p(clueScore) / Math.log1p(25_000)) * 35 +
       minigameBreadth * 30;
 
+    const adjustedEfficiency =
+      shouldUseIronmanEfficiencyRates(
+        player.accountTypeKey ??
+          player.accountTypeName ??
+          efficiencySnapshot.data.accountType,
+      ) && ironmanEfficiencyRates
+        ? calculateAdjustedEfficiency(
+            skillsSnapshot.data.values,
+            activitiesSnapshot.data.values,
+            ironmanEfficiencyRates.ehpSkills,
+            ironmanEfficiencyRates.ehbBosses,
+          )
+        : null;
+    const scoredEhp = adjustedEfficiency?.ehp ?? efficiencySnapshot.data.ehp;
+    const scoredEhb = adjustedEfficiency?.ehb ?? efficiencySnapshot.data.ehb;
+
     const efficiencyScore =
-      Math.sqrt(clamp(efficiencySnapshot.data.ehp / 12_000)) * 50 +
-      Math.sqrt(clamp(efficiencySnapshot.data.ehb / 3_000)) * 45 +
+      Math.sqrt(clamp(scoredEhp / 12_000)) * 50 +
+      Math.sqrt(clamp(scoredEhb / 3_000)) * 45 +
       percent(efficiencySnapshot.data.combatLevel, 126) * 25;
 
     const pillarPercents = [
@@ -562,7 +597,10 @@ export const get = query({
         label: "Efficiency signal",
         score: rounded(efficiencyScore),
         maxScore: efficiencyScoreCap,
-        detail: `${hours(efficiencySnapshot.data.ehp)} EHP, ${hours(efficiencySnapshot.data.ehb)} EHB`,
+        detail:
+          adjustedEfficiency === null
+            ? `${hours(scoredEhp)} EHP, ${hours(scoredEhb)} EHB`
+            : `${hours(scoredEhp)} adjusted EHP, ${hours(scoredEhb)} adjusted EHB`,
       },
       {
         key: "balance",
@@ -597,7 +635,10 @@ export const get = query({
         formulaVersion: "Formula v1",
         fetchedAt,
         refreshAllowedAt: player.refreshAllowedAt,
-        accountType: efficiencySnapshot.data.accountType,
+        accountType: accountTypeLabel(
+          player,
+          efficiencySnapshot.data.accountType,
+        ),
         accountBuild: efficiencySnapshot.data.accountBuild,
         combatLevel: efficiencySnapshot.data.combatLevel,
         totalLevel,
@@ -612,6 +653,10 @@ export const get = query({
         collectionTotal: collectionSnapshot.data.total,
         ehp: efficiencySnapshot.data.ehp,
         ehb: efficiencySnapshot.data.ehb,
+        adjustedEhp: adjustedEfficiency?.ehp ?? null,
+        adjustedEhb: adjustedEfficiency?.ehb ?? null,
+        efficiencyRateType:
+          adjustedEfficiency === null ? null : ("ironman" as const),
         pillars,
         prestigeStats: [
           {
@@ -626,8 +671,11 @@ export const get = query({
           },
           {
             label: "EHP / EHB",
-            value: `${hours(efficiencySnapshot.data.ehp)} / ${hours(efficiencySnapshot.data.ehb)}`,
-            detail: "Wise Old Man efficiency",
+            value: `${hours(scoredEhp)} / ${hours(scoredEhb)}`,
+            detail:
+              adjustedEfficiency === null
+                ? "Wise Old Man efficiency"
+                : "GIM adjusted with WOM ironman rates",
           },
           {
             label: "Quest points",

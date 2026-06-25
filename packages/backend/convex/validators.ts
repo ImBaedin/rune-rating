@@ -153,6 +153,31 @@ export const efficiencyDataValidator = v.object({
   timeTo200m: v.number(),
 });
 
+export const wiseOldManEhpSkillRateValidator = v.object({
+  skill: v.string(),
+  methods: v.array(
+    v.object({
+      startExp: v.number(),
+      rate: v.number(),
+    }),
+  ),
+  bonuses: v.array(
+    v.object({
+      originSkill: v.string(),
+      bonusSkill: v.string(),
+      startExp: v.number(),
+      endExp: v.number(),
+      end: v.boolean(),
+      ratio: v.number(),
+    }),
+  ),
+});
+
+export const wiseOldManEhbBossRateValidator = v.object({
+  boss: v.string(),
+  rate: v.number(),
+});
+
 export const questsDataValidator = v.object({
   type: v.literal("quests"),
   completed: v.number(),

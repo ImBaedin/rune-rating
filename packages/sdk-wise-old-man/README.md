@@ -12,3 +12,7 @@ to the Convex backend.
 
 Requests must send an identifiable `User-Agent`; Wise Old Man's edge protection
 may reject generic clients with HTTP 403.
+
+Efficiency rate tables are available through `/efficiency/rates` for `ehp` and
+`ehb`. The SDK validates and returns only the calculation fields RuneRating
+needs: EHP skill methods and bonuses, plus EHB boss rates.

@@ -1,6 +1,7 @@
 import { fetchRuneProfileCollectionLog } from "@rune-rating/sdk-runeprofile";
 import { internal } from "./_generated/api.js";
 import { type ActionCtx, env } from "./_generated/server.js";
+import { withProviderRequestAnalytics } from "./lib/analytics";
 import type { RunningProviderJob } from "./providerQueueTypes";
 
 type OperationResult =
@@ -55,10 +56,19 @@ export async function runProviderQueueOperation(
       });
       return { status: "completed", collectionDetailSuccessRsn: null };
     case "runeProfileCollectionDetail": {
-      const collectionLog = await fetchRuneProfileCollectionLog(job.args.rsn, {
-        apiKey: env.RUNEPROFILE_API_KEY,
-        userAgent: "RuneRating/0.1",
-      });
+      const collectionLog = await withProviderRequestAnalytics(
+        {
+          rsn: job.args.rsn,
+          source: "runeProfile",
+          endpoint: "collection_log",
+          properties: { queued: true },
+        },
+        () =>
+          fetchRuneProfileCollectionLog(job.args.rsn, {
+            apiKey: env.RUNEPROFILE_API_KEY,
+            userAgent: "RuneRating/0.1",
+          }),
+      );
       const { fetchedAt, ...collectionLogData } = collectionLog;
       const replaced: boolean = await ctx.runMutation(
         internal.runeProfile.replaceCollectionLog,

@@ -9,6 +9,8 @@ import {
   providerQueueProviderValidator,
   snapshotStatusValidator,
   sourceValidator,
+  wiseOldManEhbBossRateValidator,
+  wiseOldManEhpSkillRateValidator,
 } from "./validators";
 
 export default defineSchema({
@@ -19,6 +21,10 @@ export default defineSchema({
     lastRequestedAt: v.number(),
     lastSnapshotAt: v.union(v.number(), v.null()),
     refreshAllowedAt: v.number(),
+    accountTypeKey: v.optional(v.string()),
+    accountTypeName: v.optional(v.string()),
+    accountTypeSource: v.optional(sourceValidator),
+    groupName: v.optional(v.union(v.string(), v.null())),
   })
     .index("by_normalized_rsn", ["normalizedRsn"])
     .index("by_refresh_allowed_at", ["refreshAllowedAt"]),
@@ -164,6 +170,14 @@ export default defineSchema({
         value: v.number(),
       }),
     ),
+  }).index("by_key", ["key"]),
+
+  wiseOldManEfficiencyRates: defineTable({
+    key: v.string(),
+    type: v.literal("ironman"),
+    fetchedAt: v.number(),
+    ehpSkills: v.array(wiseOldManEhpSkillRateValidator),
+    ehbBosses: v.array(wiseOldManEhbBossRateValidator),
   }).index("by_key", ["key"]),
 
   runtimeConfig: defineTable({

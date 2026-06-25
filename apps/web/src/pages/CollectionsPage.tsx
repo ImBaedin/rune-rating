@@ -22,7 +22,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { captureAnalytics, countBucket, hashRsnPair } from "../analytics";
+import {
+  captureAnalytics,
+  countBucket,
+  hashRsnPair,
+  lookupRsnPairHashField,
+} from "../analytics";
 import {
   ComparisonKpiCard,
   DataNotice,
@@ -249,6 +254,7 @@ function CollectionsPage() {
           expanded_results: isItemSearchExpanded,
           left_rsn_hash: leftRsnHash,
           right_rsn_hash: rightRsnHash,
+          ...lookupRsnPairHashField(leftRsnHash, rightRsnHash),
         });
       });
     }, 800);

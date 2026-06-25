@@ -80,12 +80,35 @@ const completeWiseOldManFailure = makeFunctionReference<
   boolean
 >("refresh:completeWiseOldManFailure");
 
+const upsertIronmanEfficiencyRates = makeFunctionReference<
+  "mutation",
+  {
+    fetchedAt: number;
+    ehpSkills: Array<{
+      skill: string;
+      methods: Array<{ startExp: number; rate: number }>;
+      bonuses: Array<{
+        originSkill: string;
+        bonusSkill: string;
+        startExp: number;
+        endExp: number;
+        end: boolean;
+        ratio: number;
+      }>;
+    }>;
+    ehbBosses: Array<{ boss: string; rate: number }>;
+  },
+  boolean
+>("refresh:upsertWiseOldManIronmanEfficiencyRates");
+
 const completeRuneProfile = makeFunctionReference<
   "mutation",
   {
     playerId: string;
     requestId: string;
     fetchedAt: number;
+    accountType: { id: number; key: string; name: string };
+    groupName: string | null;
     quests: Array<{
       id: number;
       name: string;
@@ -153,6 +176,12 @@ const getSkills = makeFunctionReference<
   unknown
 >("comparisons:getSkills");
 
+const getEfficiency = makeFunctionReference<
+  "query",
+  { leftRsn: string; rightRsn: string },
+  { accountTypes: { left: string; right: string } } | null
+>("comparisons:getEfficiency");
+
 const getProfile = makeFunctionReference<
   "query",
   { rsn: string },
@@ -183,9 +212,15 @@ const getRuneRating = makeFunctionReference<
       status: "ready";
       card: {
         displayRsn: string;
+        accountType: string;
         score: number;
         tier: string;
-        prestigeStats: Array<{ label: string; value: string }>;
+        ehp: number;
+        ehb: number;
+        adjustedEhp: number | null;
+        adjustedEhb: number | null;
+        efficiencyRateType: "ironman" | null;
+        prestigeStats: Array<{ label: string; value: string; detail: string }>;
       };
     }
 >("runeRating:get");
@@ -429,10 +464,52 @@ function skill(
 
 async function currentLease(t: ReturnType<typeof convexTest>) {
   return await t.run(async (ctx) => {
-    const player = await ctx.db.query("players").first();
     const lease = await ctx.db.query("refreshLeases").first();
-    if (!player || !lease) throw new Error("Expected player and lease.");
+    if (!lease) throw new Error("Expected lease.");
+    const player = await ctx.db.get(lease.playerId);
+    if (!player) throw new Error("Expected lease player.");
     return { player, lease };
+  });
+}
+
+async function seedIronmanEfficiencyRates(t: ReturnType<typeof convexTest>) {
+  await t.mutation(upsertIronmanEfficiencyRates, {
+    fetchedAt: Date.now(),
+    ehpSkills: [
+      {
+        skill: "attack",
+        methods: [{ startExp: 0, rate: 100_000 }],
+        bonuses: [],
+      },
+      {
+        skill: "strength",
+        methods: [{ startExp: 0, rate: 200_000 }],
+        bonuses: [],
+      },
+      {
+        skill: "defence",
+        methods: [{ startExp: 0, rate: 90_000 }],
+        bonuses: [],
+      },
+      {
+        skill: "magic",
+        methods: [{ startExp: 0, rate: 50_000 }],
+        bonuses: [
+          {
+            originSkill: "defence",
+            bonusSkill: "magic",
+            startExp: 0,
+            endExp: 200_000_000,
+            end: false,
+            ratio: 0.5,
+          },
+        ],
+      },
+    ],
+    ehbBosses: [
+      { boss: "zulrah", rate: 50 },
+      { boss: "vorkath", rate: 100 },
+    ],
   });
 }
 
@@ -440,6 +517,7 @@ async function completeRatingFixtures(
   t: ReturnType<typeof convexTest>,
   rsn: string,
 ) {
+  await seedIronmanEfficiencyRates(t);
   await t.mutation(requestRefresh, { rsns: [rsn] });
   const { player, lease } = await currentLease(t);
   const fetchedAt = Date.now();
@@ -503,6 +581,8 @@ async function completeRatingFixtures(
     playerId: player._id,
     requestId: lease.requestId,
     fetchedAt,
+    accountType: { id: 4, key: "group_ironman", name: "Group Ironman" },
+    groupName: "Fixture Group",
     quests: [
       {
         id: 1,
@@ -635,6 +715,8 @@ describe("refresh orchestration", () => {
         playerId: player._id,
         requestId: lease.requestId,
         fetchedAt,
+        accountType: { id: 0, key: "regular", name: "Regular" },
+        groupName: null,
         quests: [
           {
             id: 1,
@@ -759,6 +841,8 @@ describe("refresh orchestration", () => {
         playerId: player._id,
         requestId: lease.requestId,
         fetchedAt,
+        accountType: { id: 0, key: "regular", name: "Regular" },
+        groupName: null,
         quests: [
           {
             id: 1,
@@ -871,15 +955,42 @@ describe("rune rating", () => {
     expect(rating.status).toBe("ready");
     if (rating.status !== "ready") throw new Error("Expected ready rating.");
     expect(rating.card.displayRsn).toBe("Rated Player");
+    expect(rating.card.accountType).toBe("Group Ironman");
+    expect(rating.card.ehp).toBe(4_200);
+    expect(rating.card.ehb).toBe(1_100);
+    expect(rating.card.adjustedEhp).toBeCloseTo(870);
+    expect(rating.card.adjustedEhb).toBeCloseTo(80);
+    expect(rating.card.efficiencyRateType).toBe("ironman");
     expect(rating.card.score).toBeGreaterThan(0);
     expect(rating.card.tier).toBeTruthy();
     expect(rating.card.prestigeStats).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ label: "Total level" }),
-        expect.objectContaining({ label: "EHP / EHB" }),
+        expect.objectContaining({
+          label: "EHP / EHB",
+          detail: "GIM adjusted with WOM ironman rates",
+        }),
         expect.objectContaining({ label: "Collection" }),
       ]),
     );
+  });
+
+  test("uses RuneProfile account type before Wise Old Man account type", async () => {
+    const t = convexTest({ schema, modules });
+    await completeRatingFixtures(t, "Left GIM");
+    await completeRatingFixtures(t, "Right GIM");
+
+    expect(
+      await t.query(getEfficiency, {
+        leftRsn: "Left GIM",
+        rightRsn: "Right GIM",
+      }),
+    ).toMatchObject({
+      accountTypes: {
+        left: "Group Ironman",
+        right: "Group Ironman",
+      },
+    });
   });
 
   test("refuses to generate without Wise Old Man and RuneProfile data", async () => {

@@ -3,6 +3,7 @@ import { v } from "convex/values";
 import { internal } from "./_generated/api.js";
 import {
   internalMutation,
+  internalQuery,
   type MutationCtx,
   mutation,
 } from "./_generated/server.js";
@@ -16,6 +17,8 @@ import {
   canonicalActivityValidator,
   canonicalSkillValidator,
   snapshotStatusValidator,
+  wiseOldManEhbBossRateValidator,
+  wiseOldManEhpSkillRateValidator,
 } from "./validators";
 
 const requestResultValidator = v.object({
@@ -471,6 +474,48 @@ export const completeWiseOldMan = internalMutation({
   },
 });
 
+export const upsertWiseOldManIronmanEfficiencyRates = internalMutation({
+  args: {
+    fetchedAt: v.number(),
+    ehpSkills: v.array(wiseOldManEhpSkillRateValidator),
+    ehbBosses: v.array(wiseOldManEhbBossRateValidator),
+  },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const key = "ironman";
+    const existing = await ctx.db
+      .query("wiseOldManEfficiencyRates")
+      .withIndex("by_key", (index) => index.eq("key", key))
+      .unique();
+    const value = {
+      key,
+      type: "ironman" as const,
+      fetchedAt: args.fetchedAt,
+      ehpSkills: args.ehpSkills,
+      ehbBosses: args.ehbBosses,
+    };
+
+    if (existing) {
+      await ctx.db.patch(existing._id, value);
+    } else {
+      await ctx.db.insert("wiseOldManEfficiencyRates", value);
+    }
+    return true;
+  },
+});
+
+export const areWiseOldManIronmanEfficiencyRatesFresh = internalQuery({
+  args: { maxAgeMs: v.number() },
+  returns: v.boolean(),
+  handler: async (ctx, args) => {
+    const rates = await ctx.db
+      .query("wiseOldManEfficiencyRates")
+      .withIndex("by_key", (index) => index.eq("key", "ironman"))
+      .unique();
+    return rates !== null && Date.now() - rates.fetchedAt <= args.maxAgeMs;
+  },
+});
+
 export const completeWiseOldManFailure = internalMutation({
   args: {
     playerId: v.id("players"),
@@ -588,6 +633,12 @@ const combatTaskValidator = v.object({
   completed: v.boolean(),
 });
 
+const runeProfileAccountTypeValidator = v.object({
+  id: v.number(),
+  key: v.string(),
+  name: v.string(),
+});
+
 function combatAchievementSummary({
   tiers,
   tasks,
@@ -615,6 +666,8 @@ export const completeRuneProfile = internalMutation({
     playerId: v.id("players"),
     requestId: v.string(),
     fetchedAt: v.number(),
+    accountType: runeProfileAccountTypeValidator,
+    groupName: v.union(v.string(), v.null()),
     quests: v.array(questValidator),
     questSummary: v.object({
       completed: v.number(),
@@ -650,6 +703,13 @@ export const completeRuneProfile = internalMutation({
       .withIndex("by_player", (index) => index.eq("playerId", args.playerId))
       .unique();
     if (!lease || lease.requestId !== args.requestId) return false;
+
+    await ctx.db.patch(args.playerId, {
+      accountTypeKey: args.accountType.key,
+      accountTypeName: args.accountType.name,
+      accountTypeSource: "runeProfile",
+      groupName: args.groupName,
+    });
 
     const diaryCompleted = args.diarySummary.reduce(
       (total, area) => total + area.completed,

@@ -1,4 +1,6 @@
 import {
+  fetchWiseOldManEhbRates,
+  fetchWiseOldManEhpRates,
   fetchWiseOldManPlayer,
   WiseOldManRequestError,
 } from "@rune-rating/sdk-wise-old-man";
@@ -9,7 +11,10 @@ import {
   analyticsDistinctIdForRsn,
   capturePostHogEvent,
   durationMs,
+  withProviderRequestAnalytics,
 } from "../lib/analytics";
+
+const EFFICIENCY_RATE_CACHE_MS = 24 * 60 * 60 * 1_000;
 
 export const refreshPlayer = internalAction({
   args: {
@@ -30,9 +35,17 @@ export const refreshPlayer = internalAction({
     if (!ownsLease) return null;
 
     try {
-      const snapshot = await fetchWiseOldManPlayer(args.rsn, {
-        userAgent: "RuneRating/0.1",
-      });
+      const snapshot = await withProviderRequestAnalytics(
+        {
+          rsn: args.rsn,
+          source: "wiseOldMan",
+          endpoint: "player",
+        },
+        () =>
+          fetchWiseOldManPlayer(args.rsn, {
+            userAgent: "RuneRating/0.1",
+          }),
+      );
       await ctx.runMutation(internal.refresh.completeWiseOldMan, {
         playerId: args.playerId,
         requestId: args.requestId,
@@ -45,6 +58,50 @@ export const refreshPlayer = internalAction({
         timeToMax: snapshot.timeToMax,
         timeTo200m: snapshot.timeTo200m,
       });
+      const ratesAreFresh: boolean = await ctx.runQuery(
+        internal.refresh.areWiseOldManIronmanEfficiencyRatesFresh,
+        { maxAgeMs: EFFICIENCY_RATE_CACHE_MS },
+      );
+      if (!ratesAreFresh) {
+        try {
+          const [ehpSkills, ehbBosses] = await Promise.all([
+            withProviderRequestAnalytics(
+              {
+                rsn: args.rsn,
+                source: "wiseOldMan",
+                endpoint: "ehp_rates",
+                properties: { account_type: "ironman" },
+              },
+              () =>
+                fetchWiseOldManEhpRates("ironman", {
+                  userAgent: "RuneRating/0.1",
+                }),
+            ),
+            withProviderRequestAnalytics(
+              {
+                rsn: args.rsn,
+                source: "wiseOldMan",
+                endpoint: "ehb_rates",
+                properties: { account_type: "ironman" },
+              },
+              () =>
+                fetchWiseOldManEhbRates("ironman", {
+                  userAgent: "RuneRating/0.1",
+                }),
+            ),
+          ]);
+          await ctx.runMutation(
+            internal.refresh.upsertWiseOldManIronmanEfficiencyRates,
+            {
+              fetchedAt: Date.now(),
+              ehpSkills,
+              ehbBosses,
+            },
+          );
+        } catch {
+          // Player efficiency is still usable if the shared rates endpoint is down.
+        }
+      }
       await capturePostHogEvent({
         event: "refresh_result",
         distinctId: await analyticsDistinctIdForRsn(args.rsn),

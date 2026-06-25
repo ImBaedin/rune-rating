@@ -15,6 +15,7 @@ import {
   captureAnalytics,
   capturePageView,
   hashRsnPair,
+  lookupRsnPairHashField,
 } from "./analytics";
 import { Sidebar } from "./features/comparison/components/Sidebar";
 import { Topbar } from "./features/comparison/components/Topbar";
@@ -330,6 +331,7 @@ export function ComparisonShell({
         view: activeView,
         left_rsn_hash: leftRsnHash,
         right_rsn_hash: rightRsnHash,
+        ...lookupRsnPairHashField(leftRsnHash, rightRsnHash),
       });
     });
     return () => {
@@ -460,6 +462,7 @@ export function ComparisonShell({
         view: activeView,
         left_rsn_hash: leftRsnHash,
         right_rsn_hash: rightRsnHash,
+        ...lookupRsnPairHashField(leftRsnHash, rightRsnHash),
         left_source_statuses: profileSourceStatusSummary(leftProfile),
         right_source_statuses: profileSourceStatusSummary(rightProfile),
         data_age_bucket: comparisonAgeBucket(comparison),
@@ -491,6 +494,7 @@ export function ComparisonShell({
         entry_view: activeView,
         left_rsn_hash: leftRsnHash,
         right_rsn_hash: rightRsnHash,
+        ...lookupRsnPairHashField(leftRsnHash, rightRsnHash),
         used_recent_lookup: usedRecentLookup,
       });
     });

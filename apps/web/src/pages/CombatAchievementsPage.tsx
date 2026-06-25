@@ -4,7 +4,12 @@ import type { FunctionReturnType } from "convex/server";
 import { BadgeCheck, Medal, Swords, Target, Trophy } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-import { captureAnalytics, countBucket, hashRsnPair } from "../analytics";
+import {
+  captureAnalytics,
+  countBucket,
+  hashRsnPair,
+  lookupRsnPairHashField,
+} from "../analytics";
 import {
   ComparisonKpiCard,
   DataNotice,
@@ -257,6 +262,7 @@ export default function CombatAchievementsPage() {
           expanded_results: isTaskSearchExpanded,
           left_rsn_hash: leftRsnHash,
           right_rsn_hash: rightRsnHash,
+          ...lookupRsnPairHashField(leftRsnHash, rightRsnHash),
         });
       });
     }, 800);

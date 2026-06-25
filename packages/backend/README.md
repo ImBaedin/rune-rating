@@ -20,6 +20,16 @@ player refresh; granular collection tabs, pages, and items are fetched
 demand-side by the collection page and replace the current canonical collection
 snapshot without retaining provider history or raw payloads.
 
+RuneProfile account summary data is also the preferred source for account type
+identity, including Group Ironman detection via `accountType` and `groupName`.
+Wise Old Man account type remains a fallback for older or unavailable
+RuneProfile snapshots.
+
+RuneRating recalculates Group Ironman efficiency with cached Wise Old Man
+ironman rates. The cache stores transformed rate tables only, refreshes
+opportunistically during WOM player refreshes, and falls back to WOM player
+totals when rates are unavailable.
+
 ## Module Layout
 
 ```text

@@ -14,6 +14,7 @@ import {
   internalMutation,
   internalQuery,
 } from "./_generated/server.js";
+import { withProviderRequestAnalytics } from "./lib/analytics";
 
 const OVERVIEW_CACHE_MS = 60 * 60 * 1_000;
 const FAILED_REFRESH_BACKOFF_MS = 15 * 60 * 1_000;
@@ -314,13 +315,31 @@ export const refreshOverviewCache = internalAction({
 
     try {
       const [timeline, gains] = await Promise.all([
-        fetchOverallXpTimeline(args.rsn, "year", {
-          userAgent: "RuneRating/0.1",
-          timeoutMs: 30_000,
-        }),
-        fetchOverallXpGains(args.rsn, "week", {
-          userAgent: "RuneRating/0.1",
-        }),
+        withProviderRequestAnalytics(
+          {
+            rsn: args.rsn,
+            source: "wiseOldMan",
+            endpoint: "overall_xp_timeline",
+            properties: { period: "year", queued: true },
+          },
+          () =>
+            fetchOverallXpTimeline(args.rsn, "year", {
+              userAgent: "RuneRating/0.1",
+              timeoutMs: 30_000,
+            }),
+        ),
+        withProviderRequestAnalytics(
+          {
+            rsn: args.rsn,
+            source: "wiseOldMan",
+            endpoint: "overall_xp_gains",
+            properties: { period: "week", queued: true },
+          },
+          () =>
+            fetchOverallXpGains(args.rsn, "week", {
+              userAgent: "RuneRating/0.1",
+            }),
+        ),
       ]);
       await ctx.runMutation(internal.wiseOldMan.completeOverviewCacheRefresh, {
         rsn: args.rsn,
@@ -604,9 +623,18 @@ export const refreshSkillGainsCache = internalAction({
     if (!claim.shouldFetch || !claim.requestId) return null;
 
     try {
-      const result = await fetchSkillXpGains(args.rsn, args.period, {
-        userAgent: "RuneRating/0.1",
-      });
+      const result = await withProviderRequestAnalytics(
+        {
+          rsn: args.rsn,
+          source: "wiseOldMan",
+          endpoint: "skill_xp_gains",
+          properties: { period: args.period, queued: true },
+        },
+        () =>
+          fetchSkillXpGains(args.rsn, args.period, {
+            userAgent: "RuneRating/0.1",
+          }),
+      );
       await ctx.runMutation(
         internal.wiseOldMan.completeSkillGainsCacheRefresh,
         {
@@ -1071,10 +1099,23 @@ export const refreshSkillTimelineCaches = internalAction({
       const metrics = claimed.map((claim) =>
         skillKeyToWomMetric(claim.cache.skillKey),
       );
-      const timelines = await fetchSkillXpTimelines(args.rsn, metrics, "year", {
-        userAgent: "RuneRating/0.1",
-        timeoutMs: 30_000,
-      });
+      const timelines = await withProviderRequestAnalytics(
+        {
+          rsn: args.rsn,
+          source: "wiseOldMan",
+          endpoint: "skill_xp_timelines",
+          properties: {
+            period: "year",
+            metric_count: metrics.length,
+            queued: true,
+          },
+        },
+        () =>
+          fetchSkillXpTimelines(args.rsn, metrics, "year", {
+            userAgent: "RuneRating/0.1",
+            timeoutMs: 30_000,
+          }),
+      );
       const byMetric = new Map(
         timelines.map((timeline) => [timeline.metric, timeline.timeline]),
       );
@@ -1567,10 +1608,23 @@ export const refreshEfficiencyTimelineCaches = internalAction({
     try {
       const metrics = claimed.map((claim) => claim.cache.metric);
       const fetchMetrics = async (requestedMetrics: EfficiencyMetric[]) =>
-        await fetchSkillXpTimelines(args.rsn, requestedMetrics, "year", {
-          userAgent: "RuneRating/0.1",
-          timeoutMs: 30_000,
-        });
+        await withProviderRequestAnalytics(
+          {
+            rsn: args.rsn,
+            source: "wiseOldMan",
+            endpoint: "efficiency_timelines",
+            properties: {
+              period: "year",
+              metric_count: requestedMetrics.length,
+              queued: true,
+            },
+          },
+          () =>
+            fetchSkillXpTimelines(args.rsn, requestedMetrics, "year", {
+              userAgent: "RuneRating/0.1",
+              timeoutMs: 30_000,
+            }),
+        );
       let timelines = await fetchMetrics(metrics).catch(async (error) => {
         if (metrics.length === 1) throw error;
         const fallbackTimelines = await Promise.all(

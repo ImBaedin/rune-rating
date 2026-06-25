@@ -14,5 +14,9 @@ achievement diaries, and combat-achievement tasks in parallel. Full
 collection-log detail is available through a separate demand-driven fetcher so
 normal player refreshes remain lightweight.
 
+The account summary includes `accountType` and nullable `groupName`. Use these
+fields as the authoritative source for distinguishing Group Ironman accounts;
+other providers may not expose enough information to identify them.
+
 RuneProfile permits anonymous requests at a lower rate limit. Set the optional
 `RUNEPROFILE_API_KEY` Convex environment variable to send an `X-API-Key` header.

@@ -48,8 +48,16 @@ const combatTaskSchema = z.object({
   completed: z.boolean(),
 });
 
+const accountTypeSchema = z.object({
+  id: z.number(),
+  key: z.string(),
+  name: z.string(),
+});
+
 const summarySchema = z.object({
   username: z.string(),
+  accountType: accountTypeSchema,
+  groupName: z.string().nullable(),
   quests: z.object({
     completed: z.number(),
     started: z.number(),
@@ -132,6 +140,8 @@ export type RuneProfileClientOptions = {
 
 export type RuneProfileSnapshot = {
   displayRsn: string;
+  accountType: z.infer<typeof accountTypeSchema>;
+  groupName: string | null;
   fetchedAt: number;
   providerUpdatedAt: number;
   quests: z.infer<typeof questSchema>[];
@@ -274,6 +284,8 @@ export async function fetchRuneProfilePlayer(
 
   return {
     displayRsn: summary.username,
+    accountType: summary.accountType,
+    groupName: summary.groupName,
     fetchedAt: Date.now(),
     providerUpdatedAt: Date.parse(summary.updatedAt),
     quests: quests.data,

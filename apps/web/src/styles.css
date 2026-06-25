@@ -1607,6 +1607,8 @@ td:first-child {
   padding: 4px 8px 8px;
 }
 .highlight {
+  --highlight-color: #7f8b94;
+  --highlight-bg: #eef2f5;
   position: relative;
   width: 100%;
   display: grid;
@@ -1618,6 +1620,14 @@ td:first-child {
   border-bottom: 1px solid var(--line);
   background: transparent;
   text-align: left;
+}
+.highlight-left {
+  --highlight-color: var(--blue);
+  --highlight-bg: var(--blue-soft);
+}
+.highlight-right {
+  --highlight-color: var(--green);
+  --highlight-bg: var(--green-soft);
 }
 .highlight-unavailable > :not(em) {
   filter: blur(3px);
@@ -1645,19 +1655,15 @@ td:first-child {
   display: grid;
   place-items: center;
   border-radius: 6px;
-  color: var(--blue);
-  background: var(--blue-soft);
-}
-.highlight-icon.green {
-  color: var(--green);
-  background: var(--green-soft);
+  color: var(--highlight-color);
+  background: var(--highlight-bg);
 }
 .highlight strong,
 .highlight small {
   display: block;
 }
 .highlight strong {
-  color: #3e648e;
+  color: var(--highlight-color);
   font-size: 9px;
 }
 .highlight small {

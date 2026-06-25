@@ -20,6 +20,13 @@ const playerHeaderValidator = v.object({
   fetchedAt: v.number(),
 });
 
+function accountTypeLabel(
+  player: { accountTypeName?: string; accountTypeKey?: string },
+  fallback: string,
+) {
+  return player.accountTypeName ?? player.accountTypeKey ?? fallback;
+}
+
 export const getSkills = query({
   args: { leftRsn: v.string(), rightRsn: v.string() },
   returns: v.union(
@@ -221,8 +228,8 @@ export const getEfficiency = query({
         fetchedAt: rightSnapshot.fetchedAt,
       },
       accountTypes: {
-        left: leftSnapshot.data.accountType,
-        right: rightSnapshot.data.accountType,
+        left: accountTypeLabel(leftPlayer, leftSnapshot.data.accountType),
+        right: accountTypeLabel(rightPlayer, rightSnapshot.data.accountType),
       },
       efficiency: {
         combatLevel: compareNumbers(

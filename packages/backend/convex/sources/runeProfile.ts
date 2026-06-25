@@ -9,6 +9,7 @@ import {
   analyticsDistinctIdForRsn,
   capturePostHogEvent,
   durationMs,
+  withProviderRequestAnalytics,
 } from "../lib/analytics";
 
 export const refreshPlayer = internalAction({
@@ -30,16 +31,26 @@ export const refreshPlayer = internalAction({
     if (!ownsLease) return null;
 
     try {
-      const snapshot = await fetchRuneProfilePlayer(args.rsn, {
-        apiKey: env.RUNEPROFILE_API_KEY,
-        userAgent: "RuneRating/0.1",
-      });
+      const snapshot = await withProviderRequestAnalytics(
+        {
+          rsn: args.rsn,
+          source: "runeProfile",
+          endpoint: "player",
+        },
+        () =>
+          fetchRuneProfilePlayer(args.rsn, {
+            apiKey: env.RUNEPROFILE_API_KEY,
+            userAgent: "RuneRating/0.1",
+          }),
+      );
       const completed: boolean = await ctx.runMutation(
         internal.refresh.completeRuneProfile,
         {
           playerId: args.playerId,
           requestId: args.requestId,
           fetchedAt: snapshot.fetchedAt,
+          accountType: snapshot.accountType,
+          groupName: snapshot.groupName,
           quests: snapshot.quests,
           questSummary: snapshot.questSummary,
           diaries: snapshot.diaries,
