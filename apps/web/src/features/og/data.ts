@@ -2,6 +2,7 @@ import { api } from "@rune-rating/backend/convex/_generated/api";
 import { normalizeRsn } from "@rune-rating/domain";
 import { ConvexHttpClient } from "convex/browser";
 import type { FunctionReturnType } from "convex/server";
+import { ratingDisplayPrestigeStats } from "../ratingDisplay";
 
 type RuneRatingResult = FunctionReturnType<typeof api.runeRating.get>;
 type SkillsComparison = FunctionReturnType<typeof api.comparisons.getSkills>;
@@ -82,7 +83,12 @@ function valueLeader(
   right: number | null | undefined,
   lowerIsBetter = false,
 ): "left" | "right" | "tie" | "unknown" {
-  if (left === null || left === undefined || right === null || right === undefined) {
+  if (
+    left === null ||
+    left === undefined ||
+    right === null ||
+    right === undefined
+  ) {
     return "unknown";
   }
   if (left === right) return "tie";
@@ -113,10 +119,12 @@ function ratingFromResult(result: RuneRatingResult, fallbackRsn: string) {
       score: result.card.score,
       tier: result.card.tier,
       percentileLabel: result.card.percentileLabel,
-      stats: result.card.prestigeStats.slice(0, 4).map((stat) => ({
-        label: stat.label,
-        value: stat.value,
-      })),
+      stats: ratingDisplayPrestigeStats(result.card)
+        .slice(0, 4)
+        .map((stat) => ({
+          label: stat.label,
+          value: stat.value,
+        })),
       pillars: result.card.pillars.map((pillar) => ({
         label: pillar.label,
         score: pillar.score,
@@ -150,7 +158,10 @@ export async function loadRatingOgModel(rsn: string): Promise<RatingOgModel> {
   try {
     normalized = normalizeRsn(decodeURIComponent(rsn.replaceAll("+", " ")));
   } catch {
-    return unavailableRating(rsn, "This RuneRating URL contains an invalid RSN.");
+    return unavailableRating(
+      rsn,
+      "This RuneRating URL contains an invalid RSN.",
+    );
   }
 
   const client = convexClient();
@@ -279,7 +290,10 @@ export async function loadCompareOgModel(
     ] = await Promise.all([
       client.query(api.players.getProfile, { rsn: left }),
       client.query(api.players.getProfile, { rsn: right }),
-      client.query(api.comparisons.getSkills, { leftRsn: left, rightRsn: right }),
+      client.query(api.comparisons.getSkills, {
+        leftRsn: left,
+        rightRsn: right,
+      }),
       client.query(api.comparisons.getEfficiency, {
         leftRsn: left,
         rightRsn: right,

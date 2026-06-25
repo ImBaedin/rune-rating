@@ -32,7 +32,10 @@ function skillKeyForWiseOldMan(key: string) {
 }
 
 function activityKeyForWiseOldMan(key: string) {
-  return key.replace(/^activity\./, "");
+  const activity = key.replace(/^activity\./, "");
+  return activity === "tombs_of_amascut_expert_mode"
+    ? "tombs_of_amascut_expert"
+    : activity;
 }
 
 function hoursForXp(xp: number, methods: WiseOldManEhpSkillRate["methods"]) {

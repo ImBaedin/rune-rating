@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import type { CanonicalActivity, CanonicalSkill } from "@rune-rating/domain";
 import { makeFunctionReference } from "convex/server";
 import { convexTest } from "convex-test";
+import { calculateAdjustedEfficiency } from "../convex/lib/wiseOldManEfficiency";
 import schema from "../convex/schema";
 import { buildXpTimelineDashboard } from "../convex/xpTimeline";
 
@@ -627,6 +628,27 @@ async function completeRatingFixtures(
     collectionSummary: { obtained: 900, total: 1_600 },
   });
 }
+
+describe("Wise Old Man efficiency calculations", () => {
+  test("maps Hiscores ToA expert mode to the WOM EHB rate key", () => {
+    const result = calculateAdjustedEfficiency(
+      [],
+      [
+        {
+          key: "activity.tombs_of_amascut_expert_mode",
+          name: "Tombs of Amascut: Expert Mode",
+          category: "bossing",
+          rank: value(1_000),
+          score: value(276),
+        },
+      ],
+      [],
+      [{ boss: "tombs_of_amascut_expert", rate: 3 }],
+    );
+
+    expect(result.ehb).toBe(92);
+  });
+});
 
 describe("refresh orchestration", () => {
   test("schedules a first refresh and blocks duplicate active leases", async () => {

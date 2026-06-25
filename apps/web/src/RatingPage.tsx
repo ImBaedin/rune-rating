@@ -35,6 +35,7 @@ import {
 import { BaseDialog } from "./components/BaseDialog";
 import { randomCompareRsns } from "./exampleRsns";
 import { comparisonPath } from "./features/comparison/navigation";
+import { ratingDisplayPrestigeStats } from "./features/ratingDisplay";
 import {
   ratingSystemImage,
   tierColorsFor,
@@ -168,7 +169,7 @@ async function imageUrlToDataUrl(url: string) {
 
 function cardSvg(card: RuneRatingCard, rankImageDataUrl: string) {
   const colors = tierColorsFor(card.tier);
-  const stats = card.prestigeStats.slice(0, 4);
+  const stats = ratingDisplayPrestigeStats(card).slice(0, 4);
   return `
     <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600">
       <defs>
@@ -797,6 +798,7 @@ function CalculationDialog({ card }: { card: RuneRatingCard }) {
 
 function RuneRatingCardPreview({ card }: { card: RuneRatingCard }) {
   const colors = tierColorsFor(card.tier);
+  const stats = ratingDisplayPrestigeStats(card).slice(0, 4);
   return (
     <article className="share-card-preview">
       <div className="share-card-topline">
@@ -822,7 +824,7 @@ function RuneRatingCardPreview({ card }: { card: RuneRatingCard }) {
         </div>
       </div>
       <div className="share-card-stats">
-        {card.prestigeStats.slice(0, 4).map((stat: RuneRatingPrestigeStat) => (
+        {stats.map((stat: RuneRatingPrestigeStat) => (
           <div className="share-stat" key={stat.label}>
             <span>{stat.label}</span>
             <strong>{stat.value}</strong>
