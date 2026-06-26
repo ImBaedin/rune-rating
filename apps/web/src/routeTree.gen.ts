@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RatingRouteImport } from './routes/rating'
+import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OgRatingDotpngRouteImport } from './routes/og/rating[.]png'
 import { Route as OgRatingRsnRouteImport } from './routes/og/rating/$rsn'
@@ -31,6 +32,11 @@ import { Route as CompareLeftRsnRightRsnAchievementDiariesRouteImport } from './
 const RatingRoute = RatingRouteImport.update({
   id: '/rating',
   path: '/rating',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaderboardRoute = LeaderboardRouteImport.update({
+  id: '/leaderboard',
+  path: '/leaderboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -134,6 +140,7 @@ const CompareLeftRsnRightRsnAchievementDiariesRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/rating': typeof RatingRoute
   '/og/rating.png': typeof OgRatingDotpngRoute
   '/compare/$leftRsn/$rightRsn': typeof CompareLeftRsnRightRsnRouteWithChildren
@@ -154,6 +161,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/rating': typeof RatingRoute
   '/og/rating.png': typeof OgRatingDotpngRoute
   '/og/rating/$rsn': typeof OgRatingRsnRoute
@@ -174,6 +182,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/rating': typeof RatingRoute
   '/og/rating.png': typeof OgRatingDotpngRoute
   '/compare/$leftRsn/$rightRsn': typeof CompareLeftRsnRightRsnRouteWithChildren
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/leaderboard'
     | '/rating'
     | '/og/rating.png'
     | '/compare/$leftRsn/$rightRsn'
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/leaderboard'
     | '/rating'
     | '/og/rating.png'
     | '/og/rating/$rsn'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/leaderboard'
     | '/rating'
     | '/og/rating.png'
     | '/compare/$leftRsn/$rightRsn'
@@ -256,6 +268,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LeaderboardRoute: typeof LeaderboardRoute
   RatingRoute: typeof RatingRoute
   OgRatingDotpngRoute: typeof OgRatingDotpngRoute
   CompareLeftRsnRightRsnRoute: typeof CompareLeftRsnRightRsnRouteWithChildren
@@ -270,6 +283,13 @@ declare module '@tanstack/react-router' {
       path: '/rating'
       fullPath: '/rating'
       preLoaderRoute: typeof RatingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leaderboard': {
+      id: '/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof LeaderboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -437,6 +457,7 @@ const CompareLeftRsnRightRsnRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LeaderboardRoute: LeaderboardRoute,
   RatingRoute: RatingRoute,
   OgRatingDotpngRoute: OgRatingDotpngRoute,
   CompareLeftRsnRightRsnRoute: CompareLeftRsnRightRsnRouteWithChildren,

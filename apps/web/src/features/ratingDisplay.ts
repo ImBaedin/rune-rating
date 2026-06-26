@@ -37,3 +37,47 @@ export function ratingDisplayPrestigeStats(card: RatingDisplayCard) {
     };
   });
 }
+
+const accountBuildLabels: Record<string, string> = {
+  main: "Main",
+  f2p: "F2P",
+  lvl3: "Level 3",
+  level3: "Level 3",
+  "1def": "1 Def",
+  def1: "1 Def",
+  zerker: "Zerker",
+};
+
+const accountTypeLabels: Record<string, string> = {
+  regular: "Regular",
+  ironman: "Ironman",
+  hardcore_ironman: "Hardcore Ironman",
+  ultimate_ironman: "Ultimate Ironman",
+  group_ironman: "Group Ironman",
+  unranked_group_ironman: "Unranked Group Ironman",
+  ranked_group_ironman: "Ranked Group Ironman",
+};
+
+function titleCaseParts(value: string) {
+  return value
+    .split(/[\s_-]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toLocaleUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+export function formatAccountBuild(value: string) {
+  const key = value.trim().toLocaleLowerCase();
+  if (!key) return "";
+  const compactKey = key.replace(/[\s_-]+/g, "");
+  const mapped = accountBuildLabels[key] ?? accountBuildLabels[compactKey];
+  if (mapped) return mapped;
+  return titleCaseParts(key);
+}
+
+export function formatAccountType(value: string) {
+  const key = value.trim().toLocaleLowerCase();
+  if (!key) return "";
+  const snakeKey = key.replace(/[\s-]+/g, "_");
+  return accountTypeLabels[snakeKey] ?? titleCaseParts(key);
+}

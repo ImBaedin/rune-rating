@@ -54,6 +54,71 @@ export default defineSchema({
     .index("by_key", ["key"])
     .index("by_player_and_category", ["playerId", "category"]),
 
+  playerRatings: defineTable({
+    playerId: v.id("players"),
+    normalizedRsn: v.string(),
+    displayRsn: v.string(),
+    searchText: v.string(),
+    score: v.number(),
+    tier: v.union(
+      v.literal("Bronze"),
+      v.literal("Iron"),
+      v.literal("Steel"),
+      v.literal("Black"),
+      v.literal("Mithril"),
+      v.literal("Adamant"),
+      v.literal("Rune"),
+      v.literal("Dragon"),
+    ),
+    tierIndex: v.number(),
+    tierProgress: v.number(),
+    percentileLabel: v.string(),
+    formulaVersion: v.string(),
+    formulaVersionKey: v.string(),
+    accountTypeKey: v.string(),
+    accountType: v.string(),
+    accountBuild: v.string(),
+    groupName: v.union(v.string(), v.null()),
+    combatLevel: v.number(),
+    totalLevel: v.number(),
+    totalXp: v.number(),
+    maxedSkills: v.number(),
+    questPoints: v.number(),
+    totalQuestPoints: v.number(),
+    collectionObtained: v.number(),
+    collectionTotal: v.number(),
+    ehp: v.number(),
+    ehb: v.number(),
+    adjustedEhp: v.union(v.number(), v.null()),
+    adjustedEhb: v.union(v.number(), v.null()),
+    efficiencyRateType: v.union(v.literal("ironman"), v.null()),
+    fetchedAt: v.number(),
+    calculatedAt: v.number(),
+    refreshAllowedAt: v.number(),
+  })
+    .index("by_player", ["playerId"])
+    .index("by_normalized_rsn", ["normalizedRsn"])
+    .index("by_score", ["score"])
+    .index("by_tier_index_and_score", ["tierIndex", "score"])
+    .index("by_account_type_key_and_score", ["accountTypeKey", "score"])
+    .index("by_account_build_and_score", ["accountBuild", "score"])
+    .searchIndex("search_search_text", {
+      searchField: "searchText",
+      filterFields: ["accountTypeKey", "accountBuild"],
+    }),
+
+  ratingDistributions: defineTable({
+    key: v.string(),
+    formulaVersionKey: v.string(),
+    scope: v.union(v.literal("global"), v.literal("accountType")),
+    scopeKey: v.string(),
+    total: v.number(),
+    countsByScore: v.array(v.number()),
+    updatedAt: v.number(),
+  })
+    .index("by_key", ["key"])
+    .index("by_formula_version_key", ["formulaVersionKey"]),
+
   canonicalItems: defineTable({
     key: v.string(),
     playerId: v.id("players"),

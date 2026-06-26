@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import type { CanonicalActivity, CanonicalSkill } from "@rune-rating/domain";
 import { makeFunctionReference } from "convex/server";
 import { convexTest } from "convex-test";
+import { rankFromDistribution } from "../convex/lib/ratingDistributions";
 import { calculateAdjustedEfficiency } from "../convex/lib/wiseOldManEfficiency";
 import schema from "../convex/schema";
 import { buildXpTimelineDashboard } from "../convex/xpTimeline";
@@ -11,6 +12,7 @@ const modules = {
   "./_generated/server.js": () => import("../convex/_generated/server.js"),
   "./analytics.ts": () => import("../convex/analytics"),
   "./comparisons.ts": () => import("../convex/comparisons"),
+  "./leaderboard.ts": () => import("../convex/leaderboard"),
   "./players.ts": () => import("../convex/players"),
   "./providerQueue.ts": () => import("../convex/providerQueue"),
   "./refresh.ts": () => import("../convex/refresh"),
@@ -215,7 +217,11 @@ const getRuneRating = makeFunctionReference<
         displayRsn: string;
         accountType: string;
         score: number;
+        leaderboardRank: number | null;
+        leaderboardRankedCount: number;
+        leaderboardTopPercent: number | null;
         tier: string;
+        percentileLabel: string;
         ehp: number;
         ehb: number;
         adjustedEhp: number | null;
@@ -225,6 +231,75 @@ const getRuneRating = makeFunctionReference<
       };
     }
 >("runeRating:get");
+
+type LeaderboardEntry = {
+  displayRsn: string;
+  normalizedRsn: string;
+  score: number;
+  leaderboardRank: number | null;
+  leaderboardRankedCount: number;
+  leaderboardTopPercent: number | null;
+  leaderboardLabel: string;
+  tier: string;
+  accountTypeKey: string;
+  accountType: string;
+  accountBuild: string;
+  formulaVersionKey: string;
+};
+
+const listLeaderboard = makeFunctionReference<
+  "query",
+  {
+    paginationOpts: { numItems: number; cursor: string | null };
+    accountTypeKey?: string;
+  },
+  { page: LeaderboardEntry[]; isDone: boolean; continueCursor: string }
+>("leaderboard:list");
+
+const searchLeaderboard = makeFunctionReference<
+  "query",
+  { query: string; limit?: number; accountTypeKey?: string },
+  LeaderboardEntry[]
+>("leaderboard:search");
+
+const getLeaderboardByRsn = makeFunctionReference<
+  "query",
+  { rsn: string },
+  LeaderboardEntry | null
+>("leaderboard:getByRsn");
+
+const backfillCurrentRatings = makeFunctionReference<
+  "mutation",
+  { cursor: string | null; limit?: number },
+  {
+    processed: number;
+    ready: number;
+    removed: number;
+    skipped: number;
+    isDone: boolean;
+    continueCursor: string;
+  }
+>("leaderboard:backfillCurrentRatings");
+
+const backfillAllCurrentRatings = makeFunctionReference<
+  "mutation",
+  {
+    cursor?: string | null;
+    limit?: number;
+    delayMs?: number;
+    resetDistributions?: boolean;
+  },
+  {
+    processed: number;
+    ready: number;
+    removed: number;
+    skipped: number;
+    isDone: boolean;
+    continueCursor: string;
+    scheduledNext: boolean;
+    nextDelayMs: number;
+  }
+>("leaderboard:backfillAllCurrentRatings");
 
 const getRuneProfileDashboard = makeFunctionReference<
   "query",
@@ -650,6 +725,30 @@ describe("Wise Old Man efficiency calculations", () => {
   });
 });
 
+describe("rating rank labels", () => {
+  test("labels top 100 ranks separately from percentile ranks", () => {
+    const countsByScore = Array.from({ length: 1_001 }, () => 0);
+    countsByScore[900] = 75;
+    countsByScore[800] = 75;
+    countsByScore[700] = 50;
+    const distribution = {
+      total: 200,
+      countsByScore,
+    } as unknown as Parameters<typeof rankFromDistribution>[0];
+
+    expect(rankFromDistribution(distribution, 800, true)).toMatchObject({
+      rank: 76,
+      topPercent: 38,
+      label: "Rank #76 / Top 100",
+    });
+    expect(rankFromDistribution(distribution, 700, true)).toMatchObject({
+      rank: 151,
+      topPercent: 76,
+      label: "Rank #151 / Top 76%",
+    });
+  });
+});
+
 describe("refresh orchestration", () => {
   test("schedules a first refresh and blocks duplicate active leases", async () => {
     const t = convexTest({ schema, modules });
@@ -984,6 +1083,9 @@ describe("rune rating", () => {
     expect(rating.card.adjustedEhb).toBeCloseTo(80);
     expect(rating.card.efficiencyRateType).toBe("ironman");
     expect(rating.card.score).toBeGreaterThan(0);
+    expect(rating.card.leaderboardRank).toBe(1);
+    expect(rating.card.leaderboardRankedCount).toBe(1);
+    expect(rating.card.percentileLabel).toBe("Rank #1 / Top 100");
     expect(rating.card.tier).toBeTruthy();
     expect(rating.card.prestigeStats).toEqual(
       expect.arrayContaining([
@@ -1048,6 +1150,160 @@ describe("rune rating", () => {
       status: "unavailable",
       missingSources: ["Wise Old Man", "RuneProfile"],
     });
+  });
+});
+
+describe("rating leaderboard", () => {
+  test("caches current ratings when refreshes complete", async () => {
+    const t = convexTest({ schema, modules });
+    await completeRatingFixtures(t, "GIM Wamuu");
+
+    const rating = await t.query(getRuneRating, { rsn: "GIM Wamuu" });
+    if (rating.status !== "ready") throw new Error("Expected ready rating.");
+
+    const exact = await t.query(getLeaderboardByRsn, { rsn: "gim wamuu" });
+    expect(exact).toMatchObject({
+      displayRsn: "GIM Wamuu",
+      normalizedRsn: "gim wamuu",
+      score: rating.card.score,
+      leaderboardRank: 1,
+      leaderboardRankedCount: 1,
+      leaderboardLabel: "Rank #1 / Top 100",
+      accountTypeKey: "group_ironman",
+      accountType: "Group Ironman",
+      formulaVersionKey: "formula-v1",
+    });
+
+    const leaderboard = await t.query(listLeaderboard, {
+      paginationOpts: { numItems: 10, cursor: null },
+    });
+    expect(leaderboard.page).toHaveLength(1);
+    expect(leaderboard.page[0]).toMatchObject({
+      displayRsn: "GIM Wamuu",
+      score: rating.card.score,
+    });
+
+    const groupIronmen = await t.query(listLeaderboard, {
+      paginationOpts: { numItems: 10, cursor: null },
+      accountTypeKey: "group_ironman",
+    });
+    expect(groupIronmen.page.map((entry) => entry.displayRsn)).toEqual([
+      "GIM Wamuu",
+    ]);
+  });
+
+  test("supports paginated leaderboard reads and name search", async () => {
+    const t = convexTest({ schema, modules });
+    await completeRatingFixtures(t, "First Rated");
+    await completeRatingFixtures(t, "Second Rated");
+
+    const firstPage = await t.query(listLeaderboard, {
+      paginationOpts: { numItems: 1, cursor: null },
+    });
+    expect(firstPage.page).toHaveLength(1);
+    expect(firstPage.isDone).toBe(false);
+
+    const secondPage = await t.query(listLeaderboard, {
+      paginationOpts: { numItems: 1, cursor: firstPage.continueCursor },
+    });
+    expect(secondPage.page).toHaveLength(1);
+
+    const searchResults = await t.query(searchLeaderboard, {
+      query: "second",
+      limit: 5,
+    });
+    expect(searchResults.map((entry) => entry.displayRsn)).toContain(
+      "Second Rated",
+    );
+  });
+
+  test("can backfill ratings for existing complete players", async () => {
+    const t = convexTest({ schema, modules });
+    await completeRatingFixtures(t, "Backfill Me");
+    await t.run(async (ctx) => {
+      const player = await ctx.db
+        .query("players")
+        .withIndex("by_normalized_rsn", (index) =>
+          index.eq("normalizedRsn", "backfill me"),
+        )
+        .unique();
+      if (!player) throw new Error("Expected player.");
+      const rating = await ctx.db
+        .query("playerRatings")
+        .withIndex("by_player", (index) => index.eq("playerId", player._id))
+        .unique();
+      if (rating) await ctx.db.delete(rating._id);
+    });
+
+    expect(await t.query(getLeaderboardByRsn, { rsn: "Backfill Me" })).toBe(
+      null,
+    );
+    expect(
+      await t.mutation(backfillCurrentRatings, { cursor: null, limit: 10 }),
+    ).toMatchObject({ processed: 1, ready: 1, removed: 0 });
+    expect(
+      await t.query(getLeaderboardByRsn, { rsn: "Backfill Me" }),
+    ).toMatchObject({
+      displayRsn: "Backfill Me",
+    });
+  });
+
+  test("schedules all-player rating backfills in bounded batches", async () => {
+    const t = convexTest({ schema, modules });
+    await completeRatingFixtures(t, "Batch One");
+    await completeRatingFixtures(t, "Batch Two");
+    await t.run(async (ctx) => {
+      const ratings = await ctx.db.query("playerRatings").take(10);
+      for (const rating of ratings) {
+        await ctx.db.delete(rating._id);
+      }
+    });
+
+    const result = await t.mutation(backfillAllCurrentRatings, {
+      limit: 1,
+      delayMs: 250,
+    });
+    expect(result).toMatchObject({
+      processed: 1,
+      ready: 1,
+      isDone: false,
+      scheduledNext: true,
+      nextDelayMs: 250,
+    });
+  });
+
+  test("publishes reset backfills without carrying stale distribution totals", async () => {
+    const t = convexTest({ schema, modules });
+    await completeRatingFixtures(t, "Stale One");
+    await completeRatingFixtures(t, "Stale Two");
+    await t.run(async (ctx) => {
+      const distributions = await ctx.db.query("ratingDistributions").take(10);
+      for (const distribution of distributions) {
+        await ctx.db.patch(distribution._id, {
+          total: 50,
+          countsByScore: distribution.countsByScore.map((count, index) =>
+            index === 0 ? 50 : count,
+          ),
+        });
+      }
+    });
+
+    expect(
+      await t.mutation(backfillAllCurrentRatings, { limit: 10 }),
+    ).toMatchObject({
+      processed: 2,
+      ready: 2,
+      isDone: true,
+      scheduledNext: false,
+    });
+
+    const leaderboard = await t.query(listLeaderboard, {
+      paginationOpts: { numItems: 10, cursor: null },
+    });
+    expect(leaderboard.page).toHaveLength(2);
+    expect(
+      leaderboard.page.every((entry) => entry.leaderboardRankedCount === 2),
+    ).toBe(true);
   });
 });
 

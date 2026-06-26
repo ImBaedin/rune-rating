@@ -3,7 +3,7 @@ import { normalizeRsn } from "@rune-rating/domain";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery } from "convex/react";
 import type { FunctionReturnType } from "convex/server";
-import { ArrowRight, Search, Swords } from "lucide-react";
+import { ArrowRight, Search, Swords, Trophy } from "lucide-react";
 import { type FormEvent, memo, useEffect, useRef, useState } from "react";
 import { capturePageView } from "./analytics";
 import { FaultyTerminal } from "./components/FaultyTerminal";
@@ -13,6 +13,7 @@ import {
   randomExampleRsn,
 } from "./exampleRsns";
 import { comparisonPath } from "./features/comparison/navigation";
+import { formatAccountBuild } from "./features/ratingDisplay";
 
 type RuneRatingResult = FunctionReturnType<typeof api.runeRating.get>;
 type RuneRatingCard = Extract<RuneRatingResult, { status: "ready" }>["card"];
@@ -68,10 +69,16 @@ export function LandingPage() {
 
         <LandingSearch />
 
-        <Link className="landing-compare" to={compareHref}>
-          <Swords aria-hidden="true" size={17} />
-          Compare players
-        </Link>
+        <div className="landing-actions">
+          <Link className="landing-compare" to="/leaderboard">
+            <Trophy aria-hidden="true" size={17} />
+            Leaderboard
+          </Link>
+          <Link className="landing-compare" to={compareHref}>
+            <Swords aria-hidden="true" size={17} />
+            Compare players
+          </Link>
+        </div>
       </section>
 
       <LandingPreview />
@@ -207,7 +214,8 @@ function LiveRatingCard({ card }: { card: RuneRatingCard }) {
     <>
       <p>{card.score}</p>
       <small>
-        {card.displayRsn} / {card.accountBuild} / {card.percentileLabel}
+        {card.displayRsn} / {formatAccountBuild(card.accountBuild)} /{" "}
+        {card.percentileLabel}
       </small>
     </>
   );

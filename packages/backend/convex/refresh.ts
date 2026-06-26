@@ -11,6 +11,7 @@ import { analyticsDistinctIdForRsn } from "./lib/analytics";
 import { syncCanonicalItemsForCategory } from "./lib/canonicalItems";
 import { getRefreshCooldownMs } from "./lib/config";
 import { categorySnapshotKey, snapshotStateKey } from "./lib/keys";
+import { deletePlayerRating, syncPlayerRating } from "./lib/playerRatings";
 import { getOrCreatePlayer } from "./lib/players";
 import { REFRESH_LEASE_MS } from "./policies/refresh";
 import {
@@ -95,6 +96,7 @@ async function finalizeRefreshIfTerminal(
 
   const cooldownMs = await getRefreshCooldownMs(ctx);
   await ctx.db.patch(playerId, { refreshAllowedAt: now + cooldownMs });
+  await syncPlayerRating(ctx, playerId, now);
   await ctx.db.delete(lease._id);
   return true;
 }
@@ -964,6 +966,7 @@ export const completeFailure = internalMutation({
         });
       }
     }
+    await deletePlayerRating(ctx, args.playerId);
     await ctx.db.delete(lease._id);
     return true;
   },

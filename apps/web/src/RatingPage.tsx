@@ -455,6 +455,9 @@ export function RatingPage() {
           <span>RuneRating</span>
         </a>
         <div className="rating-toolbar-actions">
+          <a href="/leaderboard" className="rating-nav-link">
+            Leaderboard
+          </a>
           <a href={defaultCompareHref} className="rating-nav-link">
             Compare players
           </a>
