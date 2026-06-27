@@ -269,3 +269,27 @@ export async function getRatingDistribution(
     .withIndex("by_key", (index) => index.eq("key", key))
     .unique();
 }
+
+export async function getRatingDistributionTotal(
+  ctx: DbCtx,
+  args: {
+    formulaVersionKey: string;
+    scope: RatingDistributionScope;
+    scopeKey?: string;
+  },
+) {
+  const distribution = await ctx.db
+    .query("ratingDistributions")
+    .withIndex("by_key", (index) =>
+      index.eq(
+        "key",
+        distributionKey(
+          args.formulaVersionKey,
+          args.scope,
+          args.scopeKey ?? globalScopeKey,
+        ),
+      ),
+    )
+    .unique();
+  return distribution?.total ?? 0;
+}

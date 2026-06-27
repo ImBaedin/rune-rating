@@ -111,6 +111,7 @@ export function LeaderboardPage() {
   const leaderboard = usePaginatedQuery(api.leaderboard.list, listArgs, {
     initialNumItems: 25,
   });
+  const profileCount = useQuery(api.leaderboard.totalProfiles, {});
   const searchResults = useQuery(api.leaderboard.search, searchArgs);
 
   useEffect(() => {
@@ -126,6 +127,8 @@ export function LeaderboardPage() {
       ? true
       : !trimmedQuery && leaderboard.status === "LoadingFirstPage";
   const canLoadMore = !trimmedQuery && leaderboard.status === "CanLoadMore";
+  const totalProfiles =
+    profileCount?.totalProfiles ?? leaderboard.results.length;
 
   return (
     <main className="leaderboard-page">
@@ -152,8 +155,8 @@ export function LeaderboardPage() {
           </div>
           <div className="leaderboard-hero-stat">
             <Trophy size={20} />
-            <span>{leaderboard.results.length}</span>
-            <strong>loaded profiles</strong>
+            <span>{totalProfiles.toLocaleString("en-US")}</span>
+            <strong>rated profiles</strong>
           </div>
         </header>
 

@@ -13,6 +13,7 @@ import { ratingFormulaVersionKey } from "./lib/ratingCalculation";
 import {
   clearRatingDistributions,
   getRatingDistribution,
+  getRatingDistributionTotal,
   publishRatingDistributionDraft,
   rankFromDistribution,
 } from "./lib/ratingDistributions";
@@ -67,6 +68,10 @@ const leaderboardPageValidator = v.object({
   page: v.array(leaderboardEntryValidator),
   isDone: v.boolean(),
   continueCursor: v.string(),
+});
+
+const totalProfilesValidator = v.object({
+  totalProfiles: v.number(),
 });
 
 const backfillResultValidator = v.object({
@@ -220,6 +225,21 @@ export const list = query({
       isDone: result.isDone,
       continueCursor: result.continueCursor,
     };
+  },
+});
+
+export const totalProfiles = query({
+  args: {
+    accountTypeKey: v.optional(v.string()),
+  },
+  returns: totalProfilesValidator,
+  handler: async (ctx, args) => {
+    const totalProfiles = await getRatingDistributionTotal(ctx, {
+      formulaVersionKey: ratingFormulaVersionKey,
+      scope: args.accountTypeKey === undefined ? "global" : "accountType",
+      scopeKey: args.accountTypeKey,
+    });
+    return { totalProfiles };
   },
 });
 

@@ -262,6 +262,12 @@ const searchLeaderboard = makeFunctionReference<
   LeaderboardEntry[]
 >("leaderboard:search");
 
+const totalLeaderboardProfiles = makeFunctionReference<
+  "query",
+  { accountTypeKey?: string },
+  { totalProfiles: number }
+>("leaderboard:totalProfiles");
+
 const getLeaderboardByRsn = makeFunctionReference<
   "query",
   { rsn: string },
@@ -1202,6 +1208,9 @@ describe("rating leaderboard", () => {
     });
     expect(firstPage.page).toHaveLength(1);
     expect(firstPage.isDone).toBe(false);
+    expect(await t.query(totalLeaderboardProfiles, {})).toEqual({
+      totalProfiles: 2,
+    });
 
     const secondPage = await t.query(listLeaderboard, {
       paginationOpts: { numItems: 1, cursor: firstPage.continueCursor },
@@ -1215,6 +1224,14 @@ describe("rating leaderboard", () => {
     expect(searchResults.map((entry) => entry.displayRsn)).toContain(
       "Second Rated",
     );
+    expect(
+      await t.query(totalLeaderboardProfiles, { accountTypeKey: "regular" }),
+    ).toEqual({ totalProfiles: 0 });
+    expect(
+      await t.query(totalLeaderboardProfiles, {
+        accountTypeKey: "group_ironman",
+      }),
+    ).toEqual({ totalProfiles: 2 });
   });
 
   test("can backfill ratings for existing complete players", async () => {
