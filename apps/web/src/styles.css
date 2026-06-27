@@ -6224,15 +6224,18 @@ footer {
   border-collapse: collapse;
 }
 
-.leaderboard-table-effects {
+.leaderboard-row-effect {
   position: absolute;
+  top: 0;
   left: 0;
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
 }
 
-.leaderboard-table-effects canvas {
+.leaderboard-row-effect canvas {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -6267,6 +6270,10 @@ footer {
 .leaderboard-table td > * {
   position: relative;
   z-index: 2;
+}
+
+.leaderboard-row-effect-anchor {
+  display: none;
 }
 
 .leaderboard-table tr:hover td::before {

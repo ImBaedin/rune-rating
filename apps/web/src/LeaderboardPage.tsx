@@ -4,16 +4,17 @@ import { Link } from "@tanstack/react-router";
 import { usePaginatedQuery, useQuery } from "convex/react";
 import type { FunctionReturnType } from "convex/server";
 import { ChevronDown, Info, Search, Shield, Trophy } from "lucide-react";
-import { type CSSProperties, useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
 import { capturePageView } from "./analytics";
 import {
   formatAccountBuild,
   formatAccountType,
 } from "./features/ratingDisplay";
 import {
-  LeaderboardTableEffects,
-  leaderboardRowEffectSettings,
-} from "./LeaderboardTableEffects";
+  type LeaderboardFeaturedRank,
+  leaderboardEffectSettingsForRank,
+} from "./LeaderboardRowEffectSettings";
+import { LeaderboardRowEffect } from "./LeaderboardTableEffects";
 import { tierColorsFor, tierImage } from "./runeRatingAssets";
 
 type LeaderboardPageResult = FunctionReturnType<typeof api.leaderboard.list>;
@@ -84,28 +85,29 @@ function rankDetail(entry: LeaderboardEntry) {
   return `${entry.leaderboardLabel} of ${entry.leaderboardRankedCount.toLocaleString("en-US")}`;
 }
 
+function featuredRankFor(rank: number): LeaderboardFeaturedRank | null {
+  if (rank === 1 || rank === 2 || rank === 3) return rank;
+  return null;
+}
+
 export function LeaderboardPage() {
   const [queryText, setQueryText] = useState("");
   const [activeFilter, setActiveFilter] =
     useState<AccountTypeFilter>(allAccountTypes);
   const trimmedQuery = queryText.trim();
-  const listArgs = useMemo(
-    () =>
-      activeFilter.value === undefined
-        ? {}
-        : { accountTypeKey: activeFilter.value },
-    [activeFilter.value],
-  );
-  const searchArgs = useMemo(() => {
-    if (!trimmedQuery) return "skip" as const;
-    return activeFilter.value === undefined
+  const listArgs =
+    activeFilter.value === undefined
+      ? {}
+      : { accountTypeKey: activeFilter.value };
+  const searchArgs = !trimmedQuery
+    ? ("skip" as const)
+    : activeFilter.value === undefined
       ? { query: trimmedQuery, limit: 25 }
       : {
           query: trimmedQuery,
           limit: 25,
           accountTypeKey: activeFilter.value,
         };
-  }, [activeFilter.value, trimmedQuery]);
   const leaderboard = usePaginatedQuery(api.leaderboard.list, listArgs, {
     initialNumItems: 25,
   });
@@ -164,6 +166,7 @@ export function LeaderboardPage() {
             <input
               value={queryText}
               onChange={(event) => setQueryText(event.target.value)}
+              aria-label="Search RSN"
               placeholder="Search RSN"
               autoComplete="off"
               spellCheck={false}
@@ -231,7 +234,6 @@ export function LeaderboardPage() {
                 ))}
               </tbody>
             </table>
-            <LeaderboardTableEffects settings={leaderboardRowEffectSettings} />
             {isLoading ? <EmptyState label="Loading leaderboard data" /> : null}
             {!isLoading && entries.length === 0 ? (
               <EmptyState label="No matching rated profiles yet" />
@@ -265,7 +267,15 @@ function LeaderboardRow({
   const shownEhp = entry.adjustedEhp ?? entry.ehp;
   const shownEhb = entry.adjustedEhb ?? entry.ehb;
   const rowRank = entry.leaderboardRank ?? fallbackRank;
-  const featuredRank = rowRank >= 1 && rowRank <= 3 ? rowRank : null;
+  const featuredRank = featuredRankFor(rowRank);
+  const featuredSlot =
+    featuredRank === null
+      ? null
+      : (featuredRankFor(fallbackRank) ?? featuredRank);
+  const effectSettings =
+    featuredSlot === null
+      ? null
+      : leaderboardEffectSettingsForRank(featuredSlot);
   return (
     <tr
       className={
@@ -282,6 +292,13 @@ function LeaderboardRow({
       }
     >
       <td>
+        {featuredSlot !== null && effectSettings !== null ? (
+          <LeaderboardRowEffect
+            rank={featuredSlot}
+            settings={effectSettings}
+            tierColor={colors.light}
+          />
+        ) : null}
         <span className="leaderboard-rank">
           {entry.leaderboardRank === null
             ? `#${fallbackRank}`
