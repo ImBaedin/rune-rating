@@ -82,6 +82,7 @@ export const HISCORES_ACTIVITY_NAMES = [
   "K'ril Tsutsaroth",
   "Lunar Chests",
   "Mimic",
+  "Maggot King",
   "Nex",
   "Nightmare",
   "Phosani's Nightmare",
