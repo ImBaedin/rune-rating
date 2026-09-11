@@ -76,6 +76,35 @@ function assertManifest(
   }
 }
 
+function assertActivityManifest(
+  actual: ReadonlyArray<{ id: number; name: string }>,
+): void {
+  const names = new Set<string>();
+
+  for (const [index, entry] of actual.entries()) {
+    if (entry.id !== index) {
+      throw new HiscoresContractError(
+        `Unexpected activity id at index ${index}; received ${entry.id}.`,
+      );
+    }
+    if (names.has(entry.name)) {
+      throw new HiscoresContractError(
+        `Hiscores returned duplicate activity "${entry.name}".`,
+      );
+    }
+    names.add(entry.name);
+  }
+
+  const missingNames = HISCORES_ACTIVITY_NAMES.filter(
+    (name) => !names.has(name),
+  );
+  if (missingNames.length > 0) {
+    throw new HiscoresContractError(
+      `Hiscores omitted known activities: ${missingNames.join(", ")}.`,
+    );
+  }
+}
+
 export function parseHiscoresResponse(
   input: unknown,
   fetchedAt = Date.now(),
@@ -88,7 +117,7 @@ export function parseHiscoresResponse(
   }
 
   assertManifest(parsed.data.skills, HISCORES_SKILL_NAMES, "skill");
-  assertManifest(parsed.data.activities, HISCORES_ACTIVITY_NAMES, "activity");
+  assertActivityManifest(parsed.data.activities);
 
   const skills: CanonicalSkill[] = parsed.data.skills.map((skill) => ({
     key: `skill.${slug(skill.name)}`,
@@ -102,7 +131,7 @@ export function parseHiscoresResponse(
     (activity) => ({
       key: `activity.${slug(activity.name)}`,
       name: activity.name,
-      category: activityCategory(activity.id),
+      category: activityCategory(activity.id, activity.name),
       rank: canonicalValue(activity.rank),
       score: canonicalValue(activity.score),
     }),

@@ -81,8 +81,9 @@ export const HISCORES_ACTIVITY_NAMES = [
   "Kree'Arra",
   "K'ril Tsutsaroth",
   "Lunar Chests",
-  "Mimic",
+  "Mad Angel",
   "Maggot King",
+  "Mimic",
   "Nex",
   "Nightmare",
   "Phosani's Nightmare",
@@ -121,9 +122,26 @@ export const HISCORES_ACTIVITY_NAMES = [
 
 export function activityCategory(
   id: number,
+  name: string,
 ): "activities" | "clues" | "bossing" | "minigames" {
-  if (id >= 7 && id <= 13) return "clues";
-  if (id >= 14 && id <= 19) return "minigames";
+  if (generalActivityNames.has(name)) return "activities";
+  if (clueActivityNames.has(name)) return "clues";
+  if (minigameActivityNames.has(name)) return "minigames";
+  if (bossActivityNames.has(name)) return "bossing";
   if (id >= 20) return "bossing";
   return "activities";
 }
+
+export function isKnownHiscoresActivityName(name: string): boolean {
+  return knownActivityNames.has(name);
+}
+
+const knownActivityNames = new Set<string>(HISCORES_ACTIVITY_NAMES);
+const generalActivityNames = new Set<string>(
+  HISCORES_ACTIVITY_NAMES.slice(0, 7),
+);
+const clueActivityNames = new Set<string>(HISCORES_ACTIVITY_NAMES.slice(7, 14));
+const minigameActivityNames = new Set<string>(
+  HISCORES_ACTIVITY_NAMES.slice(14, 20),
+);
+const bossActivityNames = new Set<string>(HISCORES_ACTIVITY_NAMES.slice(20));

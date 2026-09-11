@@ -1,5 +1,5 @@
 import type { HiscoresSnapshot } from "@rune-rating/domain";
-import { parseHiscoresResponse } from "./parser";
+import { HiscoresContractError, parseHiscoresResponse } from "./parser";
 
 const DEFAULT_BASE_URL =
   "https://secure.runescape.com/m=hiscore_oldschool/index_lite.json";
@@ -9,6 +9,7 @@ export type HiscoresErrorCode =
   | "notFound"
   | "rateLimited"
   | "timeout"
+  | "invalidResponse"
   | "failed";
 
 export class HiscoresRequestError extends Error {
@@ -25,7 +26,7 @@ export class HiscoresRequestError extends Error {
 export type HiscoresClientOptions = {
   baseUrl?: string;
   timeoutMs?: number;
-  fetch?: typeof globalThis.fetch;
+  fetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
   userAgent?: string;
 };
 
@@ -75,6 +76,9 @@ export async function fetchHiscores(
     return parseHiscoresResponse(await response.json());
   } catch (error) {
     if (error instanceof HiscoresRequestError) throw error;
+    if (error instanceof HiscoresContractError) {
+      throw new HiscoresRequestError("invalidResponse", error.message);
+    }
     if (error instanceof DOMException && error.name === "TimeoutError") {
       throw new HiscoresRequestError(
         "timeout",

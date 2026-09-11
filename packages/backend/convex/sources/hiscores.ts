@@ -1,4 +1,8 @@
-import { fetchHiscores, HiscoresRequestError } from "@rune-rating/sdk-hiscores";
+import {
+  fetchHiscores,
+  HiscoresRequestError,
+  isKnownHiscoresActivityName,
+} from "@rune-rating/sdk-hiscores";
 import { v } from "convex/values";
 import { internal } from "../_generated/api.js";
 import { internalAction } from "../_generated/server.js";
@@ -8,6 +12,36 @@ import {
   durationMs,
   withProviderRequestAnalytics,
 } from "../lib/analytics";
+
+const reportedContractExtensions = new Set<string>();
+
+async function reportUnknownActivities(rsn: string, names: string[]) {
+  const unreportedNames = names.filter((name) => {
+    const key = `hiscores:${name}`;
+    if (reportedContractExtensions.has(key)) return false;
+    reportedContractExtensions.add(key);
+    return true;
+  });
+  if (unreportedNames.length === 0) return;
+
+  console.warn(
+    `Hiscores returned new activities: ${unreportedNames.join(", ")}.`,
+  );
+  try {
+    await capturePostHogEvent({
+      event: "provider_contract_extension",
+      distinctId: await analyticsDistinctIdForRsn(rsn),
+      properties: {
+        source: "hiscores",
+        endpoint: "player_hiscores",
+        field_count: unreportedNames.length,
+        fields: unreportedNames.join(","),
+      },
+    });
+  } catch (error) {
+    console.warn("Failed to report a Hiscores contract extension.", error);
+  }
+}
 
 export const refreshPlayer = internalAction({
   args: {
@@ -36,6 +70,12 @@ export const refreshPlayer = internalAction({
             userAgent: "RuneRating",
           }),
       );
+      const unknownActivityNames = snapshot.activities
+        .filter((activity) => !isKnownHiscoresActivityName(activity.name))
+        .map((activity) => activity.name);
+      if (unknownActivityNames.length > 0) {
+        await reportUnknownActivities(args.rsn, unknownActivityNames);
+      }
       await ctx.runMutation(internal.refresh.completeHiscores, {
         playerId: args.playerId,
         requestId: args.requestId,
