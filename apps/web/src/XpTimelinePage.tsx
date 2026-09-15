@@ -630,6 +630,7 @@ function TimelineChart({
       <div className="xp-rechart-wrap">
         <ResponsiveContainer
           height="100%"
+          initialDimension={{ width: 1, height: 1 }}
           minHeight={0}
           minWidth={0}
           width="100%"
@@ -638,7 +639,7 @@ function TimelineChart({
             data={points}
             margin={{ top: 13, right: 29, bottom: 8, left: 0 }}
           >
-            <CartesianGrid stroke="#e6ebef" vertical={false} />
+            <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
             <XAxis
               dataKey="date"
               domain={["dataMin", "dataMax"]}
@@ -739,6 +740,7 @@ function GapChart({
       <div className="xp-rechart-wrap gap">
         <ResponsiveContainer
           height="100%"
+          initialDimension={{ width: 1, height: 1 }}
           minHeight={0}
           minWidth={0}
           width="100%"
@@ -757,7 +759,7 @@ function GapChart({
                 />
               </linearGradient>
             </defs>
-            <CartesianGrid stroke="#e6ebef" vertical={false} />
+            <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
             <XAxis
               dataKey="date"
               domain={["dataMin", "dataMax"]}
@@ -782,7 +784,11 @@ function GapChart({
                 typeof label === "number" ? formatDate(label) : label
               }
             />
-            <ReferenceLine y={0} stroke="#71808d" strokeDasharray="3 3" />
+            <ReferenceLine
+              y={0}
+              stroke="var(--chart-cursor-line)"
+              strokeDasharray="3 3"
+            />
             <Area
               connectNulls
               dataKey="gap"
@@ -879,6 +885,7 @@ function DailyGains({
       <div className="xp-rechart-wrap daily">
         <ResponsiveContainer
           height="100%"
+          initialDimension={{ width: 1, height: 1 }}
           minHeight={0}
           minWidth={0}
           width="100%"
@@ -887,7 +894,7 @@ function DailyGains({
             data={points}
             margin={{ top: 13, right: 18, bottom: 8, left: 0 }}
           >
-            <CartesianGrid stroke="#e6ebef" vertical={false} />
+            <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
             <XAxis
               dataKey="date"
               domain={["dataMin", "dataMax"]}

@@ -25,6 +25,33 @@ export type ComparisonTone =
 export const playerAccentClass = (side: PlayerSide) =>
   side === "left" ? "blue" : "green";
 
+const pageDescriptions: Record<string, string> = {
+  Overview:
+    "The current matchup, category leaders, recent momentum, and the data behind the score.",
+  Skills:
+    "Levels, XP, category composition, and the largest gaps in the current snapshots.",
+  "XP Timeline":
+    "Shared date ranges make momentum and account progression directly comparable.",
+  "EHP / Efficiency":
+    "Efficiency, account builds, and the remaining time behind each milestone.",
+  Activity:
+    "Recent training rhythm, daily gains, and the moments that changed the matchup.",
+  Quests:
+    "Quest-point progress, completion differences, and the requirements still blocking each player.",
+  "Achievement Diaries":
+    "Regional completion, reward unlocks, and the remaining tier-by-tier tasks.",
+  "Combat Achievements":
+    "Tier progress, point gaps, and granular task completion across both accounts.",
+  Bossing:
+    "Kill counts, raid completions, ranks, and the fastest opportunities to close each gap.",
+  Clues:
+    "Clue-scroll completions and rank pressure across every available tier.",
+  Minigames:
+    "Scores, ranks, and the minigame results creating the current lead.",
+  "Collection Log":
+    "Search individual items, compare ownership, and locate the pages creating the gap.",
+};
+
 export function sideLabel(
   side: PlayerSide | "tie" | "indeterminate" | null | undefined,
   names: [string, string],
@@ -57,7 +84,10 @@ export function PageHeader({
   return (
     <header className="rr-page-header">
       <div className="rr-page-header-main">
-        <h1>{title}</h1>
+        <div className="rr-page-heading">
+          <h1>{title}</h1>
+          {pageDescriptions[title] ? <p>{pageDescriptions[title]}</p> : null}
+        </div>
         {meta ? <div className="rr-page-header-meta">{meta}</div> : null}
       </div>
       {controls ? (
@@ -261,7 +291,7 @@ export function ComparisonKpiCard({
   tone = "blue",
   icon,
   isLoading = false,
-  loadingValue = "...",
+  loadingValue = "Loading value",
   loadingDetail = "Loading current snapshots",
   iconPosition = "start",
   children,
@@ -293,10 +323,30 @@ export function ComparisonKpiCard({
         <span className="rr-kpi-label">{label}</span>
         {children ?? (
           <>
-            <strong>{isLoading ? loadingValue : value}</strong>
+            {isLoading ? (
+              <span className="rr-kpi-loading" role="status">
+                <span
+                  className="rr-skeleton rr-skeleton-value"
+                  aria-hidden="true"
+                />
+                <span className="sr-only">{loadingValue}</span>
+              </span>
+            ) : (
+              <strong>{value}</strong>
+            )}
             {detail !== undefined ? (
               <div className="rr-kpi-detail">
-                {isLoading ? loadingDetail : detail}
+                {isLoading ? (
+                  <span className="rr-kpi-loading" role="status">
+                    <span
+                      className="rr-skeleton rr-skeleton-detail"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">{loadingDetail}</span>
+                  </span>
+                ) : (
+                  detail
+                )}
               </div>
             ) : null}
           </>
@@ -337,13 +387,23 @@ export function PairedMetricCard({
   return (
     <ComparisonKpiCard label={label} tone={tone} className="rr-paired-metric">
       <strong className={tone === "right" ? "green" : "blue"}>
-        {isLoading ? "..." : deltaFormatter(displayedDelta)}
-        <small> {gapLabel}</small>
+        {isLoading ? (
+          <span
+            className="rr-skeleton rr-skeleton-value"
+            role="status"
+            aria-label="Loading comparison"
+          />
+        ) : (
+          <>
+            {deltaFormatter(displayedDelta)}
+            <small> {gapLabel}</small>
+          </>
+        )}
       </strong>
       <PlayerPairLine
         names={names}
-        left={isLoading ? "..." : formatter(left)}
-        right={isLoading ? "..." : formatter(right)}
+        left={isLoading ? "—" : formatter(left)}
+        right={isLoading ? "—" : formatter(right)}
       />
       <em>{delta === null ? nullDetail : names[0]}</em>
     </ComparisonKpiCard>

@@ -24,6 +24,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { PageHeader, SourceChip } from "../../../components/comparison-ui";
 import { type Player, players } from "../../../mockData";
 import {
   type EfficiencyComparison,
@@ -37,6 +38,7 @@ import {
 import {
   formatAge,
   formatCompact,
+  formatCompactDelta,
   formatDelta,
   formatValue,
 } from "../formatters";
@@ -110,7 +112,20 @@ export function OverviewPage() {
   } = useComparisonShell();
 
   return (
-    <>
+    <div className="overview-page">
+      <PageHeader
+        title="Overview"
+        meta={
+          <>
+            <SourceChip label="Official Hiscores" />
+            <SourceChip label="Wise Old Man" />
+            <SourceChip
+              label="RuneProfile"
+              status={runeProfileUnavailableMessage ? "warn" : "ok"}
+            />
+          </>
+        }
+      />
       <section className="hero-grid">
         <PlayerCard
           player={players[0]}
@@ -147,6 +162,13 @@ export function OverviewPage() {
           }
         />
       </section>
+
+      <OutcomeRibbon
+        names={names}
+        comparison={comparison}
+        efficiency={efficiency}
+        runeProfile={runeProfile}
+      />
 
       <section className="top-grid">
         <XpTimeline
@@ -231,7 +253,106 @@ export function OverviewPage() {
           isLoading={leftProfile === undefined || rightProfile === undefined}
         />
       </section>
-    </>
+    </div>
+  );
+}
+
+function OutcomeRibbon({
+  names,
+  comparison,
+  efficiency,
+  runeProfile,
+}: {
+  names: [string, string];
+  comparison: SkillsComparison | undefined;
+  efficiency: EfficiencyComparison | undefined;
+  runeProfile: RuneProfileDashboard | undefined;
+}) {
+  const leftLeads =
+    comparison?.skills.filter(
+      (skill) => skill.key !== "skill.overall" && skill.xp.leader === "left",
+    ).length ?? null;
+  const rightLeads =
+    comparison?.skills.filter(
+      (skill) => skill.key !== "skill.overall" && skill.xp.leader === "right",
+    ).length ?? null;
+  const overall = comparison?.skills.find(
+    (skill) => skill.key === "skill.overall",
+  );
+  const questDelta =
+    runeProfile?.left && runeProfile.right
+      ? runeProfile.left.quests.earnedPoints -
+        runeProfile.right.quests.earnedPoints
+      : null;
+
+  const toneFor = (delta: number | null | undefined) =>
+    delta == null || delta === 0 ? "tie" : delta > 0 ? "left" : "right";
+  const leaderFor = (delta: number | null | undefined) =>
+    delta == null
+      ? "Waiting for data"
+      : delta === 0
+        ? "Even matchup"
+        : delta > 0
+          ? `${names[0]} leads`
+          : `${names[1]} leads`;
+
+  const skillDelta =
+    leftLeads == null || rightLeads == null ? null : leftLeads - rightLeads;
+  const outcomes = [
+    {
+      label: "Skills led",
+      source: "Official Hiscores",
+      value:
+        leftLeads == null || rightLeads == null
+          ? "—"
+          : `${leftLeads}–${rightLeads}`,
+      tone: toneFor(skillDelta),
+      leader: leaderFor(skillDelta),
+    },
+    {
+      label: "Total level",
+      source: "Official Hiscores",
+      value: formatDelta(overall?.level.delta ?? null),
+      tone: toneFor(overall?.level.delta),
+      leader: leaderFor(overall?.level.delta),
+    },
+    {
+      label: "Total XP",
+      source: "Official Hiscores",
+      value: formatCompactDelta(overall?.xp.delta ?? null),
+      tone: toneFor(overall?.xp.delta),
+      leader: leaderFor(overall?.xp.delta),
+    },
+    {
+      label: "Efficiency",
+      source: "Wise Old Man · EHP",
+      value:
+        efficiency?.efficiency.ehp.delta == null
+          ? "—"
+          : `${efficiency.efficiency.ehp.delta > 0 ? "+" : ""}${efficiency.efficiency.ehp.delta.toFixed(1)}`,
+      tone: toneFor(efficiency?.efficiency.ehp.delta),
+      leader: leaderFor(efficiency?.efficiency.ehp.delta),
+    },
+    {
+      label: "Quest points",
+      source: "RuneProfile",
+      value: formatDelta(questDelta),
+      tone: toneFor(questDelta),
+      leader: leaderFor(questDelta),
+    },
+  ];
+
+  return (
+    <section className="outcome-ribbon" aria-label="Category outcomes">
+      {outcomes.map((outcome) => (
+        <article className={`outcome-cell ${outcome.tone}`} key={outcome.label}>
+          <span>{outcome.label}</span>
+          <small>{outcome.source}</small>
+          <strong>{outcome.value}</strong>
+          <em>{outcome.leader}</em>
+        </article>
+      ))}
+    </section>
   );
 }
 
@@ -572,6 +693,7 @@ function XpTimeline({
         <div className="chart-wrap">
           <ResponsiveContainer
             height="100%"
+            initialDimension={{ width: 1, height: 1 }}
             minHeight={0}
             minWidth={0}
             width="100%"
@@ -596,7 +718,7 @@ function XpTimeline({
                   <stop offset="100%" stopColor="var(--blue)" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="#e6ebef" vertical={false} />
+              <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
               <XAxis dataKey="label" minTickGap={18} tickLine={false} />
               <YAxis
                 domain={[0, max]}
@@ -926,6 +1048,7 @@ function RecentActivity({
       <div className="bar-chart">
         <ResponsiveContainer
           height="100%"
+          initialDimension={{ width: 1, height: 1 }}
           minHeight={0}
           minWidth={0}
           width="100%"
@@ -934,7 +1057,7 @@ function RecentActivity({
             data={chartData}
             margin={{ top: 8, right: 4, bottom: 0, left: -10 }}
           >
-            <CartesianGrid stroke="#e6ebef" vertical={false} />
+            <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
             <XAxis dataKey="label" tickLine={false} />
             <YAxis
               domain={[0, max]}

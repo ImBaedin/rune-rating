@@ -18,9 +18,9 @@
 .collections-panel {
   min-width: 0;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  background: white;
-  box-shadow: var(--shadow);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .collections-wheel-panel,
@@ -33,7 +33,7 @@
 
 .collections-count {
   margin-left: auto;
-  color: #6d7985;
+  color: var(--muted);
   font-size: 10px;
   font-weight: 700;
 }
@@ -52,18 +52,18 @@
   width: 100%;
   height: 34px;
   margin-top: 10px;
-  border: 1px solid #dfe5eb;
-  border-radius: 7px;
-  background: #fbfcfd;
-  color: #33404c;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface-muted);
+  color: var(--muted);
   font-size: 11px;
   font-weight: 900;
   cursor: pointer;
 }
 
 .collections-expand-button:hover {
-  border-color: #cfd8e1;
-  background: #f4f7fa;
+  border-color: var(--blue);
+  background: var(--surface-raised);
 }
 
 .collections-side-column {
@@ -94,14 +94,14 @@
   place-content: center;
   gap: 1px;
   transform: translate(-50%, -50%);
-  border: 1px solid #e2e8ee;
+  border: 1px solid var(--line);
   border-radius: 50%;
-  background: #fbfcfd;
+  background: transparent;
   text-align: center;
 }
 
 .collections-wheel-center span {
-  color: #7a8691;
+  color: var(--muted-quiet);
   font-size: 9px;
   font-weight: 800;
   text-transform: uppercase;
@@ -110,10 +110,8 @@
 .collections-wheel-center strong {
   max-width: 86px;
   overflow: hidden;
-  color: #273440;
-  font:
-    800 12px "Manrope",
-    sans-serif;
+  color: var(--ink);
+  font: 800 12px var(--font-display);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -136,7 +134,7 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: 8px 10px;
   padding-bottom: 11px;
-  border-bottom: 1px solid #edf0f3;
+  border-bottom: 1px solid var(--line);
 }
 
 .collections-tab-signal > i {
@@ -158,18 +156,14 @@
 .collections-tab-heading strong {
   min-width: 0;
   overflow: hidden;
-  color: #33404c;
-  font:
-    800 12px "Manrope",
-    sans-serif;
+  color: var(--muted);
+  font: 800 12px var(--font-display);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .collections-tab-heading b {
-  font:
-    800 13px "Manrope",
-    sans-serif;
+  font: 800 13px var(--font-display);
   font-variant-numeric: tabular-nums;
 }
 
@@ -191,7 +185,7 @@
   align-items: center;
   gap: 6px;
   overflow: hidden;
-  color: #74808d;
+  color: var(--muted);
   font-size: 10px;
   font-weight: 800;
   text-overflow: ellipsis;
@@ -210,7 +204,7 @@
   height: 7px;
   overflow: hidden;
   border-radius: 999px;
-  background: #e9edf2;
+  background: var(--line);
 }
 
 .collections-tab-bar i {
@@ -222,9 +216,7 @@
 
 .collections-tab-bar b {
   text-align: right;
-  font:
-    800 12px "Manrope",
-    sans-serif;
+  font: 800 12px var(--font-display);
   font-variant-numeric: tabular-nums;
 }
 
@@ -256,7 +248,7 @@
   display: grid;
   gap: 8px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #edf0f3;
+  border-bottom: 1px solid var(--line);
 }
 
 .collections-meter:last-child {
@@ -268,7 +260,7 @@
   height: 9px;
   overflow: hidden;
   border-radius: 999px;
-  background: #e8edf2;
+  background: var(--line);
 }
 
 .collections-meter-track span {
@@ -301,7 +293,7 @@
   align-items: center;
   gap: 7px;
   overflow: hidden;
-  color: #33404c;
+  color: var(--muted);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -326,14 +318,12 @@
 
 .collections-meter-copy span {
   color: var(--ink);
-  font:
-    800 16px "Manrope",
-    sans-serif;
+  font: 800 16px var(--font-display);
 }
 
 .collections-meter-copy small {
   grid-column: 1 / -1;
-  color: #72808c;
+  color: var(--muted-quiet);
   font-weight: 700;
 }
 
@@ -343,7 +333,7 @@
   gap: 2px 10px;
   align-items: center;
   padding-bottom: 9px;
-  border-bottom: 1px solid #edf0f3;
+  border-bottom: 1px solid var(--line);
 }
 
 .collections-page-pressure:last-child {
@@ -354,14 +344,14 @@
 .collections-page-pressure strong {
   min-width: 0;
   overflow: hidden;
-  color: #33404c;
+  color: var(--muted);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .collections-page-pressure small,
 .collections-page-pressure span {
-  color: #7a8691;
+  color: var(--muted-quiet);
   font-size: 10px;
   font-weight: 700;
 }
@@ -369,9 +359,7 @@
 .collections-page-pressure b {
   grid-row: 1 / 3;
   grid-column: 2;
-  font:
-    800 17px "Manrope",
-    sans-serif;
+  font: 800 17px var(--font-display);
 }
 
 .collections-page-chart {
@@ -400,8 +388,8 @@
 }
 
 .collections-table th {
-  background: #fbfcfd;
-  color: #4d5964;
+  background: var(--surface-muted);
+  color: var(--muted);
   font-size: 10px;
   font-weight: 800;
 }
@@ -425,9 +413,9 @@
   height: 28px;
   display: grid;
   place-items: center;
-  border: 1px solid #dfe5eb;
+  border: 1px solid var(--line);
   border-radius: 6px;
-  background: #f8fafc;
+  background: var(--surface-muted);
 }
 
 .collections-item-icon img {
@@ -443,14 +431,14 @@
 .collections-item-name span {
   min-width: 0;
   overflow: hidden;
-  color: #2f3b46;
+  color: var(--ink);
   font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .collections-item-name small {
-  color: #788591;
+  color: var(--muted-quiet);
   font-size: 10px;
   font-weight: 700;
 }
@@ -469,10 +457,10 @@
   height: 22px;
   padding: 0 7px;
   overflow: hidden;
-  border: 1px solid #dfe5eb;
+  border: 1px solid var(--line);
   border-radius: 999px;
-  background: #f8fafc;
-  color: #52606c;
+  background: var(--surface-muted);
+  color: var(--muted);
   font-size: 10px;
   font-weight: 800;
   text-overflow: ellipsis;
@@ -482,21 +470,21 @@
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
-  color: #8a96a1;
+  color: var(--muted);
   font-weight: 800;
 }
 
 .collections-owned.owned {
-  color: #304052;
+  color: var(--ink);
 }
 
 .collections-owned small {
-  color: #7a8691;
+  color: var(--muted-quiet);
   font-weight: 700;
 }
 
 .collections-gap {
-  color: #7a8691;
+  color: var(--muted-quiet);
   font-weight: 900;
   font-variant-numeric: tabular-nums;
 }
@@ -506,8 +494,8 @@
   padding: 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: white;
-  box-shadow: var(--shadow);
+  background: var(--surface-raised);
+  box-shadow: 0 16px 38px rgb(0 0 0 / 0.34);
 }
 
 .collections-tooltip strong {
@@ -520,7 +508,7 @@
   grid-template-columns: 8px 1fr auto;
   gap: 7px;
   align-items: center;
-  color: #52606c;
+  color: var(--muted);
 }
 
 .collections-tooltip b {

@@ -411,15 +411,15 @@ button {
 .setup-message {
   margin-bottom: 10px;
   padding: 10px 12px;
-  border: 1px solid #cbd9ef;
-  border-radius: 8px;
-  background: #f2f7ff;
-  color: #526b8e;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface-raised);
+  color: var(--muted);
 }
 .data-banner.error {
-  border-color: #efcaca;
-  background: #fff4f4;
-  color: #9c4545;
+  border-color: color-mix(in srgb, var(--green) 42%, var(--line));
+  background: color-mix(in srgb, var(--green) 9%, var(--surface-raised));
+  color: #ff9b86;
 }
 .setup-message {
   margin: 24px;
@@ -926,36 +926,31 @@ button {
 .loading-overlay {
   position: absolute;
   z-index: 4;
-  inset: 43px 0 0;
+  inset: 0;
   display: grid;
   place-content: center;
   justify-items: center;
-  gap: 7px;
-  color: #63778a;
-  background: rgba(250, 252, 254, 0.8);
+  gap: 10px;
+  padding: 20px;
+  color: var(--muted);
+  background: rgba(7, 16, 18, 0.86);
   backdrop-filter: blur(2px);
   pointer-events: none;
 }
 .loading-overlay.full {
   inset: 0;
 }
-.loading-overlay span {
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #cfdae5;
-  border-radius: 50%;
-  color: var(--blue);
-  background: white;
-  box-shadow: 0 5px 16px rgba(42, 67, 91, 0.11);
-}
-.loading-overlay svg {
-  animation: spin 0.9s linear infinite;
+.loading-overlay .loading-progress {
+  width: min(180px, 62%);
+  height: 2px;
+  display: block;
+  overflow: hidden;
+  background: var(--line);
 }
 .loading-overlay strong {
-  font-size: 8px;
-  letter-spacing: 0.15px;
+  font: 700 9px var(--font-mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
 }
 .hero-grid {
   display: grid;
@@ -4168,10 +4163,9 @@ footer {
 .category-summary-head,
 .category-summary-row {
   display: grid;
-  grid-template-columns: minmax(72px, 1fr) minmax(85px, 1.2fr) minmax(
-      85px,
-      1.2fr
-    ) minmax(62px, 0.8fr) 32px;
+  grid-template-columns:
+    minmax(72px, 1fr) minmax(85px, 1.2fr) minmax(85px, 1.2fr)
+    minmax(62px, 0.8fr) 32px;
   align-items: center;
   gap: 5px;
   text-align: right;

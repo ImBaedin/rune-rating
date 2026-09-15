@@ -5,6 +5,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
+import scoreboardCss from "../styles/scoreboard.css?url";
 import appCss from "../styles.css?url";
 
 const convexUrl = import.meta.env.VITE_CONVEX_URL;
@@ -20,7 +21,7 @@ export const Route = createRootRoute({
       },
       {
         name: "theme-color",
-        content: "#f3f5f7",
+        content: "#071012",
       },
       {
         title: "RuneRating Comparison",
@@ -30,6 +31,10 @@ export const Route = createRootRoute({
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "stylesheet",
+        href: scoreboardCss,
       },
       {
         rel: "icon",

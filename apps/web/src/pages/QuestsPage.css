@@ -35,9 +35,9 @@
 .quests-chart-card,
 .quests-missing-card {
   border: 1px solid var(--line);
-  border-radius: 8px;
-  background: white;
-  box-shadow: var(--shadow);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .quests-signal-row .blue {
@@ -60,7 +60,7 @@
 
 .quests-count {
   margin-left: auto;
-  color: #6d7985;
+  color: var(--muted);
   font-size: 10px;
   font-weight: 700;
 }
@@ -85,8 +85,8 @@
 }
 
 .quests-table th {
-  background: #fbfcfd;
-  color: #4d5964;
+  background: var(--surface-muted);
+  color: var(--muted);
   font-size: 10px;
   font-weight: 800;
 }
@@ -168,7 +168,7 @@
   justify-content: space-between;
   gap: 10px;
   padding: 10px 12px;
-  color: #6d7985;
+  color: var(--muted);
 }
 
 .quests-pagination > div {
@@ -184,7 +184,7 @@
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 6px;
-  background: white;
+  background: var(--surface-muted);
 }
 
 .quests-pagination button:disabled {
@@ -215,9 +215,7 @@
 .quests-side-card h2,
 .quests-panel-header h2 {
   margin: 0;
-  font:
-    800 14px "Manrope",
-    sans-serif;
+  font: 800 14px var(--font-display);
   letter-spacing: -0.25px;
 }
 
@@ -242,9 +240,7 @@
 
 .quests-signal-row span:nth-child(2),
 .quests-signal-row span:nth-child(4) {
-  font:
-    800 16px "Manrope",
-    sans-serif;
+  font: 800 16px var(--font-display);
 }
 
 .quests-signal-row span:nth-child(3),
@@ -322,7 +318,7 @@
 
 .quests-legend {
   gap: 12px;
-  color: #596572;
+  color: var(--muted);
   font-weight: 700;
 }
 
@@ -349,8 +345,8 @@
   padding: 9px;
   border: 1px solid var(--line);
   border-radius: 7px;
-  background: white;
-  box-shadow: 0 8px 22px rgba(25, 36, 47, 0.13);
+  background: var(--surface-raised);
+  box-shadow: 0 16px 38px rgb(0 0 0 / 0.34);
 }
 
 .quests-tooltip strong {
@@ -363,7 +359,7 @@
   grid-template-columns: auto 1fr auto;
   gap: 7px;
   align-items: center;
-  color: #5f6b76;
+  color: var(--muted);
 }
 
 .quests-tooltip b {
@@ -395,7 +391,7 @@
 
 .quests-missing-row span,
 .quests-missing-row em {
-  color: #6e7a85;
+  color: var(--muted);
   font-style: normal;
 }
 

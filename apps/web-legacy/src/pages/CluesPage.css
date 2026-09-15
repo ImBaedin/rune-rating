@@ -1,0 +1,379 @@
+.clues-page {
+  display: grid;
+  gap: 12px;
+  color: #111827;
+}
+
+.clues-panel-header,
+.clues-legend,
+.clues-legend span,
+.clues-table td:first-child,
+.clues-pressure-row,
+.clues-opportunity {
+  display: flex;
+  align-items: center;
+}
+.clues-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.clues-kpi,
+.clues-panel {
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
+}
+
+.clues-kpi {
+  min-width: 0;
+  gap: 14px;
+  min-height: 98px;
+  padding: 14px 16px;
+}
+
+.clues-kpi-icon {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f1f5f9;
+}
+
+.clues-kpi-icon.left,
+.clues-kpi strong.left {
+  color: var(--blue);
+}
+
+.clues-kpi-icon.right,
+.clues-kpi strong.right {
+  color: var(--green);
+}
+
+.clues-kpi-icon.tie,
+.clues-kpi strong.tie {
+  color: #825c15;
+}
+
+.clues-kpi-icon.muted,
+.clues-kpi strong.muted {
+  color: #64748b;
+}
+
+.clues-kpi h2 {
+  margin: 0 0 4px;
+  color: #111827;
+  font:
+    800 14px "Manrope",
+    sans-serif;
+}
+
+.clues-kpi strong {
+  display: block;
+  overflow-wrap: anywhere;
+  font:
+    800 23px "Manrope",
+    sans-serif;
+  line-height: 1.05;
+}
+
+.clues-kpi p {
+  margin: 3px 0 0;
+  color: #344255;
+}
+
+.clues-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 306px;
+  gap: 12px;
+}
+
+.clues-primary-column,
+.clues-side-column {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.clues-panel {
+  overflow: hidden;
+}
+
+.clues-panel-header {
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px 8px;
+}
+
+.clues-panel-header h2 {
+  margin: 0;
+  font:
+    800 15px "Manrope",
+    sans-serif;
+}
+
+.clues-panel-header p {
+  margin: 4px 0 0;
+  color: #52606f;
+  line-height: 1.25;
+}
+
+.clues-panel-header svg {
+  flex: 0 0 auto;
+  color: #627184;
+}
+
+.clues-legend {
+  justify-content: center;
+  gap: 22px;
+  margin: 2px 0 4px;
+  color: #263244;
+  font-weight: 700;
+}
+
+.clues-legend span {
+  gap: 7px;
+}
+
+.clues-legend i {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+}
+
+.clues-legend i.left {
+  background: var(--blue);
+}
+
+.clues-legend i.right {
+  background: var(--green);
+}
+
+.clues-chart-frame {
+  height: 276px;
+  padding: 4px 14px 12px 6px;
+}
+
+.clues-table-wrap {
+  overflow-x: auto;
+}
+
+.clues-table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+}
+
+.clues-table th,
+.clues-table td {
+  height: 37px;
+  padding: 0 12px;
+  border: 1px solid #e2e8f0;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.clues-table th {
+  background: #fbfcfd;
+  color: #243246;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.clues-table th:first-child,
+.clues-table td:first-child {
+  text-align: left;
+}
+
+.clues-table td:first-child {
+  gap: 8px;
+  font-weight: 750;
+}
+
+.clues-table td.left,
+.clues-leader.left {
+  color: var(--blue);
+}
+
+.clues-table td.right,
+.clues-leader.right {
+  color: var(--green);
+}
+
+.clues-table td.tie,
+.clues-leader.tie {
+  color: #825c15;
+}
+
+.clues-table td.muted,
+.clues-leader.muted {
+  color: #64748b;
+}
+
+.clues-total-row td {
+  background: #fbfcfd;
+  font-weight: 850;
+}
+
+.clues-leader {
+  font-weight: 850;
+}
+
+.clues-tier-badge {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+}
+
+.clues-tier-badge.green {
+  background: color-mix(in srgb, var(--green) 13%, white);
+  color: var(--green);
+}
+
+.clues-tier-badge.blue {
+  background: color-mix(in srgb, var(--blue) 13%, white);
+  color: var(--blue);
+}
+
+.clues-tier-badge.yellow {
+  background: #fff4cf;
+  color: #b48100;
+}
+
+.clues-tier-badge.orange {
+  background: #ffebdf;
+  color: #d45216;
+}
+
+.clues-tier-badge.purple {
+  background: #efe8ff;
+  color: #6e49d8;
+}
+
+.clues-tier-badge.red {
+  background: #ffe7e9;
+  color: #d51f32;
+}
+
+.clues-pressure-panel,
+.clues-opportunity-panel {
+  min-height: 0;
+}
+
+.clues-pressure-list,
+.clues-opportunity-list {
+  display: grid;
+  gap: 9px;
+  padding: 8px 12px 14px;
+}
+
+.clues-pressure-row {
+  grid-template-columns: 22px minmax(64px, 0.7fr) minmax(72px, 1fr) 62px;
+  display: grid;
+  align-items: center;
+  gap: 8px;
+}
+
+.clues-pressure-row strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.clues-pressure-row b {
+  text-align: right;
+  font-size: 12px;
+}
+
+.clues-pressure-track {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e8edf3;
+}
+
+.clues-pressure-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green);
+}
+
+.clues-opportunity {
+  gap: 9px;
+  min-width: 0;
+}
+
+.clues-opportunity > div {
+  min-width: 0;
+  flex: 1;
+}
+
+.clues-opportunity strong,
+.clues-opportunity small,
+.clues-opportunity b {
+  display: block;
+}
+
+.clues-opportunity strong {
+  overflow: hidden;
+  color: #172033;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clues-opportunity small {
+  color: #546273;
+  line-height: 1.25;
+}
+
+.clues-opportunity b {
+  color: var(--green);
+  text-align: right;
+  font-size: 13px;
+}
+
+.clues-opportunity b small {
+  color: inherit;
+  font-size: 11px;
+}
+
+.clues-footnote {
+  margin: 8px 0 0;
+  color: #657386;
+}
+
+@media (max-width: 1180px) {
+  .clues-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .clues-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .clues-side-column {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .clues-kpis,
+  .clues-side-column {
+    grid-template-columns: 1fr;
+  }
+
+  .clues-kpi {
+    min-height: 86px;
+  }
+}

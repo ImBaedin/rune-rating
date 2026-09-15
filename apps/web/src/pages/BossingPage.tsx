@@ -337,6 +337,9 @@ function BossingPage() {
             <div className="bossing-chart-wrap">
               <ResponsiveContainer
                 width="100%"
+                minWidth={0}
+                minHeight={0}
+                initialDimension={{ width: 1, height: 1 }}
                 height={Math.max(260, chartRows.length * 31)}
               >
                 <BarChart
@@ -345,12 +348,15 @@ function BossingPage() {
                   margin={{ top: 6, right: 30, bottom: 4, left: 12 }}
                   barCategoryGap={8}
                 >
-                  <CartesianGrid horizontal={false} stroke="#e7ebef" />
+                  <CartesianGrid
+                    horizontal={false}
+                    stroke="var(--chart-grid)"
+                  />
                   <XAxis
                     type="number"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fill: "#74808d", fontSize: 11 }}
+                    tick={{ fill: "var(--muted)", fontSize: 11 }}
                   />
                   <YAxis
                     dataKey="name"
@@ -358,7 +364,7 @@ function BossingPage() {
                     width={150}
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fill: "#17202a", fontSize: 11 }}
+                    tick={{ fill: "var(--muted)", fontSize: 11 }}
                   />
                   <Tooltip
                     content={

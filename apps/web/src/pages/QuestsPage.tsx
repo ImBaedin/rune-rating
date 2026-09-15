@@ -469,19 +469,25 @@ function QuestsPage() {
             names={names}
           />
           <div className="quests-rechart">
-            <ResponsiveContainer width="100%" height={236}>
+            <ResponsiveContainer
+              width="100%"
+              height={236}
+              minWidth={0}
+              minHeight={0}
+              initialDimension={{ width: 1, height: 1 }}
+            >
               <BarChart data={chartData} barCategoryGap={18}>
-                <CartesianGrid vertical={false} stroke="#e7ebef" />
+                <CartesianGrid vertical={false} stroke="var(--chart-grid)" />
                 <XAxis
                   dataKey="band"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#74808d", fontSize: 11 }}
+                  tick={{ fill: "var(--muted)", fontSize: 11 }}
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#74808d", fontSize: 11 }}
+                  tick={{ fill: "var(--muted)", fontSize: 11 }}
                   width={34}
                 />
                 <Tooltip

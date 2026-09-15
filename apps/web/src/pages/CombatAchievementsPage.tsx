@@ -24,6 +24,11 @@ import {
   sideLabel,
   sideTone,
 } from "../components/comparison-ui";
+import {
+  chartCategoryColor,
+  chartTierColors,
+  mutedChartColor,
+} from "../features/comparison/chartTheme";
 import { useComparisonShell } from "../features/comparison/context";
 import {
   formatValue as formatNumber,
@@ -92,38 +97,12 @@ const tierValues: Record<TierName, number> = {
   Master: 5,
   Grandmaster: 6,
 };
-const tierColors: Record<TierName, string> = {
-  Easy: "#8b5e34",
-  Medium: "#8b96a4",
-  Hard: "#d6a321",
-  Elite: "#2f9c9c",
-  Master: "#7655c7",
-  Grandmaster: "#c03536",
-};
-const typeColors = [
-  "#3976e8",
-  "#43a66a",
-  "#d29536",
-  "#3f9f9b",
-  "#b15c45",
-  "#6f8398",
-  "#8b6bb8",
-  "#52717f",
-];
+const tierColors: Record<TierName, string> = chartTierColors;
 const tierByValue = Object.fromEntries(
   combatTiers.map((tier) => [tierValues[tier], tier]),
 ) as Record<number, TierName>;
-const typeColor = (index: number) =>
-  typeColors[index % typeColors.length] ?? "#6f8398";
-
-const mutedGroupColor = (color: string) => {
-  const hex = color.replace("#", "");
-  const value = Number.parseInt(hex, 16);
-  if (hex.length !== 6 || Number.isNaN(value)) return color;
-  const blend = (channel: number) =>
-    Math.round(channel + (255 - channel) * 0.78);
-  return `rgb(${blend((value >> 16) & 255)}, ${blend((value >> 8) & 255)}, ${blend(value & 255)})`;
-};
+const typeColor = chartCategoryColor;
+const mutedGroupColor = mutedChartColor;
 
 const deltaClass = (value: number | null | undefined) =>
   value === null || value === undefined || value === 0
@@ -1145,7 +1124,13 @@ function CompletionWheel({
   return (
     <div className="ca-wheel-layout">
       <div className="ca-wheel">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer
+          width="100%"
+          height="100%"
+          minWidth={0}
+          minHeight={0}
+          initialDimension={{ width: 1, height: 1 }}
+        >
           <PieChart>
             <Pie
               data={leftSlices}
@@ -1154,7 +1139,7 @@ function CompletionWheel({
               innerRadius="68%"
               outerRadius="86%"
               paddingAngle={0.5}
-              stroke="#fff"
+              stroke="var(--canvas)"
               strokeWidth={2}
               isAnimationActive={false}
             >
@@ -1177,7 +1162,7 @@ function CompletionWheel({
               innerRadius="44%"
               outerRadius="62%"
               paddingAngle={0.5}
-              stroke="#fff"
+              stroke="var(--canvas)"
               strokeWidth={2}
               isAnimationActive={false}
             >

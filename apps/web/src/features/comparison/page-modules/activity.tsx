@@ -384,9 +384,15 @@ function ActivityPage({
             }
           />
           <div className="activity-bars-wrap">
-            <ResponsiveContainer width="100%" height={220}>
+            <ResponsiveContainer
+              width="100%"
+              height={220}
+              minWidth={0}
+              minHeight={0}
+              initialDimension={{ width: 1, height: 1 }}
+            >
               <BarChart data={chartData} barGap={1} barCategoryGap="18%">
-                <CartesianGrid stroke="#e8edf1" vertical={false} />
+                <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
                 <XAxis
                   dataKey="date"
                   interval="preserveStartEnd"

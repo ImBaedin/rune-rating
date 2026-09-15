@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "biome check src",
-    "test": "echo 'No tests configured for visual prototype'"
+    "test": "echo 'No web unit tests configured'"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-rc.0",

@@ -29,6 +29,7 @@ import {
   sideLabel,
   sideTone,
 } from "../components/comparison-ui";
+import { chartPlayerColors } from "../features/comparison/chartTheme";
 import { useComparisonShell } from "../features/comparison/context";
 import {
   formatCompact,
@@ -49,11 +50,6 @@ type ClueRow = ActivityRow & {
   tier: TierKey;
   label: string;
   tone: string;
-};
-
-const playerColors = {
-  left: "var(--blue)",
-  right: "var(--green)",
 };
 
 const clueTiers: {
@@ -201,9 +197,15 @@ function CluesPage() {
               </span>
             </div>
             <div className="clues-chart-frame">
-              <ResponsiveContainer width="100%" height={255}>
+              <ResponsiveContainer
+                width="100%"
+                height={255}
+                minWidth={0}
+                minHeight={0}
+                initialDimension={{ width: 1, height: 1 }}
+              >
                 <BarChart data={chartData} barGap={7} barCategoryGap="24%">
-                  <CartesianGrid stroke="#e5ebf2" vertical={false} />
+                  <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
                   <XAxis
                     dataKey="tier"
                     tickLine={false}
@@ -222,16 +224,16 @@ function CluesPage() {
                       name === "left" ? names[0] : names[1],
                     ]}
                     labelFormatter={(label) => `${label} clues`}
-                    cursor={{ fill: "rgba(15, 23, 42, 0.04)" }}
+                    cursor={{ fill: "var(--chart-cursor)" }}
                   />
                   <Bar
                     dataKey="left"
-                    fill={playerColors.left}
+                    fill={chartPlayerColors.left}
                     radius={[3, 3, 0, 0]}
                   />
                   <Bar
                     dataKey="right"
-                    fill={playerColors.right}
+                    fill={chartPlayerColors.right}
                     radius={[3, 3, 0, 0]}
                   />
                 </BarChart>

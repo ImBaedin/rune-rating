@@ -1,0 +1,519 @@
+.bossing-page {
+  display: grid;
+  gap: 12px;
+}
+
+.bossing-panel-header,
+.bossing-pagination,
+.bossing-score-cell,
+.bossing-boss-name,
+.bossing-data-card h2,
+.bossing-opportunities h2 {
+  display: flex;
+  align-items: center;
+}
+
+.bossing-panel-header p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+.bossing-chart-limit {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: white;
+  overflow: hidden;
+}
+
+.bossing-chart-limit {
+  margin-left: 0;
+}
+
+.bossing-chart-limit span {
+  padding: 0 9px;
+  color: #65717d;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.bossing-chart-limit select {
+  height: 100%;
+  border: 0;
+  border-left: 1px solid var(--line);
+  outline: 0;
+  background: transparent;
+  padding: 0 9px;
+  color: #3d4954;
+  font: inherit;
+}
+
+.bossing-chart-limit:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(62, 116, 179, 0.16);
+}
+
+.bossing-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.bossing-kpi,
+.bossing-panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.bossing-kpi {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  min-height: 92px;
+  padding: 13px 14px;
+}
+
+.bossing-kpi-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.bossing-kpi.blue .bossing-kpi-icon {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.bossing-kpi.green .bossing-kpi-icon {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.bossing-kpi.purple .bossing-kpi-icon {
+  background: #f0eafd;
+  color: #7b46d8;
+}
+
+.bossing-kpi.orange .bossing-kpi-icon {
+  background: #fff0df;
+  color: #e47918;
+}
+
+.bossing-kpi p {
+  margin: 0;
+  color: #55626e;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.bossing-kpi strong {
+  display: block;
+  margin-top: 4px;
+  overflow: hidden;
+  color: var(--blue);
+  font:
+    800 23px "Manrope",
+    sans-serif;
+  letter-spacing: -0.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bossing-kpi.green strong {
+  color: var(--ink);
+}
+
+.bossing-kpi.orange strong {
+  color: var(--ink);
+}
+
+.bossing-kpi small {
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  color: #61707f;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bossing-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 12px;
+}
+
+.bossing-main,
+.bossing-side {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.bossing-chart-panel {
+  padding: 12px;
+}
+
+.bossing-panel-header {
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.bossing-panel-header h2,
+.bossing-data-card h2 {
+  margin: 0;
+  font:
+    800 14px "Manrope",
+    sans-serif;
+  letter-spacing: -0.25px;
+}
+
+.bossing-opportunities h2,
+.bossing-data-card h2 {
+  gap: 8px;
+}
+
+.bossing-chart-wrap {
+  min-height: 280px;
+  margin-top: 10px;
+}
+
+.bossing-table-panel {
+  overflow: hidden;
+}
+
+.bossing-table-scroll {
+  position: relative;
+  overflow-x: auto;
+}
+
+.bossing-table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+}
+
+.bossing-table th,
+.bossing-table td {
+  height: 38px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.bossing-table th {
+  background: #fbfcfd;
+  color: #4d5964;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.bossing-boss-name {
+  gap: 9px;
+  min-width: 230px;
+}
+
+.bossing-boss-name strong {
+  display: block;
+  font-weight: 800;
+}
+
+.bossing-boss-name small,
+.bossing-score-cell small {
+  display: block;
+  margin-top: 2px;
+  color: #74808d;
+}
+
+.bossing-badge {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #d7e0e8;
+  border-radius: 6px;
+  background: linear-gradient(145deg, #f5f7fa, #e8edf3);
+  color: #45525f;
+  font:
+    800 9px "Manrope",
+    sans-serif;
+}
+
+.bossing-badge.has-icon {
+  overflow: hidden;
+  background: #f7f9fb;
+}
+
+.bossing-badge-icon-set {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.bossing-badge img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.bossing-badge.has-icon-pair .bossing-badge-icon-set {
+  position: relative;
+}
+
+.bossing-badge.has-icon-pair img {
+  position: absolute;
+  width: 17px;
+  height: 24px;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.75));
+}
+
+.bossing-badge.has-icon-pair img:first-child {
+  left: 1px;
+}
+
+.bossing-badge.has-icon-pair img:last-child {
+  right: 1px;
+}
+
+.bossing-badge.has-icon .bossing-badge-fallback {
+  display: none;
+}
+
+.bossing-badge.has-icon.bossing-badge-missing .bossing-badge-fallback {
+  display: block;
+}
+
+.bossing-badge.has-icon.bossing-badge-missing .bossing-badge-icon-set {
+  display: none;
+}
+
+.bossing-score-cell {
+  gap: 7px;
+}
+
+.bossing-score-cell i,
+.bossing-leader::before,
+.bossing-tooltip i {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.bossing-score-cell i.blue,
+.bossing-leader.blue::before,
+.bossing-tooltip i.blue {
+  background: var(--blue);
+}
+
+.bossing-score-cell i.green,
+.bossing-leader.green::before,
+.bossing-tooltip i.green {
+  background: var(--green);
+}
+
+.bossing-score-cell b {
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.bossing-table td.blue,
+.bossing-leader.blue {
+  color: var(--blue);
+}
+
+.bossing-table td.green,
+.bossing-leader.green {
+  color: var(--green);
+}
+
+.bossing-table td.muted,
+.bossing-leader.muted {
+  color: #7c8792;
+}
+
+.bossing-leader {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 800;
+}
+
+.bossing-leader.muted::before {
+  background: #aab4bd;
+}
+
+.bossing-table-state {
+  min-height: 128px;
+  display: grid;
+  place-content: center;
+  color: #74808d;
+  font-weight: 800;
+}
+
+.bossing-pagination {
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  color: #687582;
+}
+
+.bossing-pagination > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.bossing-pagination button,
+.bossing-pagination strong {
+  min-width: 34px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: white;
+  padding: 0 9px;
+  font-weight: 800;
+}
+
+.bossing-pagination button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.bossing-pagination strong {
+  border-color: #9fbeef;
+  color: var(--blue);
+}
+
+.bossing-opportunities,
+.bossing-data-card {
+  padding: 13px;
+}
+
+.bossing-opportunity-list {
+  display: grid;
+  margin-top: 10px;
+}
+
+.bossing-opportunity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #edf0f3;
+}
+
+.bossing-opportunity strong,
+.bossing-opportunity span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bossing-opportunity span {
+  margin-top: 2px;
+  color: #74808d;
+}
+
+.bossing-opportunity dl {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 13px;
+  margin: 0;
+  text-align: right;
+}
+
+.bossing-opportunity dt {
+  color: #7b8792;
+  font-size: 10px;
+}
+
+.bossing-opportunity dd {
+  margin: 2px 0 0;
+  color: #e47918;
+  font-weight: 800;
+}
+
+.bossing-data-card p {
+  margin: 10px 0 12px;
+  color: #53616e;
+  line-height: 1.45;
+}
+
+.bossing-data-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--blue);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.bossing-tooltip {
+  min-width: 170px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: white;
+  box-shadow: 0 8px 22px rgba(25, 36, 47, 0.13);
+}
+
+.bossing-tooltip strong {
+  display: block;
+  margin-bottom: 7px;
+}
+
+.bossing-tooltip span {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  color: #5f6b76;
+}
+
+.bossing-tooltip b {
+  color: var(--ink);
+}
+
+@media (max-width: 1180px) {
+  .bossing-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bossing-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .bossing-side {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .bossing-kpi-grid,
+  .bossing-side {
+    grid-template-columns: 1fr;
+  }
+
+  .bossing-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

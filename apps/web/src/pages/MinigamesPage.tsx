@@ -218,19 +218,28 @@ function MinigamesPage() {
               {isLoading ? (
                 <EmptyState>Loading minigame scores...</EmptyState>
               ) : chartRows.length > 0 ? (
-                <ResponsiveContainer width="100%" height={320}>
+                <ResponsiveContainer
+                  width="100%"
+                  height={320}
+                  minWidth={0}
+                  minHeight={0}
+                  initialDimension={{ width: 1, height: 1 }}
+                >
                   <BarChart
                     data={chartRows}
                     layout="vertical"
                     margin={{ top: 6, right: 20, bottom: 12, left: 12 }}
                     barCategoryGap={9}
                   >
-                    <CartesianGrid horizontal={false} stroke="#e7ebef" />
+                    <CartesianGrid
+                      horizontal={false}
+                      stroke="var(--chart-grid)"
+                    />
                     <XAxis
                       type="number"
                       axisLine={false}
                       tickLine={false}
-                      tick={{ fill: "#74808d", fontSize: 11 }}
+                      tick={{ fill: "var(--muted)", fontSize: 11 }}
                     />
                     <YAxis
                       dataKey="name"
@@ -238,7 +247,7 @@ function MinigamesPage() {
                       axisLine={false}
                       tickLine={false}
                       width={132}
-                      tick={{ fill: "#24303b", fontSize: 11 }}
+                      tick={{ fill: "var(--muted)", fontSize: 11 }}
                     />
                     <Tooltip
                       content={
@@ -400,7 +409,13 @@ function GapRow({ row, names }: { row: MinigameRow; names: [string, string] }) {
         aria-valuemax={100}
         aria-valuenow={percent}
       >
-        <ResponsiveContainer width="100%" height={16}>
+        <ResponsiveContainer
+          width="100%"
+          height={16}
+          minWidth={0}
+          minHeight={0}
+          initialDimension={{ width: 1, height: 1 }}
+        >
           <BarChart
             data={[{ value: percent }]}
             layout="vertical"
@@ -413,7 +428,7 @@ function GapRow({ row, names }: { row: MinigameRow; names: [string, string] }) {
               fill={
                 row.score.leader === "left" ? "var(--blue)" : "var(--green)"
               }
-              background={{ fill: "#e8edf2", radius: 3 }}
+              background={{ fill: "var(--chart-track)", radius: 3 }}
               radius={[3, 3, 3, 3]}
             />
           </BarChart>

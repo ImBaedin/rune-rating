@@ -2,6 +2,19 @@ import type { CSSProperties } from "react";
 
 export type PlayerAccent = "blue" | "green";
 
+export const playerPalette = {
+  blue: {
+    primary: "var(--player-left)",
+    soft: "var(--player-left-soft)",
+    foreground: "var(--player-left-foreground)",
+  },
+  green: {
+    primary: "var(--player-right)",
+    soft: "var(--player-right-soft)",
+    foreground: "var(--player-right-foreground)",
+  },
+} as const;
+
 export function compactName(name: string) {
   return (
     name
@@ -27,19 +40,15 @@ export function playerAvatar(name: string, accent: PlayerAccent) {
       : accent === "blue"
         ? "L"
         : "R";
-  const hash = [...trimmed.toLocaleLowerCase()].reduce(
-    (value, character) => (value * 31 + character.charCodeAt(0)) % 360,
-    accent === "blue" ? 212 : 139,
-  );
-  const primary = `hsl(${hash} 76% 48%)`;
-  const soft = `hsl(${hash} 78% 95%)`;
+  const palette = playerPalette[accent];
 
   return {
     label,
-    primary,
-    soft,
+    primary: palette.primary,
+    soft: palette.soft,
     style: {
-      background: primary,
+      background: palette.primary,
+      color: palette.foreground,
     } as CSSProperties,
   };
 }

@@ -111,6 +111,14 @@ export const refreshPlayer = internalAction({
           : requestError.code === "rateLimited"
             ? ("rateLimited" as const)
             : ("failed" as const);
+      console.error(
+        "Hiscores player refresh failed.",
+        JSON.stringify({
+          code: requestError.code,
+          message: requestError.message,
+          retryAfterMs: requestError.retryAfterMs,
+        }),
+      );
       await ctx.runMutation(internal.refresh.completeFailure, {
         playerId: args.playerId,
         requestId: args.requestId,

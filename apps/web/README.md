@@ -2,6 +2,10 @@
 
 TanStack Start application for RuneRating.
 
+This is the production Scoreboard 2.1 frontend. The pre-redesign application
+is preserved in `apps/web-legacy` as a behavior and feature-parity reference.
+That reference app is intentionally excluded from the root Bun workspace.
+
 ## Responsibilities
 
 - Own file-based routes, SSR, loading/error boundaries, and browser interaction.
@@ -32,7 +36,7 @@ src/routes/
     collections.tsx
 ```
 
-The parent comparison route owns the shell, sidebar, player headers, source
+The parent comparison route owns the shell, category navigation, player headers, source
 status, and refresh lifecycle. Child routes request only category-specific data
 to keep reactive payloads bounded.
 

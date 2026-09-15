@@ -41,6 +41,10 @@ import {
   sideLabel,
   sideTone,
 } from "../components/comparison-ui";
+import {
+  chartCategoryColor,
+  mutedChartColor,
+} from "../features/comparison/chartTheme";
 import { useComparisonShell } from "../features/comparison/context";
 import {
   formatValue as formatNumber,
@@ -61,27 +65,8 @@ type CollectionItem = CollectionItemsComparison["items"][number];
 type StatusFilter = "all" | "different" | "one-sided" | "left" | "right";
 
 const itemPreviewLimit = 5;
-const tabColors = [
-  "#3976e8",
-  "#43a66a",
-  "#d29536",
-  "#6f8398",
-  "#b15c45",
-  "#3f9f9b",
-  "#8b6bb8",
-  "#52717f",
-];
-const tabColor = (index: number) =>
-  tabColors[index % tabColors.length] ?? "#6f8398";
-
-const mutedTabColor = (color: string) => {
-  const hex = color.replace("#", "");
-  const value = Number.parseInt(hex, 16);
-  if (hex.length !== 6 || Number.isNaN(value)) return color;
-  const blend = (channel: number) =>
-    Math.round(channel + (255 - channel) * 0.78);
-  return `rgb(${blend((value >> 16) & 255)}, ${blend((value >> 8) & 255)}, ${blend(value & 255)})`;
-};
+const tabColor = chartCategoryColor;
+const mutedTabColor = mutedChartColor;
 
 const ownedLabel = (owned: boolean | null) =>
   owned === null ? "Unavailable" : owned ? "Owned" : "Missing";
@@ -469,7 +454,13 @@ function CollectionsPage() {
         />
         <div className="collections-page-chart">
           {pages.length > 0 ? (
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+              minWidth={0}
+              minHeight={0}
+              initialDimension={{ width: 1, height: 1 }}
+            >
               <BarChart
                 data={pages.slice(0, 12).map((row) => ({
                   name: row.name,
@@ -483,19 +474,27 @@ function CollectionsPage() {
                 barGap={6}
                 barCategoryGap={10}
               >
-                <CartesianGrid horizontal={false} stroke="#e7ebef" />
+                <CartesianGrid horizontal={false} stroke="var(--line)" />
                 <XAxis
                   type="number"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#74808d", fontSize: 12, fontWeight: 700 }}
+                  tick={{
+                    fill: "var(--muted)",
+                    fontSize: 12,
+                    fontWeight: 700,
+                  }}
                 />
                 <YAxis
                   type="category"
                   dataKey="name"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#4d5964", fontSize: 11, fontWeight: 800 }}
+                  tick={{
+                    fill: "var(--muted)",
+                    fontSize: 11,
+                    fontWeight: 800,
+                  }}
                   width={132}
                 />
                 <Tooltip
@@ -504,7 +503,7 @@ function CollectionsPage() {
                     key === "left" ? names[0] : names[1],
                   ]}
                   labelFormatter={(label) => String(label)}
-                  cursor={{ fill: "rgba(15, 23, 42, 0.04)" }}
+                  cursor={{ fill: "var(--chart-cursor)" }}
                 />
                 <Bar dataKey="left" fill="var(--blue)" radius={[0, 3, 3, 0]} />
                 <Bar
@@ -634,7 +633,13 @@ function CategoryWheel({
 
   return (
     <div className="collections-wheel">
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer
+        width="100%"
+        height="100%"
+        minWidth={0}
+        minHeight={0}
+        initialDimension={{ width: 1, height: 1 }}
+      >
         <PieChart>
           <Pie
             data={leftSlices}
@@ -643,7 +648,7 @@ function CategoryWheel({
             innerRadius="68%"
             outerRadius="86%"
             paddingAngle={0.5}
-            stroke="#fff"
+            stroke="var(--canvas)"
             strokeWidth={2}
             isAnimationActive={false}
           >
@@ -662,7 +667,7 @@ function CategoryWheel({
             innerRadius="46%"
             outerRadius="63%"
             paddingAngle={0.5}
-            stroke="#fff"
+            stroke="var(--canvas)"
             strokeWidth={2}
             isAnimationActive={false}
           >
