@@ -1,12 +1,12 @@
-import adamantRank from "./assets/ranks/individual-live/rank-adamant-individual-live.png";
-import blackRank from "./assets/ranks/individual-live/rank-black-individual-live.png";
-import bronzeRank from "./assets/ranks/individual-live/rank-bronze-individual-live.png";
-import dragonRank from "./assets/ranks/individual-live/rank-dragon-individual-live.png";
-import ironRank from "./assets/ranks/individual-live/rank-iron-individual-live.png";
-import mithrilRank from "./assets/ranks/individual-live/rank-mithril-individual-live.png";
-import runeRank from "./assets/ranks/individual-live/rank-rune-individual-live.png";
-import steelRank from "./assets/ranks/individual-live/rank-steel-individual-live.png";
-import rankSheet from "./assets/ranks/individual-live/rune-rating-rank-sheet-individual-live-small.png";
+import adamantRank from "./assets/ranks/individual-live/rank-adamant-individual-live.webp";
+import blackRank from "./assets/ranks/individual-live/rank-black-individual-live.webp";
+import bronzeRank from "./assets/ranks/individual-live/rank-bronze-individual-live.webp";
+import dragonRank from "./assets/ranks/individual-live/rank-dragon-individual-live.webp";
+import ironRank from "./assets/ranks/individual-live/rank-iron-individual-live.webp";
+import mithrilRank from "./assets/ranks/individual-live/rank-mithril-individual-live.webp";
+import runeRank from "./assets/ranks/individual-live/rank-rune-individual-live.webp";
+import steelRank from "./assets/ranks/individual-live/rank-steel-individual-live.webp";
+import rankSheet from "./assets/ranks/individual-live/rune-rating-rank-sheet-individual-live-small.webp";
 
 const tierColors = {
   Bronze: { base: "#9b6439", light: "#d29a63", dark: "#4f2f1f" },

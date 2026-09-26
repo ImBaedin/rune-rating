@@ -10,10 +10,11 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "biome check src",
-    "test": "echo 'No web unit tests configured'"
+    "test": "bun test tests/*.test.ts",
+    "test:browser": "playwright test"
   },
   "dependencies": {
-    "@base-ui-components/react": "^1.0.0-rc.0",
+    "@base-ui/react": "^1.8.0",
     "@dava96/osrs-icons": "^1.0.24",
     "@rune-rating/backend": "workspace:*",
     "@rune-rating/domain": "workspace:*",
@@ -30,6 +31,8 @@
   },
   "devDependencies": {
     "@netlify/vite-plugin-tanstack-start": "^1.3.16",
+    "@playwright/test": "^1.63.0",
+    "@types/bun": "^1.4.2",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",

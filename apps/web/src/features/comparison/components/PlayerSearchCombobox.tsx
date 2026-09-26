@@ -1,5 +1,6 @@
+import { Autocomplete } from "@base-ui/react/autocomplete";
 import { ChevronDown, History } from "lucide-react";
-import { type KeyboardEvent, useId, useState } from "react";
+import { useId } from "react";
 import { type PlayerAccent, playerAvatar } from "../playerIdentity";
 
 export function PlayerSearchCombobox({
@@ -15,9 +16,7 @@ export function PlayerSearchCombobox({
   options: string[];
   onChange: (value: string) => void;
 }) {
-  const listboxId = useId();
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const inputId = useId();
   const normalizedValue = value.trim().toLocaleLowerCase();
   const avatar = playerAvatar(displayValue, side.accent);
   const suggestions = options
@@ -25,99 +24,75 @@ export function PlayerSearchCombobox({
       const normalizedOption = option.toLocaleLowerCase();
       return (
         normalizedOption !== normalizedValue &&
-        (normalizedValue.length === 0 ||
-          normalizedOption.includes(normalizedValue))
+        normalizedOption.includes(normalizedValue)
       );
     })
     .slice(0, 6);
 
-  const selectSuggestion = (suggestion: string) => {
-    onChange(suggestion);
-    setIsOpen(false);
-  };
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "ArrowDown" && suggestions.length > 0) {
-      event.preventDefault();
-      setIsOpen(true);
-      setActiveIndex((index) => (index + 1) % suggestions.length);
-    } else if (event.key === "ArrowUp" && suggestions.length > 0) {
-      event.preventDefault();
-      setIsOpen(true);
-      setActiveIndex(
-        (index) => (index - 1 + suggestions.length) % suggestions.length,
-      );
-    } else if (event.key === "Enter" && isOpen && suggestions[activeIndex]) {
-      event.preventDefault();
-      selectSuggestion(suggestions[activeIndex]);
-    } else if (event.key === "Escape") {
-      setIsOpen(false);
-    }
-  };
-
   return (
-    <div className="search-combobox">
-      <label className="search-field">
-        <span
-          className={`mini-avatar ${side.accent}`}
-          style={avatar.style}
-          aria-hidden="true"
-        >
-          {avatar.label}
-        </span>
-        <span className="search-content">
-          <small>Player {side.id.toUpperCase()}</small>
-          <input
-            value={value}
-            onChange={(event) => {
-              onChange(event.target.value);
-              setActiveIndex(0);
-              setIsOpen(true);
-            }}
-            onFocus={() => setIsOpen(true)}
-            onBlur={() => setIsOpen(false)}
-            onKeyDown={handleKeyDown}
-            aria-label={`Player ${side.id.toUpperCase()} RSN`}
-            aria-autocomplete="list"
-            aria-controls={listboxId}
-            aria-expanded={isOpen}
-            aria-activedescendant={
-              isOpen && suggestions[activeIndex]
-                ? `${listboxId}-${activeIndex}`
-                : undefined
-            }
-            role="combobox"
-            autoComplete="off"
-            name={`player-${side.id}-rsn`}
-            spellCheck={false}
-          />
-        </span>
-        <ChevronDown size={15} />
-      </label>
-      {isOpen && suggestions.length > 0 ? (
-        <div className="autocomplete-menu" id={listboxId} role="listbox">
-          <span className="autocomplete-heading">
-            <History size={11} />
-            Recent lookups
+    <Autocomplete.Root
+      items={suggestions}
+      filter={null}
+      value={value}
+      onValueChange={onChange}
+      openOnInputClick
+    >
+      <Autocomplete.InputGroup className="search-combobox">
+        <label className="search-field" htmlFor={inputId}>
+          <span
+            className={`mini-avatar ${side.accent}`}
+            style={avatar.style}
+            aria-hidden="true"
+          >
+            {avatar.label}
           </span>
-          {suggestions.map((suggestion, index) => (
-            <button
-              type="button"
-              role="option"
-              aria-selected={index === activeIndex}
-              className={index === activeIndex ? "active" : ""}
-              id={`${listboxId}-${index}`}
-              key={suggestion}
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={() => selectSuggestion(suggestion)}
-              onMouseEnter={() => setActiveIndex(index)}
-            >
-              <History size={12} />
-              {suggestion}
-            </button>
-          ))}
-        </div>
-      ) : null}
-    </div>
+          <span className="search-content">
+            <small>Player {side.id.toUpperCase()}</small>
+            <Autocomplete.Input
+              id={inputId}
+              aria-label={`Player ${side.id.toUpperCase()} RSN`}
+              autoComplete="off"
+              name={`player-${side.id}-rsn`}
+              spellCheck={false}
+            />
+          </span>
+        </label>
+        <Autocomplete.Trigger
+          className="rr-autocomplete-trigger"
+          aria-label={`Recent players for Player ${side.id.toUpperCase()}`}
+        >
+          <ChevronDown size={15} aria-hidden="true" />
+        </Autocomplete.Trigger>
+      </Autocomplete.InputGroup>
+      <Autocomplete.Portal>
+        <Autocomplete.Positioner
+          className="rr-popup-positioner"
+          sideOffset={6}
+          align="start"
+        >
+          <Autocomplete.Popup className="rr-popup rr-autocomplete-popup">
+            <div className="rr-popup-heading">
+              <History size={12} aria-hidden="true" />
+              Recent lookups
+            </div>
+            <Autocomplete.Empty className="rr-popup-empty">
+              No recent matches. Enter any RSN.
+            </Autocomplete.Empty>
+            <Autocomplete.List className="rr-popup-list">
+              {(suggestion: string) => (
+                <Autocomplete.Item
+                  className="rr-option"
+                  key={suggestion}
+                  value={suggestion}
+                >
+                  <History size={12} aria-hidden="true" />
+                  {suggestion}
+                </Autocomplete.Item>
+              )}
+            </Autocomplete.List>
+          </Autocomplete.Popup>
+        </Autocomplete.Positioner>
+      </Autocomplete.Portal>
+    </Autocomplete.Root>
   );
 }

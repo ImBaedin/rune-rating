@@ -24,8 +24,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { PageHeader, SourceChip } from "../../../components/comparison-ui";
-import { type Player, players } from "../../../mockData";
+import {
+  PageHeader,
+  SegmentedControl,
+  SourceChip,
+} from "../../../components/comparison-ui";
+
 import {
   type EfficiencyComparison,
   type HistoryPeriod,
@@ -51,6 +55,12 @@ import {
 } from "./shared";
 import { SkillsTable } from "./skills";
 
+type PlayerSide = { id: "a" | "b"; accent: "blue" | "green" };
+const players: [PlayerSide, PlayerSide] = [
+  { id: "a", accent: "blue" },
+  { id: "b", accent: "green" },
+];
+
 type TimelineComparison = {
   left: { timeline: OverviewHistory["left"]["timeline"] };
   right: { timeline: OverviewHistory["right"]["timeline"] };
@@ -70,23 +80,23 @@ type HighlightTone = "left" | "right" | "neutral";
 const highlights: HighlightConfig[] = [
   {
     icon: Activity,
-    title: "More active recently",
-    fallbackCopy: "Recent Wise Old Man snapshots show the stronger XP trend.",
+    title: "XP gained",
+    fallbackCopy: "XP gains are unavailable for this period.",
   },
   {
     icon: Gauge,
-    title: "More efficient",
-    fallbackCopy: "Efficiency is based on current Wise Old Man EHP and EHB.",
+    title: "EHP",
+    fallbackCopy: "EHP data is unavailable.",
   },
   {
     icon: BookOpen,
-    title: "Ahead in questing",
-    fallbackCopy: "RuneProfile quest points decide this comparison.",
+    title: "Quest points",
+    fallbackCopy: "Quest points are unavailable.",
   },
   {
     icon: Swords,
-    title: "Stronger combat profile",
-    fallbackCopy: "Combat level comes from Wise Old Man.",
+    title: "Combat level",
+    fallbackCopy: "Combat levels are unavailable.",
   },
 ];
 
@@ -121,7 +131,7 @@ export function OverviewPage() {
             <SourceChip label="Wise Old Man" />
             <SourceChip
               label="RuneProfile"
-              status={runeProfileUnavailableMessage ? "warn" : "ok"}
+              status={runeProfileUnavailableMessage ? "warn" : "muted"}
             />
           </>
         }
@@ -367,7 +377,7 @@ function PlayerCard({
   runeProfileUnavailable,
   isLoading,
 }: {
-  player: Player;
+  player: PlayerSide;
   fallbackName: string;
   data?: { displayRsn: string; fetchedAt: number };
   skills?: NonNullable<SkillsComparison>["skills"];
@@ -406,7 +416,7 @@ function PlayerCard({
             <ShieldCheck size={15} />
           </div>
           <span className="account-tag">
-            {accountType ?? player.accountType}
+            {accountType ?? "Unknown account type"}
           </span>
         </div>
       </div>
@@ -458,11 +468,7 @@ function PlayerCard({
           value={data ? formatAge(data.fetchedAt) : "Waiting"}
         />
       </div>
-      <LoadingOverlay
-        isLoading={isLoading}
-        label="Loading player snapshot"
-        full
-      />
+      <LoadingOverlay isLoading={isLoading} label="Loading player data" full />
     </article>
   );
 }
@@ -577,11 +583,7 @@ function AheadCard({
           </div>
         ))}
       </div>
-      <LoadingOverlay
-        isLoading={isLoading}
-        label="Comparing player snapshots"
-        full
-      />
+      <LoadingOverlay isLoading={isLoading} label="Loading comparison" full />
     </article>
   );
 }
@@ -675,18 +677,15 @@ function XpTimeline({
         title="XP gained over time"
         eyebrow="Synchronized Wise Old Man timeline"
         action={
-          <div className="segmented">
-            {(Object.keys(periodLabels) as HistoryPeriod[]).map((value) => (
-              <button
-                type="button"
-                className={period === value ? "active" : ""}
-                onClick={() => onPeriodChange(value)}
-                key={value}
-              >
-                {periodLabels[value]}
-              </button>
-            ))}
-          </div>
+          <SegmentedControl
+            label="XP history range"
+            className="segmented"
+            value={period}
+            options={(Object.keys(periodLabels) as HistoryPeriod[]).map(
+              (value) => [value, periodLabels[value]],
+            )}
+            onChange={onPeriodChange}
+          />
         }
       />
       <div className="timeline-body">
@@ -940,25 +939,25 @@ function Highlights({
       : (buildTimeline(overviewHistory).at(-1)?.a ?? 0) -
         (buildTimeline(overviewHistory).at(-1)?.b ?? 0);
   const copyByTitle: Record<string, string | null> = {
-    "More active recently":
+    "XP gained":
       activityDelta === null
         ? null
         : activityDelta === 0
           ? "Both players gained the same XP in the selected timeline."
           : `${activityDelta > 0 ? names[0] : names[1]} gained ${formatCompact(Math.abs(activityDelta))} more XP in the selected timeline.`,
-    "More efficient":
+    EHP:
       ehpDelta === null
         ? null
         : ehpDelta === 0
           ? "Both players have the same current EHP."
           : `${ehpDelta > 0 ? names[0] : names[1]} leads by ${Math.abs(ehpDelta).toFixed(1)} EHP.`,
-    "Ahead in questing":
+    "Quest points":
       questPointDelta === null
         ? null
         : questPointDelta === 0
           ? "Both players have earned the same number of quest points."
           : `${questPointDelta > 0 ? names[0] : names[1]} leads by ${formatValue(Math.abs(questPointDelta))} quest points.`,
-    "Stronger combat profile":
+    "Combat level":
       combatDelta === null
         ? null
         : combatDelta === 0
@@ -966,18 +965,18 @@ function Highlights({
           : `${combatDelta > 0 ? names[0] : names[1]} leads by ${Math.abs(combatDelta).toFixed(1)} combat levels.`,
   };
   const toneByTitle: Record<string, HighlightTone> = {
-    "More active recently": toneFromDelta(activityDelta),
-    "More efficient": toneFromDelta(ehpDelta),
-    "Ahead in questing": toneFromDelta(questPointDelta),
-    "Stronger combat profile": toneFromDelta(combatDelta),
+    "XP gained": toneFromDelta(activityDelta),
+    EHP: toneFromDelta(ehpDelta),
+    "Quest points": toneFromDelta(questPointDelta),
+    "Combat level": toneFromDelta(combatDelta),
   };
 
   return (
     <article className="panel highlights-panel" aria-busy={isLoading}>
-      <PanelHeader title="Comparison highlights" eyebrow="Generated summary" />
+      <PanelHeader title="Comparison highlights" />
       <div className="highlight-list">
         {highlights.map(({ icon: Icon, title, fallbackCopy }) => {
-          const isRuneProfileHighlight = title === "Ahead in questing";
+          const isRuneProfileHighlight = title === "Quest points";
           const isUnavailable =
             isRuneProfileHighlight && unavailableMessage !== null;
           const tone = isUnavailable ? "neutral" : toneByTitle[title];
@@ -1037,7 +1036,7 @@ function RecentActivity({
   return (
     <article className="panel activity-panel" aria-busy={isLoading}>
       <PanelHeader
-        title="Recent XP gains"
+        title="XP"
         eyebrow="Last 7 days · Wise Old Man"
         action={
           <span className="fresh-badge">

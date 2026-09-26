@@ -1,5 +1,4 @@
 import {
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Info,
@@ -24,33 +23,6 @@ export type ComparisonTone =
 
 export const playerAccentClass = (side: PlayerSide) =>
   side === "left" ? "blue" : "green";
-
-const pageDescriptions: Record<string, string> = {
-  Overview:
-    "The current matchup, category leaders, recent momentum, and the data behind the score.",
-  Skills:
-    "Levels, XP, category composition, and the largest gaps in the current snapshots.",
-  "XP Timeline":
-    "Shared date ranges make momentum and account progression directly comparable.",
-  "EHP / Efficiency":
-    "Efficiency, account builds, and the remaining time behind each milestone.",
-  Activity:
-    "Recent training rhythm, daily gains, and the moments that changed the matchup.",
-  Quests:
-    "Quest-point progress, completion differences, and the requirements still blocking each player.",
-  "Achievement Diaries":
-    "Regional completion, reward unlocks, and the remaining tier-by-tier tasks.",
-  "Combat Achievements":
-    "Tier progress, point gaps, and granular task completion across both accounts.",
-  Bossing:
-    "Kill counts, raid completions, ranks, and the fastest opportunities to close each gap.",
-  Clues:
-    "Clue-scroll completions and rank pressure across every available tier.",
-  Minigames:
-    "Scores, ranks, and the minigame results creating the current lead.",
-  "Collection Log":
-    "Search individual items, compare ownership, and locate the pages creating the gap.",
-};
 
 export function sideLabel(
   side: PlayerSide | "tie" | "indeterminate" | null | undefined,
@@ -86,7 +58,6 @@ export function PageHeader({
       <div className="rr-page-header-main">
         <div className="rr-page-heading">
           <h1>{title}</h1>
-          {pageDescriptions[title] ? <p>{pageDescriptions[title]}</p> : null}
         </div>
         {meta ? <div className="rr-page-header-meta">{meta}</div> : null}
       </div>
@@ -99,7 +70,7 @@ export function PageHeader({
 
 export function SourceChip({
   label,
-  status = "ok",
+  status = "muted",
   href,
 }: {
   label: string;
@@ -166,74 +137,7 @@ export function FilterBar({
   );
 }
 
-export function SegmentedControl<T extends string>({
-  label,
-  value,
-  options,
-  onChange,
-  className = "",
-}: {
-  label: string;
-  value: T;
-  options: Array<[T, string]>;
-  onChange: (value: T) => void;
-  className?: string;
-}) {
-  return (
-    <fieldset className={`rr-segmented ${className}`.trim()}>
-      <legend>{label}</legend>
-      {options.map(([option, text]) => (
-        <button
-          type="button"
-          className={value === option ? "active" : ""}
-          onClick={() => onChange(option)}
-          key={option}
-        >
-          {text}
-        </button>
-      ))}
-    </fieldset>
-  );
-}
-
-export function SelectField<T extends string | number>({
-  label,
-  value,
-  options,
-  onChange,
-  compact = false,
-  className = "",
-}: {
-  label: string;
-  value: T;
-  options: Array<[T, string]>;
-  onChange: (value: T) => void;
-  compact?: boolean;
-  className?: string;
-}) {
-  return (
-    <label
-      className={`rr-select-field ${compact ? "compact" : ""} ${className}`.trim()}
-    >
-      <span>{label}</span>
-      <select
-        value={value}
-        onChange={(event) => {
-          const raw = event.target.value;
-          const selected = options.find(([option]) => String(option) === raw);
-          onChange((selected?.[0] ?? raw) as T);
-        }}
-      >
-        {options.map(([option, text]) => (
-          <option value={option} key={String(option)}>
-            {text}
-          </option>
-        ))}
-      </select>
-      <ChevronDown size={14} aria-hidden="true" />
-    </label>
-  );
-}
+export { SegmentedControl, SelectField } from "./primitives/SelectionControls";
 
 export function SearchField({
   value,
@@ -292,7 +196,7 @@ export function ComparisonKpiCard({
   icon,
   isLoading = false,
   loadingValue = "Loading value",
-  loadingDetail = "Loading current snapshots",
+  loadingDetail = "Loading player data",
   iconPosition = "start",
   children,
   className = "",
@@ -366,7 +270,7 @@ export function PairedMetricCard({
   deltaFormatter = formatter,
   isLoading = false,
   invertDelta = false,
-  nullDetail = "Awaiting both snapshots",
+  nullDetail = "Loading player data",
   gapLabel = "gap",
 }: {
   label: string;
@@ -584,7 +488,9 @@ export function PairChartTooltip({
               style={entry.color ? { background: entry.color } : undefined}
             />
             {side === "left" ? names[0] : names[1]}
-            <b>{formatter(entry.value)}</b>
+            <b>
+              {entry.value == null ? "Unavailable" : formatter(entry.value)}
+            </b>
           </span>
         );
       })}

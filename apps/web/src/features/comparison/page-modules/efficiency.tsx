@@ -7,9 +7,15 @@ import { type PointerEvent, useEffect, useMemo, useState } from "react";
 import {
   SourceChip as HeaderSourceChip,
   PageHeader,
+  SegmentedControl,
 } from "../../../components/comparison-ui";
+import { ValueSlider } from "../../../components/primitives/SelectionControls";
 import type { EfficiencyComparison } from "../context";
 import { useComparisonShell } from "../context";
+import {
+  buildSmoothedDailyGainTimeline,
+  valueAtTimeline,
+} from "../efficiencyTimeline";
 import { formatValue } from "../formatters";
 import {
   efficiencyDateFormatter,
@@ -62,7 +68,6 @@ type EfficiencySignalRow = {
   direction: "up" | "down";
 };
 
-const efficiencyDailySmoothingDays = 14;
 const efficiencyChartFrame = {
   width: 1120,
   height: 230,
@@ -89,18 +94,6 @@ function timelineForMetric(
     timelines?.[side].timelines.find((timeline) => timeline.metric === metric)
       ?.timeline ?? []
   );
-}
-
-function valueAtTimeline(
-  points: Array<{ date: number; value: number }>,
-  timestamp: number,
-) {
-  let value: number | null = null;
-  for (const point of points) {
-    if (point.date > timestamp) break;
-    value = point.value;
-  }
-  return value;
 }
 
 function gainBetweenTimeline(
@@ -130,34 +123,6 @@ function timelineVelocity(points: Array<{ date: number; value: number }>) {
   if (gained === null || first === undefined || last === undefined) return null;
   const days = Math.max(1, (last - first) / efficiencyDayMs);
   return gained / days;
-}
-
-function buildSmoothedDailyGainTimeline(
-  points: Array<{ date: number; value: number }>,
-) {
-  const firstDate = points[0]?.date;
-  const lastDate = points.at(-1)?.date;
-  if (firstDate === undefined || lastDate === undefined) return [];
-  const samples: Array<{ date: number; value: number }> = [];
-  for (
-    let date = firstDate + efficiencyDayMs;
-    date <= lastDate;
-    date += efficiencyDayMs
-  ) {
-    const endValue = valueAtTimeline(points, date);
-    const startDate = Math.max(
-      firstDate,
-      date - efficiencyDailySmoothingDays * efficiencyDayMs,
-    );
-    const startValue = valueAtTimeline(points, startDate);
-    if (endValue === null || startValue === null) continue;
-    if (date <= startDate) continue;
-    samples.push({
-      date,
-      value: Math.max(0, endValue - startValue) / efficiencyDailySmoothingDays,
-    });
-  }
-  return samples;
 }
 
 function sevenDayTrend(points: Array<{ date: number; value: number }>) {
@@ -395,7 +360,6 @@ function EfficiencyPage({
     !hasEhpGap || ehpGap === null
       ? null
       : Math.abs(ehpGap) / Math.max(1, hoursPerWeek);
-  const closingProgress = Math.min(100, (hoursPerWeek / 40) * 100);
   const chartData = useMemo(
     () => buildEfficiencyChartData(leftTimeline, rightTimeline, chartMode),
     [leftTimeline, rightTimeline, chartMode],
@@ -429,12 +393,26 @@ function EfficiencyPage({
     comparison?.efficiency.timeToMax.left == null
       ? null
       : comparison.efficiency.timeToMax.left / Math.max(1, hoursPerWeek);
-  const maxTargetDate =
-    maxTargetWeeks === null
-      ? "—"
-      : efficiencyDateFormatter.format(
-          Date.now() + maxTargetWeeks * 7 * efficiencyDayMs,
-        );
+
+  let catchUpEstimate = "EHP data is unavailable.";
+  if (ehpGap !== null) {
+    if (behindSide === null || closingWeeks === null) {
+      catchUpEstimate = "Both players have the same EHP.";
+    } else {
+      const leader = behindSide === "left" ? names[1] : names[0];
+      catchUpEstimate = `At ${hoursPerWeek} EHP/week, matching the current gap would take ${closingWeeks.toFixed(1)} weeks, assuming ${leader} gains no more EHP.`;
+    }
+  }
+
+  let timeToMaxEstimate = "—";
+  if (maxTargetWeeks === 0) {
+    timeToMaxEstimate = "Maxed";
+  } else if (maxTargetWeeks !== null) {
+    timeToMaxEstimate =
+      maxTargetWeeks < 4.345
+        ? `~${maxTargetWeeks.toFixed(1)} weeks`
+        : `~${Math.round(maxTargetWeeks / 4.345)} months`;
+  }
 
   return (
     <div className="efficiency-page">
@@ -447,9 +425,7 @@ function EfficiencyPage({
         <div className="data-banner error">{timelineResult.error}</div>
       ) : null}
       {timelineResult.isLoading && timelines === null ? (
-        <div className="data-banner">
-          Loading cached WOM efficiency timeline…
-        </div>
+        <div className="data-banner">Loading efficiency timeline…</div>
       ) : null}
 
       <section className="efficiency-kpi-grid">
@@ -490,50 +466,33 @@ function EfficiencyPage({
             eyebrow="Wise Old Man historical snapshots"
             action={
               <div className="efficiency-chart-actions">
-                <fieldset
+                <SegmentedControl
+                  label="Effective hours metric"
                   className="segmented"
-                  aria-label="Effective hours metric"
-                >
-                  {(["ehp", "ehb"] as const).map((mode) => (
-                    <button
-                      type="button"
-                      className={metricMode === mode ? "active" : ""}
-                      key={mode}
-                      onClick={() => setMetricMode(mode)}
-                    >
-                      {mode.toUpperCase()}
-                    </button>
-                  ))}
-                </fieldset>
-                <fieldset className="segmented" aria-label="Chart value">
-                  {(
-                    [
-                      ["total", "Total"],
-                      ["daily", "Gained/day"],
-                    ] as const
-                  ).map(([mode, label]) => (
-                    <button
-                      type="button"
-                      className={chartMode === mode ? "active" : ""}
-                      key={mode}
-                      onClick={() => setChartMode(mode)}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </fieldset>
-                <fieldset className="xp-range" aria-label="Efficiency range">
-                  {efficiencyRanges.map((item) => (
-                    <button
-                      type="button"
-                      className={range === item ? "active" : ""}
-                      key={item}
-                      onClick={() => setRange(item)}
-                    >
-                      {item}
-                    </button>
-                  ))}
-                </fieldset>
+                  value={metricMode}
+                  options={[
+                    ["ehp", "EHP"],
+                    ["ehb", "EHB"],
+                  ]}
+                  onChange={setMetricMode}
+                />
+                <SegmentedControl
+                  label="Chart value"
+                  className="segmented"
+                  value={chartMode}
+                  options={[
+                    ["total", "Total"],
+                    ["daily", "Gained/day"],
+                  ]}
+                  onChange={setChartMode}
+                />
+                <SegmentedControl
+                  label="Efficiency range"
+                  className="xp-range"
+                  value={range}
+                  options={efficiencyRanges.map((item) => [item, item])}
+                  onChange={setRange}
+                />
               </div>
             }
           />
@@ -588,23 +547,19 @@ function EfficiencyPage({
         />
 
         <article className="panel efficiency-planner">
-          <PanelHeader
-            title="Time debt planner"
-            eyebrow="Projected from current gap"
-          />
+          <PanelHeader title="Time estimates" />
           <div className="efficiency-slider-row">
-            <label htmlFor="effective-hours">
-              <span>Efficient hours per week</span>
-              <strong>{hoursPerWeek} hrs</strong>
-            </label>
-            <input
-              id="effective-hours"
-              type="range"
-              min="5"
-              max="40"
-              step="1"
+            <div className="rr-slider-label">
+              <span>EHP per week</span>
+              <strong>{hoursPerWeek} EHP</strong>
+            </div>
+            <ValueSlider
+              label="EHP per week"
               value={hoursPerWeek}
-              onChange={(event) => setHoursPerWeek(Number(event.target.value))}
+              min={5}
+              max={40}
+              onChange={setHoursPerWeek}
+              unit="EHP per week"
             />
             <div className="efficiency-slider-ticks">
               <span>5</span>
@@ -617,25 +572,16 @@ function EfficiencyPage({
           <div className="efficiency-forecast-list">
             <EfficiencyForecast
               icon={Clock3}
-              text={
-                closingWeeks === null || behindSide === null
-                  ? "Current EHP gap is tied or unavailable."
-                  : `At ${hoursPerWeek} efficient hrs/week, ${behindSide === "left" ? names[0] : names[1]} closes the EHP gap in ${closingWeeks.toFixed(1)} weeks.`
-              }
+              text={catchUpEstimate}
               value={
                 closingWeeks === null ? "—" : `${closingWeeks.toFixed(1)} weeks`
               }
               accent="green"
-              progress={closingProgress}
             />
             <EfficiencyForecast
               icon={Target}
-              text={`${names[0]} reaches max efficiency target around ${maxTargetDate}.`}
-              value={
-                maxTargetWeeks === null
-                  ? "—"
-                  : `~${Math.max(1, Math.round(maxTargetWeeks / 4.345))} months`
-              }
+              text={`Estimated time to max for ${names[0]} at ${hoursPerWeek} EHP/week.`}
+              value={timeToMaxEstimate}
               accent="blue"
               progress={
                 comparison?.efficiency.timeToMax.left == null
@@ -656,14 +602,14 @@ function EfficiencyPage({
 
       <article className="panel efficiency-signals-panel">
         <PanelHeader
-          title="Efficiency signals"
+          title="Efficiency stats"
           eyebrow={`${periodLabels[efficiencyRangePeriods[range]]} WOM timeline`}
         />
         <div className="table-scroll efficiency-signals-scroll">
           <table className="skills-detail-table efficiency-signals-table">
             <thead>
               <tr>
-                <th>Signal</th>
+                <th>Metric</th>
                 <th>{names[0]}</th>
                 <th>{names[1]}</th>
                 <th>Delta</th>
@@ -776,10 +722,7 @@ function EfficiencyLineChart({
       : Math.ceil(max / 1_000) * 1_000;
   const ticks = [0, 0.25, 0.5, 0.75, 1].map((ratio) => ({
     key: `tick-${ratio}`,
-    value:
-      mode === "daily"
-        ? Number((top * ratio).toFixed(1))
-        : Math.round((top * ratio) / 1_000) * 1_000,
+    value: mode === "daily" ? Number((top * ratio).toFixed(1)) : top * ratio,
   }));
   const xLabelStep = Math.max(1, Math.ceil(data.length / 7));
   const x = (index: number) =>
@@ -858,7 +801,7 @@ function EfficiencyLineChart({
                 ? tick.value.toLocaleString("en-US", {
                     maximumFractionDigits: 1,
                   })
-                : `${Math.round(tick.value / 1_000)}k`}
+                : `${(tick.value / 1_000).toLocaleString("en-US", { maximumFractionDigits: 2 })}k`}
             </text>
           </g>
         ))}
@@ -1007,16 +950,18 @@ function EfficiencyForecast({
   text: string;
   value: string;
   accent: "blue" | "green";
-  progress: number;
+  progress?: number;
 }) {
   return (
     <div className={`efficiency-forecast ${accent}`}>
       <Icon size={16} />
       <div>
         <span>{text}</span>
-        <i>
-          <b style={{ width: `${progress}%` }} />
-        </i>
+        {progress !== undefined ? (
+          <i>
+            <b style={{ width: `${progress}%` }} />
+          </i>
+        ) : null}
       </div>
       <strong>{value}</strong>
     </div>

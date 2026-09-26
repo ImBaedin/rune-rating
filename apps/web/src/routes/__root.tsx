@@ -5,6 +5,8 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
+import primitivesCss from "../components/primitives/primitives.css?url";
+import { RouteMessage } from "../components/RouteMessage";
 import scoreboardCss from "../styles/scoreboard.css?url";
 import appCss from "../styles.css?url";
 
@@ -36,6 +38,7 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: scoreboardCss,
       },
+      { rel: "stylesheet", href: primitivesCss },
       {
         rel: "icon",
         href: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2317212a'/%3E%3Cpath d='M8 8h12l4 5-6 4 5 7h-6l-5-7H8V8zm5 4v2h6l-2-2h-4z' fill='%23ffffff'/%3E%3C/svg%3E",
@@ -70,7 +73,7 @@ function RootDocument({ children }: Readonly<{ children: React.ReactNode }>) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <div className="rr-app-root">{children}</div>
         <Scripts />
       </body>
     </html>
@@ -80,25 +83,24 @@ function RootDocument({ children }: Readonly<{ children: React.ReactNode }>) {
 function RootErrorComponent() {
   return (
     <RootDocument>
-      <main className="route-message">
-        <section>
-          <p className="eyebrow">Something went wrong</p>
-          <h1>RuneRating could not load this page.</h1>
-          <p>Try refreshing the page or start a new comparison.</p>
-        </section>
-      </main>
+      <RouteMessage
+        eyebrow="Something went wrong"
+        title="RuneRating could not load this page."
+        allowReload
+      >
+        Try refreshing the page or start a new comparison.
+      </RouteMessage>
     </RootDocument>
   );
 }
 
 function RootNotFoundComponent() {
   return (
-    <main className="route-message">
-      <section>
-        <p className="eyebrow">Not found</p>
-        <h1>This RuneRating page does not exist.</h1>
-        <p>Check the URL or start from the default comparison page.</p>
-      </section>
-    </main>
+    <RouteMessage
+      eyebrow="Not found"
+      title="This RuneRating page does not exist."
+    >
+      Check the URL or start from the default comparison page.
+    </RouteMessage>
   );
 }

@@ -1,6 +1,6 @@
 import { ImageResponse } from "@vercel/og";
-import { tierImage } from "../../runeRatingAssets";
 import type { CompareOgModel, RatingOgModel } from "./data";
+import { tierPngImage } from "./rankAssets";
 
 const dimensions = { width: 1200, height: 630 };
 const cacheHeaders = {
@@ -42,7 +42,7 @@ function colorFor(tier: string) {
 function rankImageSrc(origin: string | undefined, tier: string | null) {
   if (!tier || tier === "Unranked") return null;
 
-  const src = tierImage(tier);
+  const src = tierPngImage(tier);
   if (src.startsWith("http") || src.startsWith("data:")) return src;
   if (!origin) return src;
   return src.startsWith("/") ? `${origin}${src}` : `${origin}/${src}`;

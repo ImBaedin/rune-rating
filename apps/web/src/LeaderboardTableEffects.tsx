@@ -7,6 +7,7 @@ import {
   Triangle,
 } from "ogl";
 import { useEffect, useRef } from "react";
+import { useDecorativeMotionPaused } from "./features/decorativeMotion";
 import type {
   LeaderboardFeaturedRank,
   LeaderboardParticleSettings,
@@ -253,7 +254,12 @@ function mix(low: number, high: number, amount: number) {
 }
 
 function hexToRgb(hex: string): Rgb {
-  const normalized = hex.trim().replace("#", "");
+  const trimmed = hex.trim();
+  const cssVariable = trimmed.match(/^var\((--[^)]+)\)$/)?.[1];
+  const resolved = cssVariable
+    ? getComputedStyle(document.documentElement).getPropertyValue(cssVariable)
+    : trimmed;
+  const normalized = resolved.trim().replace("#", "");
   if (!/^[0-9a-fA-F]{6}$/.test(normalized)) return fallbackTier;
   const value = Number.parseInt(normalized, 16);
   return [(value >> 16) & 255, (value >> 8) & 255, value & 255];
@@ -494,28 +500,26 @@ export function LeaderboardRowEffect({
   settings,
   tierColor,
 }: LeaderboardRowEffectProps) {
-  const anchorRef = useRef<HTMLSpanElement>(null);
+  const motionPaused = useDecorativeMotionPaused();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const anchor = anchorRef.current;
-    const row = anchor?.closest("tr");
-    const table = row?.closest("table");
-    const wrapper = anchor?.closest<HTMLElement>(".leaderboard-table-wrap");
-    if (!anchor || !row || !table || !wrapper) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const container = containerRef.current;
+    if (!container) return;
+    if (motionPaused) return;
 
     const normalizedSettings = normalizeSettings(settings);
     const parsedTierColor = hexToRgb(tierColor);
     const particles = createParticles(rank, normalizedSettings);
-    const container = document.createElement("div");
-
-    container.className = "leaderboard-row-effect";
-    wrapper.appendChild(container);
-
-    const renderer = new Renderer({
-      alpha: true,
-      dpr: Math.min(window.devicePixelRatio || 1, 2),
-    });
+    let renderer: Renderer;
+    try {
+      renderer = new Renderer({
+        alpha: true,
+        dpr: Math.min(window.devicePixelRatio || 1, 2),
+      });
+    } catch {
+      return; // The podium border remains visible without WebGL.
+    }
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
@@ -563,17 +567,9 @@ export function LeaderboardRowEffect({
 
     const updateSize = () => {
       resizeFrameId = 0;
-      const rowRect = row.getBoundingClientRect();
-      const wrapperRect = wrapper.getBoundingClientRect();
-      cssWidth = Math.max(1, Math.round(table.offsetWidth));
-      cssHeight = Math.max(1, Math.round(rowRect.height));
-
-      container.style.left = "0px";
-      container.style.top = `${Math.round(
-        rowRect.top - wrapperRect.top + wrapper.scrollTop,
-      )}px`;
-      container.style.width = `${cssWidth}px`;
-      container.style.height = `${cssHeight}px`;
+      const bounds = container.getBoundingClientRect();
+      cssWidth = Math.max(1, Math.round(bounds.width));
+      cssHeight = Math.max(1, Math.round(bounds.height));
 
       renderer.setSize(cssWidth, cssHeight);
       const resolution = program.uniforms.uResolution.value as Float32Array;
@@ -619,8 +615,7 @@ export function LeaderboardRowEffect({
     };
 
     const resizeObserver = new ResizeObserver(scheduleSize);
-    resizeObserver.observe(row);
-    resizeObserver.observe(table);
+    resizeObserver.observe(container);
 
     const intersectionObserver =
       "IntersectionObserver" in window
@@ -634,9 +629,8 @@ export function LeaderboardRowEffect({
             }
           })
         : null;
-    intersectionObserver?.observe(row);
+    intersectionObserver?.observe(container);
 
-    wrapper.addEventListener("scroll", scheduleSize, { passive: true });
     window.addEventListener("resize", scheduleSize);
     updateSize();
     renderer.render({ scene: mesh });
@@ -646,16 +640,19 @@ export function LeaderboardRowEffect({
     return () => {
       stopRendering();
       cancelAnimationFrame(resizeFrameId);
-      wrapper.removeEventListener("scroll", scheduleSize);
       window.removeEventListener("resize", scheduleSize);
       resizeObserver.disconnect();
       intersectionObserver?.disconnect();
-      if (container.parentElement === wrapper) {
-        wrapper.removeChild(container);
-      }
+      gl.canvas.remove();
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-  }, [rank, settings, tierColor]);
+  }, [motionPaused, rank, settings, tierColor]);
 
-  return <span className="leaderboard-row-effect-anchor" ref={anchorRef} />;
+  return (
+    <div
+      className="leaderboard-row-effect"
+      ref={containerRef}
+      aria-hidden="true"
+    />
+  );
 }

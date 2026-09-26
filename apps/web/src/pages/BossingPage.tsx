@@ -23,6 +23,7 @@ import {
 import { getBossIconUrls } from "../bossIcons";
 import {
   ComparisonKpiCard,
+  DataNotice,
   PageHeader,
   Pagination,
   PairChartTooltip,
@@ -32,6 +33,11 @@ import {
   SelectField,
   SourceChip,
 } from "../components/comparison-ui";
+import {
+  knownTotal,
+  scoreDifference,
+  scoreLeadDetail,
+} from "../features/comparison/activityScores";
 import { useComparisonShell } from "../features/comparison/context";
 import {
   formatValue as formatNumber,
@@ -143,8 +149,8 @@ function BossingPage() {
     () =>
       visibleRows.slice(0, chartLimit).map((row) => ({
         name: row.name,
-        left: row.score.left ?? 0,
-        right: row.score.right ?? 0,
+        left: row.score.left,
+        right: row.score.right,
       })),
     [chartLimit, visibleRows],
   );
@@ -159,24 +165,18 @@ function BossingPage() {
   const stats = useMemo(() => {
     const ranked = rows.filter((row) => row.isRanked);
     const raids = rows.filter((row) => row.isRaid);
-    const leftRanked = ranked.filter((row) => row.rank.left !== null).length;
-    const rightRanked = ranked.filter((row) => row.rank.right !== null).length;
-    const leftRaidScore = raids.reduce(
-      (sum, row) => sum + (row.score.left ?? 0),
-      0,
-    );
-    const rightRaidScore = raids.reduce(
-      (sum, row) => sum + (row.score.right ?? 0),
-      0,
-    );
+    const leftRanked = rows.length
+      ? ranked.filter((row) => row.rank.left !== null).length
+      : null;
+    const rightRanked = rows.length
+      ? ranked.filter((row) => row.rank.right !== null).length
+      : null;
+    const leftRaidScore = knownTotal(raids.map((row) => row.score.left));
+    const rightRaidScore = knownTotal(raids.map((row) => row.score.right));
     const topGap = rows.find((row) => row.absGap !== null);
-    const leftLead = rows.reduce(
-      (sum, row) => sum + Math.max(row.score.delta ?? 0, 0),
-      0,
-    );
-    const rightLead = rows.reduce(
-      (sum, row) => sum + Math.max(-(row.score.delta ?? 0), 0),
-      0,
+    const scoreLead = scoreDifference(
+      knownTotal(rows.map((row) => row.score.left)),
+      knownTotal(rows.map((row) => row.score.right)),
     );
 
     return {
@@ -187,7 +187,7 @@ function BossingPage() {
       leftRaidScore,
       rightRaidScore,
       topGap,
-      scoreLead: leftLead - rightLead,
+      scoreLead,
     };
   }, [rows]);
 
@@ -204,14 +204,21 @@ function BossingPage() {
     {
       label: "Boss KC lead",
       value: formatSigned(stats.scoreLead, " KC"),
-      detail:
-        stats.scoreLead >= 0 ? `${names[0]} is ahead` : `${names[1]} is ahead`,
+      detail: scoreLeadDetail(stats.scoreLead, names, "Kill counts are tied"),
       icon: <Swords size={25} />,
-      tone: stats.scoreLead >= 0 ? "blue" : "green",
+      tone:
+        stats.scoreLead === null || stats.scoreLead === 0
+          ? "purple"
+          : stats.scoreLead > 0
+            ? "blue"
+            : "green",
     },
     {
       label: "Ranked bosses",
-      value: `${formatNumber(Math.max(stats.leftRanked, stats.rightRanked))} ranked`,
+      value:
+        stats.leftRanked === null || stats.rightRanked === null
+          ? "—"
+          : `${formatNumber(Math.max(stats.leftRanked, stats.rightRanked))} ranked`,
       detail: (
         <PlayerPairLine
           names={names}
@@ -224,9 +231,10 @@ function BossingPage() {
     },
     {
       label: "Raid completions",
-      value: `${formatNumber(
-        Math.max(stats.leftRaidScore, stats.rightRaidScore),
-      )} completions`,
+      value:
+        stats.leftRaidScore === null || stats.rightRaidScore === null
+          ? "—"
+          : `${formatNumber(Math.max(stats.leftRaidScore, stats.rightRaidScore))} completions`,
       detail: (
         <PlayerPairLine
           names={names}
@@ -296,6 +304,12 @@ function BossingPage() {
         }
       />
 
+      {result === null ? (
+        <DataNotice>
+          Bossing data is not ready for one or both players yet.
+        </DataNotice>
+      ) : null}
+
       <section className="bossing-kpi-grid" aria-label="Bossing summary">
         {kpis.map((kpi) => (
           <ComparisonKpiCard
@@ -317,21 +331,16 @@ function BossingPage() {
               title="Top boss kill counts"
               subtitle="Grouped KC and completions for the current filter."
               action={
-                <label className="bossing-chart-limit">
-                  <span>Top</span>
-                  <select
-                    value={chartLimit}
-                    onChange={(event) =>
-                      setChartLimit(Number(event.target.value))
-                    }
-                  >
-                    {chartLimitOptions.map((option) => (
-                      <option value={option} key={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <SelectField
+                  label="Top"
+                  value={chartLimit}
+                  options={chartLimitOptions.map((option) => [
+                    option,
+                    String(option),
+                  ])}
+                  onChange={setChartLimit}
+                  compact
+                />
               }
             />
             <div className="bossing-chart-wrap">
@@ -367,6 +376,7 @@ function BossingPage() {
                     tick={{ fill: "var(--muted)", fontSize: 11 }}
                   />
                   <Tooltip
+                    filterNull={false}
                     content={
                       <PairChartTooltip
                         names={names}
@@ -530,11 +540,9 @@ function OpportunityPanel({
         <div>
           <h2>
             <Target size={16} />
-            Fastest progress opportunities
+            Largest KC gaps
           </h2>
-          <p>
-            Bosses where the trailing player could gain the most KC fastest.
-          </p>
+          <p>Bosses with the largest kill count differences.</p>
         </div>
       </div>
       <div className="bossing-opportunity-list">
@@ -545,8 +553,6 @@ function OpportunityPanel({
               : row.score.leader === "right"
                 ? names[0]
                 : "Either player";
-          const estimatedHours =
-            row.absGap === null ? null : Math.max(0.5, row.absGap / 20);
           return (
             <div className="bossing-opportunity" key={row.key}>
               <BossBadge name={row.name} />
@@ -558,10 +564,6 @@ function OpportunityPanel({
                 <div>
                   <dt>Gap</dt>
                   <dd>{formatNumber(row.absGap)} KC</dd>
-                </div>
-                <div>
-                  <dt>Est. hrs</dt>
-                  <dd>{estimatedHours?.toFixed(1) ?? "—"}</dd>
                 </div>
               </dl>
             </div>

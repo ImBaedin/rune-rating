@@ -12,3 +12,7 @@ output/playwright
 .env.local
 .env.*.local
 src/routeTree.gen.ts
+
+.netlify
+playwright-report
+test-results

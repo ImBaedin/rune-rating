@@ -1,3 +1,5 @@
+import { analyticsPrivacyConfig } from "./features/analyticsPrivacy";
+
 type AnalyticsValue = string | number | boolean | null;
 type AnalyticsProperties = Record<string, AnalyticsValue>;
 
@@ -30,14 +32,9 @@ async function getPostHog() {
     if (!isInitialized) {
       posthog.init(token, {
         api_host: posthogHost,
-        autocapture: false,
-        capture_pageview: false,
-        capture_pageleave: true,
-        disable_session_recording: true,
-        person_profiles: "identified_only",
+        ...analyticsPrivacyConfig,
         persistence: "localStorage+cookie",
         defaults: "2026-05-30",
-        property_denylist: ["left_rsn", "right_rsn", "rsn", "display_rsn"],
       });
       isInitialized = true;
     }

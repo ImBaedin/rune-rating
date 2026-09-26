@@ -1,5 +1,5 @@
 import { api } from "@rune-rating/backend/convex/_generated/api";
-import { normalizeRsn } from "@rune-rating/domain";
+import { normalizeRsn, rsnLookupKey } from "@rune-rating/domain";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useMutation, useQuery } from "convex/react";
 import type { FunctionReturnType } from "convex/server";
@@ -19,6 +19,7 @@ import {
 import {
   type CSSProperties,
   type FormEvent,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -33,8 +34,7 @@ import {
   scoreBucket,
 } from "./analytics";
 import { BaseDialog } from "./components/BaseDialog";
-import { randomCompareRsns } from "./exampleRsns";
-import { comparisonPath } from "./features/comparison/navigation";
+import { PublicHeader } from "./components/PublicHeader";
 import { ratingDisplayPrestigeStats } from "./features/ratingDisplay";
 import {
   ratingSystemImage,
@@ -86,28 +86,28 @@ const pillarFormulaNotes: Record<string, string> = {
 
 const improvementCopy: Record<string, { title: string; body: string }> = {
   skills: {
-    title: "Round out skill mastery",
-    body: "Push low total-level gaps, add more 99s, and keep building total XP. Hiscores is authoritative for this pillar.",
+    title: "Train your lower-level skills",
+    body: "Raise your lower levels, work toward more 99s, and increase total XP.",
   },
   combat: {
-    title: "Add combat proof",
-    body: "Log more boss KC, improve your best boss scores, and climb Combat Achievement tiers.",
+    title: "Build your boss KC",
+    body: "Increase boss kill counts and complete more Combat Achievement tasks.",
   },
   unlocks: {
-    title: "Clean up world unlocks",
-    body: "Finish quest points and achievement diaries. These are high-signal account-completion gains.",
+    title: "Complete quests and diaries",
+    body: "Earn more quest points and finish achievement diary tiers.",
   },
   collections: {
-    title: "Broaden collection progress",
-    body: "Target collection log slots, clues, and minigame categories where you have little or no current progress.",
+    title: "Fill more collection log slots",
+    body: "Add missing items and increase your clue and minigame scores.",
   },
   efficiency: {
-    title: "Improve efficiency signals",
-    body: "Raise EHP and EHB through efficient skilling and bossing. WOM data powers this pillar.",
+    title: "Increase EHP and EHB",
+    body: "Gain skilling XP and boss kills to increase these totals.",
   },
   balance: {
-    title: "Balance the account shape",
-    body: "Your weakest pillars drag down the balance bonus. Improving the lowest categories usually lifts the overall rating fastest.",
+    title: "Improve your lowest categories",
+    body: "A more even spread of category scores increases your balance bonus.",
   },
 };
 
@@ -174,9 +174,9 @@ function cardSvg(card: RuneRatingCard, rankImageDataUrl: string) {
     <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600">
       <defs>
         <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#2a211c"/>
-          <stop offset=".58" stop-color="#151211"/>
-          <stop offset="1" stop-color="#090807"/>
+          <stop offset="0" stop-color="#071012"/>
+          <stop offset=".58" stop-color="#0c1618"/>
+          <stop offset="1" stop-color="#111b1e"/>
         </linearGradient>
         <linearGradient id="metal" x1="250" y1="120" x2="950" y2="920">
           <stop offset="0" stop-color="${colors.light}"/>
@@ -188,25 +188,29 @@ function cardSvg(card: RuneRatingCard, rankImageDataUrl: string) {
           <stop offset=".42" stop-color="${colors.base}" stop-opacity=".18"/>
           <stop offset="1" stop-color="${colors.dark}" stop-opacity="0"/>
         </radialGradient>
+        <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+          <path d="M56 0H0V56" fill="none" stroke="#f4efe4" stroke-opacity=".035" stroke-width="2"/>
+        </pattern>
       </defs>
-      <rect width="1200" height="1600" rx="76" fill="url(#bg)"/>
-      <rect width="1200" height="1600" rx="76" fill="url(#flare)"/>
+      <rect width="1200" height="1600" fill="url(#bg)"/>
+      <rect width="1200" height="1600" fill="url(#grid)"/>
+      <rect width="1200" height="1600" fill="url(#flare)" opacity=".7"/>
       <path d="M920 1120a300 300 0 1 0 0 600 300 300 0 0 0 0-600Z" fill="none" stroke="${colors.base}" stroke-width="48" opacity=".22"/>
-      <text x="88" y="126" fill="#f4f0e8" font-size="44" font-weight="800" font-family="Georgia, serif" letter-spacing="8">RUNERATING</text>
-      <text x="1112" y="126" fill="${colors.light}" font-size="30" font-weight="800" font-family="Verdana, sans-serif" text-anchor="end">${escapeSvg(card.formulaVersion).toUpperCase()}</text>
+      <line x1="88" y1="154" x2="1112" y2="154" stroke="#2b3d40" stroke-width="2"/>
+      <text x="88" y="126" fill="#f4efe4" font-size="48" font-weight="900" font-family="Arial Narrow, Impact, sans-serif" letter-spacing="6">RUNERATING</text>
       <image href="${rankImageDataUrl}" x="328" y="150" width="544" height="544" preserveAspectRatio="xMidYMid meet"/>
-      <text x="600" y="790" fill="#f4f0e8" font-size="162" font-weight="900" font-family="Georgia, serif" text-anchor="middle">${card.score}</text>
-      <text x="600" y="866" fill="${colors.light}" font-size="52" font-weight="900" font-family="Verdana, sans-serif" text-anchor="middle" letter-spacing="7">${escapeSvg(card.tier).toUpperCase()}</text>
-      <text x="600" y="960" fill="#f4f0e8" font-size="78" font-weight="900" font-family="Georgia, serif" text-anchor="middle">${escapeSvg(card.displayRsn)}</text>
-      <text x="600" y="1017" fill="#d7d1c7" font-size="34" font-weight="700" font-family="Verdana, sans-serif" text-anchor="middle">${escapeSvg(card.percentileLabel)}</text>
+      <text x="600" y="790" fill="#f4efe4" font-size="188" font-weight="900" font-family="Arial Narrow, Impact, sans-serif" text-anchor="middle">${card.score}</text>
+      <text x="600" y="866" fill="${colors.light}" font-size="50" font-weight="900" font-family="Arial Narrow, Impact, sans-serif" text-anchor="middle" letter-spacing="7">${escapeSvg(card.tier).toUpperCase()}</text>
+      <text x="600" y="960" fill="#f4efe4" font-size="84" font-weight="900" font-family="Arial Narrow, Impact, sans-serif" text-anchor="middle">${escapeSvg(card.displayRsn).toUpperCase()}</text>
+      <text x="600" y="1017" fill="#9aa8a8" font-size="28" font-weight="700" font-family="monospace" text-anchor="middle">${escapeSvg(card.percentileLabel).toUpperCase()}</text>
       <g transform="translate(88 1060)">
         ${stats
           .map(
             (stat: RuneRatingPrestigeStat, index: number) => `
               <g transform="translate(${(index % 2) * 520} ${Math.floor(index / 2) * 190})">
-                <rect width="480" height="150" rx="24" fill="#000" opacity=".22" stroke="#f4f0e8" stroke-opacity=".14"/>
-                <text x="30" y="48" fill="#d7d1c7" font-size="22" font-family="Verdana, sans-serif" font-weight="800" letter-spacing="4">${escapeSvg(stat.label).toUpperCase()}</text>
-                <text x="30" y="104" fill="#f4f0e8" font-size="48" font-family="Verdana, sans-serif" font-weight="900">${escapeSvg(stat.value)}</text>
+                <rect width="480" height="150" fill="#0c1618" stroke="#2b3d40" stroke-width="2"/>
+                <text x="30" y="48" fill="#6f7f80" font-size="20" font-family="monospace" font-weight="700" letter-spacing="4">${escapeSvg(stat.label).toUpperCase()}</text>
+                <text x="30" y="108" fill="#f4efe4" font-size="54" font-family="Arial Narrow, Impact, sans-serif" font-weight="900">${escapeSvg(stat.value)}</text>
               </g>
             `,
           )
@@ -216,18 +220,18 @@ function cardSvg(card: RuneRatingCard, rankImageDataUrl: string) {
         ${card.pillars
           .slice(0, 6)
           .map((pillar: RuneRatingPillar, index: number) => {
-            const width = Math.round((pillar.score / pillar.maxScore) * 160);
+            const width = Math.round((pillar.score / pillar.maxScore) * 148);
             return `
               <g transform="translate(${index * 170} 0)">
-                <rect width="148" height="18" rx="9" fill="#f4f0e8" opacity=".14"/>
-                <rect width="${width}" height="18" rx="9" fill="${colors.light}"/>
+                <rect width="148" height="14" fill="#213134"/>
+                <rect width="${width}" height="14" fill="${colors.light}"/>
               </g>
             `;
           })
           .join("")}
       </g>
-      <text x="88" y="1512" fill="#d7d1c7" font-size="25" font-weight="800" font-family="Verdana, sans-serif" letter-spacing="4">VERIFIED FULL PROFILE</text>
-      <text x="1112" y="1512" fill="#d7d1c7" font-size="25" font-weight="800" font-family="Verdana, sans-serif" text-anchor="end">runerating.app</text>
+      <line x1="88" y1="1464" x2="1112" y2="1464" stroke="#2b3d40" stroke-width="2"/>
+      <text x="1112" y="1512" fill="#6f7f80" font-size="22" font-weight="700" font-family="monospace" text-anchor="end">RUNERATING.APP</text>
     </svg>
   `;
 }
@@ -268,20 +272,62 @@ async function downloadCardPng(card: RuneRatingCard) {
 }
 
 export function RatingPage() {
-  const navigate = useNavigate();
   const search = useSearch({ from: "/rating" });
-  const initialRsn = optionalRsn(search.rsn);
-  const [defaultCompareHref] = useState(() =>
-    comparisonPath("overview", randomCompareRsns()),
+  const rsn = optionalRsn(search.rsn);
+  const requestRefresh = useMutation(api.refresh.request);
+  const requestedRsns = useRef(new Set<string>());
+  const [refreshError, setRefreshError] = useState<{
+    key: string;
+    message: string;
+  } | null>(null);
+  const refresh = useCallback(
+    (name: string, automatic = false) => {
+      const key = rsnLookupKey(name);
+      if (automatic && requestedRsns.current.has(key)) return;
+      requestedRsns.current.add(key);
+      setRefreshError(null);
+      void requestRefresh({ rsns: [name] }).catch((error) => {
+        setRefreshError({
+          key,
+          message:
+            error instanceof Error
+              ? error.message
+              : "RuneRating refresh failed.",
+        });
+      });
+    },
+    [requestRefresh],
   );
+  const visibleError =
+    rsn && refreshError?.key === rsnLookupKey(rsn)
+      ? refreshError.message
+      : null;
+  return (
+    <RatingWorkbench
+      key={rsn ?? "empty"}
+      initialRsn={rsn}
+      refresh={refresh}
+      refreshError={visibleError}
+    />
+  );
+}
+
+function RatingWorkbench({
+  initialRsn,
+  refresh,
+  refreshError,
+}: {
+  initialRsn: string | undefined;
+  refresh: (rsn: string, automatic?: boolean) => void;
+  refreshError: string | null;
+}) {
+  const navigate = useNavigate();
   const [draftRsn, setDraftRsn] = useState(initialRsn ?? "");
-  const [submittedRsn, setSubmittedRsn] = useState(initialRsn ?? "");
+  const submittedRsn = initialRsn ?? "";
   const [requestError, setRequestError] = useState<string | null>(null);
   const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
-  const requestedRsns = useRef(new Set<string>());
   const readyAnalyticsKeys = useRef(new Set<string>());
   const initialPageRsn = useRef(initialRsn ?? "empty");
-  const requestRefresh = useMutation(api.refresh.request);
   const rating = useQuery(
     api.runeRating.get,
     submittedRsn ? { rsn: submittedRsn } : "skip",
@@ -308,12 +354,6 @@ export function RatingPage() {
     false;
 
   useEffect(() => {
-    if (!initialRsn) return;
-    setDraftRsn(initialRsn);
-    setSubmittedRsn(initialRsn);
-  }, [initialRsn]);
-
-  useEffect(() => {
     let ignored = false;
     void hashRsn(initialPageRsn.current).then((rsnHash) => {
       if (ignored) return;
@@ -331,15 +371,8 @@ export function RatingPage() {
 
   useEffect(() => {
     if (!submittedRsn || rating?.status !== "notRequested") return;
-    const key = submittedRsn.toLocaleLowerCase();
-    if (requestedRsns.current.has(key)) return;
-    requestedRsns.current.add(key);
-    void requestRefresh({ rsns: [submittedRsn] }).catch((error) => {
-      setRequestError(
-        error instanceof Error ? error.message : "RuneRating refresh failed.",
-      );
-    });
-  }, [rating?.status, requestRefresh, submittedRsn]);
+    refresh(submittedRsn, true);
+  }, [rating?.status, refresh, submittedRsn]);
 
   useEffect(() => {
     if (!submittedRsn || rating?.status !== "ready") return;
@@ -362,7 +395,7 @@ export function RatingPage() {
     });
   }, [rating, submittedRsn]);
 
-  const submit = async (event: FormEvent) => {
+  const submit = (event: FormEvent) => {
     event.preventDefault();
     let next: string;
     try {
@@ -385,20 +418,22 @@ export function RatingPage() {
         source_statuses: ratingSourceStatusSummary(ratingSources),
       });
     });
-    setSubmittedRsn(next);
-    await navigate({ to: "/rating", search: { rsn: next } });
-    try {
-      await requestRefresh({ rsns: [next] });
-    } catch (error) {
-      setRequestError(
-        error instanceof Error ? error.message : "RuneRating refresh failed.",
-      );
-    }
+    // Track before navigation remounts the workbench; failures still reach the
+    // requested URL and its matching error state without a duplicate auto-request.
+    refresh(next);
+    void navigate({ to: "/rating", search: { rsn: next } });
   };
 
   const copyLink = async () => {
     if (!cardUrl) return;
-    await navigator.clipboard.writeText(cardUrl);
+    try {
+      await navigator.clipboard.writeText(cardUrl);
+    } catch {
+      setRequestError(
+        "Could not copy the link. Copy the page address from your browser instead.",
+      );
+      return;
+    }
     if (submittedRsn) {
       void hashRsn(submittedRsn).then((rsnHash) => {
         captureAnalytics("share_or_copy_clicked", {
@@ -432,13 +467,21 @@ export function RatingPage() {
       });
     }
     if (navigator.share) {
-      await navigator.share({
-        title: "RuneRating card",
-        text: card
-          ? `${card.displayRsn} is ${card.tier} with a RuneRating of ${card.score}.`
-          : "RuneRating card",
-        url: cardUrl,
-      });
+      try {
+        await navigator.share({
+          title: "RuneRating card",
+          text: card
+            ? `${card.displayRsn} is ${card.tier} with a RuneRating of ${card.score}.`
+            : "RuneRating card",
+          url: cardUrl,
+        });
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === "AbortError")) {
+          setRequestError(
+            "Could not share this card. Try copying its link instead.",
+          );
+        }
+      }
       return;
     }
     await copyLink();
@@ -446,33 +489,26 @@ export function RatingPage() {
 
   return (
     <main className="rating-page">
-      <section className="rating-toolbar">
-        <a href="/" className="rating-brand-link">
-          <span className="brand-mark rating-brand-mark" aria-hidden="true">
-            <span />
-            <span />
-          </span>
-          <span>RuneRating</span>
-        </a>
-        <div className="rating-toolbar-actions">
-          <a href="/leaderboard" className="rating-nav-link">
-            Leaderboard
-          </a>
-          <a href={defaultCompareHref} className="rating-nav-link">
-            Compare players
-          </a>
+      <PublicHeader active="rating" />
+
+      <section className="rating-intro" id="public-content" tabIndex={-1}>
+        <div>
+          <h1>One score for the whole account.</h1>
         </div>
+        <p>
+          RuneRating weighs skills, combat, unlocks, collections, and efficiency
+          into a single current profile.
+        </p>
       </section>
 
-      <section className="rating-workbench">
+      <section className="rating-workbench" aria-label="Player rating">
         <div className="rating-control-panel">
-          <div>
-            <p className="rating-kicker">Account rating</p>
-            <h1>Generate your RuneRating.</h1>
+          <div className="rating-control-heading">
+            <strong>Look up a player</strong>
           </div>
           <form className="rating-form" onSubmit={submit}>
             <label>
-              <span>Display name</span>
+              <span>RuneScape name</span>
               <div className="rating-input-shell">
                 <Search size={18} />
                 <input
@@ -492,18 +528,18 @@ export function RatingPage() {
               ) : (
                 <Sparkles size={18} />
               )}
-              Generate
+              Rate player
             </button>
           </form>
 
-          {requestError ? (
-            <StatusCallout tone="error" title="Refresh failed">
-              {requestError}
+          {requestError || refreshError ? (
+            <StatusCallout tone="error" title="Action could not be completed">
+              {requestError ?? refreshError}
             </StatusCallout>
           ) : null}
 
           {rating === undefined && submittedRsn ? (
-            <StatusCallout tone="pending" title="Checking cached snapshots">
+            <StatusCallout tone="pending" title="Loading rating">
               Loading RuneRating data for {submittedRsn}.
             </StatusCallout>
           ) : null}
@@ -521,27 +557,23 @@ export function RatingPage() {
           ) : null}
 
           {card ? (
-            <>
-              <div className="rating-ready-summary">
-                <div>
-                  <span>Rating</span>
-                  <strong>{card.score}</strong>
-                </div>
-                <div>
-                  <span>Tier</span>
-                  <strong>{card.tier}</strong>
-                </div>
-                <div>
-                  <span>Updated</span>
-                  <strong>{formatAge(card.fetchedAt)}</strong>
-                </div>
+            <div className="rating-ready-summary">
+              <div>
+                <span>Rating</span>
+                <strong>{card.score}</strong>
               </div>
-              <ImprovementTips card={card} />
-              <CalculationDialog card={card} />
-            </>
+              <div>
+                <span>Tier</span>
+                <strong>{card.tier}</strong>
+              </div>
+              <div>
+                <span>Updated</span>
+                <strong>{formatAge(card.fetchedAt)}</strong>
+              </div>
+            </div>
           ) : (
             <div className="rating-system-card">
-              <img src={ratingSystemImage()} alt="" />
+              <img src={ratingSystemImage()} width={1024} height={512} alt="" />
               <div>
                 <p>Bronze to Dragon</p>
                 <span>
@@ -553,6 +585,13 @@ export function RatingPage() {
           )}
 
           <SourceChecklist result={rating} />
+
+          {card ? (
+            <div className="rating-analysis">
+              <ImprovementTips card={card} />
+              <CalculationDialog card={card} />
+            </div>
+          ) : null}
         </div>
 
         <div
@@ -572,6 +611,10 @@ export function RatingPage() {
             <EmptyCardPreview rsn={submittedRsn || draftRsn || "Player"} />
           )}
           <div className="rating-card-actions">
+            <span className="rating-actions-label">Share profile</span>
+            <span className="sr-only" role="status">
+              {copyState === "copied" ? "Link copied" : ""}
+            </span>
             <button
               type="button"
               className="rating-secondary-button"
@@ -589,7 +632,11 @@ export function RatingPage() {
                     ...lookupRsnHashField(rsnHash),
                   });
                 });
-                void downloadCardPng(card);
+                void downloadCardPng(card).catch(() => {
+                  setRequestError(
+                    "Could not export the card. Please try again.",
+                  );
+                });
               }}
             >
               <Download size={17} />
@@ -632,7 +679,10 @@ function StatusCallout({
   const Icon =
     tone === "error" ? AlertTriangle : tone === "ok" ? CheckCircle2 : RefreshCw;
   return (
-    <div className={`rating-callout ${tone}`}>
+    <div
+      className={`rating-callout ${tone}`}
+      role={tone === "error" ? "alert" : "status"}
+    >
       <Icon size={18} className={tone === "pending" ? "spin" : ""} />
       <div>
         <strong>{title}</strong>
@@ -707,7 +757,7 @@ function CalculationDialog({ card }: { card: RuneRatingCard }) {
   return (
     <BaseDialog
       title="How RuneRating is calculated"
-      description="RuneRating combines current canonical snapshots into pillar scores, then maps the total score to a metal tier."
+      description="Your score combines six categories. The total determines your tier."
       trigger={
         <>
           <Info size={17} />
@@ -724,14 +774,10 @@ function CalculationDialog({ card }: { card: RuneRatingCard }) {
           <span>Current tier</span>
           <strong>{card.tier}</strong>
         </div>
-        <div>
-          <span>Formula</span>
-          <strong>{card.formulaVersion}</strong>
-        </div>
       </div>
 
       <section className="calculation-section">
-        <h3>Score pillars</h3>
+        <h3>Score breakdown</h3>
         <div className="calculation-pillars">
           {card.pillars.map((pillar) => (
             <article className="calculation-pillar" key={pillar.key}>
@@ -807,12 +853,11 @@ function RuneRatingCardPreview({ card }: { card: RuneRatingCard }) {
       <div className="share-card-topline">
         <div>
           <span>RuneRating</span>
-          <small>{card.formulaVersion}</small>
         </div>
         <strong>{card.tier}</strong>
       </div>
       <div className="share-card-identity">
-        <img src={tierImage(card.tier)} alt="" />
+        <img src={tierImage(card.tier)} width={512} height={512} alt="" />
         <div>
           <span>Current RSN</span>
           <h2>{card.displayRsn}</h2>
@@ -854,7 +899,6 @@ function RuneRatingCardPreview({ card }: { card: RuneRatingCard }) {
         ))}
       </div>
       <div className="share-card-footer">
-        <span>Verified full profile</span>
         <span>runerating.app</span>
       </div>
     </article>
@@ -867,7 +911,6 @@ function EmptyCardPreview({ rsn }: { rsn: string }) {
       <div className="share-card-topline">
         <div>
           <span>RuneRating</span>
-          <small>Formula v1</small>
         </div>
         <strong>Pending</strong>
       </div>
@@ -875,7 +918,7 @@ function EmptyCardPreview({ rsn }: { rsn: string }) {
         <Shield size={70} />
       </div>
       <h2>{rsn}</h2>
-      <p>Waiting for connected account snapshots.</p>
+      <p>Waiting for player data.</p>
     </article>
   );
 }

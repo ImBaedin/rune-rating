@@ -14,7 +14,7 @@ function safeRsn(value: string | undefined) {
 }
 
 function pathPart(value: string) {
-  return encodeURIComponent(value).replaceAll("%20", "+");
+  return encodeURIComponent(value);
 }
 
 export function absoluteUrl(path: string) {

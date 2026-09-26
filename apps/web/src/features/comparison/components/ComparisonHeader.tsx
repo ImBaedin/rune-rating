@@ -29,6 +29,8 @@ type ComparisonHeaderProps = {
       }
     | null
     | undefined;
+  hiscoresStatus: "live" | "delayed" | "off";
+  hiscoresDetail: string;
   womStatus: "live" | "delayed" | "off";
   runeProfileStatus: "live" | "delayed" | "off";
   womDetail: string | null;
@@ -47,6 +49,8 @@ export function ComparisonHeader({
   onRefresh,
   isRefreshing,
   comparison,
+  hiscoresStatus,
+  hiscoresDetail,
   womStatus,
   runeProfileStatus,
   womDetail,
@@ -121,7 +125,11 @@ export function ComparisonHeader({
 
         <div className="header-operations">
           <fieldset className="header-sources" aria-label="Data source health">
-            <ShellSourceChip label="Hiscores" status="live" />
+            <ShellSourceChip
+              label="Hiscores"
+              status={hiscoresStatus}
+              detail={hiscoresDetail}
+            />
             <ShellSourceChip
               label="Wise Old Man"
               status={womStatus}

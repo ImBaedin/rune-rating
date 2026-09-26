@@ -32,8 +32,13 @@ import {
   readLookupHistory,
 } from "./lookupHistory";
 import { comparisonPath, viewFromPathname } from "./navigation";
+import {
+  automaticRefreshKey,
+  hasActiveRefresh,
+  nextSnapshotCheckAt,
+  sourceHealth,
+} from "./sourceState";
 
-const activeRefreshStatuses = new Set(["scheduled", "refreshing"]);
 const profileSourceStatusSummary = (
   profile: PlayerProfile | null | undefined,
 ) =>
@@ -55,21 +60,6 @@ const comparisonAgeBucket = (
     : comparison === null
       ? "missing"
       : "loading";
-
-const profileRefreshStates = (profile: PlayerProfile | undefined) => [
-  profile?.skillsState,
-  profile?.activitiesState,
-  profile?.efficiencyState,
-  profile?.questsState,
-  profile?.diariesState,
-  profile?.combatAchievementsState,
-  profile?.collectionState,
-];
-
-const hasActiveRefresh = (profile: PlayerProfile | undefined) =>
-  profileRefreshStates(profile).some((state) =>
-    activeRefreshStatuses.has(state?.status ?? ""),
-  );
 
 const activeProviderQueueStatuses = new Set(["queued", "running", "retrying"]);
 
@@ -103,44 +93,6 @@ function providerQueueDetail(
   }
   return "queued";
 }
-
-const snapshotRefreshKey = (
-  rsn: string,
-  profile: PlayerProfile | undefined,
-  now: number,
-) => {
-  if (
-    !profile ||
-    profile.lastSnapshotAt === null ||
-    profile.snapshotStaleAt === null ||
-    profile.snapshotStaleAt > now ||
-    profile.refreshAllowedAt > now ||
-    hasActiveRefresh(profile)
-  ) {
-    return null;
-  }
-
-  return `${rsn.trim().toLocaleLowerCase()}:${profile.lastSnapshotAt}`;
-};
-
-const invalidCombatRefreshKey = (
-  rsn: string,
-  profile: PlayerProfile | undefined,
-) => {
-  const state = profile?.combatAchievementsState;
-  if (
-    !profile ||
-    !state ||
-    state.status !== "failed" ||
-    (state.errorCode !== "invalidResponse" &&
-      state.errorCode !== "granularInvalid") ||
-    hasActiveRefresh(profile)
-  ) {
-    return null;
-  }
-
-  return `${rsn.trim().toLocaleLowerCase()}:combat-invalid:${state.lastSuccessAt ?? "none"}`;
-};
 
 export function ComparisonShell({
   routeRsns,
@@ -236,24 +188,24 @@ export function ComparisonShell({
   const isRefreshing = [leftProfile, rightProfile].some((profile) =>
     hasActiveRefresh(profile),
   );
-  const womStatus = [leftProfile, rightProfile].every(
-    (profile) => profile?.efficiencyState?.status === "fresh",
-  )
-    ? "live"
-    : [leftProfile, rightProfile].every(
-          (profile) => profile?.efficiencyState?.status === "notConnected",
-        )
-      ? "off"
-      : "delayed";
-  const runeProfileStatus = [leftProfile, rightProfile].every(
-    (profile) => profile?.questsState?.status === "fresh",
-  )
-    ? "live"
-    : [leftProfile, rightProfile].every(
-          (profile) => profile?.questsState?.status === "notConnected",
-        )
-      ? "off"
-      : "delayed";
+  const healthNow = Math.max(staleCheckNow, queueNow);
+  const hiscoresHealth = sourceHealth(
+    [leftProfile?.skillsState, rightProfile?.skillsState],
+    healthNow,
+  );
+  const womHealth = sourceHealth(
+    [leftProfile?.efficiencyState, rightProfile?.efficiencyState],
+    healthNow,
+  );
+  const runeProfileHealth = sourceHealth(
+    [leftProfile?.questsState, rightProfile?.questsState],
+    healthNow,
+  );
+  const hiscoresUnavailable = [leftProfile, rightProfile].some((profile) =>
+    ["failed", "notFound", "notConnected", "rateLimited"].includes(
+      profile?.skillsState?.status ?? "",
+    ),
+  );
   const runeProfileUnavailable =
     runeProfile === undefined
       ? null
@@ -322,29 +274,13 @@ export function ComparisonShell({
   }, [activeView, rsns[0], rsns[1]]);
 
   useEffect(() => {
-    const profiles = [leftProfile, rightProfile];
-    if (profiles.some((profile) => profile === undefined)) return;
-
-    const nextCheckAt = profiles.reduce<number | null>((earliest, profile) => {
-      if (
-        !profile ||
-        profile.snapshotStaleAt === null ||
-        hasActiveRefresh(profile)
-      ) {
-        return earliest;
-      }
-      const eligibleAt = Math.max(
-        profile.snapshotStaleAt,
-        profile.refreshAllowedAt,
-      );
-      if (eligibleAt <= staleCheckNow) return earliest;
-      return earliest === null ? eligibleAt : Math.min(earliest, eligibleAt);
-    }, null);
+    const now = Math.max(staleCheckNow, Date.now());
+    const nextCheckAt = nextSnapshotCheckAt([leftProfile, rightProfile], now);
 
     if (nextCheckAt === null) return;
     const timeout = window.setTimeout(
       () => setStaleCheckNow(Date.now()),
-      Math.max(0, nextCheckAt - staleCheckNow),
+      Math.max(0, nextCheckAt - now),
     );
     return () => window.clearTimeout(timeout);
   }, [leftProfile, rightProfile, staleCheckNow]);
@@ -352,6 +288,7 @@ export function ComparisonShell({
   useEffect(() => {
     if (leftProfile === undefined || rightProfile === undefined) return;
 
+    const now = Math.max(staleCheckNow, Date.now());
     const profileEntries = [
       { rsn: rsns[0], profile: leftProfile },
       { rsn: rsns[1], profile: rightProfile },
@@ -359,9 +296,12 @@ export function ComparisonShell({
     const staleEntries = profileEntries
       .map((entry) => ({
         ...entry,
-        key:
-          invalidCombatRefreshKey(entry.rsn, entry.profile) ??
-          snapshotRefreshKey(entry.rsn, entry.profile, staleCheckNow),
+        key: automaticRefreshKey(
+          entry.rsn,
+          entry.profile,
+          now,
+          autoRefreshKeys.current,
+        ),
       }))
       .filter(
         (entry): entry is (typeof profileEntries)[number] & { key: string } =>
@@ -369,13 +309,7 @@ export function ComparisonShell({
       );
     if (staleEntries.length === 0) return;
 
-    const requestKey = staleEntries
-      .map((entry) => entry.key)
-      .sort()
-      .join("|");
-    if (autoRefreshKeys.current.has(requestKey)) return;
-
-    autoRefreshKeys.current.add(requestKey);
+    for (const entry of staleEntries) autoRefreshKeys.current.add(entry.key);
     setRefreshError(null);
     void requestRefresh({ rsns: staleEntries.map((entry) => entry.rsn) }).catch(
       (error) => {
@@ -480,11 +414,16 @@ export function ComparisonShell({
         used_recent_lookup: usedRecentLookup,
       });
     });
-    setLookupHistory((history) => {
-      const updated = addToLookupHistory(history, next);
-      window.localStorage.setItem(lookupHistoryKey, JSON.stringify(updated));
-      return updated;
-    });
+    const updatedHistory = addToLookupHistory(lookupHistory, next);
+    setLookupHistory(updatedHistory);
+    try {
+      window.localStorage.setItem(
+        lookupHistoryKey,
+        JSON.stringify(updatedHistory),
+      );
+    } catch {
+      // Comparing still works when browser storage is unavailable.
+    }
     void navigate({
       to: comparisonPath(activeView, next),
     });
@@ -515,25 +454,38 @@ export function ComparisonShell({
         onRefresh={handleManualRefresh}
         isRefreshing={isRefreshing}
         comparison={comparison}
-        womStatus={womQueueDetail ? "delayed" : womStatus}
+        hiscoresStatus={hiscoresHealth.status}
+        hiscoresDetail={hiscoresHealth.detail}
+        womStatus={womQueueDetail ? "delayed" : womHealth.status}
         runeProfileStatus={
-          runeProfileQueueDetail ? "delayed" : runeProfileStatus
+          runeProfileQueueDetail ? "delayed" : runeProfileHealth.status
         }
-        womDetail={womQueueDetail}
-        runeProfileDetail={runeProfileQueueDetail}
+        womDetail={womQueueDetail ?? womHealth.detail}
+        runeProfileDetail={runeProfileQueueDetail ?? runeProfileHealth.detail}
       />
-      <main className="workspace" id="main-content">
+      <main className="workspace" id="main-content" tabIndex={-1}>
         <div
           className={`content ${activeView === "skills" ? "skills-content" : ""} ${activeView === "timeline" ? "xp-content" : ""} ${activeView === "efficiency" ? "efficiency-content" : ""}`}
         >
           {refreshError ? (
-            <div className="data-banner error">{refreshError}</div>
+            <div className="data-banner error" role="alert">
+              {refreshError}
+            </div>
           ) : null}
           {comparison === null ? (
-            <div className="data-banner">
-              Fetching current Hiscores snapshots for <strong>{rsns[0]}</strong>{" "}
-              and <strong>{rsns[1]}</strong>. This updates automatically when
-              both are ready.
+            <div className="data-banner" role="status">
+              {hiscoresUnavailable ? (
+                <>
+                  Hiscores data is unavailable for one or both players. Check
+                  the names, then use Refresh to retry when the cooldown ends.
+                </>
+              ) : (
+                <>
+                  Loading Hiscores data for <strong>{rsns[0]}</strong> and{" "}
+                  <strong>{rsns[1]}</strong>. This updates automatically when
+                  both are ready.
+                </>
+              )}
             </div>
           ) : null}
           <ComparisonShellContext.Provider value={shellContext}>
@@ -542,7 +494,6 @@ export function ComparisonShell({
         </div>
         <footer className="site-footer">
           <span>All times in your local timezone</span>
-          <span>RuneRating uses current canonical snapshots.</span>
         </footer>
       </main>
     </div>

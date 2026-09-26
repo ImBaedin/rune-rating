@@ -16,6 +16,7 @@ import {
 import {
   SourceChip as HeaderSourceChip,
   PageHeader,
+  PairChartTooltip,
   PlayerPairLine,
   SegmentedControl,
 } from "../../../components/comparison-ui";
@@ -109,9 +110,9 @@ function activitySignals(
   if (dashboard === null) {
     return [
       {
-        label: "Daily rhythm",
+        label: "Average daily XP",
         value: "Waiting",
-        detail: "Cached WOM overview is loading.",
+        detail: "Loading activity.",
         accent: "muted",
       },
     ];
@@ -124,7 +125,7 @@ function activitySignals(
 
   return [
     {
-      label: "Daily rhythm",
+      label: "Average daily XP",
       value:
         dashboard.summaries.leftAveragePerDay === null ||
         dashboard.summaries.rightAveragePerDay === null
@@ -158,7 +159,7 @@ function activitySignals(
       accent: quiet.days >= 3 ? "amber" : "muted",
     },
     {
-      label: "Active block",
+      label: "Most active period",
       value: formatCompact(activeWindow.value),
       detail:
         activeWindow.startDate === null || activeWindow.endDate === null
@@ -167,7 +168,7 @@ function activitySignals(
       accent: "green",
     },
     {
-      label: "Lead pressure",
+      label: "Largest change in XP gap",
       value: formatCompact(leadChange?.value ?? null),
       detail:
         leadChange === null
@@ -252,8 +253,8 @@ function ActivityPage({
   const chartData = points.map((point) => ({
     timestamp: point.date,
     date: efficiencyDateFormatter.format(point.date),
-    left: point.leftGained ?? 0,
-    right: point.rightGained ?? 0,
+    left: point.leftGained,
+    right: point.rightGained,
   }));
   const signals = activitySignals(dashboard, names);
   const fetchedAtValues = [
@@ -282,7 +283,7 @@ function ActivityPage({
         <div className="data-banner error">{result.error}</div>
       ) : null}
       {result.isLoading && dashboard === null ? (
-        <div className="data-banner">Loading cached WOM overview…</div>
+        <div className="data-banner">Loading activity…</div>
       ) : null}
 
       <section className="activity-kpi-grid">
@@ -321,7 +322,7 @@ function ActivityPage({
           icon={Info}
           label="Source freshness"
           value={oldestFetch === null ? "Waiting" : formatAge(oldestFetch)}
-          detail="Cached WOM overview"
+          detail="Wise Old Man"
           accent="green"
         />
       </section>
@@ -329,8 +330,8 @@ function ActivityPage({
       <section className="activity-main-grid">
         <article className="panel activity-heatmap-panel">
           <PanelHeader
-            title="Daily rhythm"
-            eyebrow="One-year cached activity map"
+            title="Daily XP"
+            eyebrow="Past year"
             action={
               <span className="activity-panel-note">
                 Darker days indicate larger XP gain.
@@ -348,7 +349,7 @@ function ActivityPage({
         </article>
 
         <article className="panel activity-signals-panel">
-          <PanelHeader title="Activity signals" eyebrow={range} />
+          <PanelHeader title="Activity summary" eyebrow={range} />
           <div className="activity-signal-list">
             {signals.map((signal) => (
               <div
@@ -404,7 +405,10 @@ function ActivityPage({
                   tickLine={false}
                 />
                 <Tooltip
-                  formatter={(value) => formatCompact(Number(value))}
+                  filterNull={false}
+                  content={
+                    <PairChartTooltip names={names} formatter={formatCompact} />
+                  }
                   labelFormatter={(label) => `Daily gain: ${label}`}
                 />
                 <Bar dataKey="left" fill="var(--blue)" radius={[3, 3, 0, 0]} />
@@ -419,7 +423,7 @@ function ActivityPage({
         </article>
 
         <article className="panel activity-events-panel">
-          <PanelHeader title="Notable days" eyebrow="Recent signals" />
+          <PanelHeader title="Notable days" />
           <div className="activity-event-list">
             {(dashboard?.events ?? []).length === 0 ? (
               <p>No notable activity events in this range.</p>

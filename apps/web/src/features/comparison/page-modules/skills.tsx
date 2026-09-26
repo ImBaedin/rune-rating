@@ -412,7 +412,7 @@ function SkillHighlights({
 
   return (
     <article className="panel skills-highlights-panel" aria-busy={isLoading}>
-      <PanelHeader title="Skill highlights" eyebrow="Current snapshots" />
+      <PanelHeader title="Skill highlights" />
       <div className="skills-highlight-list">
         {items.map((item) => (
           <div className="skills-highlight-item" key={item.title}>

@@ -424,16 +424,12 @@ export default function CombatAchievementsPage() {
 
         <aside className="ca-side-column">
           <article className="ca-panel">
-            <PanelHeader
-              title="Point gap by tier"
-              subtitle="Compact tier-level swing summary."
-              names={names}
-            />
+            <PanelHeader title="Point gap by tier" names={names} />
             <TierSwingTable tiers={model.tierRows} names={names} compact />
           </article>
 
           <article className="ca-panel ca-signals-panel">
-            <h2>Difference signals</h2>
+            <h2>Point differences</h2>
             <div className="ca-signal-list">
               {model.signals.map((signal) => (
                 <SignalRow key={signal.label} signal={signal} />
@@ -446,7 +442,7 @@ export default function CombatAchievementsPage() {
       <section className="ca-lower-grid">
         <article className="ca-panel">
           <PanelHeader
-            title="Highest-value swings"
+            title="Highest-point task differences"
             subtitle="Tasks completed by exactly one player, sorted by point value."
             names={names}
           />
@@ -464,7 +460,7 @@ export default function CombatAchievementsPage() {
 
         <article className="ca-panel">
           <PanelHeader
-            title="Shared blockers"
+            title="Tasks neither player has completed"
             subtitle="High-tier tasks neither player has completed."
             names={names}
           />
@@ -993,9 +989,7 @@ function TierSwingTable({
   compact?: boolean;
 }) {
   if (tiers.every((tier) => tier.totalTasks === 0)) {
-    return (
-      <EmptyState>Combat achievement snapshots are still loading.</EmptyState>
-    );
+    return <EmptyState>Loading Combat Achievements.</EmptyState>;
   }
 
   return (

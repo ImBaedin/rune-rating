@@ -6,6 +6,9 @@
       "!**/node_modules",
       "!**/.turbo",
       "!**/.output",
+      "!**/.netlify",
+      "!**/playwright-report",
+      "!**/test-results",
       "!**/dist",
       "!**/convex/_generated",
       "!**/src/routeTree.gen.ts"

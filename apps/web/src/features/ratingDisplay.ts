@@ -49,6 +49,7 @@ const accountBuildLabels: Record<string, string> = {
 };
 
 const accountTypeLabels: Record<string, string> = {
+  normal: "Regular",
   regular: "Regular",
   ironman: "Ironman",
   hardcore_ironman: "Hardcore Ironman",
@@ -80,4 +81,14 @@ export function formatAccountType(value: string) {
   if (!key) return "";
   const snakeKey = key.replace(/[\s-]+/g, "_");
   return accountTypeLabels[snakeKey] ?? titleCaseParts(key);
+}
+
+export function formatAccountSummary(
+  accountType: string,
+  accountBuild: string,
+) {
+  const type = formatAccountType(accountType);
+  const build = accountBuild.trim();
+  if (!build || build.toLocaleLowerCase() === "main") return type;
+  return `${type} / ${formatAccountBuild(build)}`;
 }

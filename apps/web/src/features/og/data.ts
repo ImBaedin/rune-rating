@@ -101,12 +101,13 @@ function valueLeader(
       : "right";
 }
 
-function summarizeLeader(
+export function summarizeLeader(
   stats: Array<{ leader: "left" | "right" | "tie" | "unknown" }>,
 ) {
   const left = stats.filter((stat) => stat.leader === "left").length;
   const right = stats.filter((stat) => stat.leader === "right").length;
-  if (left === 0 && right === 0) return "unknown";
+  if (left === 0 && right === 0)
+    return stats.some((stat) => stat.leader === "tie") ? "tie" : "unknown";
   if (left === right) return "tie";
   return left > right ? "left" : "right";
 }

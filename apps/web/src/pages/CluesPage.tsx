@@ -22,14 +22,23 @@ import {
 import {
   ComparisonKpiCard,
   DataNotice,
+  EmptyState,
   PageHeader,
+  PairChartTooltip,
   PanelHeader,
   PlayerPairLine,
   SourceChip,
   sideLabel,
   sideTone,
 } from "../components/comparison-ui";
+import {
+  knownTotal,
+  scoreDifference,
+  scoreLeadDetail,
+  scoreLeader,
+} from "../features/comparison/activityScores";
 import { chartPlayerColors } from "../features/comparison/chartTheme";
+import { clueRankTarget } from "../features/comparison/clueTargets";
 import { useComparisonShell } from "../features/comparison/context";
 import {
   formatCompact,
@@ -79,10 +88,6 @@ function rankGap(row: ClueRow) {
   return Math.abs(row.rank.left - row.rank.right);
 }
 
-function isRanked(row: ClueRow) {
-  return row.score.left !== null || row.score.right !== null;
-}
-
 function buildRows(activities: ActivityRow[] | undefined): ClueRow[] {
   return (activities ?? [])
     .filter((activity) => activity.category === "clues")
@@ -119,8 +124,8 @@ function CluesPage() {
     () =>
       rows.map((row) => ({
         tier: row.label,
-        left: row.score.left ?? 0,
-        right: row.score.right ?? 0,
+        left: row.score.left,
+        right: row.score.right,
       })),
     [rows],
   );
@@ -132,33 +137,44 @@ function CluesPage() {
 
       {comparison === null ? (
         <DataNotice>
-          Hiscores activity snapshots are not available for this comparison yet.
+          Clue data is not available for this comparison yet.
         </DataNotice>
       ) : null}
 
       <section className="clues-kpis" aria-label="Clue summary">
         <ComparisonKpiCard
+          isLoading={isLoading}
           icon={<FileText size={24} />}
           label="Total Clue Lead"
           value={formatLead(model.totalScoreLead)}
-          detail={`${sideLabel(model.totalLeader, names)} ahead`}
+          detail={scoreLeadDetail(
+            model.totalScoreLead,
+            names,
+            "Completions are tied",
+          )}
           tone={sideTone(model.totalLeader)}
         />
         <ComparisonKpiCard
+          isLoading={isLoading}
           icon={<Trophy size={25} />}
           label="Highest Tier Lead"
           value={model.highestLeadValue}
           detail={
             model.highestLeadTier === null
-              ? `${sideLabel(model.highestLeadSide, names)} ahead`
+              ? "No known completion differences"
               : `${sideLabel(model.highestLeadSide, names)} ahead in ${model.highestLeadTier}`
           }
           tone={sideTone(model.highestLeadSide)}
         />
         <ComparisonKpiCard
+          isLoading={isLoading}
           icon={<BarChart3 size={25} />}
           label="Tiers led"
-          value={`${model.leadingTierCount} of ${model.rankedTierCount}`}
+          value={
+            model.leadingTierCount === null
+              ? "—"
+              : `${model.leadingTierCount} of ${model.comparableTierCount}`
+          }
           detail={
             <PlayerPairLine
               names={names}
@@ -171,6 +187,7 @@ function CluesPage() {
           tone={sideTone(model.leadingTierSide)}
         />
         <ComparisonKpiCard
+          isLoading={isLoading}
           icon={<TrendingUp size={26} />}
           label="Best Rank Advantage"
           value={formatNumber(model.bestRankAdvantage?.gap ?? null)}
@@ -219,10 +236,13 @@ function CluesPage() {
                     width={42}
                   />
                   <Tooltip
-                    formatter={(value, name) => [
-                      formatNumber(Number(value)),
-                      name === "left" ? names[0] : names[1],
-                    ]}
+                    filterNull={false}
+                    content={
+                      <PairChartTooltip
+                        names={names}
+                        formatter={formatNumber}
+                      />
+                    }
                     labelFormatter={(label) => `${label} clues`}
                     cursor={{ fill: "var(--chart-cursor)" }}
                   />
@@ -244,12 +264,9 @@ function CluesPage() {
           <ClueTable rows={rows} names={names} isLoading={isLoading} />
         </div>
 
-        <aside className="clues-side-column" aria-label="Tier pressure">
+        <aside className="clues-side-column" aria-label="Rank gaps by tier">
           <article className="clues-panel clues-pressure-panel">
-            <PanelHeader
-              title="Tier Pressure"
-              subtitle={`Where ${names[1]} can gain the most rankings`}
-            />
+            <PanelHeader title="Rank gaps by tier" />
             <div className="clues-pressure-list">
               {model.pressureRows.map((row) => (
                 <PressureRow key={row.key} row={row} />
@@ -259,8 +276,8 @@ function CluesPage() {
 
           <article className="clues-panel clues-opportunity-panel">
             <PanelHeader
-              title="Top Ranking Opportunities"
-              subtitle="Specific rank thresholds within tiers"
+              title="Rank targets"
+              subtitle={`Unreached rank targets for ${names[1]}`}
             />
             <div className="clues-opportunity-list">
               {model.opportunities.map((row) => (
@@ -274,7 +291,7 @@ function CluesPage() {
                     </strong>
                     <small>
                       {formatNumber(row.currentRank)} →{" "}
-                      {formatNumber(row.threshold - 1)}
+                      {formatNumber(row.threshold)}
                     </small>
                   </div>
                   <b>
@@ -283,6 +300,13 @@ function CluesPage() {
                   </b>
                 </div>
               ))}
+              {model.opportunities.length === 0 ? (
+                <EmptyState>
+                  {isLoading
+                    ? "Loading clue ranks…"
+                    : `No unreached targets in the available ranks for ${names[1]}.`}
+                </EmptyState>
+              ) : null}
             </div>
           </article>
         </aside>
@@ -296,30 +320,27 @@ function CluesPage() {
 }
 
 function buildClueModel(rows: ClueRow[]) {
-  const totalRow = rows.reduce(
-    (total, row) => ({
-      left: total.left + (row.score.left ?? 0),
-      right: total.right + (row.score.right ?? 0),
-    }),
-    { left: 0, right: 0 },
+  const totalDelta = scoreDifference(
+    knownTotal(rows.map((row) => row.score.left)),
+    knownTotal(rows.map((row) => row.score.right)),
   );
-  const totalDelta = totalRow.left - totalRow.right;
-  const totalLeader =
-    totalDelta === 0 ? "tie" : totalDelta > 0 ? "left" : "right";
-  const rankedRows = rows.filter(isRanked);
-  const leftLeadCount = rankedRows.filter(
-    (row) => row.score.leader === "left",
-  ).length;
-  const rightLeadCount = rankedRows.filter(
-    (row) => row.score.leader === "right",
-  ).length;
-  const leadingTierSide =
-    leftLeadCount === rightLeadCount
-      ? "tie"
-      : leftLeadCount > rightLeadCount
-        ? "left"
-        : "right";
-  const leadingTierCount = Math.max(leftLeadCount, rightLeadCount);
+  const totalLeader = scoreLeader(totalDelta);
+  const comparableRows = rows.filter(
+    (row) => row.score.left !== null && row.score.right !== null,
+  );
+  const leftLeadCount = comparableRows.length
+    ? comparableRows.filter((row) => row.score.leader === "left").length
+    : null;
+  const rightLeadCount = comparableRows.length
+    ? comparableRows.filter((row) => row.score.leader === "right").length
+    : null;
+  const leadingTierSide = scoreLeader(
+    scoreDifference(leftLeadCount, rightLeadCount),
+  );
+  const leadingTierCount =
+    leftLeadCount === null || rightLeadCount === null
+      ? null
+      : Math.max(leftLeadCount, rightLeadCount);
   const scoreLeads = rows
     .filter((row) => row.score.delta !== null)
     .map((row) => ({
@@ -348,30 +369,28 @@ function buildClueModel(rows: ClueRow[]) {
     .sort((a, b) => b.gap - a.gap);
   const pressureRows = rows
     .map((row) => {
-      const gap = rankGap(row) ?? 0;
+      const gap = rankGap(row);
       return {
         key: row.key,
         label: row.label,
         tone: row.tone,
         gap,
-        pressure: Math.min(100, Math.max(3, gap / 200)),
+        pressure: gap === null ? 0 : Math.min(100, Math.max(3, gap / 200)),
       };
     })
-    .sort((a, b) => b.gap - a.gap)
+    .sort((a, b) => (b.gap ?? -1) - (a.gap ?? -1))
     .slice(0, 6);
   const opportunities = rows
     .map((row) => {
-      const currentRank = row.rank.right ?? row.rank.left ?? null;
       const tier = tierByKey.get(row.tier);
-      if (currentRank === null || tier === undefined) return null;
-      const toPass = Math.max(0, currentRank - tier.threshold + 1);
+      if (tier === undefined) return null;
+      const target = clueRankTarget(row.rank.right, tier.threshold);
+      if (target === null) return null;
       return {
         key: row.key,
         label: row.label,
         tone: row.tone,
-        threshold: tier.threshold,
-        currentRank,
-        toPass,
+        ...target,
       };
     })
     .filter((row): row is NonNullable<typeof row> => row !== null)
@@ -383,7 +402,7 @@ function buildClueModel(rows: ClueRow[]) {
     highestLeadValue: highestLead ? formatLead(highestLead.delta) : "—",
     highestLeadTier: highestLead?.row.label ?? null,
     highestLeadSide: (highestLead?.side ?? "indeterminate") as PlayerSide,
-    rankedTierCount: rankedRows.length,
+    comparableTierCount: comparableRows.length,
     leadingTierCount,
     leftLeadCount,
     rightLeadCount,
@@ -409,11 +428,10 @@ function ClueTable({
   names: [string, string];
   isLoading: boolean;
 }) {
-  const totalLeft = rows.reduce((sum, row) => sum + (row.score.left ?? 0), 0);
-  const totalRight = rows.reduce((sum, row) => sum + (row.score.right ?? 0), 0);
-  const totalDelta = totalLeft - totalRight;
-  const totalLeader =
-    totalDelta === 0 ? "tie" : totalDelta > 0 ? "left" : "right";
+  const totalLeft = knownTotal(rows.map((row) => row.score.left));
+  const totalRight = knownTotal(rows.map((row) => row.score.right));
+  const totalDelta = scoreDifference(totalLeft, totalRight);
+  const totalLeader = scoreLeader(totalDelta);
 
   return (
     <article className="clues-panel clues-table-panel">
@@ -463,7 +481,13 @@ function ClueTable({
                       {sideLabel(row.score.leader, names)}
                     </span>
                   </td>
-                  <td>{isRanked(row) ? "Ranked" : "Unranked"}</td>
+                  <td>
+                    {row.score.left !== null && row.score.right !== null
+                      ? "Available"
+                      : row.score.left !== null || row.score.right !== null
+                        ? "Partial"
+                        : "Unavailable"}
+                  </td>
                 </tr>
               ))
             )}
@@ -499,7 +523,7 @@ function PressureRow({
     key: string;
     label: string;
     tone: string;
-    gap: number;
+    gap: number | null;
     pressure: number;
   };
 }) {

@@ -1,15 +1,16 @@
-import { Popover } from "@base-ui-components/react/popover";
 import { api } from "@rune-rating/backend/convex/_generated/api";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { usePaginatedQuery, useQuery } from "convex/react";
 import type { FunctionReturnType } from "convex/server";
 import { ChevronDown, Info, Search, Shield, Trophy } from "lucide-react";
 import { type CSSProperties, useEffect, useState } from "react";
 import { capturePageView } from "./analytics";
-import {
-  formatAccountBuild,
-  formatAccountType,
-} from "./features/ratingDisplay";
+import { SegmentedControl } from "./components/comparison-ui";
+import { PublicHeader } from "./components/PublicHeader";
+import { InfoPopover } from "./components/primitives/InfoPopover";
+import { useDecorativeMotionPaused } from "./features/decorativeMotion";
+import { leaderboardSearchInput } from "./features/leaderboardSearch";
+import { formatAccountSummary } from "./features/ratingDisplay";
 import {
   type LeaderboardFeaturedRank,
   leaderboardEffectSettingsForRank,
@@ -27,7 +28,7 @@ type AccountTypeFilter = {
 
 const accountTypeFilters: AccountTypeFilter[] = [
   { label: "All", value: undefined },
-  { label: "Regular", value: "regular" },
+  { label: "Regular", value: "normal" },
   { label: "Ironman", value: "ironman" },
   { label: "Hardcore", value: "hardcore_ironman" },
   { label: "Ultimate", value: "ultimate_ironman" },
@@ -68,10 +69,7 @@ function ratingPath(entry: LeaderboardEntry) {
 }
 
 function accountSummary(entry: LeaderboardEntry) {
-  const accountType = formatAccountType(entry.accountType);
-  const build = entry.accountBuild.trim();
-  if (!build || build.toLocaleLowerCase() === "main") return accountType;
-  return `${accountType} / ${formatAccountBuild(build)}`;
+  return formatAccountSummary(entry.accountType, entry.accountBuild);
 }
 
 function rankText(entry: LeaderboardEntry) {
@@ -91,20 +89,25 @@ function featuredRankFor(rank: number): LeaderboardFeaturedRank | null {
 }
 
 export function LeaderboardPage() {
+  const motionPaused = useDecorativeMotionPaused();
   const [queryText, setQueryText] = useState("");
-  const [activeFilter, setActiveFilter] =
-    useState<AccountTypeFilter>(allAccountTypes);
+  const search = useSearch({ from: "/leaderboard" });
+  const navigate = useNavigate({ from: "/leaderboard" });
+  const activeFilter =
+    accountTypeFilters.find((filter) => filter.value === search.account) ??
+    allAccountTypes;
   const trimmedQuery = queryText.trim();
+  const validatedSearch = leaderboardSearchInput(queryText);
   const listArgs =
     activeFilter.value === undefined
       ? {}
       : { accountTypeKey: activeFilter.value };
-  const searchArgs = !trimmedQuery
+  const searchArgs = !validatedSearch.query
     ? ("skip" as const)
     : activeFilter.value === undefined
-      ? { query: trimmedQuery, limit: 25 }
+      ? { query: validatedSearch.query, limit: 25 }
       : {
-          query: trimmedQuery,
+          query: validatedSearch.query,
           limit: 25,
           accountTypeKey: activeFilter.value,
         };
@@ -123,40 +126,30 @@ export function LeaderboardPage() {
 
   const entries = trimmedQuery ? (searchResults ?? []) : leaderboard.results;
   const isLoading =
-    trimmedQuery && searchResults === undefined
+    trimmedQuery && !validatedSearch.error && searchResults === undefined
       ? true
       : !trimmedQuery && leaderboard.status === "LoadingFirstPage";
   const canLoadMore = !trimmedQuery && leaderboard.status === "CanLoadMore";
   const totalProfiles =
     profileCount?.totalProfiles ?? leaderboard.results.length;
+  const showPodium = !trimmedQuery && activeFilter.value === undefined;
+  const podiumEntries = showPodium ? entries.slice(0, 3) : [];
+  const standingEntries = showPodium ? entries.slice(3) : entries;
 
   return (
-    <main className="leaderboard-page">
-      <section className="leaderboard-toolbar">
-        <Link className="rating-brand-link" to="/">
-          <span className="brand-mark rating-brand-mark" aria-hidden="true">
-            <span />
-            <span />
-          </span>
-          <span>RuneRating</span>
-        </Link>
-        <div className="rating-toolbar-actions">
-          <a className="rating-nav-link" href="/rating">
-            Rating card
-          </a>
-        </div>
-      </section>
+    <main className={`leaderboard-page${motionPaused ? " motion-paused" : ""}`}>
+      <PublicHeader active="leaderboard" />
 
-      <section className="leaderboard-shell">
+      <section className="leaderboard-shell" id="public-content" tabIndex={-1}>
         <header className="leaderboard-hero">
           <div>
-            <p className="rating-kicker">Live ratings / Formula v1</p>
-            <h1>Leaderboard</h1>
+            <h1>RuneRating leaderboard</h1>
+            <p>Players ranked by RuneRating.</p>
           </div>
           <div className="leaderboard-hero-stat">
             <Trophy size={20} />
             <span>{totalProfiles.toLocaleString("en-US")}</span>
-            <strong>rated profiles</strong>
+            <strong>Profiles rated</strong>
           </div>
         </header>
 
@@ -168,6 +161,10 @@ export function LeaderboardPage() {
             <Search size={17} />
             <input
               value={queryText}
+              aria-invalid={Boolean(validatedSearch.error)}
+              aria-describedby={
+                validatedSearch.error ? "leaderboard-search-error" : undefined
+              }
               onChange={(event) => setQueryText(event.target.value)}
               aria-label="Search RSN"
               placeholder="Search RSN"
@@ -175,20 +172,51 @@ export function LeaderboardPage() {
               spellCheck={false}
             />
           </div>
-          <fieldset className="leaderboard-tabs">
-            <legend className="sr-only">Account type</legend>
-            {accountTypeFilters.map((filter) => (
-              <button
-                type="button"
-                className={filter.value === activeFilter.value ? "active" : ""}
-                key={filter.label}
-                onClick={() => setActiveFilter(filter)}
-              >
-                {filter.label}
-              </button>
-            ))}
-          </fieldset>
+          <SegmentedControl
+            label="Account type"
+            className="leaderboard-tabs"
+            value={activeFilter.label}
+            options={accountTypeFilters.map((filter) => [
+              filter.label,
+              filter.label,
+            ])}
+            onChange={(value) => {
+              const filter = accountTypeFilters.find(
+                (filter) => filter.label === value,
+              );
+              if (filter) void navigate({ search: { account: filter.value } });
+            }}
+          />
         </section>
+
+        {validatedSearch.error ? (
+          <p id="leaderboard-search-error" role="status">
+            {validatedSearch.error}
+          </p>
+        ) : null}
+
+        {showPodium && podiumEntries.length > 0 ? (
+          <section
+            className="leaderboard-podium"
+            aria-labelledby="podium-title"
+          >
+            <div className="leaderboard-section-heading">
+              <div>
+                <span id="podium-title">Top three</span>
+              </div>
+              <small>Live global rank</small>
+            </div>
+            <div className="leaderboard-podium-grid">
+              {podiumEntries.map((entry, index) => (
+                <LeaderboardPodiumCard
+                  entry={entry}
+                  fallbackRank={index + 1}
+                  key={entry._id}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <section
           className="leaderboard-panel"
@@ -196,10 +224,12 @@ export function LeaderboardPage() {
         >
           <div className="leaderboard-panel-heading">
             <div>
-              <span>{trimmedQuery ? "Search results" : "Global rank"}</span>
-              <strong id="leaderboard-title">
-                {activeFilter.label} RuneRating
-              </strong>
+              <span id={showPodium ? "leaderboard-title" : undefined}>
+                {trimmedQuery ? "Search results" : "Standings"}
+              </span>
+              {!showPodium ? (
+                <h2 id="leaderboard-title">{activeFilter.label} RuneRating</h2>
+              ) : null}
             </div>
             {trimmedQuery ? (
               <small>
@@ -210,36 +240,34 @@ export function LeaderboardPage() {
             )}
           </div>
 
+          <div className="leaderboard-ledger-head" aria-hidden="true">
+            <span>Rank</span>
+            <span>Player</span>
+            <span>Rating</span>
+            <span>Account</span>
+            <span>Total / XP</span>
+            <span>Collection</span>
+            <span>Efficiency</span>
+            <span>Updated</span>
+          </div>
+          <ol className="leaderboard-ledger">
+            {standingEntries.map((entry, index) => (
+              <LeaderboardStanding
+                entry={entry}
+                key={entry._id}
+                fallbackRank={index + 1 + (showPodium ? 3 : 0)}
+              />
+            ))}
+          </ol>
           <div className="leaderboard-table-wrap">
-            <table className="leaderboard-table">
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Player</th>
-                  <th>Score</th>
-                  <th>Tier</th>
-                  <th>Account</th>
-                  <th>Total</th>
-                  <th>XP</th>
-                  <th>Collection</th>
-                  <th>EHP</th>
-                  <th>EHB</th>
-                  <th>Updated</th>
-                </tr>
-              </thead>
-              <tbody>
-                {entries.map((entry, index) => (
-                  <LeaderboardRow
-                    entry={entry}
-                    key={entry._id}
-                    fallbackRank={index + 1}
-                  />
-                ))}
-              </tbody>
-            </table>
             {isLoading ? <EmptyState label="Loading leaderboard data" /> : null}
-            {!isLoading && entries.length === 0 ? (
+            {!isLoading && !validatedSearch.error && entries.length === 0 ? (
               <EmptyState label="No matching rated profiles yet" />
+            ) : null}
+            {!isLoading &&
+            entries.length > 0 &&
+            standingEntries.length === 0 ? (
+              <EmptyState label="All rated players are shown above" />
             ) : null}
           </div>
 
@@ -259,7 +287,76 @@ export function LeaderboardPage() {
   );
 }
 
-function LeaderboardRow({
+function LeaderboardPodiumCard({
+  entry,
+  fallbackRank,
+}: {
+  entry: LeaderboardEntry;
+  fallbackRank: number;
+}) {
+  const colors = tierColorsFor(entry.tier);
+  const shownEhp = entry.adjustedEhp ?? entry.ehp;
+  const rowRank = entry.leaderboardRank ?? fallbackRank;
+  const featuredSlot = featuredRankFor(fallbackRank) ?? 3;
+  const effectSettings = leaderboardEffectSettingsForRank(featuredSlot);
+  return (
+    <article
+      className={`leaderboard-podium-card leaderboard-podium-card-${featuredSlot}`}
+      style={
+        {
+          "--tier-base": colors.base,
+          "--tier-light": colors.light,
+        } as CSSProperties
+      }
+    >
+      <LeaderboardRowEffect
+        rank={featuredSlot}
+        settings={effectSettings}
+        tierColor={colors.light}
+      />
+      <div className="leaderboard-podium-shimmer" aria-hidden="true" />
+      <Link className="leaderboard-podium-link" to={ratingPath(entry)}>
+        <div className="leaderboard-podium-topline">
+          <span>Global rank</span>
+          <strong>#{rowRank}</strong>
+        </div>
+        <div className="leaderboard-podium-player">
+          <img src={tierImage(entry.tier)} width={512} height={512} alt="" />
+          <div>
+            <span>{entry.tier} tier</span>
+            <h3>{entry.displayRsn}</h3>
+            <p>{accountSummary(entry)}</p>
+          </div>
+        </div>
+        <div className="leaderboard-podium-score">
+          <span>RuneRating</span>
+          <strong>{entry.score}</strong>
+        </div>
+        <div className="leaderboard-podium-stats">
+          <span>
+            <small>Total</small>
+            <strong>
+              <span className="sr-only">Total level </span>
+              {entry.totalLevel.toLocaleString("en-US")}
+            </strong>
+          </span>
+          <span>
+            <small>Collection</small>
+            <strong>
+              {percent(entry.collectionObtained, entry.collectionTotal)}
+            </strong>
+          </span>
+          <span>
+            <small>EHP</small>
+            <strong>{hours(shownEhp)}</strong>
+          </span>
+        </div>
+      </Link>
+    </article>
+  );
+}
+
+function LeaderboardStanding({
   entry,
   fallbackRank,
 }: {
@@ -269,24 +366,9 @@ function LeaderboardRow({
   const colors = tierColorsFor(entry.tier);
   const shownEhp = entry.adjustedEhp ?? entry.ehp;
   const shownEhb = entry.adjustedEhb ?? entry.ehb;
-  const rowRank = entry.leaderboardRank ?? fallbackRank;
-  const featuredRank = featuredRankFor(rowRank);
-  const featuredSlot =
-    featuredRank === null
-      ? null
-      : (featuredRankFor(fallbackRank) ?? featuredRank);
-  const effectSettings =
-    featuredSlot === null
-      ? null
-      : leaderboardEffectSettingsForRank(featuredSlot);
   return (
-    <tr
-      className={
-        featuredRank === null
-          ? undefined
-          : `leaderboard-row-featured leaderboard-row-featured-${featuredRank}`
-      }
-      data-featured-rank={featuredRank ?? undefined}
+    <li
+      className="leaderboard-standing"
       style={
         {
           "--tier-base": colors.base,
@@ -294,98 +376,78 @@ function LeaderboardRow({
         } as CSSProperties
       }
     >
-      <td>
-        {featuredSlot !== null && effectSettings !== null ? (
-          <LeaderboardRowEffect
-            rank={featuredSlot}
-            settings={effectSettings}
-            tierColor={colors.light}
-          />
-        ) : null}
-        <span className="leaderboard-rank">
-          {entry.leaderboardRank === null
-            ? `#${fallbackRank}`
-            : rankText(entry)}
+      <span className="leaderboard-rank">
+        <span className="sr-only">Rank </span>
+        {entry.leaderboardRank === null ? `#${fallbackRank}` : rankText(entry)}
+      </span>
+      <Link className="leaderboard-player" to={ratingPath(entry)}>
+        <img src={tierImage(entry.tier)} width={512} height={512} alt="" />
+        <span>
+          <strong>{entry.displayRsn}</strong>
+          <small>
+            {entry.tier} · {rankDetail(entry)}
+          </small>
         </span>
-      </td>
-      <td>
-        <a className="leaderboard-player" href={ratingPath(entry)}>
-          <img src={tierImage(entry.tier)} alt="" />
-          <span>
-            <strong>{entry.displayRsn}</strong>
-            <small>{rankDetail(entry)}</small>
-          </span>
-        </a>
-      </td>
-      <td>
-        <strong className="leaderboard-score">{entry.score}</strong>
-      </td>
-      <td>
-        <span className="leaderboard-tier">{entry.tier}</span>
-      </td>
-      <td>
-        <span className="leaderboard-build">
-          <Shield size={13} />
-          {accountSummary(entry)}
-        </span>
-      </td>
-      <td>{entry.totalLevel.toLocaleString("en-US")}</td>
-      <td>{compactNumber(entry.totalXp)}</td>
-      <td>{percent(entry.collectionObtained, entry.collectionTotal)}</td>
-      <td>
+      </Link>
+      <strong className="leaderboard-score">
+        <span className="sr-only">RuneRating </span>
+        {entry.score}
+      </strong>
+      <span className="leaderboard-build">
+        <Shield size={13} />
+        {accountSummary(entry)}
+      </span>
+      <span className="leaderboard-dual-stat">
+        <strong>
+          <span className="sr-only">Total level </span>
+          {entry.totalLevel.toLocaleString("en-US")}
+        </strong>
+        <small>{compactNumber(entry.totalXp)} XP</small>
+      </span>
+      <span>
+        <span className="leaderboard-mobile-label">Collection </span>
+        <span className="sr-only leaderboard-desktop-label">Collection </span>
+        {percent(entry.collectionObtained, entry.collectionTotal)}
+      </span>
+      <span className="leaderboard-dual-stat">
         <span className="leaderboard-efficiency-value">
-          {hours(shownEhp)}
+          <strong>{hours(shownEhp)} EHP</strong>
           {entry.adjustedEhp !== null ? (
             <AdjustedEfficiencyInfo metric="EHP" />
           ) : null}
         </span>
-      </td>
-      <td>
         <span className="leaderboard-efficiency-value">
-          {hours(shownEhb)}
+          <small>{hours(shownEhb)} EHB</small>
           {entry.adjustedEhb !== null ? (
             <AdjustedEfficiencyInfo metric="EHB" />
           ) : null}
         </span>
-      </td>
-      <td>{formatAge(entry.fetchedAt)}</td>
-    </tr>
+      </span>
+      <span className="leaderboard-updated">
+        <span className="sr-only">Updated </span>
+        {formatAge(entry.fetchedAt)}
+      </span>
+    </li>
   );
 }
 
 function AdjustedEfficiencyInfo({ metric }: { metric: "EHP" | "EHB" }) {
   return (
-    <Popover.Root>
-      <Popover.Trigger
-        className="leaderboard-efficiency-info"
-        aria-label={`${metric} is adjusted for group players`}
-        openOnHover
-        delay={0}
-        closeDelay={120}
-      >
-        <Info size={13} />
-      </Popover.Trigger>
-      <Popover.Portal>
-        <Popover.Positioner side="top" align="center" sideOffset={8}>
-          <Popover.Popup className="leaderboard-efficiency-popover">
-            <Popover.Title className="leaderboard-efficiency-popover-title">
-              Adjusted {metric}
-            </Popover.Title>
-            <Popover.Description className="leaderboard-efficiency-popover-copy">
-              Group player efficiency is adjusted with Wise Old Man ironman
-              rates before ranking, so shared group progress is compared against
-              an ironman baseline.
-            </Popover.Description>
-          </Popover.Popup>
-        </Popover.Positioner>
-      </Popover.Portal>
-    </Popover.Root>
+    <InfoPopover
+      trigger={<Info size={13} />}
+      className="leaderboard-efficiency-info"
+      label={`${metric} is adjusted for group players`}
+      title={`Adjusted ${metric}`}
+    >
+      Group player efficiency is adjusted with Wise Old Man ironman rates before
+      ranking, so shared group progress is compared against an ironman baseline.
+    </InfoPopover>
   );
 }
 
 function EmptyState({ label }: { label: string }) {
   return (
-    <div className="leaderboard-empty">
+    <div className="leaderboard-empty" role="status">
       <Trophy size={22} />
       <span>{label}</span>
     </div>

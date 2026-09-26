@@ -249,8 +249,7 @@
 
 .rr-select-field svg {
   pointer-events: none;
-  position: absolute;
-  right: 8px;
+  display: block;
   color: var(--muted-quiet);
 }
 

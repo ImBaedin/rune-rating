@@ -33,6 +33,7 @@ import {
   DataNotice,
   EmptyState,
   PageHeader,
+  PairChartTooltip,
   PanelHeader,
   SearchField,
   SegmentedControl,
@@ -404,11 +405,7 @@ function CollectionsPage() {
 
         <aside className="collections-side-column">
           <article className="collections-panel collections-rate-panel">
-            <PanelHeader
-              title="Completion rate"
-              subtitle="Current detailed snapshot"
-              help={false}
-            />
+            <PanelHeader title="Completion rate" help={false} />
             <div className="collections-rate-list">
               <CompletionMeter
                 name={names[0]}
@@ -429,7 +426,7 @@ function CollectionsPage() {
 
           <article className="collections-panel collections-pressure-panel">
             <PanelHeader
-              title="High-value misses"
+              title="Largest collection gaps"
               subtitle="Largest category and page gaps"
               help={false}
             />
@@ -465,8 +462,8 @@ function CollectionsPage() {
                 data={pages.slice(0, 12).map((row) => ({
                   name: row.name,
                   tab: row.tab,
-                  left: row.left?.obtained ?? 0,
-                  right: row.right?.obtained ?? 0,
+                  left: row.left?.obtained ?? null,
+                  right: row.right?.obtained ?? null,
                 }))}
                 layout="vertical"
                 margin={{ top: 10, right: 32, bottom: 10, left: 16 }}
@@ -498,10 +495,10 @@ function CollectionsPage() {
                   width={132}
                 />
                 <Tooltip
-                  formatter={(value, key) => [
-                    formatNumber(Number(value)),
-                    key === "left" ? names[0] : names[1],
-                  ]}
+                  filterNull={false}
+                  content={
+                    <PairChartTooltip names={names} formatter={formatNumber} />
+                  }
                   labelFormatter={(label) => String(label)}
                   cursor={{ fill: "var(--chart-cursor)" }}
                 />
@@ -577,11 +574,14 @@ function CategoryWheel({
   }
   const data = tabs.map((tab, index) => {
     const total = Math.max(tab.left?.total ?? 0, tab.right?.total ?? 0, 1);
-    const leftObtained = Math.max(0, Math.min(tab.left?.obtained ?? 0, total));
-    const rightObtained = Math.max(
-      0,
-      Math.min(tab.right?.obtained ?? 0, total),
-    );
+    const leftObtained =
+      tab.left === null
+        ? null
+        : Math.max(0, Math.min(tab.left.obtained, total));
+    const rightObtained =
+      tab.right === null
+        ? null
+        : Math.max(0, Math.min(tab.right.obtained, total));
 
     const color = tabColor(index);
 
@@ -592,10 +592,12 @@ function CategoryWheel({
       remainingColor: mutedTabColor(color),
       leftObtained,
       rightObtained,
-      leftRemaining: Math.max(total - leftObtained, 0),
-      rightRemaining: Math.max(total - rightObtained, 0),
-      leftPercent: tab.left?.percent ?? 0,
-      rightPercent: tab.right?.percent ?? 0,
+      leftRemaining:
+        leftObtained === null ? null : Math.max(total - leftObtained, 0),
+      rightRemaining:
+        rightObtained === null ? null : Math.max(total - rightObtained, 0),
+      leftPercent: tab.left?.percent ?? null,
+      rightPercent: tab.right?.percent ?? null,
     };
   });
   const leftSlices = data
@@ -613,7 +615,7 @@ function CategoryWheel({
         isRemaining: true,
       },
     ])
-    .filter((entry) => entry.value > 0);
+    .filter((entry) => entry.value !== null && entry.value > 0);
   const rightSlices = data
     .flatMap((entry) => [
       {
@@ -629,7 +631,7 @@ function CategoryWheel({
         isRemaining: true,
       },
     ])
-    .filter((entry) => entry.value > 0);
+    .filter((entry) => entry.value !== null && entry.value > 0);
 
   return (
     <div className="collections-wheel">

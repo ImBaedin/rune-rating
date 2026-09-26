@@ -1,9 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import {
-  fetchWiseOldManEhbRates,
-  fetchWiseOldManEhpRates,
-} from "./rates";
 import type { WiseOldManRequestError } from "./player";
+import { fetchWiseOldManEhbRates, fetchWiseOldManEhpRates } from "./rates";
 
 describe("Wise Old Man efficiency rates", () => {
   test("fetches EHP skill method and bonus rates", async () => {

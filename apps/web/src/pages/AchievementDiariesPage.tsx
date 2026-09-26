@@ -69,7 +69,7 @@ export default function AchievementDiariesPage() {
     category: "diaries",
   });
   const [regionFilter, setRegionFilter] = useState<RegionFilter>("all");
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("incomplete");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [tierFilter, setTierFilter] = useState<TierFilter>("all");
 
   const model = useMemo(
@@ -174,7 +174,7 @@ export default function AchievementDiariesPage() {
         />
         <DiaryMetricCard
           icon={<AlertTriangle size={22} />}
-          title="Task blockers"
+          title="Tasks remaining"
           values={{
             left: leftStats?.remainingTasks ?? null,
             right: rightStats?.remainingTasks ?? null,
@@ -183,7 +183,7 @@ export default function AchievementDiariesPage() {
         />
         <DiaryMetricCard
           icon={<Gift size={22} />}
-          title="Reward unlocks"
+          title="Tasks completed"
           values={{
             left: leftStats?.completedTasks ?? null,
             right: rightStats?.completedTasks ?? null,
@@ -298,7 +298,7 @@ export default function AchievementDiariesPage() {
           </article>
 
           <article className="ad-panel ad-signals-panel">
-            <h2>Diary signals</h2>
+            <h2>Diary summary</h2>
             <div className="ad-signal-list">
               <SignalRow
                 icon={<Trophy size={16} />}
@@ -321,16 +321,8 @@ export default function AchievementDiariesPage() {
                 tone="green"
                 label="Most total completions"
                 detail="Overall tier completions"
-                left={leftStats?.completedTasks ?? null}
-                right={rightStats?.completedTasks ?? null}
-              />
-              <SignalRow
-                icon={<AlertTriangle size={16} />}
-                tone="amber"
-                label="Most blocked tasks"
-                detail="Incomplete requirements"
-                left={leftStats?.remainingTasks ?? null}
-                right={rightStats?.remainingTasks ?? null}
+                left={leftStats?.completedTiers ?? null}
+                right={rightStats?.completedTiers ?? null}
               />
               <SignalRow
                 icon={<ListChecks size={16} />}
@@ -392,7 +384,7 @@ export default function AchievementDiariesPage() {
         </article>
 
         <article className="ad-panel">
-          <h2>Top blockers (by remaining tasks)</h2>
+          <h2>Diaries with the most tasks remaining</h2>
           <BlockerTable rows={model.blockers} names={names} />
         </article>
 
@@ -403,10 +395,7 @@ export default function AchievementDiariesPage() {
       </div>
 
       <footer className="ad-footnote">
-        <span>
-          Data sourced from RuneProfile. Tiers and tasks reflect the latest
-          cached canonical snapshot for each player.
-        </span>
+        <span>Diary data comes from RuneProfile.</span>
       </footer>
     </section>
   );

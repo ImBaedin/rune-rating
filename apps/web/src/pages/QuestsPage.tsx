@@ -45,6 +45,11 @@ import {
   formatValue as formatNumber,
   formatDelta as signed,
 } from "../features/comparison/formatters";
+import {
+  questPointBand as pointBandKey,
+  questCompletionDiffers,
+  questPointCompletions,
+} from "../features/comparison/questCompletion";
 import "./QuestsPage.css";
 
 type QuestCategory = FunctionReturnType<typeof api.runeProfile.getCategory>;
@@ -86,8 +91,6 @@ const isIncomplete = (item: QuestItem | null) => item?.completed === false;
 const stateLabel = (state: string | null | undefined) =>
   state ? (statusLabels[state] ?? state.replaceAll("_", " ")) : "Unavailable";
 const groupLabel = (group: string) => groupLabels[group] ?? group;
-const pointBandKey = (points: number | null) =>
-  points === null ? "0" : (String(Math.min(points, 5)) as PointFilter);
 
 function buildRows(
   left: QuestCategory | undefined,
@@ -164,7 +167,7 @@ function QuestsPage() {
       if (status === "incomplete")
         return isIncomplete(row.left) || isIncomplete(row.right);
       if (status === "different")
-        return row.left?.completed !== row.right?.completed;
+        return questCompletionDiffers(row.left, row.right);
       return true;
     });
   }, [group, hideZeroPoint, points, rows, search, status]);
@@ -210,21 +213,15 @@ function QuestsPage() {
     () =>
       pointBands.map((band) => ({
         band: band.label,
-        left: rows.filter(
-          (row) =>
-            pointBandKey(row.points) === band.key && isComplete(row.left),
-        ).length,
-        right: rows.filter(
-          (row) =>
-            pointBandKey(row.points) === band.key && isComplete(row.right),
-        ).length,
+        left: questPointCompletions(leftCategory?.items, band.key),
+        right: questPointCompletions(rightCategory?.items, band.key),
       })),
-    [rows],
+    [leftCategory, rightCategory],
   );
   const notableMissing = useMemo(
     () =>
       rows
-        .filter((row) => isComplete(row.left) !== isComplete(row.right))
+        .filter((row) => questCompletionDiffers(row.left, row.right))
         .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
         .slice(0, 6),
     [rows],
@@ -232,7 +229,7 @@ function QuestsPage() {
   const completionEdges = useMemo(
     () =>
       rows
-        .filter((row) => isComplete(row.left) !== isComplete(row.right))
+        .filter((row) => questCompletionDiffers(row.left, row.right))
         .slice(0, 6),
     [rows],
   );
@@ -440,7 +437,7 @@ function QuestsPage() {
 
         <aside className="quests-side">
           <SignalCard
-            title="Quest signals"
+            title="Completions by quest points"
             rows={pointBands
               .slice()
               .reverse()
@@ -453,7 +450,7 @@ function QuestsPage() {
             names={names}
           />
           <EdgeCard
-            title="Completion edges"
+            title="Completion differences"
             rows={completionEdges}
             names={names}
           />
@@ -519,7 +516,7 @@ function QuestsPage() {
               ))
             ) : (
               <EmptyState>
-                Both players match on visible quest completions.
+                No confirmed quest differences in the available data.
               </EmptyState>
             )}
           </div>
@@ -542,7 +539,7 @@ function QuestTable({
     return (
       <div className="quests-table-state">
         <BookOpenCheck size={20} />
-        Loading RuneProfile quest snapshots...
+        Loading quests...
       </div>
     );
   }
@@ -625,8 +622,8 @@ function SignalCard({
   title: string;
   rows: Array<{
     label: string;
-    left: number | undefined;
-    right: number | undefined;
+    left: number | null | undefined;
+    right: number | null | undefined;
   }>;
   names: [string, string];
 }) {
@@ -677,7 +674,9 @@ function EdgeCard({
           );
         })
       ) : (
-        <EmptyState>No one-sided completions in the current data.</EmptyState>
+        <EmptyState>
+          No confirmed one-sided completions in the available data.
+        </EmptyState>
       )}
     </section>
   );
@@ -692,7 +691,7 @@ function BlockersCard({
 }) {
   return (
     <section className="quests-side-card">
-      <h2>Requirement blockers</h2>
+      <h2>Quest differences</h2>
       {rows.length > 0 ? (
         rows.slice(0, 4).map((row) => {
           const missingName = isComplete(row.left) ? names[1] : names[0];
@@ -705,7 +704,9 @@ function BlockersCard({
           );
         })
       ) : (
-        <EmptyState>No visible blockers from quest completion.</EmptyState>
+        <EmptyState>
+          No confirmed quest differences in the available data.
+        </EmptyState>
       )}
     </section>
   );

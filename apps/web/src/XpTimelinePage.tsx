@@ -1,4 +1,5 @@
 import { api } from "@rune-rating/backend/convex/_generated/api";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useAction } from "convex/react";
 import type { FunctionReturnType } from "convex/server";
 import type { LucideIcon } from "lucide-react";
@@ -7,13 +8,10 @@ import {
   Bolt,
   CalendarDays,
   ChartNoAxesCombined,
-  Check,
-  ChevronDown,
   Clock3,
-  Search,
   Trophy,
 } from "lucide-react";
-import { type ReactNode, useEffect, useId, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -34,10 +32,12 @@ import {
   SegmentedControl,
   SourceChip,
 } from "./components/comparison-ui";
+import { SearchMultiSelect } from "./components/primitives/SearchMultiSelect";
 import {
   heatmapValues,
   XpActivityHeatmap,
 } from "./components/XpActivityHeatmap";
+import { compareTimelineValues } from "./features/timelineComparison";
 import {
   agilityIcon,
   attackIcon,
@@ -217,7 +217,14 @@ export default function XpTimelinePage({
 }) {
   const getDashboard = useAction(api.xpTimeline.getDashboard);
   const [leftName, rightName] = names;
-  const [range, setRange] = useState<Range>("90d");
+  const search = useSearch({ from: "/compare/$leftRsn/$rightRsn/xp-timeline" });
+  const navigate = useNavigate({
+    from: "/compare/$leftRsn/$rightRsn/xp-timeline",
+  });
+  const range = search.range ?? "90d";
+  const setRange = (range: Range) => {
+    void navigate({ search: { range } });
+  };
   const [selectedSkillKeys, setSelectedSkillKeys] = useState<string[] | null>(
     null,
   );
@@ -306,17 +313,24 @@ export default function XpTimelinePage({
         ? (summaries?.currentGap ?? null)
         : currentXp.left - currentXp.right;
   const currentLeader =
-    currentGap === null || currentGap === 0
-      ? "Players are tied"
-      : `${currentGap > 0 ? names[0] : names[1]} is ahead`;
-  const rangeLeader =
-    (summaries?.leftGained ?? 0) >= (summaries?.rightGained ?? 0)
-      ? names[0]
-      : names[1];
-  const rangeGain = Math.max(
-    summaries?.leftGained ?? 0,
-    summaries?.rightGained ?? 0,
+    currentGap === null
+      ? "Comparison unavailable"
+      : currentGap === 0
+        ? "Players are tied"
+        : `${currentGap > 0 ? names[0] : names[1]} is ahead`;
+  const gainComparison = compareTimelineValues(
+    summaries?.leftGained,
+    summaries?.rightGained,
   );
+  const hasGainComparison = gainComparison !== null;
+  const rangeGain = gainComparison?.maximum ?? null;
+  let rangeLeader = "Comparison unavailable";
+  if (gainComparison) {
+    rangeLeader =
+      gainComparison.leader === null
+        ? "Players are tied"
+        : sideName(gainComparison.leader, names);
+  }
   const heatA = useMemo(
     () => heatmapValues(dashboard?.heatmapPoints ?? [], "leftGained"),
     [dashboard],
@@ -359,10 +373,12 @@ export default function XpTimelinePage({
       />
 
       {result.error ? (
-        <div className="data-banner error">{result.error}</div>
+        <div className="data-banner error" role="alert">
+          {result.error}
+        </div>
       ) : null}
       {result.isLoading && dashboard === null ? (
-        <div className="data-banner">Loading cached Wise Old Man timeline…</div>
+        <div className="data-banner">Loading XP timeline…</div>
       ) : null}
 
       <section className="xp-kpi-grid">
@@ -407,9 +423,17 @@ export default function XpTimelinePage({
         <KpiCard
           icon={Trophy}
           label="Longest lead streak"
-          value={`${summaries?.longestLeadStreak.days ?? 0}`}
+          value={
+            hasGainComparison
+              ? `${summaries?.longestLeadStreak.days ?? 0}`
+              : "—"
+          }
           unit="days"
-          detail={sideName(summaries?.longestLeadStreak.side ?? null, names)}
+          detail={
+            hasGainComparison
+              ? sideName(summaries?.longestLeadStreak.side ?? null, names)
+              : "Comparison unavailable"
+          }
           accent="amber"
         />
       </section>
@@ -483,114 +507,45 @@ function MetricSelect({
   categorySkillKeys: (category: SkillCategory) => string[];
   onChange: (skillKeys: string[] | null) => void;
 }) {
-  const menuId = useId();
-  const [isOpen, setIsOpen] = useState(false);
-  const [query, setQuery] = useState("");
   const selectedKeys = selectedSkillKeys ?? [];
   const selectedKeySet = new Set(selectedKeys);
-  const filteredSkills = skills.filter((skill) =>
-    skill.name.toLowerCase().includes(query.trim().toLowerCase()),
-  );
-  const keysMatch = (keys: string[]) =>
-    selectedSkillKeys !== null &&
-    keys.length === selectedSkillKeys.length &&
-    keys.every((key) => selectedKeySet.has(key));
-  const toggleSkill = (skillKey: string) => {
-    if (selectedKeySet.has(skillKey)) {
-      if (selectedKeys.length === 1) return;
-      onChange(selectedKeys.filter((key) => key !== skillKey));
-      return;
-    }
-    onChange([...selectedKeys, skillKey]);
-  };
-
+  const presets = [
+    {
+      label: "Total XP",
+      description: "Overall timeline",
+      selected: selectedSkillKeys === null,
+      onSelect: () => onChange(null),
+    },
+    ...skillCategoryRows.map(([category, label]) => {
+      const keys = categorySkillKeys(category);
+      return {
+        label,
+        description: `${keys.length} skills`,
+        selected:
+          selectedSkillKeys !== null &&
+          keys.length === selectedKeys.length &&
+          keys.every((key) => selectedKeySet.has(key)),
+        onSelect: () => onChange(keys),
+      };
+    }),
+  ];
   return (
-    <fieldset
-      className="xp-metric-select"
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null))
-          setIsOpen(false);
-      }}
-    >
-      <button
-        type="button"
-        className={`xp-toolbar-select ${isOpen ? "active" : ""}`}
-        aria-expanded={isOpen}
-        aria-controls={menuId}
-        onClick={() => setIsOpen((open) => !open)}
-      >
-        <span>Metric</span>
-        <strong>{value}</strong>
-        <ChevronDown size={12} />
-      </button>
-      {isOpen ? (
-        <div className="xp-metric-menu" id={menuId}>
-          <span>Metric</span>
-          <div className="xp-metric-options">
-            <button
-              type="button"
-              className={selectedSkillKeys === null ? "selected" : ""}
-              onClick={() => {
-                onChange(null);
-                setIsOpen(false);
-              }}
-            >
-              <b>Total XP</b>
-              <small>Overall timeline</small>
-              <i>{selectedSkillKeys === null ? <Check size={9} /> : null}</i>
-            </button>
-            {skillCategoryRows.map(([category, label]) => {
-              const keys = categorySkillKeys(category);
-              const selected = keysMatch(keys);
-              return (
-                <button
-                  type="button"
-                  className={selected ? "selected" : ""}
-                  onClick={() => {
-                    onChange(keys);
-                    setIsOpen(false);
-                  }}
-                  key={category}
-                >
-                  <b>{label}</b>
-                  <small>{keys.length} skills</small>
-                  <i>{selected ? <Check size={9} /> : null}</i>
-                </button>
-              );
-            })}
-          </div>
-          <label className="xp-metric-search">
-            <Search size={12} />
-            <input
-              aria-label="Search timeline skills"
-              placeholder="Search skills"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-          </label>
-          <div className="xp-metric-skill-list">
-            {filteredSkills.map((skill) => {
-              const selected = selectedKeySet.has(skill.key);
-              return (
-                <button
-                  type="button"
-                  className={selected ? "selected" : ""}
-                  onClick={() => toggleSkill(skill.key)}
-                  key={skill.key}
-                >
-                  <OsrsSkillIcon name={skill.name} />
-                  <b className="skill-select-option-label">{skill.name}</b>
-                  <i>{selected ? <Check size={9} /> : null}</i>
-                </button>
-              );
-            })}
-            {filteredSkills.length === 0 ? (
-              <span className="xp-empty-copy">No matching skills.</span>
-            ) : null}
-          </div>
-        </div>
-      ) : null}
-    </fieldset>
+    <SearchMultiSelect
+      label="Metric"
+      summary={value}
+      items={skills.map((skill) => ({
+        value: skill.key,
+        label: skill.name,
+        icon: <OsrsSkillIcon name={skill.name} />,
+      }))}
+      value={selectedKeys}
+      onChange={onChange}
+      presets={presets}
+      searchLabel="Search timeline skills"
+      placeholder="Search skills…"
+      emptyMessage="No matching skills."
+      minSelections={1}
+    />
   );
 }
 
@@ -947,7 +902,10 @@ function TimelineInsights({
 }) {
   const summaries = dashboard?.summaries;
   const gainDelta =
-    (summaries?.leftGained ?? 0) - (summaries?.rightGained ?? 0);
+    compareTimelineValues(summaries?.leftGained, summaries?.rightGained)
+      ?.delta ?? null;
+  const biggestGain =
+    gainDelta === null ? null : summaries?.biggestSingleDayGain;
   const inactive = dashboard?.events.find(
     (event) => event.kind === "inactivity",
   );
@@ -958,17 +916,41 @@ function TimelineInsights({
       </div>
       <Insight
         icon={ChartNoAxesCombined}
-        accent={gainDelta >= 0 ? "blue" : "green"}
-        text={`${gainDelta >= 0 ? names[0] : names[1]} gained more XP during this range.`}
-        detail={`${formatSigned(Math.abs(gainDelta))} more XP gained`}
+        accent={
+          gainDelta === null || gainDelta === 0
+            ? "muted"
+            : gainDelta > 0
+              ? "blue"
+              : "green"
+        }
+        text={
+          gainDelta === null
+            ? "XP gain comparison is unavailable."
+            : gainDelta === 0
+              ? "Both players gained the same XP during this range."
+              : `${gainDelta > 0 ? names[0] : names[1]} gained more XP during this range.`
+        }
+        detail={
+          gainDelta === null
+            ? "History is needed for both players."
+            : `${formatSigned(Math.abs(gainDelta))} XP difference`
+        }
       />
       <Insight
         icon={Bolt}
-        accent={sideAccent(summaries?.biggestSingleDayGain?.side ?? null)}
-        text={`${sideName(summaries?.biggestSingleDayGain?.side ?? null, names)} recorded the largest single-day gain.`}
-        detail={`${formatCompact(summaries?.biggestSingleDayGain?.value)} on ${formatDate(summaries?.biggestSingleDayGain?.date)}`}
+        accent={sideAccent(biggestGain?.side ?? null)}
+        text={
+          biggestGain
+            ? `${sideName(biggestGain.side, names)} recorded the largest single-day gain.`
+            : "Largest single-day gain comparison is unavailable."
+        }
+        detail={
+          biggestGain
+            ? `${formatCompact(biggestGain.value)} on ${formatDate(biggestGain.date)}`
+            : "No comparable daily history."
+        }
       />
-      {inactive ? (
+      {inactive && gainDelta !== null ? (
         <Insight
           icon={Clock3}
           accent="muted"
@@ -1014,6 +996,8 @@ function SummaryStrip({
   currentGap: number | null;
 }) {
   const summaries = dashboard?.summaries;
+  const hasComparison =
+    summaries?.leftGained != null && summaries.rightGained != null;
   const cards: Array<{
     icon: LucideIcon;
     label: string;
@@ -1025,41 +1009,53 @@ function SummaryStrip({
       icon: ChartNoAxesCombined,
       label: "Current XP gap",
       value: formatSigned(currentGap),
-      detail: sideName(
-        currentGap === null || currentGap === 0
-          ? null
-          : currentGap > 0
-            ? "left"
-            : "right",
-        names,
-      ),
+      detail:
+        currentGap === null
+          ? "Comparison unavailable"
+          : sideName(
+              currentGap === 0 ? null : currentGap > 0 ? "left" : "right",
+              names,
+            ),
       accent: "blue",
     },
     {
       icon: Trophy,
       label: "Longest lead streak",
-      value: `${summaries?.longestLeadStreak.days ?? 0} days`,
-      detail: formatDateRange(
-        summaries?.longestLeadStreak.startDate,
-        summaries?.longestLeadStreak.endDate,
-      ),
+      value: hasComparison
+        ? `${summaries?.longestLeadStreak.days ?? 0} days`
+        : "—",
+      detail: hasComparison
+        ? formatDateRange(
+            summaries?.longestLeadStreak.startDate,
+            summaries?.longestLeadStreak.endDate,
+          )
+        : "Comparison unavailable",
       accent: "amber",
     },
     {
       icon: Bolt,
       label: "Biggest single day gain",
-      value: formatCompact(summaries?.biggestSingleDayGain?.value),
-      detail: `${sideName(summaries?.biggestSingleDayGain?.side ?? null, names)} · ${formatDate(summaries?.biggestSingleDayGain?.date)}`,
+      value: hasComparison
+        ? formatCompact(summaries?.biggestSingleDayGain?.value)
+        : "—",
+      detail:
+        hasComparison && summaries?.biggestSingleDayGain
+          ? `${sideName(summaries.biggestSingleDayGain.side, names)} · ${formatDate(summaries.biggestSingleDayGain.date)}`
+          : "Comparison unavailable",
       accent: "blue",
     },
     {
       icon: CalendarDays,
       label: "Most active period",
-      value: formatDateRange(
-        summaries?.mostActivePeriod.startDate,
-        summaries?.mostActivePeriod.endDate,
-      ),
-      detail: `${summaries?.mostActivePeriod.days ?? 0} days · ${formatCompact(summaries?.mostActivePeriod.value)} XP`,
+      value: hasComparison
+        ? formatDateRange(
+            summaries?.mostActivePeriod.startDate,
+            summaries?.mostActivePeriod.endDate,
+          )
+        : "—",
+      detail: hasComparison
+        ? `${summaries?.mostActivePeriod.days ?? 0} days · ${formatCompact(summaries?.mostActivePeriod.value)} XP`
+        : "Comparison unavailable",
       accent: "amber",
     },
   ];

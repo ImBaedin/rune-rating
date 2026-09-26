@@ -22,6 +22,11 @@ import {
   PlayerPairLine,
   SourceChip,
 } from "../components/comparison-ui";
+import {
+  knownTotal,
+  scoreDifference,
+  scoreLeadDetail,
+} from "../features/comparison/activityScores";
 import { useComparisonShell } from "../features/comparison/context";
 import {
   formatDelta,
@@ -76,7 +81,7 @@ function MinigamesPage() {
     [comparison],
   );
 
-  const rankedRows = useMemo(
+  const scoredRows = useMemo(
     () =>
       rows.filter((row) => row.score.left !== null || row.score.right !== null),
     [rows],
@@ -84,7 +89,7 @@ function MinigamesPage() {
 
   const chartRows = useMemo(
     () =>
-      rankedRows
+      scoredRows
         .slice()
         .sort((left, right) => {
           const rightMax = Math.max(
@@ -96,10 +101,10 @@ function MinigamesPage() {
         })
         .map((row) => ({
           name: row.name,
-          left: row.score.left ?? 0,
-          right: row.score.right ?? 0,
+          left: row.score.left,
+          right: row.score.right,
         })),
-    [rankedRows],
+    [scoredRows],
   );
 
   const gapRows = useMemo(
@@ -112,16 +117,14 @@ function MinigamesPage() {
   );
 
   const stats = useMemo(() => {
-    const leftTotal = rows.reduce(
-      (total, row) => total + (row.score.left ?? 0),
-      0,
-    );
-    const rightTotal = rows.reduce(
-      (total, row) => total + (row.score.right ?? 0),
-      0,
-    );
-    const leftRanked = rows.filter((row) => row.score.left !== null).length;
-    const rightRanked = rows.filter((row) => row.score.right !== null).length;
+    const leftTotal = knownTotal(rows.map((row) => row.score.left));
+    const rightTotal = knownTotal(rows.map((row) => row.score.right));
+    const leftRanked = rows.length
+      ? rows.filter((row) => row.rank.left !== null).length
+      : null;
+    const rightRanked = rows.length
+      ? rows.filter((row) => row.rank.right !== null).length
+      : null;
     const rankEdge = rows
       .filter((row) => row.rankGap !== null && row.rank.leader !== "tie")
       .sort((left, right) => (right.rankGap ?? 0) - (left.rankGap ?? 0))[0];
@@ -130,11 +133,11 @@ function MinigamesPage() {
     ).length;
 
     return {
-      totalGap: leftTotal - rightTotal,
+      totalGap: scoreDifference(leftTotal, rightTotal),
       leftRanked,
       rightRanked,
       rankEdge,
-      unrankedPressure,
+      unrankedPressure: rows.length ? unrankedPressure : null,
     };
   }, [rows]);
 
@@ -147,7 +150,7 @@ function MinigamesPage() {
 
       {noSnapshots ? (
         <DataNotice>
-          Minigame snapshots are not ready for one or both players yet.
+          Minigame data is not ready for one or both players yet.
         </DataNotice>
       ) : null}
 
@@ -155,22 +158,26 @@ function MinigamesPage() {
         <ComparisonKpiCard
           label="Total minigame score lead"
           value={formatDelta(stats.totalGap)}
-          detail={
-            stats.totalGap === 0
-              ? "Scores are even"
-              : `${stats.totalGap > 0 ? names[0] : names[1]} ahead`
+          detail={scoreLeadDetail(stats.totalGap, names)}
+          tone={
+            stats.totalGap === null || stats.totalGap === 0
+              ? "violet"
+              : stats.totalGap > 0
+                ? "blue"
+                : "green"
           }
-          tone={stats.totalGap >= 0 ? "blue" : "green"}
           icon={<Trophy size={30} />}
           isLoading={isLoading}
-          loadingDetail="Awaiting snapshots"
+          loadingDetail="Loading player data"
         />
         <ComparisonKpiCard
           label="Ranked minigames"
           value={
             isLoading
               ? "..."
-              : `${formatNumber(Math.max(stats.leftRanked, stats.rightRanked))} ranked`
+              : stats.leftRanked === null || stats.rightRanked === null
+                ? "—"
+                : `${formatNumber(Math.max(stats.leftRanked, stats.rightRanked))} ranked`
           }
           detail={
             <PlayerPairLine
@@ -184,21 +191,21 @@ function MinigamesPage() {
           isLoading={false}
         />
         <ComparisonKpiCard
-          label="Best rank edge"
+          label="Largest rank gap"
           value={
             stats.rankEdge
               ? `${formatNumber(stats.rankEdge.rankGap)} places`
               : "—"
           }
-          detail={stats.rankEdge?.name ?? "No rank edge yet"}
+          detail={stats.rankEdge?.name ?? "No rank gap"}
           tone="violet"
           icon={<Medal size={30} />}
           isLoading={isLoading}
-          loadingDetail="Awaiting snapshots"
+          loadingDetail="Loading player data"
         />
         <ComparisonKpiCard
-          label="Unranked pressure"
-          value={`${isLoading ? "..." : stats.unrankedPressure}`}
+          label="Missing scores"
+          value={`${isLoading ? "..." : formatNumber(stats.unrankedPressure)}`}
           detail="missing score entries"
           tone="amber"
           icon={<Target size={30} />}
@@ -211,7 +218,7 @@ function MinigamesPage() {
           <section className="minigames-panel minigames-chart-panel">
             <PanelHeader
               title="Top minigame scores"
-              subtitle="Grouped score comparison for ranked minigames."
+              subtitle="Grouped comparison of available minigame scores."
               names={names}
             />
             <div className="minigames-chart">
@@ -250,6 +257,7 @@ function MinigamesPage() {
                       tick={{ fill: "var(--muted)", fontSize: 11 }}
                     />
                     <Tooltip
+                      filterNull={false}
                       content={
                         <PairChartTooltip
                           names={names}
@@ -270,7 +278,7 @@ function MinigamesPage() {
                   </BarChart>
                 </ResponsiveContainer>
               ) : (
-                <EmptyState>No ranked minigames found.</EmptyState>
+                <EmptyState>No minigame scores available.</EmptyState>
               )}
             </div>
           </section>
@@ -329,15 +337,17 @@ function MinigamesPage() {
                         <td>
                           <span
                             className={`minigames-status ${
-                              row.score.left !== null &&
-                              row.score.right !== null
+                              row.rank.left !== null && row.rank.right !== null
                                 ? "ranked"
                                 : "unranked"
                             }`}
                           >
-                            {row.score.left !== null && row.score.right !== null
+                            {row.rank.left !== null && row.rank.right !== null
                               ? "Ranked"
-                              : "Partial"}
+                              : row.rank.left !== null ||
+                                  row.rank.right !== null
+                                ? "Partial"
+                                : "Unranked"}
                           </span>
                         </td>
                       </tr>
@@ -356,7 +366,7 @@ function MinigamesPage() {
         </div>
 
         <aside className="minigames-side minigames-panel">
-          <h2>Score gaps to watch</h2>
+          <h2>Largest score gaps</h2>
           <div className="minigames-gap-list">
             {isLoading ? (
               <EmptyState>Loading score gaps...</EmptyState>
@@ -372,8 +382,9 @@ function MinigamesPage() {
       </section>
 
       <p className="minigames-footnote">
-        Scores and ranks come from Old School Hiscores. Unranked values are
-        shown as unavailable and excluded from score-gap ranking.
+        Scores and ranks come from Old School Hiscores. Missing scores remain
+        unavailable and are excluded from score-gap ranking. Rank labels reflect
+        Hiscores rank availability.
       </p>
     </div>
   );
