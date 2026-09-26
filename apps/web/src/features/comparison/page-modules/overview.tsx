@@ -24,7 +24,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { type Player, players } from "../../../mockData";
+import {
+  PageHeader,
+  SegmentedControl,
+  SourceChip,
+} from "../../../components/comparison-ui";
+
 import {
   type EfficiencyComparison,
   type HistoryPeriod,
@@ -37,6 +42,7 @@ import {
 import {
   formatAge,
   formatCompact,
+  formatCompactDelta,
   formatDelta,
   formatValue,
 } from "../formatters";
@@ -48,6 +54,12 @@ import {
   periodLabels,
 } from "./shared";
 import { SkillsTable } from "./skills";
+
+type PlayerSide = { id: "a" | "b"; accent: "blue" | "green" };
+const players: [PlayerSide, PlayerSide] = [
+  { id: "a", accent: "blue" },
+  { id: "b", accent: "green" },
+];
 
 type TimelineComparison = {
   left: { timeline: OverviewHistory["left"]["timeline"] };
@@ -68,23 +80,23 @@ type HighlightTone = "left" | "right" | "neutral";
 const highlights: HighlightConfig[] = [
   {
     icon: Activity,
-    title: "More active recently",
-    fallbackCopy: "Recent Wise Old Man snapshots show the stronger XP trend.",
+    title: "XP gained",
+    fallbackCopy: "XP gains are unavailable for this period.",
   },
   {
     icon: Gauge,
-    title: "More efficient",
-    fallbackCopy: "Efficiency is based on current Wise Old Man EHP and EHB.",
+    title: "EHP",
+    fallbackCopy: "EHP data is unavailable.",
   },
   {
     icon: BookOpen,
-    title: "Ahead in questing",
-    fallbackCopy: "RuneProfile quest points decide this comparison.",
+    title: "Quest points",
+    fallbackCopy: "Quest points are unavailable.",
   },
   {
     icon: Swords,
-    title: "Stronger combat profile",
-    fallbackCopy: "Combat level comes from Wise Old Man.",
+    title: "Combat level",
+    fallbackCopy: "Combat levels are unavailable.",
   },
 ];
 
@@ -110,7 +122,20 @@ export function OverviewPage() {
   } = useComparisonShell();
 
   return (
-    <>
+    <div className="overview-page">
+      <PageHeader
+        title="Overview"
+        meta={
+          <>
+            <SourceChip label="Official Hiscores" />
+            <SourceChip label="Wise Old Man" />
+            <SourceChip
+              label="RuneProfile"
+              status={runeProfileUnavailableMessage ? "warn" : "muted"}
+            />
+          </>
+        }
+      />
       <section className="hero-grid">
         <PlayerCard
           player={players[0]}
@@ -147,6 +172,13 @@ export function OverviewPage() {
           }
         />
       </section>
+
+      <OutcomeRibbon
+        names={names}
+        comparison={comparison}
+        efficiency={efficiency}
+        runeProfile={runeProfile}
+      />
 
       <section className="top-grid">
         <XpTimeline
@@ -231,7 +263,106 @@ export function OverviewPage() {
           isLoading={leftProfile === undefined || rightProfile === undefined}
         />
       </section>
-    </>
+    </div>
+  );
+}
+
+function OutcomeRibbon({
+  names,
+  comparison,
+  efficiency,
+  runeProfile,
+}: {
+  names: [string, string];
+  comparison: SkillsComparison | undefined;
+  efficiency: EfficiencyComparison | undefined;
+  runeProfile: RuneProfileDashboard | undefined;
+}) {
+  const leftLeads =
+    comparison?.skills.filter(
+      (skill) => skill.key !== "skill.overall" && skill.xp.leader === "left",
+    ).length ?? null;
+  const rightLeads =
+    comparison?.skills.filter(
+      (skill) => skill.key !== "skill.overall" && skill.xp.leader === "right",
+    ).length ?? null;
+  const overall = comparison?.skills.find(
+    (skill) => skill.key === "skill.overall",
+  );
+  const questDelta =
+    runeProfile?.left && runeProfile.right
+      ? runeProfile.left.quests.earnedPoints -
+        runeProfile.right.quests.earnedPoints
+      : null;
+
+  const toneFor = (delta: number | null | undefined) =>
+    delta == null || delta === 0 ? "tie" : delta > 0 ? "left" : "right";
+  const leaderFor = (delta: number | null | undefined) =>
+    delta == null
+      ? "Waiting for data"
+      : delta === 0
+        ? "Even matchup"
+        : delta > 0
+          ? `${names[0]} leads`
+          : `${names[1]} leads`;
+
+  const skillDelta =
+    leftLeads == null || rightLeads == null ? null : leftLeads - rightLeads;
+  const outcomes = [
+    {
+      label: "Skills led",
+      source: "Official Hiscores",
+      value:
+        leftLeads == null || rightLeads == null
+          ? "—"
+          : `${leftLeads}–${rightLeads}`,
+      tone: toneFor(skillDelta),
+      leader: leaderFor(skillDelta),
+    },
+    {
+      label: "Total level",
+      source: "Official Hiscores",
+      value: formatDelta(overall?.level.delta ?? null),
+      tone: toneFor(overall?.level.delta),
+      leader: leaderFor(overall?.level.delta),
+    },
+    {
+      label: "Total XP",
+      source: "Official Hiscores",
+      value: formatCompactDelta(overall?.xp.delta ?? null),
+      tone: toneFor(overall?.xp.delta),
+      leader: leaderFor(overall?.xp.delta),
+    },
+    {
+      label: "Efficiency",
+      source: "Wise Old Man · EHP",
+      value:
+        efficiency?.efficiency.ehp.delta == null
+          ? "—"
+          : `${efficiency.efficiency.ehp.delta > 0 ? "+" : ""}${efficiency.efficiency.ehp.delta.toFixed(1)}`,
+      tone: toneFor(efficiency?.efficiency.ehp.delta),
+      leader: leaderFor(efficiency?.efficiency.ehp.delta),
+    },
+    {
+      label: "Quest points",
+      source: "RuneProfile",
+      value: formatDelta(questDelta),
+      tone: toneFor(questDelta),
+      leader: leaderFor(questDelta),
+    },
+  ];
+
+  return (
+    <section className="outcome-ribbon" aria-label="Category outcomes">
+      {outcomes.map((outcome) => (
+        <article className={`outcome-cell ${outcome.tone}`} key={outcome.label}>
+          <span>{outcome.label}</span>
+          <small>{outcome.source}</small>
+          <strong>{outcome.value}</strong>
+          <em>{outcome.leader}</em>
+        </article>
+      ))}
+    </section>
   );
 }
 
@@ -246,7 +377,7 @@ function PlayerCard({
   runeProfileUnavailable,
   isLoading,
 }: {
-  player: Player;
+  player: PlayerSide;
   fallbackName: string;
   data?: { displayRsn: string; fetchedAt: number };
   skills?: NonNullable<SkillsComparison>["skills"];
@@ -285,7 +416,7 @@ function PlayerCard({
             <ShieldCheck size={15} />
           </div>
           <span className="account-tag">
-            {accountType ?? player.accountType}
+            {accountType ?? "Unknown account type"}
           </span>
         </div>
       </div>
@@ -337,11 +468,7 @@ function PlayerCard({
           value={data ? formatAge(data.fetchedAt) : "Waiting"}
         />
       </div>
-      <LoadingOverlay
-        isLoading={isLoading}
-        label="Loading player snapshot"
-        full
-      />
+      <LoadingOverlay isLoading={isLoading} label="Loading player data" full />
     </article>
   );
 }
@@ -456,11 +583,7 @@ function AheadCard({
           </div>
         ))}
       </div>
-      <LoadingOverlay
-        isLoading={isLoading}
-        label="Comparing player snapshots"
-        full
-      />
+      <LoadingOverlay isLoading={isLoading} label="Loading comparison" full />
     </article>
   );
 }
@@ -554,24 +677,22 @@ function XpTimeline({
         title="XP gained over time"
         eyebrow="Synchronized Wise Old Man timeline"
         action={
-          <div className="segmented">
-            {(Object.keys(periodLabels) as HistoryPeriod[]).map((value) => (
-              <button
-                type="button"
-                className={period === value ? "active" : ""}
-                onClick={() => onPeriodChange(value)}
-                key={value}
-              >
-                {periodLabels[value]}
-              </button>
-            ))}
-          </div>
+          <SegmentedControl
+            label="XP history range"
+            className="segmented"
+            value={period}
+            options={(Object.keys(periodLabels) as HistoryPeriod[]).map(
+              (value) => [value, periodLabels[value]],
+            )}
+            onChange={onPeriodChange}
+          />
         }
       />
       <div className="timeline-body">
         <div className="chart-wrap">
           <ResponsiveContainer
             height="100%"
+            initialDimension={{ width: 1, height: 1 }}
             minHeight={0}
             minWidth={0}
             width="100%"
@@ -596,7 +717,7 @@ function XpTimeline({
                   <stop offset="100%" stopColor="var(--blue)" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="#e6ebef" vertical={false} />
+              <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
               <XAxis dataKey="label" minTickGap={18} tickLine={false} />
               <YAxis
                 domain={[0, max]}
@@ -818,25 +939,25 @@ function Highlights({
       : (buildTimeline(overviewHistory).at(-1)?.a ?? 0) -
         (buildTimeline(overviewHistory).at(-1)?.b ?? 0);
   const copyByTitle: Record<string, string | null> = {
-    "More active recently":
+    "XP gained":
       activityDelta === null
         ? null
         : activityDelta === 0
           ? "Both players gained the same XP in the selected timeline."
           : `${activityDelta > 0 ? names[0] : names[1]} gained ${formatCompact(Math.abs(activityDelta))} more XP in the selected timeline.`,
-    "More efficient":
+    EHP:
       ehpDelta === null
         ? null
         : ehpDelta === 0
           ? "Both players have the same current EHP."
           : `${ehpDelta > 0 ? names[0] : names[1]} leads by ${Math.abs(ehpDelta).toFixed(1)} EHP.`,
-    "Ahead in questing":
+    "Quest points":
       questPointDelta === null
         ? null
         : questPointDelta === 0
           ? "Both players have earned the same number of quest points."
           : `${questPointDelta > 0 ? names[0] : names[1]} leads by ${formatValue(Math.abs(questPointDelta))} quest points.`,
-    "Stronger combat profile":
+    "Combat level":
       combatDelta === null
         ? null
         : combatDelta === 0
@@ -844,18 +965,18 @@ function Highlights({
           : `${combatDelta > 0 ? names[0] : names[1]} leads by ${Math.abs(combatDelta).toFixed(1)} combat levels.`,
   };
   const toneByTitle: Record<string, HighlightTone> = {
-    "More active recently": toneFromDelta(activityDelta),
-    "More efficient": toneFromDelta(ehpDelta),
-    "Ahead in questing": toneFromDelta(questPointDelta),
-    "Stronger combat profile": toneFromDelta(combatDelta),
+    "XP gained": toneFromDelta(activityDelta),
+    EHP: toneFromDelta(ehpDelta),
+    "Quest points": toneFromDelta(questPointDelta),
+    "Combat level": toneFromDelta(combatDelta),
   };
 
   return (
     <article className="panel highlights-panel" aria-busy={isLoading}>
-      <PanelHeader title="Comparison highlights" eyebrow="Generated summary" />
+      <PanelHeader title="Comparison highlights" />
       <div className="highlight-list">
         {highlights.map(({ icon: Icon, title, fallbackCopy }) => {
-          const isRuneProfileHighlight = title === "Ahead in questing";
+          const isRuneProfileHighlight = title === "Quest points";
           const isUnavailable =
             isRuneProfileHighlight && unavailableMessage !== null;
           const tone = isUnavailable ? "neutral" : toneByTitle[title];
@@ -915,7 +1036,7 @@ function RecentActivity({
   return (
     <article className="panel activity-panel" aria-busy={isLoading}>
       <PanelHeader
-        title="Recent XP gains"
+        title="XP"
         eyebrow="Last 7 days · Wise Old Man"
         action={
           <span className="fresh-badge">
@@ -926,6 +1047,7 @@ function RecentActivity({
       <div className="bar-chart">
         <ResponsiveContainer
           height="100%"
+          initialDimension={{ width: 1, height: 1 }}
           minHeight={0}
           minWidth={0}
           width="100%"
@@ -934,7 +1056,7 @@ function RecentActivity({
             data={chartData}
             margin={{ top: 8, right: 4, bottom: 0, left: -10 }}
           >
-            <CartesianGrid stroke="#e6ebef" vertical={false} />
+            <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
             <XAxis dataKey="label" tickLine={false} />
             <YAxis
               domain={[0, max]}

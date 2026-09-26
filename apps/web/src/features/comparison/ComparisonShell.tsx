@@ -1,0 +1,501 @@
+import { api } from "@rune-rating/backend/convex/_generated/api";
+import { normalizeRsn } from "@rune-rating/domain";
+import { useLocation, useNavigate } from "@tanstack/react-router";
+import { useAction, useMutation, useQuery } from "convex/react";
+import {
+  type FormEvent,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  ageBucket,
+  captureAnalytics,
+  capturePageView,
+  hashRsnPair,
+  lookupRsnPairHashField,
+} from "../../analytics";
+import { ComparisonHeader } from "./components/ComparisonHeader";
+import {
+  ComparisonShellContext,
+  type ComparisonShellContextValue,
+  type HistoryPeriod,
+  type OverviewHistory,
+  type PlayerProfile,
+  type SkillsComparison,
+} from "./context";
+import {
+  addToLookupHistory,
+  lookupHistoryKey,
+  readLookupHistory,
+} from "./lookupHistory";
+import { comparisonPath, viewFromPathname } from "./navigation";
+import {
+  automaticRefreshKey,
+  hasActiveRefresh,
+  nextSnapshotCheckAt,
+  sourceHealth,
+} from "./sourceState";
+
+const profileSourceStatusSummary = (
+  profile: PlayerProfile | null | undefined,
+) =>
+  [
+    `skills:${profile?.skillsState?.status ?? "unknown"}`,
+    `activities:${profile?.activitiesState?.status ?? "unknown"}`,
+    `efficiency:${profile?.efficiencyState?.status ?? "unknown"}`,
+    `quests:${profile?.questsState?.status ?? "unknown"}`,
+    `diaries:${profile?.diariesState?.status ?? "unknown"}`,
+    `combat:${profile?.combatAchievementsState?.status ?? "unknown"}`,
+    `collection:${profile?.collectionState?.status ?? "unknown"}`,
+  ].join("|");
+
+const comparisonAgeBucket = (
+  comparison: SkillsComparison | null | undefined,
+) =>
+  comparison
+    ? ageBucket(Math.min(comparison.left.fetchedAt, comparison.right.fetchedAt))
+    : comparison === null
+      ? "missing"
+      : "loading";
+
+const activeProviderQueueStatuses = new Set(["queued", "running", "retrying"]);
+
+function formatQueueDuration(timestamp: number, now: number) {
+  const seconds = Math.max(0, Math.ceil((timestamp - now) / 1_000));
+  if (seconds < 60) return `${seconds}s`;
+  const minutes = Math.ceil(seconds / 60);
+  if (minutes < 60) return `${minutes}m`;
+  const hours = Math.floor(minutes / 60);
+  const remainder = minutes % 60;
+  return remainder === 0 ? `${hours}h` : `${hours}h ${remainder}m`;
+}
+
+function providerQueueDetail(
+  status:
+    | {
+        status: string;
+        estimatedRunAt: number | null;
+        retryAt: number | null;
+      }
+    | undefined,
+  now: number,
+) {
+  if (!status || !activeProviderQueueStatuses.has(status.status)) return null;
+  if (status.status === "running") return "running";
+  if (status.status === "retrying" && status.retryAt !== null) {
+    return `retry in ${formatQueueDuration(status.retryAt, now)}`;
+  }
+  if (status.estimatedRunAt !== null) {
+    return `in ${formatQueueDuration(status.estimatedRunAt, now)}`;
+  }
+  return "queued";
+}
+
+export function ComparisonShell({
+  routeRsns,
+  children,
+}: {
+  routeRsns: [string, string];
+  children: ReactNode;
+}) {
+  const navigate = useNavigate();
+  const pathname = useLocation({ select: (location) => location.pathname });
+  const activeView = viewFromPathname(pathname);
+  const rsns = routeRsns;
+  const [draftRsns, setDraftRsns] = useState<[string, string]>(rsns);
+  const [lookupHistory, setLookupHistory] =
+    useState<string[]>(readLookupHistory);
+  const [refreshError, setRefreshError] = useState<string | null>(null);
+  const autoRefreshKeys = useRef(new Set<string>());
+  const [staleCheckNow, setStaleCheckNow] = useState(() => Date.now());
+  const [historyPeriod, setHistoryPeriod] = useState<HistoryPeriod>("month");
+  const [historyResult, setHistoryResult] = useState<{
+    data: OverviewHistory | null;
+    error: string | null;
+    isLoading: boolean;
+  }>({ data: null, error: null, isLoading: true });
+  const history = historyResult.data;
+  const historyError = historyResult.error;
+  const comparison = useQuery(api.comparisons.getSkills, {
+    leftRsn: rsns[0],
+    rightRsn: rsns[1],
+  });
+  const efficiency = useQuery(api.comparisons.getEfficiency, {
+    leftRsn: rsns[0],
+    rightRsn: rsns[1],
+  });
+  const leftProfile = useQuery(api.players.getProfile, { rsn: rsns[0] });
+  const rightProfile = useQuery(api.players.getProfile, { rsn: rsns[1] });
+  const displayRsns: [string, string] = [
+    leftProfile?.displayRsn ?? rsns[0],
+    rightProfile?.displayRsn ?? rsns[1],
+  ];
+  const runeProfile = useQuery(api.runeProfile.getDashboard, {
+    leftRsn: rsns[0],
+    rightRsn: rsns[1],
+  });
+  const requestRefresh = useMutation(api.refresh.request);
+  const getOverviewHistory = useAction(api.wiseOldMan.getOverviewHistory);
+  const providerQueueStatuses = useQuery(
+    api.providerQueue.getProviderStatuses,
+    {
+      rsns,
+    },
+  );
+  const hasActiveProviderQueue =
+    providerQueueStatuses?.some((status) =>
+      activeProviderQueueStatuses.has(status.status),
+    ) ?? false;
+  const [queueNow, setQueueNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (!hasActiveProviderQueue) return;
+    setQueueNow(Date.now());
+    const interval = window.setInterval(() => setQueueNow(Date.now()), 1_000);
+    return () => window.clearInterval(interval);
+  }, [hasActiveProviderQueue]);
+  const womQueueStatus = providerQueueStatuses?.find(
+    (status) => status.provider === "wiseOldMan",
+  );
+  const runeProfileQueueStatus = providerQueueStatuses?.find(
+    (status) => status.provider === "runeProfile",
+  );
+  const rsnPairKey = rsns.map((rsn) => normalizeRsn(rsn)).join("|");
+  const [womQueueCompletionToken, setWomQueueCompletionToken] = useState(0);
+  const lastObservedWomCompletion = useRef<{
+    key: string;
+    completedAt: number | null;
+  } | null>(null);
+  useEffect(() => {
+    const completedAt = womQueueStatus?.completedAt ?? null;
+    const observed = lastObservedWomCompletion.current;
+    if (observed?.key !== rsnPairKey) {
+      lastObservedWomCompletion.current = { key: rsnPairKey, completedAt };
+      return;
+    }
+    if (completedAt !== null && completedAt !== observed.completedAt) {
+      setWomQueueCompletionToken((token) => token + 1);
+    }
+    lastObservedWomCompletion.current = { key: rsnPairKey, completedAt };
+  }, [rsnPairKey, womQueueStatus?.completedAt]);
+  const womQueueDetail = providerQueueDetail(womQueueStatus, queueNow);
+  const runeProfileQueueDetail = providerQueueDetail(
+    runeProfileQueueStatus,
+    queueNow,
+  );
+  const isRefreshing = [leftProfile, rightProfile].some((profile) =>
+    hasActiveRefresh(profile),
+  );
+  const healthNow = Math.max(staleCheckNow, queueNow);
+  const hiscoresHealth = sourceHealth(
+    [leftProfile?.skillsState, rightProfile?.skillsState],
+    healthNow,
+  );
+  const womHealth = sourceHealth(
+    [leftProfile?.efficiencyState, rightProfile?.efficiencyState],
+    healthNow,
+  );
+  const runeProfileHealth = sourceHealth(
+    [leftProfile?.questsState, rightProfile?.questsState],
+    healthNow,
+  );
+  const hiscoresUnavailable = [leftProfile, rightProfile].some((profile) =>
+    ["failed", "notFound", "notConnected", "rateLimited"].includes(
+      profile?.skillsState?.status ?? "",
+    ),
+  );
+  const runeProfileUnavailable =
+    runeProfile === undefined
+      ? null
+      : [
+          runeProfile.left === null ? rsns[0] : null,
+          runeProfile.right === null ? rsns[1] : null,
+        ].filter((rsn): rsn is string => rsn !== null);
+  const runeProfileUnavailableMessage =
+    runeProfileUnavailable && runeProfileUnavailable.length > 0
+      ? runeProfileUnavailable.length === 2
+        ? `${runeProfileUnavailable[0]} and ${runeProfileUnavailable[1]} do not have RuneProfile data available.`
+        : `${runeProfileUnavailable[0]} does not have RuneProfile data available.`
+      : null;
+  const shellContext = useMemo<ComparisonShellContextValue>(
+    () => ({
+      names: rsns,
+      comparison,
+      efficiency,
+      leftProfile,
+      rightProfile,
+      runeProfile,
+      runeProfileUnavailableMessage,
+      overviewHistory: history,
+      overviewHistoryError: historyError,
+      isOverviewHistoryLoading: historyResult.isLoading,
+      historyPeriod,
+      setHistoryPeriod,
+      womQueueCompletionToken,
+    }),
+    [
+      comparison,
+      efficiency,
+      history,
+      historyError,
+      historyPeriod,
+      historyResult.isLoading,
+      leftProfile,
+      rightProfile,
+      rsns,
+      runeProfile,
+      runeProfileUnavailableMessage,
+      womQueueCompletionToken,
+    ],
+  );
+  const overviewHistoryRequestKey = `${rsns[0]}:${rsns[1]}:${historyPeriod}:${womQueueCompletionToken}`;
+
+  useEffect(() => {
+    setDraftRsns(rsns);
+  }, [rsns[0], rsns[1]]);
+
+  useEffect(() => {
+    let ignored = false;
+    void hashRsnPair(rsns).then(([leftRsnHash, rightRsnHash]) => {
+      if (ignored) return;
+      capturePageView({
+        page: "comparison",
+        view: activeView,
+        left_rsn_hash: leftRsnHash,
+        right_rsn_hash: rightRsnHash,
+        ...lookupRsnPairHashField(leftRsnHash, rightRsnHash),
+      });
+    });
+    return () => {
+      ignored = true;
+    };
+  }, [activeView, rsns[0], rsns[1]]);
+
+  useEffect(() => {
+    const now = Math.max(staleCheckNow, Date.now());
+    const nextCheckAt = nextSnapshotCheckAt([leftProfile, rightProfile], now);
+
+    if (nextCheckAt === null) return;
+    const timeout = window.setTimeout(
+      () => setStaleCheckNow(Date.now()),
+      Math.max(0, nextCheckAt - now),
+    );
+    return () => window.clearTimeout(timeout);
+  }, [leftProfile, rightProfile, staleCheckNow]);
+
+  useEffect(() => {
+    if (leftProfile === undefined || rightProfile === undefined) return;
+
+    const now = Math.max(staleCheckNow, Date.now());
+    const profileEntries = [
+      { rsn: rsns[0], profile: leftProfile },
+      { rsn: rsns[1], profile: rightProfile },
+    ];
+    const staleEntries = profileEntries
+      .map((entry) => ({
+        ...entry,
+        key: automaticRefreshKey(
+          entry.rsn,
+          entry.profile,
+          now,
+          autoRefreshKeys.current,
+        ),
+      }))
+      .filter(
+        (entry): entry is (typeof profileEntries)[number] & { key: string } =>
+          entry.key !== null,
+      );
+    if (staleEntries.length === 0) return;
+
+    for (const entry of staleEntries) autoRefreshKeys.current.add(entry.key);
+    setRefreshError(null);
+    void requestRefresh({ rsns: staleEntries.map((entry) => entry.rsn) }).catch(
+      (error) => {
+        setRefreshError(
+          error instanceof Error ? error.message : "Refresh failed",
+        );
+      },
+    );
+  }, [leftProfile, requestRefresh, rightProfile, rsns, staleCheckNow]);
+
+  useEffect(() => {
+    const requestKey = overviewHistoryRequestKey;
+    if (activeView !== "overview") {
+      setHistoryResult({ data: null, error: null, isLoading: false });
+      return;
+    }
+    let ignored = false;
+    setHistoryResult({ data: null, error: null, isLoading: true });
+    void getOverviewHistory({
+      leftRsn: rsns[0],
+      rightRsn: rsns[1],
+      period: historyPeriod,
+    })
+      .then((result) => {
+        if (!ignored && requestKey === overviewHistoryRequestKey)
+          setHistoryResult({ data: result, error: null, isLoading: false });
+      })
+      .catch((error) => {
+        if (!ignored) {
+          setHistoryResult({
+            data: null,
+            isLoading: false,
+            error:
+              error instanceof Error
+                ? error.message
+                : "WOM history unavailable",
+          });
+        }
+      });
+    return () => {
+      ignored = true;
+    };
+  }, [
+    activeView,
+    getOverviewHistory,
+    historyPeriod,
+    overviewHistoryRequestKey,
+    rsns,
+  ]);
+
+  const refresh = async (nextRsns = rsns) => {
+    setRefreshError(null);
+    try {
+      await requestRefresh({ rsns: nextRsns });
+    } catch (error) {
+      setRefreshError(
+        error instanceof Error ? error.message : "Refresh failed",
+      );
+    }
+  };
+
+  const handleManualRefresh = () => {
+    void hashRsnPair(rsns).then(([leftRsnHash, rightRsnHash]) => {
+      captureAnalytics("manual_refresh_clicked", {
+        page: "comparison",
+        view: activeView,
+        left_rsn_hash: leftRsnHash,
+        right_rsn_hash: rightRsnHash,
+        ...lookupRsnPairHashField(leftRsnHash, rightRsnHash),
+        left_source_statuses: profileSourceStatusSummary(leftProfile),
+        right_source_statuses: profileSourceStatusSummary(rightProfile),
+        data_age_bucket: comparisonAgeBucket(comparison),
+      });
+    });
+    void refresh();
+  };
+
+  const handleCompare = (event: FormEvent) => {
+    event.preventDefault();
+    let next: [string, string];
+    try {
+      next = draftRsns.map((rsn) => normalizeRsn(rsn)) as [string, string];
+    } catch (error) {
+      setRefreshError(
+        error instanceof Error
+          ? error.message
+          : "Enter valid RuneScape names before comparing.",
+      );
+      return;
+    }
+    const usedRecentLookup = next.some((rsn) =>
+      lookupHistory.some(
+        (value) => value.toLocaleLowerCase() === rsn.toLocaleLowerCase(),
+      ),
+    );
+    void hashRsnPair(next).then(([leftRsnHash, rightRsnHash]) => {
+      captureAnalytics("comparison_submitted", {
+        entry_view: activeView,
+        left_rsn_hash: leftRsnHash,
+        right_rsn_hash: rightRsnHash,
+        ...lookupRsnPairHashField(leftRsnHash, rightRsnHash),
+        used_recent_lookup: usedRecentLookup,
+      });
+    });
+    const updatedHistory = addToLookupHistory(lookupHistory, next);
+    setLookupHistory(updatedHistory);
+    try {
+      window.localStorage.setItem(
+        lookupHistoryKey,
+        JSON.stringify(updatedHistory),
+      );
+    } catch {
+      // Comparing still works when browser storage is unavailable.
+    }
+    void navigate({
+      to: comparisonPath(activeView, next),
+    });
+    void refresh(next);
+  };
+
+  return (
+    <div className="app-shell scoreboard-shell">
+      <ComparisonHeader
+        skillCount={
+          comparison?.skills.filter((skill) => skill.key !== "skill.overall")
+            .length ?? null
+        }
+        primaryRsn={displayRsns[0]}
+        getPath={(view) => comparisonPath(view, rsns)}
+        rsns={draftRsns}
+        displayRsns={displayRsns}
+        lookupHistory={lookupHistory}
+        onRsnChange={(index, value) =>
+          setDraftRsns(
+            (current) =>
+              current.map((rsn, itemIndex) =>
+                itemIndex === index ? value : rsn,
+              ) as [string, string],
+          )
+        }
+        onCompare={handleCompare}
+        onRefresh={handleManualRefresh}
+        isRefreshing={isRefreshing}
+        comparison={comparison}
+        hiscoresStatus={hiscoresHealth.status}
+        hiscoresDetail={hiscoresHealth.detail}
+        womStatus={womQueueDetail ? "delayed" : womHealth.status}
+        runeProfileStatus={
+          runeProfileQueueDetail ? "delayed" : runeProfileHealth.status
+        }
+        womDetail={womQueueDetail ?? womHealth.detail}
+        runeProfileDetail={runeProfileQueueDetail ?? runeProfileHealth.detail}
+      />
+      <main className="workspace" id="main-content" tabIndex={-1}>
+        <div
+          className={`content ${activeView === "skills" ? "skills-content" : ""} ${activeView === "timeline" ? "xp-content" : ""} ${activeView === "efficiency" ? "efficiency-content" : ""}`}
+        >
+          {refreshError ? (
+            <div className="data-banner error" role="alert">
+              {refreshError}
+            </div>
+          ) : null}
+          {comparison === null ? (
+            <div className="data-banner" role="status">
+              {hiscoresUnavailable ? (
+                <>
+                  Hiscores data is unavailable for one or both players. Check
+                  the names, then use Refresh to retry when the cooldown ends.
+                </>
+              ) : (
+                <>
+                  Loading Hiscores data for <strong>{rsns[0]}</strong> and{" "}
+                  <strong>{rsns[1]}</strong>. This updates automatically when
+                  both are ready.
+                </>
+              )}
+            </div>
+          ) : null}
+          <ComparisonShellContext.Provider value={shellContext}>
+            {children}
+          </ComparisonShellContext.Provider>
+        </div>
+        <footer className="site-footer">
+          <span>All times in your local timezone</span>
+        </footer>
+      </main>
+    </div>
+  );
+}

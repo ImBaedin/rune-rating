@@ -338,13 +338,19 @@ function SkillGapChart({
         }
       />
       <div className="skill-progress-chart">
-        <ResponsiveContainer height="100%" width="100%">
+        <ResponsiveContainer
+          height="100%"
+          width="100%"
+          minWidth={0}
+          minHeight={0}
+          initialDimension={{ width: 1, height: 1 }}
+        >
           <BarChart
             data={chartRows}
             layout="vertical"
             margin={{ top: 8, right: 18, bottom: 8, left: 36 }}
           >
-            <CartesianGrid stroke="#e7ebef" horizontal={false} />
+            <CartesianGrid stroke="var(--chart-grid)" horizontal={false} />
             <XAxis tickFormatter={formatCompact} type="number" />
             <YAxis dataKey="name" type="category" width={70} />
             <Tooltip formatter={(value) => formatCompact(Number(value))} />
@@ -406,7 +412,7 @@ function SkillHighlights({
 
   return (
     <article className="panel skills-highlights-panel" aria-busy={isLoading}>
-      <PanelHeader title="Skill highlights" eyebrow="Current snapshots" />
+      <PanelHeader title="Skill highlights" />
       <div className="skills-highlight-list">
         {items.map((item) => (
           <div className="skills-highlight-item" key={item.title}>

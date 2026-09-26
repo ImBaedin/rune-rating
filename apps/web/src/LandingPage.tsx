@@ -7,13 +7,10 @@ import { ArrowRight, Search, Swords, Trophy } from "lucide-react";
 import { type FormEvent, memo, useEffect, useRef, useState } from "react";
 import { capturePageView } from "./analytics";
 import { FaultyTerminal } from "./components/FaultyTerminal";
-import {
-  fallbackExampleRsn,
-  randomCompareRsns,
-  randomExampleRsn,
-} from "./exampleRsns";
+import { PublicHeader } from "./components/PublicHeader";
+import { fallbackCompareRsns, fallbackExampleRsn } from "./exampleRsns";
 import { comparisonPath } from "./features/comparison/navigation";
-import { formatAccountBuild } from "./features/ratingDisplay";
+import { formatAccountSummary } from "./features/ratingDisplay";
 
 type RuneRatingResult = FunctionReturnType<typeof api.runeRating.get>;
 type RuneRatingCard = Extract<RuneRatingResult, { status: "ready" }>["card"];
@@ -26,6 +23,7 @@ const featuredStats = [
 
 const landingTerminalGrid: [number, number] = [2.4, 1.05];
 const activeStatuses = new Set(["scheduled", "refreshing"]);
+const featuredComparisonHref = comparisonPath("overview", fallbackCompareRsns);
 
 function hasActiveRefresh(result: RuneRatingResult | undefined) {
   if (!result || !("sources" in result)) return false;
@@ -36,52 +34,46 @@ function hasActiveRefresh(result: RuneRatingResult | undefined) {
 }
 
 export function LandingPage() {
-  const [compareHref] = useState(() =>
-    comparisonPath("overview", randomCompareRsns()),
-  );
-
   useEffect(() => {
     capturePageView({ page: "landing" });
   }, []);
 
   return (
     <main className="landing-page">
-      <LandingBackground />
-      <div className="landing-vignette" aria-hidden="true" />
+      <PublicHeader compareHref={featuredComparisonHref} />
 
-      <section className="landing-hero" aria-labelledby="landing-title">
-        <div className="landing-brand">
-          <span className="brand-mark landing-brand-mark" aria-hidden="true">
-            <span />
-            <span />
-          </span>
-          <strong>RuneRating</strong>
-        </div>
+      <div className="landing-shell" id="public-content" tabIndex={-1}>
+        <section className="landing-stage" aria-labelledby="landing-title">
+          <LandingBackground />
 
-        <div className="landing-copy">
-          <p className="landing-kicker">Account signal / live snapshots</p>
-          <h1 id="landing-title">RuneRating</h1>
-          <p>
-            Check the current shape of an OSRS account, then jump straight into
-            the categories that move the score.
-          </p>
-        </div>
+          <div className="landing-hero">
+            <div className="landing-copy">
+              <p className="rating-kicker">Old School RuneScape player stats</p>
+              <h1 className="landing-title" id="landing-title">
+                See the whole account.
+              </h1>
+              <p>Look up a player’s rating, stats, and account progress.</p>
+            </div>
 
-        <LandingSearch />
+            <LandingSearch />
 
-        <div className="landing-actions">
-          <Link className="landing-compare" to="/leaderboard">
-            <Trophy aria-hidden="true" size={17} />
-            Leaderboard
-          </Link>
-          <Link className="landing-compare" to={compareHref}>
-            <Swords aria-hidden="true" size={17} />
-            Compare players
-          </Link>
-        </div>
-      </section>
+            <nav className="landing-actions" aria-label="Explore RuneRating">
+              <Link className="landing-action-link" to="/leaderboard">
+                <Trophy aria-hidden="true" size={16} />
+                Leaderboard
+                <ArrowRight aria-hidden="true" size={14} />
+              </Link>
+              <Link className="landing-action-link" to={featuredComparisonHref}>
+                <Swords aria-hidden="true" size={16} />
+                Compare players
+                <ArrowRight aria-hidden="true" size={14} />
+              </Link>
+            </nav>
+          </div>
 
-      <LandingPreview />
+          <LandingPreview />
+        </section>
+      </div>
     </main>
   );
 }
@@ -90,23 +82,23 @@ const LandingBackground = memo(function LandingBackground() {
   return (
     <div className="landing-background" aria-hidden="true">
       <FaultyTerminal
-        scale={1.16}
+        scale={1.08}
         gridMul={landingTerminalGrid}
-        digitSize={1.42}
-        timeScale={0.22}
-        scanlineIntensity={0.42}
-        glitchAmount={0.74}
-        flickerAmount={0.58}
-        noiseAmp={0.86}
-        chromaticAberration={0.9}
-        dither={0.52}
-        curvature={0.11}
-        tint="#e6a375"
+        digitSize={1.56}
+        timeScale={0.16}
+        scanlineIntensity={0.32}
+        glitchAmount={0.46}
+        flickerAmount={0.3}
+        noiseAmp={0.52}
+        chromaticAberration={0.18}
+        dither={0.42}
+        curvature={0.08}
+        tint="#e7b957"
         mouseReact={false}
-        dpr={0.72}
-        maxFps={24}
+        dpr={0.68}
+        maxFps={20}
         pageLoadAnimation={false}
-        brightness={0.62}
+        brightness={0.48}
       />
     </div>
   );
@@ -133,7 +125,9 @@ function LandingSearch() {
 
   return (
     <form className="landing-search" onSubmit={handleSubmit}>
-      <label htmlFor="landing-rsn">Check your RuneRating</label>
+      <label htmlFor="landing-rsn">
+        <strong className="landing-search-title">Look up a player</strong>
+      </label>
       <div className="landing-search-row">
         <Search aria-hidden="true" size={18} />
         <input
@@ -143,28 +137,30 @@ function LandingSearch() {
             setRsn(event.target.value);
             if (error) setError(null);
           }}
-          placeholder="Search RSN"
+          placeholder="RuneScape name"
           autoComplete="off"
+          spellCheck={false}
         />
-        <button type="submit" aria-label="Check RuneRating">
+        <button type="submit">
+          <span>Rate player</span>
           <ArrowRight aria-hidden="true" size={18} />
         </button>
       </div>
-      {error ? <p className="landing-error">{error}</p> : null}
+      {error ? (
+        <p className="landing-error" role="alert">
+          {error}
+        </p>
+      ) : null}
     </form>
   );
 }
 
 function LandingPreview() {
-  const [exampleRsn, setExampleRsn] = useState<string>(fallbackExampleRsn);
+  const exampleRsn = fallbackExampleRsn;
   const requestedRsns = useRef<Set<string> | null>(null);
   const requestRefresh = useMutation(api.refresh.request);
   const rating = useQuery(api.runeRating.get, { rsn: exampleRsn });
   const card = rating?.status === "ready" ? rating.card : null;
-
-  useEffect(() => {
-    setExampleRsn(randomExampleRsn());
-  }, []);
 
   useEffect(() => {
     if (rating?.status !== "notRequested") return;
@@ -172,23 +168,32 @@ function LandingPreview() {
     requestedRsns.current ??= new Set<string>();
     if (requestedRsns.current.has(key)) return;
     requestedRsns.current.add(key);
-    void requestRefresh({ rsns: [exampleRsn] });
-  }, [exampleRsn, rating?.status, requestRefresh]);
+    void requestRefresh({ rsns: [exampleRsn] }).catch(() => {
+      // The preview remains optional; the main lookup is still available.
+    });
+  }, [rating?.status, requestRefresh]);
 
-  const stateLabel =
-    rating === undefined
-      ? "Loading"
-      : rating.status === "ready"
-        ? "Live rating"
-        : rating.status === "refreshing" || hasActiveRefresh(rating)
-          ? "Refreshing"
-          : "Live example";
+  let stateLabel: string | null = null;
+  if (rating === undefined) {
+    stateLabel = "Loading";
+  } else if (
+    rating.status !== "ready" &&
+    (rating.status === "refreshing" || hasActiveRefresh(rating))
+  ) {
+    stateLabel = "Refreshing";
+  }
 
   return (
     <aside className="landing-preview" aria-label="RuneRating preview">
+      <div className="landing-preview-heading">
+        <span className="landing-preview-label">Example player</span>
+        {stateLabel ? (
+          <strong className="landing-preview-state">{stateLabel}</strong>
+        ) : null}
+      </div>
       <div className="landing-rating-card">
-        <div>
-          <span>{stateLabel}</span>
+        <div className="landing-rating-meta">
+          <span className="landing-rating-label">RuneRating</span>
           <strong>{card?.tier ?? "Pending"}</strong>
         </div>
         {card ? (
@@ -200,7 +205,7 @@ function LandingPreview() {
       <div className="landing-tier-strip">
         {featuredStats.map(([tier, floor]) => (
           <div key={tier}>
-            <span>{tier}</span>
+            <span className="landing-tier-label">{tier}</span>
             <strong>{floor}</strong>
           </div>
         ))}
@@ -212,10 +217,14 @@ function LandingPreview() {
 function LiveRatingCard({ card }: { card: RuneRatingCard }) {
   return (
     <>
-      <p>{card.score}</p>
+      <div className="landing-score">
+        <p>{card.score}</p>
+        <span>/ 1,000</span>
+      </div>
       <small>
-        {card.displayRsn} / {formatAccountBuild(card.accountBuild)} /{" "}
-        {card.percentileLabel}
+        <strong>{card.displayRsn}</strong>
+        <span>{formatAccountSummary(card.accountType, card.accountBuild)}</span>
+        <span>{card.percentileLabel}</span>
       </small>
     </>
   );
@@ -233,13 +242,17 @@ function PendingRatingCard({
       ? rating.message
       : rating?.status === "refreshing"
         ? rating.message
-        : "Fetching the current RuneRating snapshot.";
+        : "Loading rating.";
 
   return (
     <>
-      <p className="landing-rating-pending">--</p>
+      <div className="landing-score">
+        <p className="landing-rating-pending">--</p>
+        <span>/ 1,000</span>
+      </div>
       <small>
-        {rsn} / {message}
+        <strong>{rsn}</strong>
+        <span>{message}</span>
       </small>
     </>
   );

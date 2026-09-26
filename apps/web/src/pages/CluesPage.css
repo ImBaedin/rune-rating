@@ -1,7 +1,7 @@
 .clues-page {
   display: grid;
   gap: 12px;
-  color: #111827;
+  color: var(--ink);
 }
 
 .clues-panel-header,
@@ -22,9 +22,9 @@
 .clues-kpi,
 .clues-panel {
   border: 1px solid #dbe2ea;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .clues-kpi {
@@ -41,7 +41,7 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: #f1f5f9;
+  background: var(--surface-raised);
 }
 
 .clues-kpi-icon.left,
@@ -61,29 +61,25 @@
 
 .clues-kpi-icon.muted,
 .clues-kpi strong.muted {
-  color: #64748b;
+  color: var(--muted);
 }
 
 .clues-kpi h2 {
   margin: 0 0 4px;
-  color: #111827;
-  font:
-    800 14px "Manrope",
-    sans-serif;
+  color: var(--ink);
+  font: 800 14px var(--font-display);
 }
 
 .clues-kpi strong {
   display: block;
   overflow-wrap: anywhere;
-  font:
-    800 23px "Manrope",
-    sans-serif;
+  font: 800 23px var(--font-display);
   line-height: 1.05;
 }
 
 .clues-kpi p {
   margin: 3px 0 0;
-  color: #344255;
+  color: var(--ink);
 }
 
 .clues-main-grid {
@@ -112,27 +108,25 @@
 
 .clues-panel-header h2 {
   margin: 0;
-  font:
-    800 15px "Manrope",
-    sans-serif;
+  font: 800 15px var(--font-display);
 }
 
 .clues-panel-header p {
   margin: 4px 0 0;
-  color: #52606f;
+  color: var(--muted);
   line-height: 1.25;
 }
 
 .clues-panel-header svg {
   flex: 0 0 auto;
-  color: #627184;
+  color: var(--muted);
 }
 
 .clues-legend {
   justify-content: center;
   gap: 22px;
   margin: 2px 0 4px;
-  color: #263244;
+  color: var(--ink);
   font-weight: 700;
 }
 
@@ -179,8 +173,8 @@
 }
 
 .clues-table th {
-  background: #fbfcfd;
-  color: #243246;
+  background: var(--surface-muted);
+  color: var(--ink);
   font-size: 12px;
   font-weight: 800;
 }
@@ -212,11 +206,11 @@
 
 .clues-table td.muted,
 .clues-leader.muted {
-  color: #64748b;
+  color: var(--muted);
 }
 
 .clues-total-row td {
-  background: #fbfcfd;
+  background: var(--surface-muted);
   font-weight: 850;
 }
 
@@ -234,32 +228,32 @@
 }
 
 .clues-tier-badge.green {
-  background: color-mix(in srgb, var(--green) 13%, white);
+  background: color-mix(in srgb, var(--green) 13%, transparent);
   color: var(--green);
 }
 
 .clues-tier-badge.blue {
-  background: color-mix(in srgb, var(--blue) 13%, white);
+  background: color-mix(in srgb, var(--blue) 13%, transparent);
   color: var(--blue);
 }
 
 .clues-tier-badge.yellow {
-  background: #fff4cf;
+  background: color-mix(in srgb, var(--amber) 14%, transparent);
   color: #b48100;
 }
 
 .clues-tier-badge.orange {
-  background: #ffebdf;
+  background: color-mix(in srgb, #f08a4b 14%, transparent);
   color: #d45216;
 }
 
 .clues-tier-badge.purple {
-  background: #efe8ff;
+  background: color-mix(in srgb, #9b7fe8 14%, transparent);
   color: #6e49d8;
 }
 
 .clues-tier-badge.red {
-  background: #ffe7e9;
+  background: color-mix(in srgb, #e76e75 14%, transparent);
   color: #d51f32;
 }
 
@@ -299,7 +293,7 @@
   height: 7px;
   overflow: hidden;
   border-radius: 999px;
-  background: #e8edf3;
+  background: var(--line);
 }
 
 .clues-pressure-track i {
@@ -327,13 +321,13 @@
 
 .clues-opportunity strong {
   overflow: hidden;
-  color: #172033;
+  color: var(--ink);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .clues-opportunity small {
-  color: #546273;
+  color: var(--muted);
   line-height: 1.25;
 }
 
@@ -350,7 +344,7 @@
 
 .clues-footnote {
   margin: 8px 0 0;
-  color: #657386;
+  color: var(--muted);
 }
 
 @media (max-width: 1180px) {

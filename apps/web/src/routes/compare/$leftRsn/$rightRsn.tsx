@@ -1,6 +1,7 @@
 import { normalizeRsn } from "@rune-rating/domain";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { ComparisonShell } from "../../../App";
+import { RouteMessage } from "../../../components/RouteMessage";
+import { ComparisonShell } from "../../../features/comparison/ComparisonShell";
 import { compareHead } from "../../../features/og/meta";
 
 export const Route = createFileRoute("/compare/$leftRsn/$rightRsn")({
@@ -13,16 +14,13 @@ function CompareShellRoute() {
   const normalized = normalizeRouteRsns(leftRsn, rightRsn);
   if (!normalized) {
     return (
-      <main className="route-message">
-        <section>
-          <p className="eyebrow">Invalid player name</p>
-          <h1>That comparison URL contains an invalid RSN.</h1>
-          <p>
-            Player names must be 1-12 characters and can use letters, numbers,
-            spaces, underscores, or hyphens.
-          </p>
-        </section>
-      </main>
+      <RouteMessage
+        eyebrow="Invalid player name"
+        title="That comparison URL contains an invalid RSN."
+      >
+        Player names must be 1-12 characters and can use letters, numbers,
+        spaces, underscores, or hyphens.
+      </RouteMessage>
     );
   }
   return (

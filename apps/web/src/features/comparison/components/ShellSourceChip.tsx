@@ -11,7 +11,9 @@ export function ShellSourceChip({
 }) {
   return (
     <span className={`source-chip ${status}`}>
-      <i>{status === "live" ? <Check size={9} /> : <Clock3 size={9} />}</i>
+      <i aria-hidden="true">
+        {status === "live" ? <Check size={9} /> : <Clock3 size={9} />}
+      </i>
       {label}
       {detail ? <small>{detail}</small> : null}
     </span>

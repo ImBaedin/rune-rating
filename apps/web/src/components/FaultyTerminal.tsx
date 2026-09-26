@@ -3,6 +3,8 @@ import { Color, Mesh, Program, Renderer, Triangle } from "ogl";
 import type { HTMLAttributes } from "react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
+import { useDecorativeMotionPaused } from "../features/decorativeMotion";
+
 type Vec2 = [number, number];
 const defaultGridMul: Vec2 = [2, 1];
 
@@ -275,6 +277,7 @@ export function FaultyTerminal({
   style,
   ...rest
 }: FaultyTerminalProps) {
+  const motionPaused = useDecorativeMotionPaused();
   const containerRef = useRef<HTMLDivElement>(null);
   const programRef = useRef<Program>(null);
   const rendererRef = useRef<Renderer>(null);
@@ -305,9 +308,14 @@ export function FaultyTerminal({
 
   useEffect(() => {
     const ctn = containerRef.current;
-    if (!ctn) return;
+    if (!ctn || motionPaused) return;
 
-    const renderer = new Renderer({ dpr });
+    let renderer: Renderer;
+    try {
+      renderer = new Renderer({ dpr });
+    } catch {
+      return; // Keep the static background when WebGL is unavailable.
+    }
     rendererRef.current = renderer;
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 1);
@@ -431,6 +439,7 @@ export function FaultyTerminal({
       timeOffsetRef.current = Math.random() * 100;
     };
   }, [
+    motionPaused,
     dpr,
     maxFps,
     pause,

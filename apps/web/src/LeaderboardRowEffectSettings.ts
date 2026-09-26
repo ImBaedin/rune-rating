@@ -19,32 +19,32 @@ export type LeaderboardParticleSettings = {
 
 export const firstPlaceLeaderboardEffectSettings: LeaderboardParticleSettings =
   {
-    particleOpacity: [0.2, 0.8],
-    particleSpawnRate: 150,
-    particleColors: ["#f4d48a", "#9df4f1", "#eef2f3"],
-    particleTravelDistance: [0.1, 0.5],
-    particleMoveSpeed: [0.2, 1.2],
-    particleSize: [1, 4],
-    particleWander: [0.05, 0.25],
-    beamFalloffDistance: 0.5,
-    beamColors: ["#d8aa43"],
-    beamIntensity: 0.8,
-    beamWaveWidth: 0.1,
-    beamWaveFrequency: 4,
+    particleOpacity: [0.12, 0.52],
+    particleSpawnRate: 72,
+    particleColors: ["var(--amber)", "var(--muted)", "var(--ink)"],
+    particleTravelDistance: [0.12, 0.42],
+    particleMoveSpeed: [0.16, 0.72],
+    particleSize: [0.7, 2.6],
+    particleWander: [0.02, 0.12],
+    beamFalloffDistance: 0.36,
+    beamColors: ["var(--amber)"],
+    beamIntensity: 0.34,
+    beamWaveWidth: 0.045,
+    beamWaveFrequency: 3.2,
   };
 
 export const secondPlaceLeaderboardEffectSettings: LeaderboardParticleSettings =
   {
     ...firstPlaceLeaderboardEffectSettings,
-    beamIntensity: 0.7,
-    beamColors: ["#9df4f1"],
+    beamIntensity: 0.26,
+    beamColors: ["var(--chart-tier-medium)"],
   };
 
 export const thirdPlaceLeaderboardEffectSettings: LeaderboardParticleSettings =
   {
     ...firstPlaceLeaderboardEffectSettings,
-    beamIntensity: 0.6,
-    beamColors: ["#eef2f3"],
+    beamIntensity: 0.22,
+    beamColors: ["var(--chart-tier-easy)"],
   };
 
 export const leaderboardRowEffectSettings = [

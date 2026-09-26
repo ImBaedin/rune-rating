@@ -1,7 +1,8 @@
 import { normalizeRsn } from "@rune-rating/domain";
 
-const appUrl = (import.meta.env.VITE_SITE_URL ?? "https://runerating.app")
-  .replace(/\/+$/, "");
+const appUrl = (
+  import.meta.env.VITE_SITE_URL ?? "https://runerating.app"
+).replace(/\/+$/, "");
 
 function safeRsn(value: string | undefined) {
   if (!value) return null;
@@ -13,7 +14,7 @@ function safeRsn(value: string | undefined) {
 }
 
 function pathPart(value: string) {
-  return encodeURIComponent(value).replaceAll("%20", "+");
+  return encodeURIComponent(value);
 }
 
 export function absoluteUrl(path: string) {

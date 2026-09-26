@@ -104,6 +104,10 @@ export function comparisonPath(view: AppView, rsns: [string, string]) {
 }
 
 export function viewFromPathname(pathname: string): AppView {
-  const segment = pathname.split("/").filter(Boolean).at(-1);
-  return segment ? (routeViewBySegment[segment] ?? "overview") : "overview";
+  const [route, , , segment] = pathname.split("/").filter(Boolean);
+  return route === "compare" &&
+    segment &&
+    Object.hasOwn(routeViewBySegment, segment)
+    ? (routeViewBySegment[segment] ?? "overview")
+    : "overview";
 }

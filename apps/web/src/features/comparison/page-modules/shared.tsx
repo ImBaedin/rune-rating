@@ -1,4 +1,4 @@
-import { RefreshCw, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import type { ReactNode } from "react";
 import { PageHeader } from "../../../components/comparison-ui";
 import type { HistoryPeriod } from "../context";
@@ -112,8 +112,8 @@ export function LoadingOverlay({
       role="status"
       aria-live="polite"
     >
-      <span>
-        <RefreshCw size={15} />
+      <span className="loading-progress" aria-hidden="true">
+        <i />
       </span>
       <strong>{label}</strong>
     </div>

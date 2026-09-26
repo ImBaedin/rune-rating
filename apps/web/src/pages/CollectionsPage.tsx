@@ -33,6 +33,7 @@ import {
   DataNotice,
   EmptyState,
   PageHeader,
+  PairChartTooltip,
   PanelHeader,
   SearchField,
   SegmentedControl,
@@ -41,6 +42,10 @@ import {
   sideLabel,
   sideTone,
 } from "../components/comparison-ui";
+import {
+  chartCategoryColor,
+  mutedChartColor,
+} from "../features/comparison/chartTheme";
 import { useComparisonShell } from "../features/comparison/context";
 import {
   formatValue as formatNumber,
@@ -61,27 +66,8 @@ type CollectionItem = CollectionItemsComparison["items"][number];
 type StatusFilter = "all" | "different" | "one-sided" | "left" | "right";
 
 const itemPreviewLimit = 5;
-const tabColors = [
-  "#3976e8",
-  "#43a66a",
-  "#d29536",
-  "#6f8398",
-  "#b15c45",
-  "#3f9f9b",
-  "#8b6bb8",
-  "#52717f",
-];
-const tabColor = (index: number) =>
-  tabColors[index % tabColors.length] ?? "#6f8398";
-
-const mutedTabColor = (color: string) => {
-  const hex = color.replace("#", "");
-  const value = Number.parseInt(hex, 16);
-  if (hex.length !== 6 || Number.isNaN(value)) return color;
-  const blend = (channel: number) =>
-    Math.round(channel + (255 - channel) * 0.78);
-  return `rgb(${blend((value >> 16) & 255)}, ${blend((value >> 8) & 255)}, ${blend(value & 255)})`;
-};
+const tabColor = chartCategoryColor;
+const mutedTabColor = mutedChartColor;
 
 const ownedLabel = (owned: boolean | null) =>
   owned === null ? "Unavailable" : owned ? "Owned" : "Missing";
@@ -419,11 +405,7 @@ function CollectionsPage() {
 
         <aside className="collections-side-column">
           <article className="collections-panel collections-rate-panel">
-            <PanelHeader
-              title="Completion rate"
-              subtitle="Current detailed snapshot"
-              help={false}
-            />
+            <PanelHeader title="Completion rate" help={false} />
             <div className="collections-rate-list">
               <CompletionMeter
                 name={names[0]}
@@ -444,7 +426,7 @@ function CollectionsPage() {
 
           <article className="collections-panel collections-pressure-panel">
             <PanelHeader
-              title="High-value misses"
+              title="Largest collection gaps"
               subtitle="Largest category and page gaps"
               help={false}
             />
@@ -469,13 +451,19 @@ function CollectionsPage() {
         />
         <div className="collections-page-chart">
           {pages.length > 0 ? (
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+              minWidth={0}
+              minHeight={0}
+              initialDimension={{ width: 1, height: 1 }}
+            >
               <BarChart
                 data={pages.slice(0, 12).map((row) => ({
                   name: row.name,
                   tab: row.tab,
-                  left: row.left?.obtained ?? 0,
-                  right: row.right?.obtained ?? 0,
+                  left: row.left?.obtained ?? null,
+                  right: row.right?.obtained ?? null,
                 }))}
                 layout="vertical"
                 margin={{ top: 10, right: 32, bottom: 10, left: 16 }}
@@ -483,28 +471,36 @@ function CollectionsPage() {
                 barGap={6}
                 barCategoryGap={10}
               >
-                <CartesianGrid horizontal={false} stroke="#e7ebef" />
+                <CartesianGrid horizontal={false} stroke="var(--line)" />
                 <XAxis
                   type="number"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#74808d", fontSize: 12, fontWeight: 700 }}
+                  tick={{
+                    fill: "var(--muted)",
+                    fontSize: 12,
+                    fontWeight: 700,
+                  }}
                 />
                 <YAxis
                   type="category"
                   dataKey="name"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#4d5964", fontSize: 11, fontWeight: 800 }}
+                  tick={{
+                    fill: "var(--muted)",
+                    fontSize: 11,
+                    fontWeight: 800,
+                  }}
                   width={132}
                 />
                 <Tooltip
-                  formatter={(value, key) => [
-                    formatNumber(Number(value)),
-                    key === "left" ? names[0] : names[1],
-                  ]}
+                  filterNull={false}
+                  content={
+                    <PairChartTooltip names={names} formatter={formatNumber} />
+                  }
                   labelFormatter={(label) => String(label)}
-                  cursor={{ fill: "rgba(15, 23, 42, 0.04)" }}
+                  cursor={{ fill: "var(--chart-cursor)" }}
                 />
                 <Bar dataKey="left" fill="var(--blue)" radius={[0, 3, 3, 0]} />
                 <Bar
@@ -578,11 +574,14 @@ function CategoryWheel({
   }
   const data = tabs.map((tab, index) => {
     const total = Math.max(tab.left?.total ?? 0, tab.right?.total ?? 0, 1);
-    const leftObtained = Math.max(0, Math.min(tab.left?.obtained ?? 0, total));
-    const rightObtained = Math.max(
-      0,
-      Math.min(tab.right?.obtained ?? 0, total),
-    );
+    const leftObtained =
+      tab.left === null
+        ? null
+        : Math.max(0, Math.min(tab.left.obtained, total));
+    const rightObtained =
+      tab.right === null
+        ? null
+        : Math.max(0, Math.min(tab.right.obtained, total));
 
     const color = tabColor(index);
 
@@ -593,10 +592,12 @@ function CategoryWheel({
       remainingColor: mutedTabColor(color),
       leftObtained,
       rightObtained,
-      leftRemaining: Math.max(total - leftObtained, 0),
-      rightRemaining: Math.max(total - rightObtained, 0),
-      leftPercent: tab.left?.percent ?? 0,
-      rightPercent: tab.right?.percent ?? 0,
+      leftRemaining:
+        leftObtained === null ? null : Math.max(total - leftObtained, 0),
+      rightRemaining:
+        rightObtained === null ? null : Math.max(total - rightObtained, 0),
+      leftPercent: tab.left?.percent ?? null,
+      rightPercent: tab.right?.percent ?? null,
     };
   });
   const leftSlices = data
@@ -614,7 +615,7 @@ function CategoryWheel({
         isRemaining: true,
       },
     ])
-    .filter((entry) => entry.value > 0);
+    .filter((entry) => entry.value !== null && entry.value > 0);
   const rightSlices = data
     .flatMap((entry) => [
       {
@@ -630,11 +631,17 @@ function CategoryWheel({
         isRemaining: true,
       },
     ])
-    .filter((entry) => entry.value > 0);
+    .filter((entry) => entry.value !== null && entry.value > 0);
 
   return (
     <div className="collections-wheel">
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer
+        width="100%"
+        height="100%"
+        minWidth={0}
+        minHeight={0}
+        initialDimension={{ width: 1, height: 1 }}
+      >
         <PieChart>
           <Pie
             data={leftSlices}
@@ -643,7 +650,7 @@ function CategoryWheel({
             innerRadius="68%"
             outerRadius="86%"
             paddingAngle={0.5}
-            stroke="#fff"
+            stroke="var(--canvas)"
             strokeWidth={2}
             isAnimationActive={false}
           >
@@ -662,7 +669,7 @@ function CategoryWheel({
             innerRadius="46%"
             outerRadius="63%"
             paddingAngle={0.5}
-            stroke="#fff"
+            stroke="var(--canvas)"
             strokeWidth={2}
             isAnimationActive={false}
           >

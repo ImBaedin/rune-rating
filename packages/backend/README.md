@@ -87,3 +87,9 @@ missing/stale -> scheduled -> refreshing -> fresh + cooldown
 
 Actions must be safe to retry. Internal mutations use the player lease request
 ID to prevent older fetches from overwriting newer snapshots.
+
+The current player refresh pipeline treats Hiscores as its baseline gate. Wise
+Old Man and RuneProfile player jobs are enqueued only after Hiscores commits;
+an upstream Hiscores failure marks those downstream states as
+`hiscoresUnavailable`. Source adapters log sanitized error codes and messages
+for operational diagnosis without logging provider payloads or credentials.

@@ -1,10 +1,11 @@
 import { ImageResponse } from "@vercel/og";
-import { tierImage } from "../../runeRatingAssets";
 import type { CompareOgModel, RatingOgModel } from "./data";
+import { tierPngImage } from "./rankAssets";
 
 const dimensions = { width: 1200, height: 630 };
 const cacheHeaders = {
-  "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
+  "Cache-Control":
+    "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
 };
 
 async function bufferedPngResponse(image: ImageResponse) {
@@ -19,18 +20,20 @@ async function bufferedPngResponse(image: ImageResponse) {
   });
 }
 
-const tierColors: Record<string, { base: string; light: string; dark: string }> =
-  {
-    Bronze: { base: "#9b6439", light: "#d29a63", dark: "#4f2f1f" },
-    Iron: { base: "#a8adb0", light: "#eef2f3", dark: "#5a6267" },
-    Steel: { base: "#6b7881", light: "#cbd5dc", dark: "#2c363d" },
-    Black: { base: "#242321", light: "#888078", dark: "#090909" },
-    Mithril: { base: "#4c5291", light: "#aeb4ff", dark: "#20274f" },
-    Adamant: { base: "#4d8f62", light: "#a9d891", dark: "#23452f" },
-    Rune: { base: "#2aa7ae", light: "#9df4f1", dark: "#18535e" },
-    Dragon: { base: "#b53827", light: "#ff7245", dark: "#551b18" },
-    Unranked: { base: "#667085", light: "#d0d5dd", dark: "#1d2939" },
-  };
+const tierColors: Record<
+  string,
+  { base: string; light: string; dark: string }
+> = {
+  Bronze: { base: "#9b6439", light: "#d29a63", dark: "#4f2f1f" },
+  Iron: { base: "#a8adb0", light: "#eef2f3", dark: "#5a6267" },
+  Steel: { base: "#6b7881", light: "#cbd5dc", dark: "#2c363d" },
+  Black: { base: "#242321", light: "#888078", dark: "#090909" },
+  Mithril: { base: "#4c5291", light: "#aeb4ff", dark: "#20274f" },
+  Adamant: { base: "#4d8f62", light: "#a9d891", dark: "#23452f" },
+  Rune: { base: "#2aa7ae", light: "#9df4f1", dark: "#18535e" },
+  Dragon: { base: "#b53827", light: "#ff7245", dark: "#551b18" },
+  Unranked: { base: "#667085", light: "#d0d5dd", dark: "#1d2939" },
+};
 
 function colorFor(tier: string) {
   return tierColors[tier] ?? tierColors.Unranked!;
@@ -39,7 +42,7 @@ function colorFor(tier: string) {
 function rankImageSrc(origin: string | undefined, tier: string | null) {
   if (!tier || tier === "Unranked") return null;
 
-  const src = tierImage(tier);
+  const src = tierPngImage(tier);
   if (src.startsWith("http") || src.startsWith("data:")) return src;
   if (!origin) return src;
   return src.startsWith("/") ? `${origin}${src}` : `${origin}/${src}`;
@@ -78,8 +81,7 @@ function statRail(stats: Array<{ label: string; value: string }>) {
             justifyContent: "center",
             width: 240,
             paddingLeft: 30,
-            borderLeft:
-              index === 0 ? "0" : "1px solid rgba(190,198,255,0.24)",
+            borderLeft: index === 0 ? "0" : "1px solid rgba(190,198,255,0.24)",
           }}
         >
           <div
@@ -151,7 +153,6 @@ export function ratingImageResponse(
 
   return bufferedPngResponse(
     new ImageResponse(
-    (
       <div
         style={{
           width: "100%",
@@ -400,8 +401,7 @@ export function ratingImageResponse(
             </div>
           </div>
         </div>
-      </div>
-    ),
+      </div>,
       dimensions,
     ),
   );
@@ -597,7 +597,6 @@ export function compareImageResponse(
 
   return bufferedPngResponse(
     new ImageResponse(
-    (
       <div
         style={{
           width: "100%",
@@ -703,10 +702,8 @@ export function compareImageResponse(
               }),
             )}
           </div>
-
         </div>
-      </div>
-    ),
+      </div>,
       dimensions,
     ),
   );

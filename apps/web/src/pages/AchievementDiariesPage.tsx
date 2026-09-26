@@ -4,7 +4,6 @@ import type { FunctionReturnType } from "convex/server";
 import {
   AlertTriangle,
   Check,
-  ChevronRight,
   ClipboardList,
   Gift,
   ListChecks,
@@ -36,6 +35,7 @@ import {
   SelectField,
   SourceChip,
 } from "../components/comparison-ui";
+import { chartPlayerColors } from "../features/comparison/chartTheme";
 import { useComparisonShell } from "../features/comparison/context";
 import { formatCountOf, formatValue } from "../features/comparison/formatters";
 import "./AchievementDiariesPage.css";
@@ -50,10 +50,6 @@ type StatusFilter = "all" | "incomplete";
 type TierFilter = "all" | Tier;
 
 const tiers: Tier[] = ["Easy", "Medium", "Hard", "Elite"];
-const playerColors: Record<PlayerSide, string> = {
-  left: "var(--blue)",
-  right: "var(--green)",
-};
 const tierTotals: Record<Tier, number> = {
   Easy: 4,
   Medium: 4,
@@ -73,7 +69,7 @@ export default function AchievementDiariesPage() {
     category: "diaries",
   });
   const [regionFilter, setRegionFilter] = useState<RegionFilter>("all");
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("incomplete");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [tierFilter, setTierFilter] = useState<TierFilter>("all");
 
   const model = useMemo(
@@ -97,6 +93,19 @@ export default function AchievementDiariesPage() {
     return matchesRegion && (statusFilter === "all" || hasIncomplete === true);
   });
   const visibleTiers = tierFilter === "all" ? tiers : [tierFilter];
+  const visibleTierMaximum = model.totalRegions * visibleTiers.length;
+  const leftVisibleCompleted = leftStats
+    ? visibleTiers.reduce(
+        (total, tier) => total + leftStats.byTier[tier].completed,
+        0,
+      )
+    : null;
+  const rightVisibleCompleted = rightStats
+    ? visibleTiers.reduce(
+        (total, tier) => total + rightStats.byTier[tier].completed,
+        0,
+      )
+    : null;
 
   return (
     <section className="achievement-diaries-page" aria-busy={isLoading}>
@@ -165,7 +174,7 @@ export default function AchievementDiariesPage() {
         />
         <DiaryMetricCard
           icon={<AlertTriangle size={22} />}
-          title="Task blockers"
+          title="Tasks remaining"
           values={{
             left: leftStats?.remainingTasks ?? null,
             right: rightStats?.remainingTasks ?? null,
@@ -174,7 +183,7 @@ export default function AchievementDiariesPage() {
         />
         <DiaryMetricCard
           icon={<Gift size={22} />}
-          title="Reward unlocks"
+          title="Tasks completed"
           values={{
             left: leftStats?.completedTasks ?? null,
             right: rightStats?.completedTasks ?? null,
@@ -185,17 +194,44 @@ export default function AchievementDiariesPage() {
 
       <div className="ad-main-grid">
         <article className="ad-panel ad-region-panel">
-          <PanelHeader title="Completed tiers by region" names={names} />
+          <PanelHeader title="Completed tiers by region" />
           <div className="ad-region-table-wrap">
-            <table className="ad-region-table">
+            <table
+              className={`ad-region-table ad-region-matrix ${visibleTiers.length === 1 ? "single-tier" : ""}`.trim()}
+            >
               <thead>
                 <tr>
-                  <th>Region</th>
+                  <th rowSpan={2}>Region</th>
+                  <th colSpan={visibleTiers.length}>
+                    <span className="ad-matrix-player left">
+                      <i />
+                      {names[0]}
+                    </span>
+                  </th>
+                  <th
+                    className="ad-player-divider"
+                    colSpan={visibleTiers.length}
+                  >
+                    <span className="ad-matrix-player right">
+                      <i />
+                      {names[1]}
+                    </span>
+                  </th>
+                </tr>
+                <tr>
                   {visibleTiers.map((tier) => (
-                    <th key={tier}>{tier}</th>
+                    <th className="ad-matrix-tier" key={`left-${tier}`}>
+                      {tier}
+                    </th>
                   ))}
-                  <th>Total</th>
-                  <th aria-label="Expand region" />
+                  {visibleTiers.map((tier) => (
+                    <th
+                      className={`ad-matrix-tier ${tier === visibleTiers[0] ? "ad-player-divider" : ""}`.trim()}
+                      key={`right-${tier}`}
+                    >
+                      {tier}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -204,32 +240,40 @@ export default function AchievementDiariesPage() {
                     key={row.region}
                     row={row}
                     visibleTiers={visibleTiers}
+                    names={names}
                   />
                 ))}
                 <tr className="ad-region-total">
-                  <td>Total</td>
-                  {visibleTiers.map((tier) => (
-                    <td key={tier}>
-                      <DualValue
-                        left={leftStats?.byTier[tier]?.completed ?? null}
-                        right={rightStats?.byTier[tier]?.completed ?? null}
-                        max={model.totalRegions}
-                        compact
-                      />
-                    </td>
-                  ))}
-                  <td>
-                    <DualValue
-                      left={leftStats?.completedTiers ?? null}
-                      right={rightStats?.completedTiers ?? null}
-                      max={model.maxTiers}
+                  <td>Visible total</td>
+                  <td colSpan={visibleTiers.length}>
+                    <RegionTotal
+                      side="left"
+                      value={leftVisibleCompleted}
+                      max={visibleTierMaximum}
                     />
                   </td>
-                  <td />
+                  <td
+                    className="ad-player-divider"
+                    colSpan={visibleTiers.length}
+                  >
+                    <RegionTotal
+                      side="right"
+                      value={rightVisibleCompleted}
+                      max={visibleTierMaximum}
+                    />
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <MobileRegionMatrix
+            leftTotal={leftVisibleCompleted}
+            max={visibleTierMaximum}
+            names={names}
+            rightTotal={rightVisibleCompleted}
+            rows={visibleRows}
+            visibleTiers={visibleTiers}
+          />
         </article>
 
         <aside className="ad-side-column">
@@ -254,7 +298,7 @@ export default function AchievementDiariesPage() {
           </article>
 
           <article className="ad-panel ad-signals-panel">
-            <h2>Diary signals</h2>
+            <h2>Diary summary</h2>
             <div className="ad-signal-list">
               <SignalRow
                 icon={<Trophy size={16} />}
@@ -277,16 +321,8 @@ export default function AchievementDiariesPage() {
                 tone="green"
                 label="Most total completions"
                 detail="Overall tier completions"
-                left={leftStats?.completedTasks ?? null}
-                right={rightStats?.completedTasks ?? null}
-              />
-              <SignalRow
-                icon={<AlertTriangle size={16} />}
-                tone="amber"
-                label="Most blocked tasks"
-                detail="Incomplete requirements"
-                left={leftStats?.remainingTasks ?? null}
-                right={rightStats?.remainingTasks ?? null}
+                left={leftStats?.completedTiers ?? null}
+                right={rightStats?.completedTiers ?? null}
               />
               <SignalRow
                 icon={<ListChecks size={16} />}
@@ -305,9 +341,15 @@ export default function AchievementDiariesPage() {
         <article className="ad-panel">
           <PanelHeader title="Tier completion distribution" names={names} />
           <div className="ad-chart-frame">
-            <ResponsiveContainer width="100%" height={210}>
+            <ResponsiveContainer
+              width="100%"
+              height={210}
+              minWidth={0}
+              minHeight={0}
+              initialDimension={{ width: 1, height: 1 }}
+            >
               <BarChart data={model.tierChartData} barGap={8}>
-                <CartesianGrid stroke="#e7ebf0" vertical={false} />
+                <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
                 <XAxis dataKey="tier" tickLine={false} axisLine={false} />
                 <YAxis
                   domain={[0, 100]}
@@ -321,16 +363,16 @@ export default function AchievementDiariesPage() {
                     `${Number(value ?? 0).toFixed(1)}%`,
                     "",
                   ]}
-                  cursor={{ fill: "rgba(15, 23, 42, 0.04)" }}
+                  cursor={{ fill: "var(--chart-cursor)" }}
                 />
                 <Bar
                   dataKey="left"
-                  fill={playerColors.left}
+                  fill={chartPlayerColors.left}
                   radius={[3, 3, 0, 0]}
                 />
                 <Bar
                   dataKey="right"
-                  fill={playerColors.right}
+                  fill={chartPlayerColors.right}
                   radius={[3, 3, 0, 0]}
                 />
               </BarChart>
@@ -342,7 +384,7 @@ export default function AchievementDiariesPage() {
         </article>
 
         <article className="ad-panel">
-          <h2>Top blockers (by remaining tasks)</h2>
+          <h2>Diaries with the most tasks remaining</h2>
           <BlockerTable rows={model.blockers} names={names} />
         </article>
 
@@ -353,10 +395,7 @@ export default function AchievementDiariesPage() {
       </div>
 
       <footer className="ad-footnote">
-        <span>
-          Data sourced from RuneProfile. Tiers and tasks reflect the latest
-          cached canonical snapshot for each player.
-        </span>
+        <span>Diary data comes from RuneProfile.</span>
       </footer>
     </section>
   );
@@ -589,7 +628,13 @@ function CompletionDonut({
   right: number | null;
 }) {
   return (
-    <ResponsiveContainer width="100%" height={82}>
+    <ResponsiveContainer
+      width="100%"
+      height={96}
+      minWidth={0}
+      minHeight={0}
+      initialDimension={{ width: 1, height: 1 }}
+    >
       <PieChart>
         <Pie
           data={donutData(left)}
@@ -600,8 +645,8 @@ function CompletionDonut({
           endAngle={-270}
           stroke="none"
         >
-          <Cell fill={playerColors.left} />
-          <Cell fill="#d8dee7" />
+          <Cell fill={chartPlayerColors.left} />
+          <Cell fill="var(--chart-track)" />
         </Pie>
         <Pie
           data={donutData(right)}
@@ -612,8 +657,8 @@ function CompletionDonut({
           endAngle={-270}
           stroke="none"
         >
-          <Cell fill={playerColors.right} />
-          <Cell fill="#d8dee7" />
+          <Cell fill={chartPlayerColors.right} />
+          <Cell fill="var(--chart-track)" />
         </Pie>
       </PieChart>
     </ResponsiveContainer>
@@ -628,18 +673,28 @@ function EliteGauge({
   right: number | null;
 }) {
   return (
-    <ResponsiveContainer width="100%" height={82}>
+    <ResponsiveContainer
+      width="100%"
+      height={82}
+      minWidth={0}
+      minHeight={0}
+      initialDimension={{ width: 1, height: 1 }}
+    >
       <RadialBarChart
         innerRadius="58%"
         outerRadius="100%"
         startAngle={180}
         endAngle={0}
         data={[
-          { name: "left", value: left ?? 0, fill: playerColors.left },
-          { name: "right", value: right ?? 0, fill: playerColors.right },
+          { name: "left", value: left ?? 0, fill: chartPlayerColors.left },
+          { name: "right", value: right ?? 0, fill: chartPlayerColors.right },
         ]}
       >
-        <RadialBar background dataKey="value" cornerRadius={8} />
+        <RadialBar
+          background={{ fill: "var(--chart-track)" }}
+          dataKey="value"
+          cornerRadius={8}
+        />
       </RadialBarChart>
     </ResponsiveContainer>
   );
@@ -656,80 +711,194 @@ function donutData(value: number | null) {
 function RegionRow({
   row,
   visibleTiers,
+  names,
 }: {
   row: ReturnType<typeof buildDiaryModel>["regions"][number];
   visibleTiers: Tier[];
+  names: [string, string];
 }) {
   return (
     <tr>
       <td>
         <strong>{row.region}</strong>
       </td>
-      {visibleTiers.map((tier) => (
-        <td key={tier}>
-          <DualValue
-            left={row.sides.left?.tiers[tier]?.current ?? null}
-            right={row.sides.right?.tiers[tier]?.current ?? null}
-            max={
-              Math.max(
-                row.sides.left?.tiers[tier]?.total ?? 0,
-                row.sides.right?.tiers[tier]?.total ?? 0,
-              ) || tierTotals[tier]
+      {(["left", "right"] as const).flatMap((side) =>
+        visibleTiers.map((tier, index) => (
+          <td
+            className={
+              side === "right" && index === 0 ? "ad-player-divider" : undefined
             }
-            compact
-          />
-        </td>
-      ))}
-      <td>
-        <DualValue
-          left={row.sides.left?.completedTiers ?? null}
-          right={row.sides.right?.completedTiers ?? null}
-          max={tiers.length}
-        />
-      </td>
-      <td>
-        <ChevronRight size={14} />
-      </td>
+            key={`${side}-${tier}`}
+          >
+            <TierStatus
+              name={names[side === "left" ? 0 : 1]}
+              region={row.region}
+              side={side}
+              tier={tier}
+              value={row.sides[side]?.tiers[tier] ?? null}
+            />
+          </td>
+        )),
+      )}
     </tr>
   );
 }
 
-function DualValue({
-  left,
-  right,
+function MobileRegionMatrix({
+  leftTotal,
   max,
-  compact = false,
+  names,
+  rightTotal,
+  rows,
+  visibleTiers,
 }: {
-  left: number | null;
-  right: number | null;
+  leftTotal: number | null;
   max: number;
-  compact?: boolean;
+  names: [string, string];
+  rightTotal: number | null;
+  rows: ReturnType<typeof buildDiaryModel>["regions"];
+  visibleTiers: Tier[];
 }) {
   return (
-    <div className={`ad-dual-value ${compact ? "compact" : ""}`}>
-      <span className="ad-dual-line">
-        <b className="ad-left">{left === null ? "-" : left}</b>
-        <small>/ {max}</small>
-      </span>
-      <span className="ad-dual-line">
-        <b className="ad-right">{right === null ? "-" : right}</b>
-        <small>/ {max}</small>
-      </span>
-      <span className="ad-mini-bars" aria-hidden="true">
-        <i
-          className="left"
-          style={{
-            width: `${left === null || max === 0 ? 0 : (left / max) * 100}%`,
-          }}
-        />
-        <i
-          className="right"
-          style={{
-            width: `${right === null || max === 0 ? 0 : (right / max) * 100}%`,
-          }}
-        />
-      </span>
+    <div className="ad-mobile-region-list">
+      {rows.map((row) => (
+        <article className="ad-mobile-region" key={row.region}>
+          <h3>{row.region}</h3>
+          <div className="ad-mobile-region-players">
+            {(["left", "right"] as const).map((side) => {
+              const name = names[side === "left" ? 0 : 1];
+              return (
+                <section className={`ad-mobile-player ${side}`} key={side}>
+                  <h4>
+                    <i />
+                    <span>{name}</span>
+                  </h4>
+                  <div
+                    className={`ad-mobile-tier-grid ${visibleTiers.length === 1 ? "single-tier" : ""}`.trim()}
+                  >
+                    {visibleTiers.map((tier) => (
+                      <div className="ad-mobile-tier" key={tier}>
+                        <span className="ad-mobile-tier-label">{tier}</span>
+                        <TierStatus
+                          name={name}
+                          region={row.region}
+                          side={side}
+                          tier={tier}
+                          value={row.sides[side]?.tiers[tier] ?? null}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+        </article>
+      ))}
+      <div className="ad-mobile-region-total">
+        <span>Visible total</span>
+        <div>
+          <RegionTotal side="left" value={leftTotal} max={max} />
+        </div>
+        <div>
+          <RegionTotal side="right" value={rightTotal} max={max} />
+        </div>
+      </div>
     </div>
+  );
+}
+
+function TierStatus({
+  name,
+  region,
+  side,
+  tier,
+  value,
+}: {
+  name: string;
+  region: string;
+  side: PlayerSide;
+  tier: Tier;
+  value: {
+    completed: boolean | null;
+    current: number;
+    total: number;
+    remaining: number;
+  } | null;
+}) {
+  if (value === null || value.completed === null) {
+    return (
+      <span
+        className="ad-tier-status unavailable"
+        aria-label={`${name}: ${region} ${tier} status unavailable`}
+        role="img"
+      >
+        —
+      </span>
+    );
+  }
+
+  if (value.completed) {
+    return (
+      <span
+        className={`ad-tier-status complete ${side}`}
+        aria-label={`${name}: ${region} ${tier} complete`}
+        role="img"
+      >
+        <Check aria-hidden="true" size={18} />
+      </span>
+    );
+  }
+
+  const progress =
+    value.total > 0
+      ? Math.max(0, Math.min(100, (value.current / value.total) * 100))
+      : 0;
+  return (
+    <span
+      className={`ad-tier-status progress ${side}`}
+      aria-label={`${name}: ${region} ${tier}, ${value.current} of ${value.total} tasks complete`}
+      role="img"
+    >
+      <svg aria-hidden="true" viewBox="0 0 36 36">
+        <circle className="track" cx="18" cy="18" r="14" />
+        <circle
+          className="value"
+          cx="18"
+          cy="18"
+          r="14"
+          pathLength="100"
+          strokeDasharray={`${progress} ${100 - progress}`}
+          transform="rotate(-90 18 18)"
+        />
+        <text
+          className="copy"
+          dominantBaseline="central"
+          textAnchor="middle"
+          x="18"
+          y="18"
+        >
+          {value.current}/{value.total}
+        </text>
+      </svg>
+    </span>
+  );
+}
+
+function RegionTotal({
+  side,
+  value,
+  max,
+}: {
+  side: PlayerSide;
+  value: number | null;
+  max: number;
+}) {
+  return (
+    <span className={`ad-region-summary ${side}`}>
+      <strong>{value === null ? "—" : value}</strong>
+      <small className="ad-region-summary-copy">/ {max} tiers complete</small>
+    </span>
   );
 }
 

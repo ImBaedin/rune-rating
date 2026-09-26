@@ -1,5 +1,7 @@
+import { Popover } from "@base-ui/react/popover";
 import { Info } from "lucide-react";
-import { type CSSProperties, useState } from "react";
+import { type CSSProperties, type KeyboardEvent, useId, useState } from "react";
+import { SegmentedControl } from "./primitives/SelectionControls";
 
 const compactNumber = new Intl.NumberFormat("en-US", {
   notation: "compact",
@@ -95,22 +97,16 @@ export function XpActivityHeatmap({
       <div className="xp-chart-heading">
         <strong>XP Activity Heatmap</strong>
         <Info size={12} />
-        <div className="segmented">
-          <button
-            type="button"
-            className={mode === "perPlayer" ? "active" : ""}
-            onClick={() => setMode("perPlayer")}
-          >
-            Per Player
-          </button>
-          <button
-            type="button"
-            className={mode === "combined" ? "active" : ""}
-            onClick={() => setMode("combined")}
-          >
-            Combined
-          </button>
-        </div>
+        <SegmentedControl
+          label="Heatmap display"
+          className="segmented"
+          value={mode}
+          options={[
+            ["perPlayer", "Per Player"],
+            ["combined", "Combined"],
+          ]}
+          onChange={setMode}
+        />
       </div>
       {mode === "combined" ? (
         <HeatmapRow
@@ -137,6 +133,46 @@ export function HeatmapRow({
   values: HeatmapModel;
   accent: "blue" | "green" | "combined";
 }) {
+  const instructionsId = useId();
+  const [activeIndex, setActiveIndex] = useState(values.days.length - 1);
+  const focusedIndex = Math.min(activeIndex, values.days.length - 1);
+  const moveFocus = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number,
+  ) => {
+    let next: number;
+    switch (event.key) {
+      case "ArrowUp":
+        next = index - 1;
+        break;
+      case "ArrowDown":
+        next = index + 1;
+        break;
+      case "ArrowLeft":
+        next = index - 7;
+        break;
+      case "ArrowRight":
+        next = index + 7;
+        break;
+      case "Home":
+        next = event.ctrlKey ? 0 : index % 7;
+        break;
+      case "End":
+        next = event.ctrlKey
+          ? values.days.length - 1
+          : index + Math.floor((values.days.length - 1 - index) / 7) * 7;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    if (next < 0 || next >= values.days.length) return;
+    setActiveIndex(next);
+    event.currentTarget
+      .closest("table")
+      ?.querySelector<HTMLButtonElement>(`button[data-day-index="${next}"]`)
+      ?.focus();
+  };
   const style = {
     "--heatmap-columns": values.columns,
   } as CSSProperties;
@@ -148,22 +184,78 @@ export function HeatmapRow({
           Less <HeatmapLegend accent={accent} /> More
         </span>
       </div>
-      <ul className={`xp-heatmap-grid ${accent}`} style={style}>
-        {values.days.map((cell: HeatmapCell) => (
-          <li
-            className="xp-heatmap-slot"
-            key={cell.id}
-            style={{ gridColumn: cell.column, gridRow: cell.row }}
-          >
-            <button
-              aria-label={`${name}, ${formatDate(cell.date)}, ${formatCompact(cell.gained)} XP gained`}
-              className={`xp-heatmap-cell intensity-${cell.value}`}
-              title={`${name}\n${formatDate(cell.date)}\n${formatCompact(cell.gained)} XP gained`}
-              type="button"
-            />
-          </li>
-        ))}
-      </ul>
+      <p id={instructionsId} className="sr-only">
+        Use up and down arrows to move one day, left and right arrows to move
+        one week. Home and End move to the first or last week in the row;
+        Control+Home and Control+End reach the first or last day. Press Enter
+        for details or Tab to leave the calendar.
+      </p>
+      <Popover.Root<HeatmapCell>>
+        {({ payload }) => (
+          <>
+            <table
+              // biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: ARIA grid on a table preserves native cell semantics and adds roving keyboard focus.
+              role="grid"
+              aria-label={`${name} daily XP`}
+              aria-describedby={instructionsId}
+              aria-rowcount={7}
+              aria-colcount={values.columns}
+              className={`xp-heatmap-grid ${accent}`}
+              style={style}
+            >
+              <tbody className="xp-heatmap-weekdays">
+                {[1, 2, 3, 4, 5, 6, 7].map((weekday) => (
+                  <tr
+                    aria-rowindex={weekday}
+                    className="xp-heatmap-weekday"
+                    key={weekday}
+                  >
+                    {values.days.map((cell, index) =>
+                      cell.row === weekday ? (
+                        <td
+                          aria-colindex={cell.column}
+                          className="xp-heatmap-slot"
+                          key={cell.id}
+                          style={{ gridColumn: cell.column, gridRow: cell.row }}
+                        >
+                          <Popover.Trigger
+                            data-day-index={index}
+                            tabIndex={index === focusedIndex ? 0 : -1}
+                            onFocus={() => setActiveIndex(index)}
+                            onKeyDown={(event) => moveFocus(event, index)}
+                            payload={cell}
+                            aria-label={`${name}, ${formatDate(cell.date)}, ${cell.gained === null ? "No data" : `${formatCompact(cell.gained)} XP gained`}`}
+                            className={`xp-heatmap-cell intensity-${cell.value}`}
+                            openOnHover
+                            delay={250}
+                            closeDelay={120}
+                          />
+                        </td>
+                      ) : null,
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <Popover.Portal>
+              <Popover.Positioner
+                className="rr-popup-positioner"
+                side="top"
+                sideOffset={8}
+              >
+                <Popover.Popup className="rr-popup rr-info-popup rr-heatmap-popup">
+                  <Popover.Title>{name}</Popover.Title>
+                  <Popover.Description>
+                    {payload
+                      ? `${formatDate(payload.date)} · ${payload.gained === null ? "No data" : `${formatCompact(payload.gained)} XP gained`}`
+                      : ""}
+                  </Popover.Description>
+                </Popover.Popup>
+              </Popover.Positioner>
+            </Popover.Portal>
+          </>
+        )}
+      </Popover.Root>
     </div>
   );
 }

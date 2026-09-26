@@ -1,5 +1,4 @@
 import {
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Info,
@@ -57,7 +56,9 @@ export function PageHeader({
   return (
     <header className="rr-page-header">
       <div className="rr-page-header-main">
-        <h1>{title}</h1>
+        <div className="rr-page-heading">
+          <h1>{title}</h1>
+        </div>
         {meta ? <div className="rr-page-header-meta">{meta}</div> : null}
       </div>
       {controls ? (
@@ -69,7 +70,7 @@ export function PageHeader({
 
 export function SourceChip({
   label,
-  status = "ok",
+  status = "muted",
   href,
 }: {
   label: string;
@@ -136,74 +137,7 @@ export function FilterBar({
   );
 }
 
-export function SegmentedControl<T extends string>({
-  label,
-  value,
-  options,
-  onChange,
-  className = "",
-}: {
-  label: string;
-  value: T;
-  options: Array<[T, string]>;
-  onChange: (value: T) => void;
-  className?: string;
-}) {
-  return (
-    <fieldset className={`rr-segmented ${className}`.trim()}>
-      <legend>{label}</legend>
-      {options.map(([option, text]) => (
-        <button
-          type="button"
-          className={value === option ? "active" : ""}
-          onClick={() => onChange(option)}
-          key={option}
-        >
-          {text}
-        </button>
-      ))}
-    </fieldset>
-  );
-}
-
-export function SelectField<T extends string | number>({
-  label,
-  value,
-  options,
-  onChange,
-  compact = false,
-  className = "",
-}: {
-  label: string;
-  value: T;
-  options: Array<[T, string]>;
-  onChange: (value: T) => void;
-  compact?: boolean;
-  className?: string;
-}) {
-  return (
-    <label
-      className={`rr-select-field ${compact ? "compact" : ""} ${className}`.trim()}
-    >
-      <span>{label}</span>
-      <select
-        value={value}
-        onChange={(event) => {
-          const raw = event.target.value;
-          const selected = options.find(([option]) => String(option) === raw);
-          onChange((selected?.[0] ?? raw) as T);
-        }}
-      >
-        {options.map(([option, text]) => (
-          <option value={option} key={String(option)}>
-            {text}
-          </option>
-        ))}
-      </select>
-      <ChevronDown size={14} aria-hidden="true" />
-    </label>
-  );
-}
+export { SegmentedControl, SelectField } from "./primitives/SelectionControls";
 
 export function SearchField({
   value,
@@ -261,8 +195,8 @@ export function ComparisonKpiCard({
   tone = "blue",
   icon,
   isLoading = false,
-  loadingValue = "...",
-  loadingDetail = "Loading current snapshots",
+  loadingValue = "Loading value",
+  loadingDetail = "Loading player data",
   iconPosition = "start",
   children,
   className = "",
@@ -293,10 +227,30 @@ export function ComparisonKpiCard({
         <span className="rr-kpi-label">{label}</span>
         {children ?? (
           <>
-            <strong>{isLoading ? loadingValue : value}</strong>
+            {isLoading ? (
+              <span className="rr-kpi-loading" role="status">
+                <span
+                  className="rr-skeleton rr-skeleton-value"
+                  aria-hidden="true"
+                />
+                <span className="sr-only">{loadingValue}</span>
+              </span>
+            ) : (
+              <strong>{value}</strong>
+            )}
             {detail !== undefined ? (
               <div className="rr-kpi-detail">
-                {isLoading ? loadingDetail : detail}
+                {isLoading ? (
+                  <span className="rr-kpi-loading" role="status">
+                    <span
+                      className="rr-skeleton rr-skeleton-detail"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">{loadingDetail}</span>
+                  </span>
+                ) : (
+                  detail
+                )}
               </div>
             ) : null}
           </>
@@ -316,7 +270,7 @@ export function PairedMetricCard({
   deltaFormatter = formatter,
   isLoading = false,
   invertDelta = false,
-  nullDetail = "Awaiting both snapshots",
+  nullDetail = "Loading player data",
   gapLabel = "gap",
 }: {
   label: string;
@@ -337,13 +291,23 @@ export function PairedMetricCard({
   return (
     <ComparisonKpiCard label={label} tone={tone} className="rr-paired-metric">
       <strong className={tone === "right" ? "green" : "blue"}>
-        {isLoading ? "..." : deltaFormatter(displayedDelta)}
-        <small> {gapLabel}</small>
+        {isLoading ? (
+          <span
+            className="rr-skeleton rr-skeleton-value"
+            role="status"
+            aria-label="Loading comparison"
+          />
+        ) : (
+          <>
+            {deltaFormatter(displayedDelta)}
+            <small> {gapLabel}</small>
+          </>
+        )}
       </strong>
       <PlayerPairLine
         names={names}
-        left={isLoading ? "..." : formatter(left)}
-        right={isLoading ? "..." : formatter(right)}
+        left={isLoading ? "—" : formatter(left)}
+        right={isLoading ? "—" : formatter(right)}
       />
       <em>{delta === null ? nullDetail : names[0]}</em>
     </ComparisonKpiCard>
@@ -524,7 +488,9 @@ export function PairChartTooltip({
               style={entry.color ? { background: entry.color } : undefined}
             />
             {side === "left" ? names[0] : names[1]}
-            <b>{formatter(entry.value)}</b>
+            <b>
+              {entry.value == null ? "Unavailable" : formatter(entry.value)}
+            </b>
           </span>
         );
       })}
