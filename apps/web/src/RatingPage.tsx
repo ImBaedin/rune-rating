@@ -33,8 +33,8 @@ import {
   lookupRsnHashField,
   scoreBucket,
 } from "./analytics";
+import { AppHeader } from "./components/AppHeader";
 import { BaseDialog } from "./components/BaseDialog";
-import { PublicHeader } from "./components/PublicHeader";
 import { ratingDisplayPrestigeStats } from "./features/ratingDisplay";
 import {
   ratingSystemImage,
@@ -489,7 +489,7 @@ function RatingWorkbench({
 
   return (
     <main className="rating-page">
-      <PublicHeader active="rating" />
+      <AppHeader active="rating" />
 
       <section className="rating-intro" id="public-content" tabIndex={-1}>
         <div>

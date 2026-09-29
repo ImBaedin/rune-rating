@@ -4,12 +4,15 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./achievements": "./src/achievements/evaluator.ts",
+    "./achievement-facts": "./src/achievements/facts.ts",
+    "./achievement-version": "./src/achievements/version.json"
   },
   "scripts": {
-    "build": "tsc --noEmit",
+    "build": "bun scripts/compile-achievements.ts --check && tsc --noEmit",
     "lint": "biome check src",
-    "test": "bun test",
+    "test": "bun scripts/compile-achievements.ts --check && bun test",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

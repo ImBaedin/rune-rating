@@ -5,6 +5,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
+import brandMark from "../assets/brand/rune-rating.svg";
 import primitivesCss from "../components/primitives/primitives.css?url";
 import { RouteMessage } from "../components/RouteMessage";
 import scoreboardCss from "../styles/scoreboard.css?url";
@@ -41,7 +42,8 @@ export const Route = createRootRoute({
       { rel: "stylesheet", href: primitivesCss },
       {
         rel: "icon",
-        href: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2317212a'/%3E%3Cpath d='M8 8h12l4 5-6 4 5 7h-6l-5-7H8V8zm5 4v2h6l-2-2h-4z' fill='%23ffffff'/%3E%3C/svg%3E",
+        href: brandMark,
+        type: "image/svg+xml",
       },
     ],
   }),

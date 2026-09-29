@@ -1618,6 +1618,21 @@ describe("collection log comparison", () => {
 
     expect(
       await t.query(getCollectionRefreshPlan, { rsns: ["Summary Only"] }),
+    ).toMatchObject([{ shouldRefresh: true }]);
+    await t.run(async (ctx) => {
+      await ctx.db.insert("categorySnapshots", {
+        key: `${playerId}:collection:detail`,
+        playerId,
+        source: "runeProfile",
+        category: "collection",
+        segment: "detail",
+        fetchedAt,
+        completeness: "complete",
+        data: { type: "collection", obtained: 1, total: 10 },
+      });
+    });
+    expect(
+      await t.query(getCollectionRefreshPlan, { rsns: ["Summary Only"] }),
     ).toMatchObject([{ shouldRefresh: false }]);
   });
 

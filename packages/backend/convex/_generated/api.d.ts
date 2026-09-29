@@ -8,9 +8,13 @@
  * @module
  */
 
+import type * as achievements from "../achievements.js";
 import type * as analytics from "../analytics.js";
 import type * as comparisons from "../comparisons.js";
 import type * as leaderboard from "../leaderboard.js";
+import type * as lib_achievementFreshness from "../lib/achievementFreshness.js";
+import type * as lib_achievementValidators from "../lib/achievementValidators.js";
+import type * as lib_achievements from "../lib/achievements.js";
 import type * as lib_analytics from "../lib/analytics.js";
 import type * as lib_canonicalItems from "../lib/canonicalItems.js";
 import type * as lib_config from "../lib/config.js";
@@ -49,9 +53,13 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  achievements: typeof achievements;
   analytics: typeof analytics;
   comparisons: typeof comparisons;
   leaderboard: typeof leaderboard;
+  "lib/achievementFreshness": typeof lib_achievementFreshness;
+  "lib/achievementValidators": typeof lib_achievementValidators;
+  "lib/achievements": typeof lib_achievements;
   "lib/analytics": typeof lib_analytics;
   "lib/canonicalItems": typeof lib_canonicalItems;
   "lib/config": typeof lib_config;

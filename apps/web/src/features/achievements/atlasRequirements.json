@@ -1,0 +1,6767 @@
+{
+  "rancour": [
+    {
+      "group": "skills",
+      "label": "86 Crafting",
+      "note": "Boosts allowed; the base jewellery route already exceeds this level.",
+      "milestoneId": "route-amulet-of-torture",
+      "wiki": "Amulet_of_rancour"
+    },
+    {
+      "group": "other",
+      "label": "Etched araxyte fang",
+      "note": "Etch the logged fang before assembly.",
+      "wiki": "Etched_araxyte_fang"
+    }
+  ],
+  "rupture": [
+    {
+      "group": "skills",
+      "label": "84 Crafting",
+      "note": "Boosts allowed; the base jewellery route already exceeds this level.",
+      "milestoneId": "route-necklace-of-anguish",
+      "wiki": "Necklace_of_rupture"
+    },
+    {
+      "group": "other",
+      "label": "Etched elder venator fang",
+      "note": "Etch the logged fang before assembly.",
+      "wiki": "Etched_elder_venator_fang"
+    }
+  ],
+  "confliction": [
+    {
+      "group": "skills",
+      "label": "83 Crafting",
+      "note": "Boosts allowed; the base jewellery route already exceeds this level.",
+      "milestoneId": "route-tormented-bracelet",
+      "wiki": "Confliction_gauntlets"
+    },
+    {
+      "group": "skills",
+      "label": "70 Smithing",
+      "note": "Boosts allowed",
+      "milestoneId": "elf-smithing",
+      "wiki": "Confliction_gauntlets"
+    },
+    {
+      "group": "other",
+      "label": "10,000 demon tears",
+      "note": "Consumed when assembling at a bank.",
+      "wiki": "Demon_tear"
+    }
+  ],
+  "diary-ardougne-easy": [
+    {
+      "group": "skills",
+      "label": "5 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "Biohazard",
+      "wiki": "Biohazard",
+      "milestoneId": "biohazard"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    }
+  ],
+  "diary-ardougne-medium": [
+    {
+      "group": "skills",
+      "label": "38 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "39 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "25 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "38 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "49 Crafting",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Ardougne_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "51 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "36 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "31 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "10 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "Enlightened Journey",
+      "wiki": "Enlightened_Journey",
+      "milestoneId": "enlightened"
+    },
+    {
+      "group": "quests",
+      "label": "The Hand in the Sand",
+      "wiki": "The_Hand_in_the_Sand"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    },
+    {
+      "group": "quests",
+      "label": "Tower of Life",
+      "wiki": "Tower_of_Life"
+    },
+    {
+      "group": "quests",
+      "label": "Underground Pass",
+      "wiki": "Underground_Pass",
+      "milestoneId": "underground"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Ardougne_Diary#Medium",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Started Sea Slug",
+      "wiki": "Ardougne_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Watchtower",
+      "wiki": "Ardougne_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "20 quest points",
+      "wiki": "Ardougne_Diary#Medium"
+    }
+  ],
+  "diary-ardougne-hard": [
+    {
+      "group": "skills",
+      "label": "52 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "56 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "68 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "45 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "60 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "72 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "42 Prayer",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Crafting",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "66 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "5 Fletching",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "65 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard",
+      "milestoneId": "elf-farming"
+    },
+    {
+      "group": "skills",
+      "label": "50 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "59 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Enlightened Journey",
+      "wiki": "Enlightened_Journey",
+      "milestoneId": "enlightened"
+    },
+    {
+      "group": "quests",
+      "label": "The Hand in the Sand",
+      "wiki": "The_Hand_in_the_Sand"
+    },
+    {
+      "group": "quests",
+      "label": "Legends' Quest",
+      "wiki": "Legends'_Quest",
+      "milestoneId": "legends"
+    },
+    {
+      "group": "quests",
+      "label": "Monkey Madness I",
+      "wiki": "Monkey_Madness_I",
+      "milestoneId": "monkey-1"
+    },
+    {
+      "group": "quests",
+      "label": "Mourning's End Part II",
+      "wiki": "Mourning's_End_Part_II",
+      "milestoneId": "mourning-2"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    },
+    {
+      "group": "quests",
+      "label": "Tower of Life",
+      "wiki": "Tower_of_Life"
+    },
+    {
+      "group": "quests",
+      "label": "Watchtower",
+      "wiki": "Watchtower"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Ardougne_Diary#Hard",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Started Sea Slug",
+      "wiki": "Ardougne_Diary#Hard",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "107 quest points",
+      "wiki": "Ardougne_Diary#Hard"
+    }
+  ],
+  "diary-ardougne-elite": [
+    {
+      "group": "skills",
+      "label": "52 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "90 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "91 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "45 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "81 Fishing",
+      "note": "Cannot be boosted",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "60 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "82 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "91 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "42 Prayer",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "94 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "69 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "65 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite",
+      "milestoneId": "farming-85"
+    },
+    {
+      "group": "skills",
+      "label": "50 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "59 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Desert Treasure I",
+      "wiki": "Desert_Treasure_I",
+      "milestoneId": "desert-1"
+    },
+    {
+      "group": "quests",
+      "label": "Enlightened Journey",
+      "wiki": "Enlightened_Journey",
+      "milestoneId": "enlightened"
+    },
+    {
+      "group": "quests",
+      "label": "The Hand in the Sand",
+      "wiki": "The_Hand_in_the_Sand"
+    },
+    {
+      "group": "quests",
+      "label": "Haunted Mine",
+      "wiki": "Haunted_Mine"
+    },
+    {
+      "group": "quests",
+      "label": "Legends' Quest",
+      "wiki": "Legends'_Quest",
+      "milestoneId": "legends"
+    },
+    {
+      "group": "quests",
+      "label": "Monkey Madness I",
+      "wiki": "Monkey_Madness_I",
+      "milestoneId": "monkey-1"
+    },
+    {
+      "group": "quests",
+      "label": "Mourning's End Part II",
+      "wiki": "Mourning's_End_Part_II",
+      "milestoneId": "mourning-2"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    },
+    {
+      "group": "quests",
+      "label": "Tower of Life",
+      "wiki": "Tower_of_Life"
+    },
+    {
+      "group": "quests",
+      "label": "Watchtower",
+      "wiki": "Watchtower"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Ardougne_Diary#Elite",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Started Sea Slug",
+      "wiki": "Ardougne_Diary#Elite",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Reach 800,000 Nightmare Zone points (or 400,000 with the hard tier of the Combat Achievements)",
+      "wiki": "Ardougne_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "107 quest points",
+      "wiki": "Ardougne_Diary#Elite"
+    }
+  ],
+  "diary-morytania-easy": [
+    {
+      "group": "skills",
+      "label": "12 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "15 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "15 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "23 Farming",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Morytania_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "20 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "Nature Spirit",
+      "wiki": "Nature_Spirit",
+      "milestoneId": "nature"
+    }
+  ],
+  "diary-morytania-medium": [
+    {
+      "group": "skills",
+      "label": "15 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "42 Agility",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Smithing",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "22 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "40 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "47 Prayer",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "45 Crafting",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "7 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "5 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "45 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "42 Slayer",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "40 Farming",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "29 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "20 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "Cabin Fever",
+      "wiki": "Cabin_Fever"
+    },
+    {
+      "group": "quests",
+      "label": "Dwarf Cannon",
+      "wiki": "Dwarf_Cannon"
+    },
+    {
+      "group": "quests",
+      "label": "Ghosts Ahoy",
+      "wiki": "Ghosts_Ahoy"
+    },
+    {
+      "group": "quests",
+      "label": "Lair of Tarn Razorlor",
+      "wiki": "Lair_of_Tarn_Razorlor"
+    },
+    {
+      "group": "quests",
+      "label": "Started In Aid of the Myreque",
+      "wiki": "Morytania_Diary#Medium",
+      "milestoneId": "myreque-aid",
+      "note": "See the diary guide for the required quest stage."
+    }
+  ],
+  "diary-morytania-hard": [
+    {
+      "group": "skills",
+      "label": "20 Attack",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "55 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "71 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Smithing",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Defence",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "22 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Thieving",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "45 Crafting",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "66 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "10 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "58 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard",
+      "milestoneId": "slayer-58"
+    },
+    {
+      "group": "skills",
+      "label": "53 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "29 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "20 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Desert Treasure I",
+      "wiki": "Desert_Treasure_I",
+      "milestoneId": "desert-1"
+    },
+    {
+      "group": "quests",
+      "label": "Dwarf Cannon",
+      "wiki": "Dwarf_Cannon"
+    },
+    {
+      "group": "quests",
+      "label": "Ghosts Ahoy",
+      "wiki": "Ghosts_Ahoy"
+    },
+    {
+      "group": "quests",
+      "label": "In Aid of the Myreque",
+      "wiki": "In_Aid_of_the_Myreque",
+      "milestoneId": "myreque-aid"
+    },
+    {
+      "group": "quests",
+      "label": "Lair of Tarn Razorlor",
+      "wiki": "Lair_of_Tarn_Razorlor"
+    },
+    {
+      "group": "quests",
+      "label": "Started The Great Brain Robbery",
+      "wiki": "Morytania_Diary#Hard",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Completion of the Knight Waves Training Grounds",
+      "wiki": "Morytania_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "12 quest points",
+      "wiki": "Morytania_Diary#Hard"
+    }
+  ],
+  "diary-morytania-elite": [
+    {
+      "group": "skills",
+      "label": "20 Attack",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "60 Mining",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "76 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "71 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Smithing",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Defence",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "22 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "96 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Cannot be boosted · see diary guide",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "53 Thieving",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "84 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "80 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "83 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "10 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "55 Woodcutting",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite",
+      "milestoneId": "slayer-85"
+    },
+    {
+      "group": "skills",
+      "label": "53 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "29 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "20 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Desert Treasure I",
+      "wiki": "Desert_Treasure_I",
+      "milestoneId": "desert-1"
+    },
+    {
+      "group": "quests",
+      "label": "Dwarf Cannon",
+      "wiki": "Dwarf_Cannon"
+    },
+    {
+      "group": "quests",
+      "label": "Ghosts Ahoy",
+      "wiki": "Ghosts_Ahoy"
+    },
+    {
+      "group": "quests",
+      "label": "In Aid of the Myreque",
+      "wiki": "In_Aid_of_the_Myreque",
+      "milestoneId": "myreque-aid"
+    },
+    {
+      "group": "quests",
+      "label": "Lair of Tarn Razorlor",
+      "wiki": "Lair_of_Tarn_Razorlor"
+    },
+    {
+      "group": "quests",
+      "label": "Lunar Diplomacy",
+      "wiki": "Lunar_Diplomacy",
+      "milestoneId": "lunar-diplomacy"
+    },
+    {
+      "group": "quests",
+      "label": "Shades of Mort'ton",
+      "wiki": "Shades_of_Mort'ton"
+    },
+    {
+      "group": "other",
+      "label": "Access to Barbarian Fishing",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Started The Great Brain Robbery",
+      "wiki": "Morytania_Diary#Elite",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Completion of the Knight Waves Training Grounds",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Open the Barrows chest while wearing a full Barrows set",
+      "wiki": "Morytania_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "12 quest points",
+      "wiki": "Morytania_Diary#Elite"
+    }
+  ],
+  "diary-kandarin-easy": [
+    {
+      "group": "skills",
+      "label": "20 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "16 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "13 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "Started Elemental Workshop I",
+      "wiki": "Kandarin_Diary#Easy",
+      "note": "See the diary guide for the required quest stage."
+    }
+  ],
+  "diary-kandarin-medium": [
+    {
+      "group": "skills",
+      "label": "30 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "22 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "36 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "30 Smithing",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "48 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "46 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "31 Crafting",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "47 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "43 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "45 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Fletching",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "36 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "26 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "Alfred Grimhand's Barcrawl",
+      "wiki": "Alfred_Grimhand's_Barcrawl"
+    },
+    {
+      "group": "quests",
+      "label": "Waterfall Quest",
+      "wiki": "Waterfall_Quest"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Kandarin_Diary#Medium",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Elemental Workshop II",
+      "wiki": "Kandarin_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    }
+  ],
+  "diary-kandarin-hard": [
+    {
+      "group": "skills",
+      "label": "20 Attack",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "30 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "60 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "75 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Defence",
+      "note": "Cannot be boosted",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "48 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "43 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "31 Crafting",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "65 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "56 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "60 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "26 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Construction",
+      "note": "Cannot be boosted",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Alfred Grimhand's Barcrawl",
+      "wiki": "Alfred_Grimhand's_Barcrawl"
+    },
+    {
+      "group": "other",
+      "label": "Access to Barbarian Fishing, Firemaking, and Smithing",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Started Desert Treasure I",
+      "wiki": "Kandarin_Diary#Hard",
+      "milestoneId": "desert-1",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Kandarin_Diary#Hard",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Elemental Workshop II",
+      "wiki": "Kandarin_Diary#Hard",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Completion of the Knight Waves Training Grounds",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Penance Queen and complete Barbarian Assault",
+      "wiki": "Kandarin_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "12 quest points",
+      "wiki": "Kandarin_Diary#Hard"
+    }
+  ],
+  "diary-kandarin-elite": [
+    {
+      "group": "skills",
+      "label": "20 Attack",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "60 Mining",
+      "note": "Cannot be boosted",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "60 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "90 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Defence",
+      "note": "Cannot be boosted",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "86 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "76 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "53 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "80 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite",
+      "milestoneId": "food-sharks"
+    },
+    {
+      "group": "skills",
+      "label": "70 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "87 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite",
+      "milestoneId": "onyx-enchant"
+    },
+    {
+      "group": "skills",
+      "label": "70 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "60 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "79 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Construction",
+      "note": "Cannot be boosted",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Alfred Grimhand's Barcrawl",
+      "wiki": "Alfred_Grimhand's_Barcrawl"
+    },
+    {
+      "group": "quests",
+      "label": "Family Crest",
+      "wiki": "Family_Crest"
+    },
+    {
+      "group": "quests",
+      "label": "Lunar Diplomacy",
+      "wiki": "Lunar_Diplomacy",
+      "milestoneId": "lunar-diplomacy"
+    },
+    {
+      "group": "other",
+      "label": "Access to Barbarian Fishing, Firemaking, Smithing, and Herblore",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Started Desert Treasure I",
+      "wiki": "Kandarin_Diary#Elite",
+      "milestoneId": "desert-1",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Kandarin_Diary#Elite",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Elemental Workshop II",
+      "wiki": "Kandarin_Diary#Elite",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Completion of the Knight Waves Training Grounds",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Penance Queen and acquire level 5 in all Barbarian Assault roles",
+      "wiki": "Kandarin_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "12 quest points",
+      "wiki": "Kandarin_Diary#Elite"
+    }
+  ],
+  "diary-falador-easy": [
+    {
+      "group": "skills",
+      "label": "10 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "5 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "13 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "16 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "Doric's Quest",
+      "wiki": "Doric's_Quest"
+    },
+    {
+      "group": "quests",
+      "label": "The Knight's Sword",
+      "wiki": "The_Knight's_Sword"
+    }
+  ],
+  "diary-falador-medium": [
+    {
+      "group": "skills",
+      "label": "40 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "37 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "42 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "13 Smithing",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "20 Defence",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "19 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "40 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "20 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "10 Prayer",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "40 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "49 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "37 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "30 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "32 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "23 Farming",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "16 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "Doric's Quest",
+      "wiki": "Doric's_Quest"
+    },
+    {
+      "group": "quests",
+      "label": "The Knight's Sword",
+      "wiki": "The_Knight's_Sword"
+    },
+    {
+      "group": "quests",
+      "label": "Recruitment Drive",
+      "wiki": "Recruitment_Drive"
+    },
+    {
+      "group": "quests",
+      "label": "Skippy and the Mogres",
+      "wiki": "Skippy_and_the_Mogres"
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Ratcatchers",
+      "wiki": "Falador_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "12 quest points",
+      "wiki": "Falador_Diary#Medium"
+    }
+  ],
+  "diary-falador-hard": [
+    {
+      "group": "skills",
+      "label": "60 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "37 Strength",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "59 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "13 Smithing",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Defence",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "19 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "52 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "58 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "49 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "37 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "71 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "56 Runecraft",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "72 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "45 Farming",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "16 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Doric's Quest",
+      "wiki": "Doric's_Quest"
+    },
+    {
+      "group": "quests",
+      "label": "Grim Tales",
+      "wiki": "Grim_Tales"
+    },
+    {
+      "group": "quests",
+      "label": "Heroes' Quest",
+      "wiki": "Heroes'_Quest",
+      "milestoneId": "heroes"
+    },
+    {
+      "group": "quests",
+      "label": "The Knight's Sword",
+      "wiki": "The_Knight's_Sword"
+    },
+    {
+      "group": "quests",
+      "label": "Skippy and the Mogres",
+      "wiki": "Skippy_and_the_Mogres"
+    },
+    {
+      "group": "quests",
+      "label": "The Slug Menace",
+      "wiki": "The_Slug_Menace"
+    },
+    {
+      "group": "other",
+      "label": "Access to the Warriors' Guild",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Ratcatchers",
+      "wiki": "Falador_Diary#Hard",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Giant Mole",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "Acquire a prospector helmet from the Motherlode Mine",
+      "wiki": "Falador_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "55 quest points",
+      "wiki": "Falador_Diary#Hard"
+    }
+  ],
+  "diary-falador-elite": [
+    {
+      "group": "skills",
+      "label": "60 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "37 Strength",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "80 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "13 Smithing",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Defence",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "19 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "81 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite",
+      "milestoneId": "herblore-81"
+    },
+    {
+      "group": "skills",
+      "label": "53 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "58 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "53 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "49 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "37 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "75 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "88 Runecraft",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "72 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "91 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "16 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Doric's Quest",
+      "wiki": "Doric's_Quest"
+    },
+    {
+      "group": "quests",
+      "label": "Grim Tales",
+      "wiki": "Grim_Tales"
+    },
+    {
+      "group": "quests",
+      "label": "Heroes' Quest",
+      "wiki": "Heroes'_Quest",
+      "milestoneId": "heroes"
+    },
+    {
+      "group": "quests",
+      "label": "The Knight's Sword",
+      "wiki": "The_Knight's_Sword"
+    },
+    {
+      "group": "quests",
+      "label": "Skippy and the Mogres",
+      "wiki": "Skippy_and_the_Mogres"
+    },
+    {
+      "group": "quests",
+      "label": "The Slug Menace",
+      "wiki": "The_Slug_Menace"
+    },
+    {
+      "group": "other",
+      "label": "Access to the Warriors' Guild",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Ratcatchers",
+      "wiki": "Falador_Diary#Elite",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Giant Mole",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Reach the rank of White Knight Master",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Acquire a prospector helmet from the Motherlode Mine",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Completion of all quests, discovery of all music tracks, or level 99 in any skill",
+      "wiki": "Falador_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "55 quest points",
+      "wiki": "Falador_Diary#Elite"
+    }
+  ],
+  "diary-varrock-easy": [
+    {
+      "group": "skills",
+      "label": "15 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "13 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "20 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "5 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "8 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "9 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    },
+    {
+      "group": "other",
+      "label": "Reach 50 kudos with the Varrock Museum",
+      "wiki": "Varrock_Diary#Easy"
+    }
+  ],
+  "diary-varrock-medium": [
+    {
+      "group": "skills",
+      "label": "15 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "30 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "10 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "20 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "25 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "36 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "40 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "25 Magic",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "9 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "30 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "40 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "The Dig Site",
+      "wiki": "The_Dig_Site",
+      "milestoneId": "digsite"
+    },
+    {
+      "group": "quests",
+      "label": "Enlightened Journey",
+      "wiki": "Enlightened_Journey",
+      "milestoneId": "enlightened"
+    },
+    {
+      "group": "quests",
+      "label": "Garden of Tranquillity",
+      "wiki": "Garden_of_Tranquillity"
+    },
+    {
+      "group": "quests",
+      "label": "Gertrude's Cat",
+      "wiki": "Gertrude's_Cat"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    },
+    {
+      "group": "quests",
+      "label": "A Soul's Bane",
+      "wiki": "A_Soul's_Bane"
+    },
+    {
+      "group": "quests",
+      "label": "Tree Gnome Village",
+      "wiki": "Tree_Gnome_Village",
+      "milestoneId": "tree-village"
+    },
+    {
+      "group": "other",
+      "label": "Own a Jagex Account, or set up the older RuneScape Authenticator",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "other",
+      "label": "Reach 50 kudos with the Varrock Museum",
+      "wiki": "Varrock_Diary#Medium"
+    },
+    {
+      "group": "other",
+      "label": "32 quest points",
+      "wiki": "Varrock_Diary#Medium"
+    }
+  ],
+  "diary-varrock-hard": [
+    {
+      "group": "skills",
+      "label": "15 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "51 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "10 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "20 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "20 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "52 Prayer",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "36 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "60 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "54 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "10 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "60 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "9 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "68 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "66 Hunter",
+      "note": "Cannot be boosted · see diary guide",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Desert Treasure I",
+      "wiki": "Desert_Treasure_I",
+      "milestoneId": "desert-1"
+    },
+    {
+      "group": "quests",
+      "label": "Enlightened Journey",
+      "wiki": "Enlightened_Journey",
+      "milestoneId": "enlightened"
+    },
+    {
+      "group": "quests",
+      "label": "Garden of Tranquillity",
+      "wiki": "Garden_of_Tranquillity"
+    },
+    {
+      "group": "quests",
+      "label": "Gertrude's Cat",
+      "wiki": "Gertrude's_Cat"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    },
+    {
+      "group": "quests",
+      "label": "A Soul's Bane",
+      "wiki": "A_Soul's_Bane"
+    },
+    {
+      "group": "quests",
+      "label": "Tree Gnome Village",
+      "wiki": "Tree_Gnome_Village",
+      "milestoneId": "tree-village"
+    },
+    {
+      "group": "other",
+      "label": "Own a Jagex Account, or set up the older RuneScape Authenticator",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "Reach 153 kudos with the Varrock Museum",
+      "wiki": "Varrock_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "32 quest points",
+      "wiki": "Varrock_Diary#Hard"
+    }
+  ],
+  "diary-varrock-elite": [
+    {
+      "group": "skills",
+      "label": "60 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "51 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "89 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Defence",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "90 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite",
+      "milestoneId": "herblore-90"
+    },
+    {
+      "group": "skills",
+      "label": "20 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "53 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "95 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "52 Prayer",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "61 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite",
+      "milestoneId": "crafting-61"
+    },
+    {
+      "group": "skills",
+      "label": "60 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "86 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "81 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "60 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "78 Runecraft",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "68 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "66 Hunter",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Desert Treasure I",
+      "wiki": "Desert_Treasure_I",
+      "milestoneId": "desert-1"
+    },
+    {
+      "group": "quests",
+      "label": "Dream Mentor",
+      "wiki": "Dream_Mentor",
+      "milestoneId": "dream-mentor"
+    },
+    {
+      "group": "quests",
+      "label": "Enlightened Journey",
+      "wiki": "Enlightened_Journey",
+      "milestoneId": "enlightened"
+    },
+    {
+      "group": "quests",
+      "label": "Garden of Tranquillity",
+      "wiki": "Garden_of_Tranquillity"
+    },
+    {
+      "group": "quests",
+      "label": "Gertrude's Cat",
+      "wiki": "Gertrude's_Cat"
+    },
+    {
+      "group": "quests",
+      "label": "A Soul's Bane",
+      "wiki": "A_Soul's_Bane"
+    },
+    {
+      "group": "quests",
+      "label": "Tree Gnome Village",
+      "wiki": "Tree_Gnome_Village",
+      "milestoneId": "tree-village"
+    },
+    {
+      "group": "other",
+      "label": "Own a Jagex Account, or set up the older RuneScape Authenticator",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Reach 153 kudos with the Varrock Museum",
+      "wiki": "Varrock_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "32 quest points",
+      "wiki": "Varrock_Diary#Elite"
+    }
+  ],
+  "diary-karamja-easy": [
+    {
+      "group": "skills",
+      "label": "40 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "15 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Easy"
+    }
+  ],
+  "diary-karamja-medium": [
+    {
+      "group": "skills",
+      "label": "40 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "32 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "3 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "65 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "16 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "20 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "27 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "41 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "The Grand Tree",
+      "wiki": "The_Grand_Tree",
+      "milestoneId": "grand-tree"
+    },
+    {
+      "group": "quests",
+      "label": "Shilo Village",
+      "wiki": "Shilo_Village"
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Dragon Slayer I",
+      "wiki": "Karamja_Diary#Medium",
+      "milestoneId": "dragon-1",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Tai Bwo Wannai Trio",
+      "wiki": "Karamja_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Reach 100% Tai Bwo Wannai Cleanup favour",
+      "wiki": "Karamja_Diary#Medium"
+    },
+    {
+      "group": "other",
+      "label": "32 quest points",
+      "wiki": "Karamja_Diary#Medium"
+    }
+  ],
+  "diary-karamja-hard": [
+    {
+      "group": "skills",
+      "label": "52 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Smithing",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "25 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "65 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "42 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "59 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "44 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Slayer",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "27 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "41 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "100 Combat",
+      "note": "Cannot be boosted · see diary guide",
+      "wiki": "Karamja_Diary#Hard",
+      "milestoneId": "combat-100"
+    },
+    {
+      "group": "quests",
+      "label": "The Grand Tree",
+      "wiki": "The_Grand_Tree",
+      "milestoneId": "grand-tree"
+    },
+    {
+      "group": "quests",
+      "label": "Tai Bwo Wannai Trio",
+      "wiki": "Tai_Bwo_Wannai_Trio"
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Legends' Quest",
+      "wiki": "Karamja_Diary#Hard",
+      "milestoneId": "legends",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Defeat a Ket-Zek in the TzHaar Fight Cave on the 31st wave",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "Reach 100% Tai Bwo Wannai Cleanup favour",
+      "wiki": "Karamja_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "107 quest points",
+      "wiki": "Karamja_Diary#Hard"
+    }
+  ],
+  "diary-karamja-elite": [
+    {
+      "group": "skills",
+      "label": "52 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "53 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Smithing",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "87 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "65 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "42 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "53 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "59 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "91 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Slayer",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "72 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "41 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "100 Combat",
+      "note": "Cannot be boosted · see diary guide",
+      "wiki": "Karamja_Diary#Elite",
+      "milestoneId": "combat-100"
+    },
+    {
+      "group": "quests",
+      "label": "The Grand Tree",
+      "wiki": "The_Grand_Tree",
+      "milestoneId": "grand-tree"
+    },
+    {
+      "group": "quests",
+      "label": "Tai Bwo Wannai Trio",
+      "wiki": "Tai_Bwo_Wannai_Trio"
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Legends' Quest",
+      "wiki": "Karamja_Diary#Elite",
+      "milestoneId": "legends",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Completion of the TzHaar Fight Cave",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Reach 100% Tai Bwo Wannai Cleanup favour",
+      "wiki": "Karamja_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "107 quest points",
+      "wiki": "Karamja_Diary#Elite"
+    }
+  ],
+  "diary-fremennik-easy": [
+    {
+      "group": "skills",
+      "label": "20 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "20 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "5 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "23 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "15 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "15 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "11 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "The Fremennik Trials",
+      "wiki": "The_Fremennik_Trials",
+      "milestoneId": "fremennik-trials"
+    },
+    {
+      "group": "quests",
+      "label": "Started The Giant Dwarf",
+      "wiki": "Fremennik_Diary#Easy",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Started Troll Stronghold",
+      "wiki": "Fremennik_Diary#Easy",
+      "note": "See the diary guide for the required quest stage."
+    }
+  ],
+  "diary-fremennik-medium": [
+    {
+      "group": "skills",
+      "label": "40 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "35 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "30 Defence",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "42 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "31 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "40 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "47 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "37 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "35 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "Between a Rock...",
+      "wiki": "Between_a_Rock..."
+    },
+    {
+      "group": "quests",
+      "label": "Eagles' Peak",
+      "wiki": "Eagles'_Peak",
+      "milestoneId": "eagles"
+    },
+    {
+      "group": "quests",
+      "label": "Horror from the Deep",
+      "wiki": "Horror_from_the_Deep"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Fremennik_Diary#Medium",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Started The Giant Dwarf",
+      "wiki": "Fremennik_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Started Troll Stronghold",
+      "wiki": "Fremennik_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Olaf's Quest",
+      "wiki": "Fremennik_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    }
+  ],
+  "diary-fremennik-hard": [
+    {
+      "group": "skills",
+      "label": "70 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard",
+      "milestoneId": "elf-mining"
+    },
+    {
+      "group": "skills",
+      "label": "35 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "60 Smithing",
+      "note": "Cannot be boosted",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Defence",
+      "note": "Cannot be boosted",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "66 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "75 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "61 Crafting",
+      "note": "Cannot be boosted",
+      "wiki": "Fremennik_Diary#Hard",
+      "milestoneId": "crafting-61"
+    },
+    {
+      "group": "skills",
+      "label": "49 Firemaking",
+      "note": "Cannot be boosted",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "72 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "56 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "47 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "37 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "55 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Between a Rock...",
+      "wiki": "Between_a_Rock..."
+    },
+    {
+      "group": "quests",
+      "label": "Eadgar's Ruse",
+      "wiki": "Eadgar's_Ruse"
+    },
+    {
+      "group": "quests",
+      "label": "Eagles' Peak",
+      "wiki": "Eagles'_Peak",
+      "milestoneId": "eagles"
+    },
+    {
+      "group": "quests",
+      "label": "Horror from the Deep",
+      "wiki": "Horror_from_the_Deep"
+    },
+    {
+      "group": "quests",
+      "label": "Lunar Diplomacy",
+      "wiki": "Lunar_Diplomacy",
+      "milestoneId": "lunar-diplomacy"
+    },
+    {
+      "group": "quests",
+      "label": "Throne of Miscellania",
+      "wiki": "Throne_of_Miscellania"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Fremennik_Diary#Hard",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Started The Giant Dwarf",
+      "wiki": "Fremennik_Diary#Hard",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of The Fremennik Isles",
+      "wiki": "Fremennik_Diary#Hard",
+      "milestoneId": "fremennik-isles",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Olaf's Quest",
+      "wiki": "Fremennik_Diary#Hard",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "55 quest points",
+      "wiki": "Fremennik_Diary#Hard"
+    }
+  ],
+  "diary-fremennik-elite": [
+    {
+      "group": "skills",
+      "label": "70 Hitpoints",
+      "note": "Cannot be boosted",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite",
+      "milestoneId": "elf-mining"
+    },
+    {
+      "group": "skills",
+      "label": "70 Strength",
+      "note": "Cannot be boosted",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "80 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "60 Smithing",
+      "note": "Cannot be boosted",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Defence",
+      "note": "Cannot be boosted",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "66 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "53 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "75 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "53 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "80 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite",
+      "milestoneId": "glory-craft"
+    },
+    {
+      "group": "skills",
+      "label": "49 Firemaking",
+      "note": "Cannot be boosted",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "72 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "56 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "82 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "83 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "37 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "55 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Between a Rock...",
+      "wiki": "Between_a_Rock..."
+    },
+    {
+      "group": "quests",
+      "label": "Eadgar's Ruse",
+      "wiki": "Eadgar's_Ruse"
+    },
+    {
+      "group": "quests",
+      "label": "Eagles' Peak",
+      "wiki": "Eagles'_Peak",
+      "milestoneId": "eagles"
+    },
+    {
+      "group": "quests",
+      "label": "Horror from the Deep",
+      "wiki": "Horror_from_the_Deep"
+    },
+    {
+      "group": "quests",
+      "label": "Lunar Diplomacy",
+      "wiki": "Lunar_Diplomacy",
+      "milestoneId": "lunar-diplomacy"
+    },
+    {
+      "group": "quests",
+      "label": "Throne of Miscellania",
+      "wiki": "Throne_of_Miscellania"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Fremennik_Diary#Elite",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Started The Giant Dwarf",
+      "wiki": "Fremennik_Diary#Elite",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Olaf's Quest",
+      "wiki": "Fremennik_Diary#Elite",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Defeat each of the Dagannoth Kings",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Defeat all God Wars Dungeon generals, except Nex",
+      "wiki": "Fremennik_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "55 quest points",
+      "wiki": "Fremennik_Diary#Elite"
+    }
+  ],
+  "diary-desert-easy": [
+    {
+      "group": "skills",
+      "label": "21 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "5 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "Started Icthlarin's Little Helper",
+      "wiki": "Desert_Diary#Easy",
+      "note": "See the diary guide for the required quest stage."
+    }
+  ],
+  "diary-desert-medium": [
+    {
+      "group": "skills",
+      "label": "37 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "30 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "36 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "37 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "37 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "43 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Medium",
+      "milestoneId": "prayer-43"
+    },
+    {
+      "group": "skills",
+      "label": "50 Crafting",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "45 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "39 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "35 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "22 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "20 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "47 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "Eagles' Peak",
+      "wiki": "Eagles'_Peak",
+      "milestoneId": "eagles"
+    },
+    {
+      "group": "quests",
+      "label": "Enakhra's Lament",
+      "wiki": "Enakhra's_Lament"
+    },
+    {
+      "group": "quests",
+      "label": "The Golem",
+      "wiki": "The_Golem"
+    },
+    {
+      "group": "quests",
+      "label": "Spirits of the Elid",
+      "wiki": "Spirits_of_the_Elid"
+    },
+    {
+      "group": "quests",
+      "label": "Started Icthlarin's Little Helper",
+      "wiki": "Desert_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    }
+  ],
+  "diary-desert-hard": [
+    {
+      "group": "skills",
+      "label": "50 Attack",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "60 Mining",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard",
+      "milestoneId": "elf-agility"
+    },
+    {
+      "group": "skills",
+      "label": "68 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Defence",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "36 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "65 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "43 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Hard",
+      "milestoneId": "prayer-43"
+    },
+    {
+      "group": "skills",
+      "label": "61 Crafting",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Hard",
+      "milestoneId": "crafting-61"
+    },
+    {
+      "group": "skills",
+      "label": "60 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "68 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "10 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "55 Woodcutting",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "65 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "20 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "47 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "85 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Contact!",
+      "wiki": "Contact!"
+    },
+    {
+      "group": "quests",
+      "label": "Desert Treasure I",
+      "wiki": "Desert_Treasure_I",
+      "milestoneId": "desert-1"
+    },
+    {
+      "group": "quests",
+      "label": "Dream Mentor",
+      "wiki": "Dream_Mentor",
+      "milestoneId": "dream-mentor"
+    },
+    {
+      "group": "quests",
+      "label": "Eagles' Peak",
+      "wiki": "Eagles'_Peak",
+      "milestoneId": "eagles"
+    },
+    {
+      "group": "quests",
+      "label": "Enakhra's Lament",
+      "wiki": "Enakhra's_Lament"
+    },
+    {
+      "group": "quests",
+      "label": "The Feud",
+      "wiki": "The_Feud"
+    },
+    {
+      "group": "quests",
+      "label": "The Golem",
+      "wiki": "The_Golem"
+    },
+    {
+      "group": "quests",
+      "label": "Spirits of the Elid",
+      "wiki": "Spirits_of_the_Elid"
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Kalphite Queen",
+      "wiki": "Desert_Diary#Hard"
+    }
+  ],
+  "diary-desert-elite": [
+    {
+      "group": "skills",
+      "label": "50 Attack",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "60 Mining",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite",
+      "milestoneId": "elf-agility"
+    },
+    {
+      "group": "skills",
+      "label": "68 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Defence",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "36 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "91 Thieving",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "61 Crafting",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Elite",
+      "milestoneId": "crafting-61"
+    },
+    {
+      "group": "skills",
+      "label": "60 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "94 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "95 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "55 Woodcutting",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "65 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "78 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "47 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Contact!",
+      "wiki": "Contact!"
+    },
+    {
+      "group": "quests",
+      "label": "Desert Treasure I",
+      "wiki": "Desert_Treasure_I",
+      "milestoneId": "desert-1"
+    },
+    {
+      "group": "quests",
+      "label": "Dream Mentor",
+      "wiki": "Dream_Mentor",
+      "milestoneId": "dream-mentor"
+    },
+    {
+      "group": "quests",
+      "label": "Eagles' Peak",
+      "wiki": "Eagles'_Peak",
+      "milestoneId": "eagles"
+    },
+    {
+      "group": "quests",
+      "label": "Enakhra's Lament",
+      "wiki": "Enakhra's_Lament"
+    },
+    {
+      "group": "quests",
+      "label": "The Feud",
+      "wiki": "The_Feud"
+    },
+    {
+      "group": "quests",
+      "label": "The Golem",
+      "wiki": "The_Golem"
+    },
+    {
+      "group": "quests",
+      "label": "Spirits of the Elid",
+      "wiki": "Spirits_of_the_Elid"
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Kalphite Queen and obtain her (tattered) head",
+      "wiki": "Desert_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Open the Grand Gold Chest in the final room of Pyramid Plunder",
+      "wiki": "Desert_Diary#Elite"
+    }
+  ],
+  "diary-western-easy": [
+    {
+      "group": "skills",
+      "label": "15 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "30 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Western_Provinces_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "30 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Easy",
+      "milestoneId": "food-karambwan"
+    },
+    {
+      "group": "skills",
+      "label": "20 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "9 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "40 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Western_Provinces_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "Big Chompy Bird Hunting",
+      "wiki": "Big_Chompy_Bird_Hunting"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    },
+    {
+      "group": "other",
+      "label": "Reach 30 chompy or jubbly bird kills",
+      "wiki": "Western_Provinces_Diary#Easy"
+    }
+  ],
+  "diary-western-medium": [
+    {
+      "group": "skills",
+      "label": "40 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "37 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "30 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "18 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "46 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "30 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "42 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "25 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "35 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "46 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "20 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "35 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "5 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "31 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "70 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Western_Provinces_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "Big Chompy Bird Hunting",
+      "wiki": "Big_Chompy_Bird_Hunting"
+    },
+    {
+      "group": "quests",
+      "label": "Eagles' Peak",
+      "wiki": "Eagles'_Peak",
+      "milestoneId": "eagles"
+    },
+    {
+      "group": "quests",
+      "label": "The Eyes of Glouphrie",
+      "wiki": "The_Eyes_of_Glouphrie"
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Monkey Madness I",
+      "wiki": "Western_Provinces_Diary#Medium",
+      "milestoneId": "monkey-1",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of One Small Favour",
+      "wiki": "Western_Provinces_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Reach 125 chompy or jubbly bird kills",
+      "wiki": "Western_Provinces_Diary#Medium"
+    }
+  ],
+  "diary-western-hard": [
+    {
+      "group": "skills",
+      "label": "70 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard",
+      "milestoneId": "elf-mining"
+    },
+    {
+      "group": "skills",
+      "label": "56 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "45 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "18 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "62 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "75 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "66 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "20 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "68 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "65 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "69 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "100 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Western_Provinces_Diary#Hard",
+      "milestoneId": "combat-100"
+    },
+    {
+      "group": "quests",
+      "label": "Eagles' Peak",
+      "wiki": "Eagles'_Peak",
+      "milestoneId": "eagles"
+    },
+    {
+      "group": "quests",
+      "label": "The Eyes of Glouphrie",
+      "wiki": "The_Eyes_of_Glouphrie"
+    },
+    {
+      "group": "quests",
+      "label": "Recipe for Disaster/Freeing King Awowogei subquest",
+      "wiki": "Recipe_for_Disaster/Freeing_King_Awowogei"
+    },
+    {
+      "group": "quests",
+      "label": "Swan Song",
+      "wiki": "Swan_Song"
+    },
+    {
+      "group": "quests",
+      "label": "Started Mourning's End Part I",
+      "wiki": "Western_Provinces_Diary#Hard",
+      "milestoneId": "mourning-1",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Defeat Zulrah",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "Reach 300 chompy or jubbly bird kills",
+      "wiki": "Western_Provinces_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "100 quest points",
+      "wiki": "Western_Provinces_Diary#Hard"
+    }
+  ],
+  "diary-western-elite": [
+    {
+      "group": "skills",
+      "label": "42 Attack",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "42 Hitpoints",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite",
+      "milestoneId": "elf-mining"
+    },
+    {
+      "group": "skills",
+      "label": "42 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "45 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "42 Defence",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "18 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "62 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "22 Prayer",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "66 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "93 Slayer",
+      "note": "Cannot be boosted",
+      "wiki": "Western_Provinces_Diary#Elite",
+      "milestoneId": "slayer-93"
+    },
+    {
+      "group": "skills",
+      "label": "75 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "65 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "69 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "100 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Western_Provinces_Diary#Elite",
+      "milestoneId": "combat-100"
+    },
+    {
+      "group": "quests",
+      "label": "Eagles' Peak",
+      "wiki": "Eagles'_Peak",
+      "milestoneId": "eagles"
+    },
+    {
+      "group": "quests",
+      "label": "The Eyes of Glouphrie",
+      "wiki": "The_Eyes_of_Glouphrie"
+    },
+    {
+      "group": "quests",
+      "label": "Recipe for Disaster/Freeing King Awowogei subquest",
+      "wiki": "Recipe_for_Disaster/Freeing_King_Awowogei"
+    },
+    {
+      "group": "quests",
+      "label": "Swan Song",
+      "wiki": "Swan_Song"
+    },
+    {
+      "group": "quests",
+      "label": "Started Mourning's End Part I",
+      "wiki": "Western_Provinces_Diary#Elite",
+      "milestoneId": "mourning-1",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Thermonuclear smoke devil",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Defeat Zulrah",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Reach 1,000 chompy or jubbly bird kills",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Acquire and wear any complete void set",
+      "wiki": "Western_Provinces_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "100 quest points",
+      "wiki": "Western_Provinces_Diary#Elite"
+    }
+  ],
+  "diary-wilderness-easy": [
+    {
+      "group": "skills",
+      "label": "15 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "15 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "21 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "Enter the Abyss",
+      "wiki": "Enter_the_Abyss"
+    }
+  ],
+  "diary-wilderness-medium": [
+    {
+      "group": "skills",
+      "label": "55 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "52 Agility",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Wilderness_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "60 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "61 Woodcutting",
+      "note": "Cannot be boosted",
+      "wiki": "Wilderness_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "Enter the Abyss",
+      "wiki": "Enter_the_Abyss"
+    },
+    {
+      "group": "other",
+      "label": "Access to the Wilderness God Wars Dungeon",
+      "wiki": "Wilderness_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Between a Rock...",
+      "wiki": "Wilderness_Diary#Medium",
+      "note": "See the diary guide for the required quest stage."
+    }
+  ],
+  "diary-wilderness-hard": [
+    {
+      "group": "skills",
+      "label": "55 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "64 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "75 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "66 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "61 Woodcutting",
+      "note": "Cannot be boosted",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "68 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "67 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Death Plateau",
+      "wiki": "Death_Plateau"
+    },
+    {
+      "group": "quests",
+      "label": "Enter the Abyss",
+      "wiki": "Enter_the_Abyss"
+    },
+    {
+      "group": "quests",
+      "label": "Mage Arena I",
+      "wiki": "Mage_Arena_I"
+    },
+    {
+      "group": "other",
+      "label": "Access to at least one of the three god spells",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "Access to the Wilderness God Wars Dungeon",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Between a Rock...",
+      "wiki": "Wilderness_Diary#Hard",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Chaos elemental",
+      "wiki": "Wilderness_Diary#Hard"
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Crazy archaeologist, Chaos fanatic, and Scorpia",
+      "wiki": "Wilderness_Diary#Hard"
+    }
+  ],
+  "diary-wilderness-elite": [
+    {
+      "group": "skills",
+      "label": "85 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "64 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "90 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "10 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "84 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "90 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "75 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "96 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "10 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "75 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "83 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "67 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Death Plateau",
+      "wiki": "Death_Plateau"
+    },
+    {
+      "group": "quests",
+      "label": "Desert Treasure I",
+      "wiki": "Desert_Treasure_I",
+      "milestoneId": "desert-1"
+    },
+    {
+      "group": "quests",
+      "label": "Enter the Abyss",
+      "wiki": "Enter_the_Abyss"
+    },
+    {
+      "group": "quests",
+      "label": "Mage Arena I",
+      "wiki": "Mage_Arena_I"
+    },
+    {
+      "group": "other",
+      "label": "Access to at least one of the three god spells",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Access to the Wilderness God Wars Dungeon",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Between a Rock...",
+      "wiki": "Wilderness_Diary#Elite",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Defeat Callisto/Artio, Venenatis/Spindel, and Vet'ion/Calvar'ion",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Chaos elemental",
+      "wiki": "Wilderness_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Defeat the Crazy archaeologist, Chaos fanatic, and Scorpia",
+      "wiki": "Wilderness_Diary#Elite"
+    }
+  ],
+  "staffless": [
+    {
+      "group": "skills",
+      "label": "50 Attack",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Hitpoints",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "72 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Strength",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Agility",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite",
+      "milestoneId": "elf-agility"
+    },
+    {
+      "group": "skills",
+      "label": "88 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "65 Defence",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Herblore",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite",
+      "milestoneId": "elf-herblore"
+    },
+    {
+      "group": "skills",
+      "label": "62 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "78 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "72 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "52 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Crafting",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "75 Firemaking",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "75 Magic",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Fletching",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "75 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "60 Runecraft with 3 Raiments pieces, or 76",
+      "note": "The 76 route allows boosting; see the diary guide for outfit alternatives.",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "74 Slayer",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Farming",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite",
+      "milestoneId": "elf-farming"
+    },
+    {
+      "group": "skills",
+      "label": "70 Construction",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite",
+      "milestoneId": "elf-construction"
+    },
+    {
+      "group": "skills",
+      "label": "70 Hunter",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite",
+      "milestoneId": "elf-hunter"
+    },
+    {
+      "group": "skills",
+      "label": "62 Sailing",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "All quests",
+      "wiki": "Quests/List",
+      "milestoneId": "quest-cape"
+    },
+    {
+      "group": "other",
+      "label": "Access to the Bones to Peaches spell from the Mage Training Arena",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    }
+  ],
+  "diary-lumbridge-easy": [
+    {
+      "group": "skills",
+      "label": "15 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "15 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "15 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "15 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "5 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "7 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "Cook's Assistant",
+      "wiki": "Cook's_Assistant",
+      "milestoneId": "cooks-assistant"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    }
+  ],
+  "diary-lumbridge-medium": [
+    {
+      "group": "skills",
+      "label": "19 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "15 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "20 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "30 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "38 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "38 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "15 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "31 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "36 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "23 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "18 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "42 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "70 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "Animal Magnetism",
+      "wiki": "Animal_Magnetism"
+    },
+    {
+      "group": "quests",
+      "label": "Cook's Assistant",
+      "wiki": "Cook's_Assistant",
+      "milestoneId": "cooks-assistant"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Medium",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    }
+  ],
+  "diary-lumbridge-hard": [
+    {
+      "group": "skills",
+      "label": "50 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "19 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "46 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "40 Smithing",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "25 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "50 Ranged",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "52 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "65 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "60 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "10 Fletching",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "57 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "59 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "18 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "63 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "42 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Animal Magnetism",
+      "wiki": "Animal_Magnetism"
+    },
+    {
+      "group": "quests",
+      "label": "Another Slice of H.A.M.",
+      "wiki": "Another_Slice_of_H.A.M."
+    },
+    {
+      "group": "quests",
+      "label": "Recipe for Disaster fully completed",
+      "wiki": "Recipe_for_Disaster",
+      "milestoneId": "rfd-final"
+    },
+    {
+      "group": "quests",
+      "label": "Rune Mysteries",
+      "wiki": "Rune_Mysteries"
+    },
+    {
+      "group": "quests",
+      "label": "Tears of Guthix",
+      "wiki": "Tears_of_Guthix"
+    },
+    {
+      "group": "other",
+      "label": "Access to the Bones to Peaches spell from the Mage Training Arena",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "175 quest points",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Hard",
+      "milestoneId": "rfd-qp"
+    }
+  ],
+  "diary-lumbridge-elite": [
+    {
+      "group": "skills",
+      "label": "50 Attack",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "50 Hitpoints",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "72 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Strength",
+      "note": "Boosts may apply · see diary guide",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Agility",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite",
+      "milestoneId": "elf-agility"
+    },
+    {
+      "group": "skills",
+      "label": "88 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "65 Defence",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Herblore",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite",
+      "milestoneId": "elf-herblore"
+    },
+    {
+      "group": "skills",
+      "label": "62 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Ranged",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "78 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "72 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "52 Prayer",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Crafting",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "75 Firemaking",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "75 Magic",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Fletching",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "75 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "60 Runecraft with 3 Raiments pieces, or 76",
+      "note": "The 76 route allows boosting; see the diary guide for outfit alternatives.",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "74 Slayer",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Farming",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite",
+      "milestoneId": "elf-farming"
+    },
+    {
+      "group": "skills",
+      "label": "70 Construction",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite",
+      "milestoneId": "elf-construction"
+    },
+    {
+      "group": "skills",
+      "label": "70 Hunter",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite",
+      "milestoneId": "elf-hunter"
+    },
+    {
+      "group": "skills",
+      "label": "62 Sailing",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "All quests",
+      "wiki": "Quests/List",
+      "milestoneId": "quest-cape"
+    },
+    {
+      "group": "other",
+      "label": "Access to the Bones to Peaches spell from the Mage Training Arena",
+      "wiki": "Lumbridge_%26_Draynor_Diary#Elite"
+    }
+  ],
+  "diary-kourend-easy": [
+    {
+      "group": "skills",
+      "label": "15 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "12 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "20 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "25 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Easy"
+    },
+    {
+      "group": "skills",
+      "label": "25 Construction",
+      "note": "Cannot be boosted",
+      "wiki": "Kourend_%26_Kebos_Diary#Easy"
+    },
+    {
+      "group": "quests",
+      "label": "Druidic Ritual",
+      "wiki": "Druidic_Ritual"
+    }
+  ],
+  "diary-kourend-medium": [
+    {
+      "group": "skills",
+      "label": "42 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "16 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "49 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "12 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "43 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "25 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "31 Crafting",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "50 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "45 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "30 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "skills",
+      "label": "53 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium"
+    },
+    {
+      "group": "quests",
+      "label": "The Ascent of Arceuus",
+      "wiki": "The_Ascent_of_Arceuus",
+      "milestoneId": "ascent"
+    },
+    {
+      "group": "quests",
+      "label": "The Depths of Despair",
+      "wiki": "The_Depths_of_Despair",
+      "milestoneId": "depths"
+    },
+    {
+      "group": "quests",
+      "label": "The Forsaken Tower",
+      "wiki": "The_Forsaken_Tower",
+      "milestoneId": "forsaken"
+    },
+    {
+      "group": "quests",
+      "label": "The Queen of Thieves",
+      "wiki": "The_Queen_of_Thieves",
+      "milestoneId": "queen-thieves"
+    },
+    {
+      "group": "quests",
+      "label": "Tale of the Righteous",
+      "wiki": "Tale_of_the_Righteous",
+      "milestoneId": "righteous"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Eagles' Peak",
+      "wiki": "Kourend_%26_Kebos_Diary#Medium",
+      "milestoneId": "eagles",
+      "note": "See the diary guide for the required quest stage."
+    }
+  ],
+  "diary-kourend-hard": [
+    {
+      "group": "skills",
+      "label": "65 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "16 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "49 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "70 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard",
+      "milestoneId": "elf-smithing"
+    },
+    {
+      "group": "skills",
+      "label": "40 Defence",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "31 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "43 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "49 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "61 Crafting",
+      "note": "Cannot be boosted",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard",
+      "milestoneId": "crafting-61"
+    },
+    {
+      "group": "skills",
+      "label": "50 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "66 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "25 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "60 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "62 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "74 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "30 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "53 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "skills",
+      "label": "85 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    },
+    {
+      "group": "quests",
+      "label": "The Ascent of Arceuus",
+      "wiki": "The_Ascent_of_Arceuus",
+      "milestoneId": "ascent"
+    },
+    {
+      "group": "quests",
+      "label": "The Depths of Despair",
+      "wiki": "The_Depths_of_Despair",
+      "milestoneId": "depths"
+    },
+    {
+      "group": "quests",
+      "label": "Dream Mentor",
+      "wiki": "Dream_Mentor",
+      "milestoneId": "dream-mentor"
+    },
+    {
+      "group": "quests",
+      "label": "The Forsaken Tower",
+      "wiki": "The_Forsaken_Tower",
+      "milestoneId": "forsaken"
+    },
+    {
+      "group": "quests",
+      "label": "The Queen of Thieves",
+      "wiki": "The_Queen_of_Thieves",
+      "milestoneId": "queen-thieves"
+    },
+    {
+      "group": "quests",
+      "label": "Tale of the Righteous",
+      "wiki": "Tale_of_the_Righteous",
+      "milestoneId": "righteous"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Eagles' Peak",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard",
+      "milestoneId": "eagles",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Defeat a Lizardman Shaman in the Lizardman Temple",
+      "wiki": "Kourend_%26_Kebos_Diary#Hard"
+    }
+  ],
+  "diary-kourend-elite": [
+    {
+      "group": "skills",
+      "label": "65 Mining",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "16 Strength",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "49 Agility",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "70 Smithing",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite",
+      "milestoneId": "elf-smithing"
+    },
+    {
+      "group": "skills",
+      "label": "40 Defence",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "31 Herblore",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "82 Fishing",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "49 Thieving",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "84 Cooking",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite",
+      "milestoneId": "food-angler"
+    },
+    {
+      "group": "skills",
+      "label": "61 Crafting",
+      "note": "Cannot be boosted",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite",
+      "milestoneId": "crafting-61"
+    },
+    {
+      "group": "skills",
+      "label": "50 Firemaking",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "90 Magic",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "40 Fletching",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "90 Woodcutting",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "77 Runecraft",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite",
+      "milestoneId": "blood-runes"
+    },
+    {
+      "group": "skills",
+      "label": "95 Slayer",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite",
+      "milestoneId": "slayer-95"
+    },
+    {
+      "group": "skills",
+      "label": "85 Farming",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite",
+      "milestoneId": "farming-85"
+    },
+    {
+      "group": "skills",
+      "label": "30 Construction",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "53 Hunter",
+      "note": "Boosts may apply",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "skills",
+      "label": "85 Combat",
+      "note": "Cannot be boosted",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "quests",
+      "label": "The Ascent of Arceuus",
+      "wiki": "The_Ascent_of_Arceuus",
+      "milestoneId": "ascent"
+    },
+    {
+      "group": "quests",
+      "label": "The Depths of Despair",
+      "wiki": "The_Depths_of_Despair",
+      "milestoneId": "depths"
+    },
+    {
+      "group": "quests",
+      "label": "Dream Mentor",
+      "wiki": "Dream_Mentor",
+      "milestoneId": "dream-mentor"
+    },
+    {
+      "group": "quests",
+      "label": "The Forsaken Tower",
+      "wiki": "The_Forsaken_Tower",
+      "milestoneId": "forsaken"
+    },
+    {
+      "group": "quests",
+      "label": "The Queen of Thieves",
+      "wiki": "The_Queen_of_Thieves",
+      "milestoneId": "queen-thieves"
+    },
+    {
+      "group": "quests",
+      "label": "Tale of the Righteous",
+      "wiki": "Tale_of_the_Righteous",
+      "milestoneId": "righteous"
+    },
+    {
+      "group": "quests",
+      "label": "Started Fairytale II - Cure a Queen",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite",
+      "milestoneId": "fairy-rings",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "quests",
+      "label": "Partial completion of Eagles' Peak",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite",
+      "milestoneId": "eagles",
+      "note": "See the diary guide for the required quest stage."
+    },
+    {
+      "group": "other",
+      "label": "Completion of the Chambers of Xeric",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Defeat a Hydra in the Karuulm Slayer Dungeon",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Defeat a Lizardman Shaman in the Lizardman Temple",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    },
+    {
+      "group": "other",
+      "label": "Defeat Skotizo",
+      "wiki": "Kourend_%26_Kebos_Diary#Elite"
+    }
+  ],
+  "fish-barrel": [
+    {
+      "group": "other",
+      "label": "Tempoross rewards",
+      "wiki": "Tempoross",
+      "milestoneId": "log-tempoross",
+      "note": "Reward pool or 6,000 Spirit flakes"
+    }
+  ],
+  "tackle-box": [
+    {
+      "group": "other",
+      "label": "Tempoross rewards",
+      "wiki": "Tempoross",
+      "milestoneId": "log-tempoross",
+      "note": "Reward pool or 6,000 Spirit flakes"
+    }
+  ],
+  "forestry-basket-route": [
+    {
+      "group": "skills",
+      "label": "75 Smithing and 75 Woodcutting to make the sturdy harness",
+      "wiki": "Sturdy_harness"
+    },
+    {
+      "group": "other",
+      "label": "Forestry kit and ordinary harness materials",
+      "wiki": "Forestry_basket"
+    }
+  ],
+  "crystal-tool-seed": [
+    {
+      "group": "other",
+      "label": "Zalcano collection",
+      "wiki": "Zalcano",
+      "milestoneId": "log-zalcano"
+    }
+  ],
+  "crystal-axe": [
+    {
+      "group": "quests",
+      "label": "Song of the Elves",
+      "wiki": "Song_of_the_Elves",
+      "milestoneId": "song"
+    },
+    {
+      "group": "other",
+      "label": "Crystal shards and creation requirements",
+      "wiki": "Crystal_axe"
+    }
+  ],
+  "infernal-axe": [
+    {
+      "group": "skills",
+      "label": "Creation and usage levels",
+      "wiki": "Infernal_axe"
+    }
+  ],
+  "crystal-pickaxe": [
+    {
+      "group": "quests",
+      "label": "Song of the Elves",
+      "wiki": "Song_of_the_Elves",
+      "milestoneId": "song"
+    },
+    {
+      "group": "other",
+      "label": "Crystal shards and creation requirements",
+      "wiki": "Crystal_pickaxe"
+    }
+  ],
+  "infernal-pickaxe": [
+    {
+      "group": "skills",
+      "label": "Creation and usage levels",
+      "wiki": "Infernal_pickaxe"
+    }
+  ],
+  "crystal-harpoon": [
+    {
+      "group": "quests",
+      "label": "Song of the Elves",
+      "wiki": "Song_of_the_Elves",
+      "milestoneId": "song"
+    },
+    {
+      "group": "other",
+      "label": "Crystal shards and creation requirements",
+      "wiki": "Crystal_harpoon"
+    }
+  ],
+  "infernal-harpoon": [
+    {
+      "group": "skills",
+      "label": "Creation and usage levels",
+      "wiki": "Infernal_harpoon"
+    }
+  ],
+  "colossal-pouch-level": [
+    {
+      "group": "other",
+      "label": "Abyssal needle",
+      "wiki": "Abyssal_needle",
+      "milestoneId": "abyssal-needle"
+    },
+    {
+      "group": "other",
+      "label": "Small, medium, large and giant essence pouches",
+      "wiki": "Colossal_pouch"
+    }
+  ],
+  "outfit-eye": [
+    {
+      "group": "other",
+      "label": "Guardians of the Rift rewards",
+      "wiki": "Guardians_of_the_Rift"
+    }
+  ],
+  "abyssal-lantern": [
+    {
+      "group": "other",
+      "label": "Guardians of the Rift rewards",
+      "wiki": "Guardians_of_the_Rift"
+    }
+  ],
+  "abyssal-needle": [
+    {
+      "group": "other",
+      "label": "Guardians of the Rift rewards",
+      "wiki": "Guardians_of_the_Rift",
+      "note": "Reward searches or 750 abyssal pearls"
+    },
+    {
+      "group": "skills",
+      "label": "25 Runecraft and 56 Crafting to create the pouch",
+      "wiki": "Colossal_pouch"
+    },
+    {
+      "group": "other",
+      "label": "Small, medium, large and giant essence pouches",
+      "wiki": "Colossal_pouch"
+    }
+  ],
+  "ring-elements": [
+    {
+      "group": "other",
+      "label": "Guardians of the Rift rewards",
+      "wiki": "Guardians_of_the_Rift"
+    }
+  ],
+  "hallowed-grapple": [
+    {
+      "group": "quests",
+      "label": "Sins of the Father",
+      "wiki": "Sins_of_the_Father",
+      "milestoneId": "sins"
+    }
+  ],
+  "hallowed-focus": [
+    {
+      "group": "quests",
+      "label": "Sins of the Father",
+      "wiki": "Sins_of_the_Father",
+      "milestoneId": "sins"
+    }
+  ],
+  "hallowed-symbol": [
+    {
+      "group": "quests",
+      "label": "Sins of the Father",
+      "wiki": "Sins_of_the_Father",
+      "milestoneId": "sins"
+    }
+  ],
+  "hallowed-hammer": [
+    {
+      "group": "quests",
+      "label": "Sins of the Father",
+      "wiki": "Sins_of_the_Father",
+      "milestoneId": "sins"
+    }
+  ],
+  "hallowed-ring": [
+    {
+      "group": "quests",
+      "label": "Sins of the Father",
+      "wiki": "Sins_of_the_Father",
+      "milestoneId": "sins"
+    }
+  ],
+  "bottomless-bucket": [
+    {
+      "group": "other",
+      "label": "Hespori collection",
+      "wiki": "Hespori",
+      "milestoneId": "log-hespori"
+    }
+  ],
+  "blood-moon-rises": [
+    {
+      "group": "skills",
+      "label": "74 Slayer",
+      "note": "Not boostable; required to start.",
+      "wiki": "The_Blood_Moon_Rises"
+    },
+    {
+      "group": "skills",
+      "label": "74 Woodcutting",
+      "note": "Not boostable; required to start.",
+      "wiki": "The_Blood_Moon_Rises"
+    },
+    {
+      "group": "skills",
+      "label": "72 Smithing",
+      "note": "Not boostable; required to start.",
+      "wiki": "The_Blood_Moon_Rises"
+    },
+    {
+      "group": "skills",
+      "label": "72 Cooking",
+      "note": "Not boostable; required to start.",
+      "wiki": "The_Blood_Moon_Rises"
+    },
+    {
+      "group": "skills",
+      "label": "70 Fletching",
+      "note": "Not boostable; required to start.",
+      "wiki": "The_Blood_Moon_Rises"
+    },
+    {
+      "group": "skills",
+      "label": "66 Mining",
+      "note": "Not boostable; required to start.",
+      "wiki": "The_Blood_Moon_Rises"
+    },
+    {
+      "group": "skills",
+      "label": "65 Hunter",
+      "note": "Not boostable; required to start.",
+      "wiki": "The_Blood_Moon_Rises"
+    },
+    {
+      "group": "skills",
+      "label": "64 Crafting",
+      "note": "Not boostable; required to start.",
+      "wiki": "The_Blood_Moon_Rises"
+    },
+    {
+      "group": "skills",
+      "label": "64 Herblore",
+      "note": "Not boostable; required to start.",
+      "wiki": "The_Blood_Moon_Rises"
+    },
+    {
+      "group": "skills",
+      "label": "57 Magic",
+      "note": "Not boostable; required to start.",
+      "wiki": "The_Blood_Moon_Rises"
+    }
+  ],
+  "vampyrium": [
+    {
+      "group": "other",
+      "label": "Maggot King",
+      "milestoneId": "maggot-access",
+      "wiki": "Maggot_King"
+    }
+  ],
+  "twinflame-staff": [
+    {
+      "group": "skills",
+      "label": "60 Magic",
+      "note": "Required to wield",
+      "wiki": "Twinflame_staff"
+    },
+    {
+      "group": "other",
+      "label": "Battlestaff",
+      "note": "Needed for assembly",
+      "wiki": "Battlestaff"
+    },
+    {
+      "group": "other",
+      "label": "Royal Titans",
+      "milestoneId": "log-the-royal-titans",
+      "wiki": "Royal_Titans"
+    }
+  ],
+  "red-reef": [
+    {
+      "group": "skills",
+      "label": "52 Sailing",
+      "wiki": "Sailing"
+    },
+    {
+      "group": "skills",
+      "label": "48 Smithing",
+      "wiki": "Smithing"
+    },
+    {
+      "group": "quests",
+      "label": "Troubled Tortugans",
+      "wiki": "Troubled_Tortugans",
+      "milestoneId": "troubled-tortugans"
+    }
+  ],
+  "ruff-situation": [
+    {
+      "group": "skills",
+      "label": "15 Crafting",
+      "wiki": "Crafting"
+    }
+  ],
+  "crab-quest": [
+    {
+      "group": "skills",
+      "label": "40 Sailing",
+      "wiki": "Sailing"
+    },
+    {
+      "group": "skills",
+      "label": "30 Fishing",
+      "wiki": "Fishing"
+    }
+  ],
+  "gem-pouch": [
+    {
+      "group": "skills",
+      "label": "12 Crafting",
+      "wiki": "Crafting"
+    },
+    {
+      "group": "other",
+      "label": "Bolt of linen",
+      "wiki": "Bolt_of_linen"
+    },
+    {
+      "group": "other",
+      "label": "Thread",
+      "wiki": "Thread"
+    },
+    {
+      "group": "other",
+      "label": "Silk",
+      "wiki": "Silk"
+    },
+    {
+      "group": "other",
+      "label": "Needle",
+      "wiki": "Needle"
+    }
+  ],
+  "gem-satchel": [
+    {
+      "group": "skills",
+      "label": "39 Crafting",
+      "wiki": "Crafting"
+    },
+    {
+      "group": "other",
+      "label": "Gem pouch",
+      "wiki": "Gem_pouch",
+      "milestoneId": "gem-pouch"
+    },
+    {
+      "group": "other",
+      "label": "Bolt of canvas",
+      "wiki": "Bolt_of_canvas"
+    },
+    {
+      "group": "other",
+      "label": "Thread",
+      "wiki": "Thread"
+    },
+    {
+      "group": "other",
+      "label": "Silk",
+      "wiki": "Silk"
+    },
+    {
+      "group": "other",
+      "label": "Needle",
+      "wiki": "Needle"
+    }
+  ],
+  "gem-tote": [
+    {
+      "group": "skills",
+      "label": "81 Crafting",
+      "wiki": "Crafting"
+    },
+    {
+      "group": "other",
+      "label": "Gem satchel",
+      "wiki": "Gem_satchel",
+      "milestoneId": "gem-satchel"
+    },
+    {
+      "group": "other",
+      "label": "Bolt of cotton",
+      "wiki": "Bolt_of_cotton"
+    },
+    {
+      "group": "other",
+      "label": "Thread",
+      "wiki": "Thread"
+    },
+    {
+      "group": "other",
+      "label": "Silk",
+      "wiki": "Silk"
+    },
+    {
+      "group": "other",
+      "label": "Needle",
+      "wiki": "Needle"
+    }
+  ],
+  "gem-sack": [
+    {
+      "group": "skills",
+      "label": "81 Crafting",
+      "wiki": "Crafting"
+    },
+    {
+      "group": "other",
+      "label": "Gem tote",
+      "wiki": "Gem_tote",
+      "milestoneId": "gem-tote"
+    },
+    {
+      "group": "other",
+      "label": "Gem bag",
+      "wiki": "Gem_bag",
+      "milestoneId": "gem-bag"
+    },
+    {
+      "group": "other",
+      "label": "Immaculate mole skin",
+      "wiki": "Immaculate_mole_skin",
+      "milestoneId": "immaculate-mole-skin"
+    },
+    {
+      "group": "other",
+      "label": "Needle",
+      "wiki": "Needle"
+    },
+    {
+      "group": "other",
+      "label": "Thread",
+      "wiki": "Thread"
+    }
+  ],
+  "horn-of-plenty": [
+    {
+      "group": "skills",
+      "label": "50 Hunter",
+      "wiki": "Hunter"
+    },
+    {
+      "group": "other",
+      "label": "Gryphon feathers",
+      "wiki": "Gryphon_feathers"
+    }
+  ],
+  "amulet-of-air": [
+    {
+      "group": "skills",
+      "label": "18 Runecraft",
+      "wiki": "Runecraft"
+    },
+    {
+      "group": "other",
+      "label": "Amulet of magic",
+      "wiki": "Amulet_of_magic"
+    },
+    {
+      "group": "other",
+      "label": "100 air runes",
+      "wiki": "Air_rune"
+    }
+  ],
+  "amulet-of-water": [
+    {
+      "group": "skills",
+      "label": "19 Runecraft",
+      "wiki": "Runecraft"
+    },
+    {
+      "group": "other",
+      "label": "Amulet of magic",
+      "wiki": "Amulet_of_magic"
+    },
+    {
+      "group": "other",
+      "label": "100 water runes",
+      "wiki": "Water_rune"
+    }
+  ],
+  "amulet-of-earth": [
+    {
+      "group": "skills",
+      "label": "20 Runecraft",
+      "wiki": "Runecraft"
+    },
+    {
+      "group": "other",
+      "label": "Amulet of magic",
+      "wiki": "Amulet_of_magic"
+    },
+    {
+      "group": "other",
+      "label": "100 earth runes",
+      "wiki": "Earth_rune"
+    }
+  ],
+  "amulet-of-fire": [
+    {
+      "group": "skills",
+      "label": "21 Runecraft",
+      "wiki": "Runecraft"
+    },
+    {
+      "group": "other",
+      "label": "Amulet of magic",
+      "wiki": "Amulet_of_magic"
+    },
+    {
+      "group": "other",
+      "label": "100 fire runes",
+      "wiki": "Fire_rune"
+    }
+  ],
+  "elemental-amulet": [
+    {
+      "group": "skills",
+      "label": "30 Runecraft",
+      "wiki": "Runecraft"
+    },
+    {
+      "group": "other",
+      "label": "500 each of air, water, earth and fire runes",
+      "wiki": "Elemental_rune"
+    }
+  ],
+  "deadeye": [
+    {
+      "group": "skills",
+      "label": "62 Prayer",
+      "wiki": "Prayer"
+    },
+    {
+      "group": "other",
+      "label": "Deadeye prayer scroll",
+      "wiki": "Deadeye_prayer_scroll"
+    }
+  ],
+  "mystic-vigour": [
+    {
+      "group": "skills",
+      "label": "63 Prayer",
+      "wiki": "Prayer"
+    },
+    {
+      "group": "other",
+      "label": "Mystic vigour prayer scroll",
+      "wiki": "Mystic_vigour_prayer_scroll"
+    }
+  ],
+  "belles-folly": [
+    {
+      "group": "skills",
+      "label": "70 Smithing",
+      "wiki": "Smithing"
+    },
+    {
+      "group": "quests",
+      "label": "Sleeping Giants",
+      "wiki": "Sleeping_Giants"
+    }
+  ],
+  "aquanite-hopper": [
+    {
+      "group": "skills",
+      "label": "60 Smithing",
+      "wiki": "Smithing"
+    },
+    {
+      "group": "other",
+      "label": "Mithril bar",
+      "wiki": "Mithril_bar"
+    },
+    {
+      "group": "skills",
+      "label": "60 Ranged",
+      "wiki": "Ranged",
+      "note": "To wield"
+    }
+  ],
+  "camphor-blowpipe": [
+    {
+      "group": "skills",
+      "label": "58 Fletching",
+      "wiki": "Fletching"
+    },
+    {
+      "group": "skills",
+      "label": "45 Ranged",
+      "wiki": "Ranged",
+      "note": "To wield"
+    },
+    {
+      "group": "other",
+      "label": "2 camphor logs",
+      "wiki": "Camphor_logs"
+    },
+    {
+      "group": "other",
+      "label": "Knife",
+      "wiki": "Knife"
+    }
+  ],
+  "ironwood-blowpipe": [
+    {
+      "group": "skills",
+      "label": "72 Fletching",
+      "wiki": "Fletching"
+    },
+    {
+      "group": "skills",
+      "label": "55 Ranged",
+      "wiki": "Ranged",
+      "note": "To wield"
+    },
+    {
+      "group": "other",
+      "label": "2 ironwood logs",
+      "wiki": "Ironwood_logs"
+    },
+    {
+      "group": "other",
+      "label": "Knife",
+      "wiki": "Knife"
+    }
+  ],
+  "rosewood-blowpipe": [
+    {
+      "group": "skills",
+      "label": "84 Fletching",
+      "wiki": "Fletching"
+    },
+    {
+      "group": "skills",
+      "label": "65 Ranged",
+      "wiki": "Ranged",
+      "note": "To wield"
+    },
+    {
+      "group": "other",
+      "label": "2 rosewood logs",
+      "wiki": "Rosewood_logs"
+    },
+    {
+      "group": "other",
+      "label": "Knife",
+      "wiki": "Knife"
+    }
+  ],
+  "bosuns-bench": [
+    {
+      "group": "skills",
+      "label": "63 Sailing",
+      "wiki": "Sailing"
+    },
+    {
+      "group": "skills",
+      "label": "54 Construction",
+      "wiki": "Construction"
+    },
+    {
+      "group": "other",
+      "label": "6 camphor planks",
+      "wiki": "Camphor_plank"
+    },
+    {
+      "group": "other",
+      "label": "24 adamantite nails",
+      "wiki": "Adamantite_nails"
+    },
+    {
+      "group": "other",
+      "label": "2 lead bars",
+      "wiki": "Lead_bar"
+    }
+  ],
+  "bloodwood": [
+    {
+      "group": "skills",
+      "label": "77 Woodcutting",
+      "wiki": "Woodcutting"
+    },
+    {
+      "group": "quests",
+      "label": "The Blood Moon Rises",
+      "wiki": "The_Blood_Moon_Rises",
+      "milestoneId": "blood-moon-rises"
+    }
+  ],
+  "stymphike-hunting": [
+    {
+      "group": "skills",
+      "label": "82 Hunter",
+      "wiki": "Hunter"
+    },
+    {
+      "group": "quests",
+      "label": "The Blood Moon Rises",
+      "wiki": "The_Blood_Moon_Rises",
+      "milestoneId": "blood-moon-rises"
+    }
+  ],
+  "leechfin-fishing": [
+    {
+      "group": "skills",
+      "label": "78 Fishing",
+      "wiki": "Fishing"
+    },
+    {
+      "group": "quests",
+      "label": "The Blood Moon Rises",
+      "wiki": "The_Blood_Moon_Rises",
+      "milestoneId": "blood-moon-rises"
+    }
+  ],
+  "seeker-arrows": [
+    {
+      "group": "other",
+      "label": "Bucket of bloodwood sap",
+      "wiki": "Bucket_of_bloodwood_sap"
+    },
+    {
+      "group": "other",
+      "label": "Logs",
+      "wiki": "Logs"
+    },
+    {
+      "group": "other",
+      "label": "Feathers",
+      "wiki": "Feathers"
+    },
+    {
+      "group": "other",
+      "label": "Arrowtips",
+      "wiki": "Arrowtips"
+    }
+  ],
+  "troubled-tortugans": [
+    {
+      "group": "skills",
+      "label": "51 Slayer",
+      "wiki": "Slayer"
+    },
+    {
+      "group": "skills",
+      "label": "48 Construction",
+      "wiki": "Construction"
+    },
+    {
+      "group": "skills",
+      "label": "45 Sailing",
+      "wiki": "Sailing"
+    },
+    {
+      "group": "skills",
+      "label": "45 Hunter",
+      "wiki": "Hunter"
+    },
+    {
+      "group": "skills",
+      "label": "40 Woodcutting",
+      "wiki": "Woodcutting"
+    },
+    {
+      "group": "skills",
+      "label": "34 Crafting",
+      "wiki": "Crafting"
+    },
+    {
+      "group": "quests",
+      "label": "Pandemonium",
+      "wiki": "Pandemonium",
+      "milestoneId": "pandemonium"
+    }
+  ],
+  "medallion-of-the-deep": [
+    {
+      "group": "skills",
+      "label": "63 Sailing",
+      "wiki": "Sailing"
+    },
+    {
+      "group": "other",
+      "label": "Read the waterlogged journal",
+      "wiki": "Waterlogged_journal"
+    }
+  ]
+}

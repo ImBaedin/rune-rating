@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RatingRouteImport } from './routes/rating'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
+import { Route as AchievementsRouteImport } from './routes/achievements'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OgRatingDotpngRouteImport } from './routes/og/rating[.]png'
 import { Route as OgRatingRsnRouteImport } from './routes/og/rating/$rsn'
@@ -37,6 +38,11 @@ const RatingRoute = RatingRouteImport.update({
 const LeaderboardRoute = LeaderboardRouteImport.update({
   id: '/leaderboard',
   path: '/leaderboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AchievementsRoute = AchievementsRouteImport.update({
+  id: '/achievements',
+  path: '/achievements',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -140,6 +146,7 @@ const CompareLeftRsnRightRsnAchievementDiariesRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/achievements': typeof AchievementsRoute
   '/leaderboard': typeof LeaderboardRoute
   '/rating': typeof RatingRoute
   '/og/rating.png': typeof OgRatingDotpngRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/achievements': typeof AchievementsRoute
   '/leaderboard': typeof LeaderboardRoute
   '/rating': typeof RatingRoute
   '/og/rating.png': typeof OgRatingDotpngRoute
@@ -182,6 +190,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/achievements': typeof AchievementsRoute
   '/leaderboard': typeof LeaderboardRoute
   '/rating': typeof RatingRoute
   '/og/rating.png': typeof OgRatingDotpngRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/achievements'
     | '/leaderboard'
     | '/rating'
     | '/og/rating.png'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/achievements'
     | '/leaderboard'
     | '/rating'
     | '/og/rating.png'
@@ -246,6 +257,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/achievements'
     | '/leaderboard'
     | '/rating'
     | '/og/rating.png'
@@ -268,6 +280,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AchievementsRoute: typeof AchievementsRoute
   LeaderboardRoute: typeof LeaderboardRoute
   RatingRoute: typeof RatingRoute
   OgRatingDotpngRoute: typeof OgRatingDotpngRoute
@@ -290,6 +303,13 @@ declare module '@tanstack/react-router' {
       path: '/leaderboard'
       fullPath: '/leaderboard'
       preLoaderRoute: typeof LeaderboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/achievements': {
+      id: '/achievements'
+      path: '/achievements'
+      fullPath: '/achievements'
+      preLoaderRoute: typeof AchievementsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -457,6 +477,7 @@ const CompareLeftRsnRightRsnRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AchievementsRoute: AchievementsRoute,
   LeaderboardRoute: LeaderboardRoute,
   RatingRoute: RatingRoute,
   OgRatingDotpngRoute: OgRatingDotpngRoute,

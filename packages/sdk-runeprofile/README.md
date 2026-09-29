@@ -20,3 +20,14 @@ other providers may not expose enough information to identify them.
 
 RuneProfile permits anonymous requests at a lower rate limit. Set the optional
 `RUNEPROFILE_API_KEY` Convex environment variable to send an `X-API-Key` header.
+
+### Static achievement definitions
+
+`scripts/extract-achievement-definitions.ts` converts locally supplied, revision-pinned
+RuneProfile game catalogs into canonical RuneRating definition facts. It only parses
+literal TypeScript AST nodes; it never executes downloaded source or fetches player
+data. Inputs are `tree.json`, `quests.ts`, `diaries.ts`, `combat.ts`, and `collection.ts`.
+The upstream source directory is `ReinhardtR/runeprofile/packages/runescape`.
+Run the domain achievement compiler after updating definitions, then format the
+canonical JSON with Biome. RuneProfile's quest catalog exposes only the overall
+Recipe for Disaster ID, not IDs for its individual subquests.

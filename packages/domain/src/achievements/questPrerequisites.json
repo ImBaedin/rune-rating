@@ -1,0 +1,2457 @@
+{
+  "verifiedAt": "2026-09-29",
+  "scope": "Account prerequisites for atlas quest milestones. Supplies and ability to win fights are not inferred. Fairy Tale II covers its started-state fairy-ring checkpoint only.",
+  "quests": {
+    "quest.81": {
+      "name": "A Kingdom Divided",
+      "wiki": "https://oldschool.runescape.wiki/w/A_Kingdom_Divided",
+      "sourceSha256": "f7a8245c804c71035c18e84fcbe02cbfb5283a39205388395ac49d1a0fba6b29",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.26",
+            "target": 2,
+            "label": "The Depths of Despair"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.113",
+            "target": 2,
+            "label": "The Queen of Thieves"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.3",
+            "target": 2,
+            "label": "The Ascent of Arceuus"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.54",
+            "target": 2,
+            "label": "The Forsaken Tower"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.143",
+            "target": 2,
+            "label": "Tale of the Righteous"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 54,
+            "label": "Agility"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 52,
+            "label": "Thieving"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.woodcutting.level",
+            "target": 52,
+            "label": "Woodcutting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.herblore.level",
+            "target": 50,
+            "label": "Herblore"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 42,
+            "label": "Mining"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 38,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 35,
+            "label": "Magic"
+          }
+        ]
+      }
+    },
+    "quest.104": {
+      "name": "A Night at the Theatre",
+      "wiki": "https://oldschool.runescape.wiki/w/A_Night_at_the_Theatre",
+      "sourceSha256": "0d1b0b986cae2010699f4262e46c6214f1bd08d7b2c529a82807585d50e4a90b",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.144",
+            "target": 2,
+            "label": "A Taste of Hope"
+          }
+        ]
+      }
+    },
+    "quest.16971": {
+      "name": "A Ruff Situation",
+      "wiki": "https://oldschool.runescape.wiki/w/A_Ruff_Situation",
+      "sourceSha256": "18f22bdc04280384a6f644d920f207da9095d75051d29240eca33a9beadef8ec",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 15,
+            "label": "Crafting",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.144": {
+      "name": "A Taste of Hope",
+      "wiki": "https://oldschool.runescape.wiki/w/A_Taste_of_Hope",
+      "sourceSha256": "ada786be83bbd67cf451524772383e91398924f7e892c7f3cb50fb35ecd8fa13",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.22",
+            "target": 2,
+            "label": "Darkness of Hallowvale"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 48,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 45,
+            "label": "Agility"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.attack.level",
+            "target": 40,
+            "label": "Attack"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.herblore.level",
+            "target": 40,
+            "label": "Herblore"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.slayer.level",
+            "target": 38,
+            "label": "Slayer"
+          }
+        ]
+      }
+    },
+    "quest.168": {
+      "name": "Beneath Cursed Sands",
+      "wiki": "https://oldschool.runescape.wiki/w/Beneath_Cursed_Sands",
+      "sourceSha256": "4653b388e87cc9e59bc100c6c610eebaf42e0d2cb14f5e5ec4f282237a43acd0",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.16",
+            "target": 2,
+            "label": "Contact!"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 62,
+            "label": "Agility"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 55,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.firemaking.level",
+            "target": 55,
+            "label": "Firemaking"
+          }
+        ]
+      }
+    },
+    "quest.9": {
+      "name": "Biohazard",
+      "wiki": "https://oldschool.runescape.wiki/w/Biohazard",
+      "sourceSha256": "fe33491445576f5d6657ed49fd1e725db813d8208dc274ff4d5c401402984aea",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.109",
+            "target": 2,
+            "label": "Plague City"
+          }
+        ]
+      }
+    },
+    "quest.11": {
+      "name": "Bone Voyage",
+      "wiki": "https://oldschool.runescape.wiki/w/Bone_Voyage",
+      "sourceSha256": "0aed41b62cf9ce76b098dcbfa785f2ee20ef400dd57cc5e2af4044e3c694eda3",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.29",
+            "target": 2,
+            "label": "The Dig Site"
+          },
+          {
+            "kind": "untracked",
+            "reason": "The 100 Kudos requirement is not reported by the providers."
+          }
+        ]
+      }
+    },
+    "quest.13": {
+      "name": "Client of Kourend",
+      "wiki": "https://oldschool.runescape.wiki/w/Client_of_Kourend",
+      "sourceSha256": "04aae607f461e4423e1805d77c0186797c2f8e09ce1ac6a9c68b235ba06e2356",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.162",
+            "target": 2,
+            "label": "X Marks the Spot"
+          }
+        ]
+      }
+    },
+    "quest.17": {
+      "name": "Cook's Assistant",
+      "wiki": "https://oldschool.runescape.wiki/w/Cook%27s_Assistant",
+      "sourceSha256": "776fb12083abbc20b4630b5c5083ee5f82edc36245bf0e55ea97a65d3b65f8c0",
+      "rule": {
+        "kind": "all",
+        "rules": []
+      }
+    },
+    "quest.16972": {
+      "name": "Crab Quest",
+      "wiki": "https://oldschool.runescape.wiki/w/Crab_Quest",
+      "sourceSha256": "3eb8c7baba99005841528cf26255fab710f7df1eaaf892413c0143d5aae38912",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.sailing.level",
+            "target": 40,
+            "label": "Sailing",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.fishing.level",
+            "target": 30,
+            "label": "Fishing",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.22": {
+      "name": "Darkness of Hallowvale",
+      "wiki": "https://oldschool.runescape.wiki/w/Darkness_of_Hallowvale",
+      "sourceSha256": "def98cc68a8e23292994684f77a8ef9181c942cbc4dd529c2d714e37c173a022",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.77",
+            "target": 2,
+            "label": "In Aid of the Myreque"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.construction.level",
+            "target": 5,
+            "label": "Construction",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 20,
+            "label": "Mining"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 22,
+            "label": "Thieving"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 26,
+            "label": "Agility",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 32,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 33,
+            "label": "Magic",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.strength.level",
+            "target": 40,
+            "label": "Strength"
+          }
+        ]
+      }
+    },
+    "quest.27": {
+      "name": "Desert Treasure I",
+      "wiki": "https://oldschool.runescape.wiki/w/Desert_Treasure_I",
+      "sourceSha256": "8215dfbfb38f6505ddc05233fb73d038c275d0e4015ad24844a8d6af80501481",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.29",
+            "target": 2,
+            "label": "The Dig Site"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.146",
+            "target": 2,
+            "label": "Temple of Ikov"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.148",
+            "target": 2,
+            "label": "The Tourist Trap"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.153",
+            "target": 2,
+            "label": "Troll Stronghold"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.111",
+            "target": 2,
+            "label": "Priest in Peril"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.158",
+            "target": 2,
+            "label": "Waterfall Quest"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 53,
+            "label": "Thieving"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 50,
+            "label": "Magic"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.firemaking.level",
+            "target": 50,
+            "label": "Firemaking",
+            "boostable": true
+          },
+          {
+            "kind": "any",
+            "rules": [
+              {
+                "kind": "threshold",
+                "key": "skill.slayer.level",
+                "target": 10,
+                "label": "Slayer"
+              },
+              {
+                "kind": "threshold",
+                "key": "quest.109",
+                "target": 2,
+                "label": "Plague City"
+              }
+            ]
+          },
+          {
+            "kind": "any",
+            "rules": [
+              {
+                "kind": "threshold",
+                "key": "quest.103",
+                "target": 2,
+                "label": "Nature Spirit"
+              },
+              {
+                "kind": "untracked",
+                "reason": "Access to the Morytania Graveyard requires an unreported Nature Spirit stage; full quest completion confirms access."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "quest.2343": {
+      "name": "Desert Treasure II - The Fallen Empire",
+      "wiki": "https://oldschool.runescape.wiki/w/Desert_Treasure_II_-_The_Fallen_Empire",
+      "sourceSha256": "ab078d7f1e137af4d3a74ad39e5e30deb22ca5db6b05158077bbf7ff814c6158",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.firemaking.level",
+            "target": 75,
+            "label": "Firemaking"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 75,
+            "label": "Magic"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 70,
+            "label": "Thieving"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.herblore.level",
+            "target": 62,
+            "label": "Herblore"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.runecraft.level",
+            "target": 60,
+            "label": "Runecraft"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.construction.level",
+            "target": 60,
+            "label": "Construction"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.27",
+            "target": 2,
+            "label": "Desert Treasure I"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.2338",
+            "target": 2,
+            "label": "Secrets of the North"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.40",
+            "target": 2,
+            "label": "Enakhra's Lament"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.167",
+            "target": 2,
+            "label": "Temple of the Eye"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.180",
+            "target": 2,
+            "label": "The Garden of Death"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.6",
+            "target": 2,
+            "label": "Below Ice Mountain"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.3250",
+            "target": 2,
+            "label": "His Faithful Servants"
+          }
+        ]
+      }
+    },
+    "quest.31": {
+      "name": "Dragon Slayer I",
+      "wiki": "https://oldschool.runescape.wiki/w/Dragon_Slayer_I",
+      "sourceSha256": "e1b0ff0c91b1dd7fe76ec1cc2ab3a6208a8e72db6d317b4c14157d589d26b561",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quests.points",
+            "target": 32,
+            "label": "Quest points"
+          }
+        ]
+      }
+    },
+    "quest.32": {
+      "name": "Dragon Slayer II",
+      "wiki": "https://oldschool.runescape.wiki/w/Dragon_Slayer_II",
+      "sourceSha256": "1d67ba9e2bed4095a3d5b0681f25d18a2c1397f13fda5b9dc7178f4646c447b1",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quests.points",
+            "target": 200,
+            "label": "Quest points"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 75,
+            "label": "Magic"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.smithing.level",
+            "target": 70,
+            "label": "Smithing"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 68,
+            "label": "Mining"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 62,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 60,
+            "label": "Agility"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 60,
+            "label": "Thieving"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.construction.level",
+            "target": 50,
+            "label": "Construction"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.hitpoints.level",
+            "target": 50,
+            "label": "Hitpoints"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.85",
+            "target": 2,
+            "label": "Legends' Quest"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.33",
+            "target": 2,
+            "label": "Dream Mentor"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.142",
+            "target": 2,
+            "label": "A Tail of Two Cats"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.0",
+            "target": 2,
+            "label": "Animal Magnetism"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.62",
+            "target": 2,
+            "label": "Ghosts Ahoy"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.11",
+            "target": 2,
+            "label": "Bone Voyage"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.13",
+            "target": 2,
+            "label": "Client of Kourend"
+          },
+          {
+            "kind": "untracked",
+            "reason": "Access to the Ancient Cavern through Barbarian Training is not reported by the providers."
+          }
+        ]
+      }
+    },
+    "quest.33": {
+      "name": "Dream Mentor",
+      "wiki": "https://oldschool.runescape.wiki/w/Dream_Mentor",
+      "sourceSha256": "ec28b774fd3d4303730d83b2a6f5f0128db052ad29894c5ba1ef62d4cc7cfce8",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "account.combatLevel",
+            "target": 85,
+            "label": "Combat level"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.88",
+            "target": 2,
+            "label": "Lunar Diplomacy"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.36",
+            "target": 2,
+            "label": "Eadgar's Ruse"
+          }
+        ]
+      }
+    },
+    "quest.37": {
+      "name": "Eagles' Peak",
+      "wiki": "https://oldschool.runescape.wiki/w/Eagles%27_Peak",
+      "sourceSha256": "f8f82bb0e828d9993a0b5d277b09c4cd2ddb5169499e760799528cd379209d7b",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.hunter.level",
+            "target": 27,
+            "label": "Hunter",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.42": {
+      "name": "Enlightened Journey",
+      "wiki": "https://oldschool.runescape.wiki/w/Enlightened_Journey",
+      "sourceSha256": "eddcc99c3039fde2128699a4525b8c15daaafd0728ad0448719148e7e669aba6",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quests.points",
+            "target": 20,
+            "label": "Quest points"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.firemaking.level",
+            "target": 20,
+            "label": "Firemaking",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.farming.level",
+            "target": 30,
+            "label": "Farming",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 36,
+            "label": "Crafting",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.46": {
+      "name": "Fairytale I - Growing Pains",
+      "wiki": "https://oldschool.runescape.wiki/w/Fairytale_I_-_Growing_Pains",
+      "sourceSha256": "d9ad242de8e9df356ddeb22644d2008fc23c023259e61091ad904afcb470d0fc",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.86",
+            "target": 2,
+            "label": "Lost City"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.103",
+            "target": 2,
+            "label": "Nature Spirit"
+          }
+        ]
+      }
+    },
+    "quest.47": {
+      "name": "Fairytale II - Cure a Queen",
+      "wiki": "https://oldschool.runescape.wiki/w/Fairytale_II_-_Cure_a_Queen",
+      "sourceSha256": "0c099aed0517c9334faa0d056536d2500feba29334d733851893eaf6fdb27012",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.46",
+            "target": 2,
+            "label": "Fairytale I - Growing Pains"
+          }
+        ]
+      }
+    },
+    "quest.7133": {
+      "name": "Fallen From Grace",
+      "wiki": "https://oldschool.runescape.wiki/w/Fallen_From_Grace",
+      "sourceSha256": "80a1ace019413e6db042caa49991529bb405c37796504e90b05870e99373af4c",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.sailing.level",
+            "target": 62,
+            "label": "Sailing"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 60,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.runecraft.level",
+            "target": 47,
+            "label": "Runecraft"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 53,
+            "label": "Mining"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.7103",
+            "target": 2,
+            "label": "Pandemonium"
+          }
+        ]
+      }
+    },
+    "quest.72": {
+      "name": "Heroes' Quest",
+      "wiki": "https://oldschool.runescape.wiki/w/Heroes%27_Quest",
+      "sourceSha256": "c1d2c89101d2ff81b1f2b7ed4b7428ebdedde03abf99d0b3c426d7f4c41dd7df",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quests.points",
+            "target": 55,
+            "label": "Quest points"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.cooking.level",
+            "target": 53,
+            "label": "Cooking",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.fishing.level",
+            "target": 53,
+            "label": "Fishing",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.herblore.level",
+            "target": 25,
+            "label": "Herblore",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 50,
+            "label": "Mining",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.132",
+            "target": 2,
+            "label": "Shield of Arrav"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.86",
+            "target": 2,
+            "label": "Lost City"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.93",
+            "target": 2,
+            "label": "Merlin's Crystal"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.31",
+            "target": 2,
+            "label": "Dragon Slayer I"
+          }
+        ]
+      }
+    },
+    "quest.77": {
+      "name": "In Aid of the Myreque",
+      "wiki": "https://oldschool.runescape.wiki/w/In_Aid_of_the_Myreque",
+      "sourceSha256": "57d475a7f0afc88970ceda8f2976813efe4945ad900f1ed153ece646c6297cf0",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.79",
+            "target": 2,
+            "label": "In Search of the Myreque"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 25,
+            "label": "Agility",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 25,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 15,
+            "label": "Mining"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 7,
+            "label": "Magic",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.79": {
+      "name": "In Search of the Myreque",
+      "wiki": "https://oldschool.runescape.wiki/w/In_Search_of_the_Myreque",
+      "sourceSha256": "4a341e1743a5582db70cefa91da9bdd4647b589d753966d99b988779691bb1de",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.103",
+            "target": 2,
+            "label": "Nature Spirit"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 25,
+            "label": "Agility",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.85": {
+      "name": "Legends' Quest",
+      "wiki": "https://oldschool.runescape.wiki/w/Legends%27_Quest",
+      "sourceSha256": "874656c315e8014f0b8a70f37baea57f545067f95408ec7364e1a0a642efb785",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quests.points",
+            "target": 107,
+            "label": "Quest points"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 50,
+            "label": "Agility",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 50,
+            "label": "Crafting",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.herblore.level",
+            "target": 45,
+            "label": "Herblore",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 56,
+            "label": "Magic",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 52,
+            "label": "Mining",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.prayer.level",
+            "target": 42,
+            "label": "Prayer",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.smithing.level",
+            "target": 50,
+            "label": "Smithing",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.strength.level",
+            "target": 50,
+            "label": "Strength",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 50,
+            "label": "Thieving",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.woodcutting.level",
+            "target": 50,
+            "label": "Woodcutting",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.48",
+            "target": 2,
+            "label": "Family Crest"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.72",
+            "target": 2,
+            "label": "Heroes' Quest"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.133",
+            "target": 2,
+            "label": "Shilo Village"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.154",
+            "target": 2,
+            "label": "Underground Pass"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.158",
+            "target": 2,
+            "label": "Waterfall Quest"
+          }
+        ]
+      }
+    },
+    "quest.86": {
+      "name": "Lost City",
+      "wiki": "https://oldschool.runescape.wiki/w/Lost_City",
+      "sourceSha256": "cd373727e813d1ce9e70e28d3b8a6b51a8b71caa348bc937a7e7655087bd663b",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 31,
+            "label": "Crafting",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.woodcutting.level",
+            "target": 36,
+            "label": "Woodcutting",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.88": {
+      "name": "Lunar Diplomacy",
+      "wiki": "https://oldschool.runescape.wiki/w/Lunar_Diplomacy",
+      "sourceSha256": "93784950035a1072e1dd4debd8ca836fe5ca607d99506f52a1a5360785120c53",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.57",
+            "target": 2,
+            "label": "The Fremennik Trials"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.86",
+            "target": 2,
+            "label": "Lost City"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.125",
+            "target": 2,
+            "label": "Rune Mysteries"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.133",
+            "target": 2,
+            "label": "Shilo Village"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.herblore.level",
+            "target": 5,
+            "label": "Herblore"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 61,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.defence.level",
+            "target": 40,
+            "label": "Defence"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.firemaking.level",
+            "target": 49,
+            "label": "Firemaking"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 65,
+            "label": "Magic"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 60,
+            "label": "Mining"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.woodcutting.level",
+            "target": 55,
+            "label": "Woodcutting"
+          }
+        ]
+      }
+    },
+    "quest.92": {
+      "name": "Making History",
+      "wiki": "https://oldschool.runescape.wiki/w/Making_History",
+      "sourceSha256": "efd015401f82b356b09e0923be467841a2ed1aef83e402f98ea7c55357d43af2",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.111",
+            "target": 2,
+            "label": "Priest in Peril"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.120",
+            "target": 2,
+            "label": "The Restless Ghost"
+          }
+        ]
+      }
+    },
+    "quest.95": {
+      "name": "Monkey Madness I",
+      "wiki": "https://oldschool.runescape.wiki/w/Monkey_Madness_I",
+      "sourceSha256": "28d8b49708cc9d5eff23e7c048a5487c025fef56fea58f94d97f5961fca739fe",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.66",
+            "target": 2,
+            "label": "The Grand Tree"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.150",
+            "target": 2,
+            "label": "Tree Gnome Village"
+          }
+        ]
+      }
+    },
+    "quest.96": {
+      "name": "Monkey Madness II",
+      "wiki": "https://oldschool.runescape.wiki/w/Monkey_Madness_II",
+      "sourceSha256": "22fa33fc9b4103e1cb6ac44fd495f2ee2ebaf909fe2b585103223fba9690cd60",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.42",
+            "target": 2,
+            "label": "Enlightened Journey"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.45",
+            "target": 2,
+            "label": "The Eyes of Glouphrie"
+          },
+          {
+            "kind": "untracked",
+            "reason": "RuneProfile cannot verify the Freeing King Awowogei subquest separately. Full Recipe for Disaster completion confirms it.",
+            "completedBy": "quest.117"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.153",
+            "target": 2,
+            "label": "Troll Stronghold"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.157",
+            "target": 2,
+            "label": "Watchtower"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.slayer.level",
+            "target": 69,
+            "label": "Slayer"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 70,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.hunter.level",
+            "target": 60,
+            "label": "Hunter"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 55,
+            "label": "Agility"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 55,
+            "label": "Thieving"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.firemaking.level",
+            "target": 60,
+            "label": "Firemaking"
+          },
+          {
+            "kind": "any",
+            "rules": [
+              {
+                "kind": "threshold",
+                "key": "quest.96",
+                "target": 1,
+                "label": "Monkey Madness II"
+              },
+              {
+                "kind": "untracked",
+                "reason": "The Grand Tree balloon route unlock is not reported. Starting Monkey Madness II confirms this start requirement."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "quest.99": {
+      "name": "Mourning's End Part I",
+      "wiki": "https://oldschool.runescape.wiki/w/Mourning%27s_End_Part_I",
+      "sourceSha256": "551d31e4325f779ef1b6acbb5cf6d1e0ecd3232ea842b6cd5d187b7daa8cd93c",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.ranged.level",
+            "target": 60,
+            "label": "Ranged"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 50,
+            "label": "Thieving"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.122",
+            "target": 2,
+            "label": "Roving Elves"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.8",
+            "target": 2,
+            "label": "Big Chompy Bird Hunting"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.130",
+            "target": 2,
+            "label": "Sheep Herder"
+          }
+        ]
+      }
+    },
+    "quest.100": {
+      "name": "Mourning's End Part II",
+      "wiki": "https://oldschool.runescape.wiki/w/Mourning%27s_End_Part_II",
+      "sourceSha256": "dba2c52ff5896b6a850db04521f3cc9fe67e8e84e63c3a52ed96c3671863c240",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.99",
+            "target": 2,
+            "label": "Mourning's End Part I"
+          }
+        ]
+      }
+    },
+    "quest.103": {
+      "name": "Nature Spirit",
+      "wiki": "https://oldschool.runescape.wiki/w/Nature_Spirit",
+      "sourceSha256": "21dc296fffc7a00c77eb4e7a8b19ad8a9e313fdca23dfb791316c657985af5e0",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.111",
+            "target": 2,
+            "label": "Priest in Peril"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.120",
+            "target": 2,
+            "label": "The Restless Ghost"
+          }
+        ]
+      }
+    },
+    "quest.7103": {
+      "name": "Pandemonium",
+      "wiki": "https://oldschool.runescape.wiki/w/Pandemonium",
+      "sourceSha256": "4d2986d6011f62eb3d7d2427b5bc6fb05fa72f4fdd1e9c2c783b8df2403a0d4a",
+      "rule": {
+        "kind": "all",
+        "rules": []
+      }
+    },
+    "quest.3514": {
+      "name": "Perilous Moons",
+      "wiki": "https://oldschool.runescape.wiki/w/Perilous_Moons",
+      "sourceSha256": "ac71b5c34a03296b05192577db496816a53309fdb4addb32cd763ed17d209a94",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.slayer.level",
+            "target": 48,
+            "label": "Slayer"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.hunter.level",
+            "target": 20,
+            "label": "Hunter"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.fishing.level",
+            "target": 20,
+            "label": "Fishing"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.runecraft.level",
+            "target": 20,
+            "label": "Runecraft"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.construction.level",
+            "target": 10,
+            "label": "Construction"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.3512",
+            "target": 2,
+            "label": "Twilight's Promise"
+          }
+        ]
+      }
+    },
+    "quest.109": {
+      "name": "Plague City",
+      "wiki": "https://oldschool.runescape.wiki/w/Plague_City",
+      "sourceSha256": "ed3b0f51dcd83184065fc983a77438916cbdd8c06a6d3e722f453c34663ca286",
+      "rule": {
+        "kind": "all",
+        "rules": []
+      }
+    },
+    "quest.111": {
+      "name": "Priest in Peril",
+      "wiki": "https://oldschool.runescape.wiki/w/Priest_in_Peril",
+      "sourceSha256": "edb66b35fb40e40b6fd658b489587b558227eee8c954bf69e5b86cff736be6e3",
+      "rule": {
+        "kind": "all",
+        "rules": []
+      }
+    },
+    "quest.117": {
+      "name": "Recipe for Disaster",
+      "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster",
+      "sourceSha256": "adf4a290eecf7a50bac6f21dabd52ad8ac98e3356fef852b379d8d520fb7a238",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.17",
+            "target": 2,
+            "label": "Cook's Assistant"
+          },
+          {
+            "kind": "threshold",
+            "key": "quests.points",
+            "target": 175,
+            "label": "Quest points"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.cooking.level",
+            "target": 70,
+            "label": "Cooking",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 48,
+            "label": "Agility"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 50,
+            "label": "Mining",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.fishing.level",
+            "target": 53,
+            "label": "Fishing",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 53,
+            "label": "Thieving"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.herblore.level",
+            "target": 25,
+            "label": "Herblore",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 59,
+            "label": "Magic",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.smithing.level",
+            "target": 40,
+            "label": "Smithing",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.firemaking.level",
+            "target": 50,
+            "label": "Firemaking",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.ranged.level",
+            "target": 40,
+            "label": "Ranged"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 40,
+            "label": "Crafting",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.fletching.level",
+            "target": 10,
+            "label": "Fletching",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.woodcutting.level",
+            "target": 36,
+            "label": "Woodcutting",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.52",
+            "target": 2,
+            "label": "Fishing Contest"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.64",
+            "target": 2,
+            "label": "Goblin Diplomacy"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.8",
+            "target": 2,
+            "label": "Big Chompy Bird Hunting"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.101",
+            "target": 2,
+            "label": "Murder Mystery"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.103",
+            "target": 2,
+            "label": "Nature Spirit"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.160",
+            "target": 2,
+            "label": "Witch's House"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.60",
+            "target": 2,
+            "label": "Gertrude's Cat"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.129",
+            "target": 2,
+            "label": "Shadow of the Storm"
+          },
+          {
+            "kind": "any",
+            "rules": [
+              {
+                "kind": "threshold",
+                "key": "quest.85",
+                "target": 2,
+                "label": "Legends' Quest"
+              },
+              {
+                "kind": "untracked",
+                "reason": "The required stage of Legends' Quest is not reported; full completion confirms it."
+              }
+            ]
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.95",
+            "target": 2,
+            "label": "Monkey Madness I"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.27",
+            "target": 2,
+            "label": "Desert Treasure I"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.74",
+            "target": 2,
+            "label": "Horror from the Deep"
+          }
+        ]
+      }
+    },
+    "quest.119": {
+      "name": "Regicide",
+      "wiki": "https://oldschool.runescape.wiki/w/Regicide",
+      "sourceSha256": "7d719452d91a251281116dc09be7cfc46f004f5e8f0a4e7a90ec9df9f0da8fa0",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.154",
+            "target": 2,
+            "label": "Underground Pass"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 10,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 56,
+            "label": "Agility",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.122": {
+      "name": "Roving Elves",
+      "wiki": "https://oldschool.runescape.wiki/w/Roving_Elves",
+      "sourceSha256": "824788d26ff0678cfe13b175c7561a4e66ea381b59a5a51f80fb04821bb5c54e",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.119",
+            "target": 2,
+            "label": "Regicide"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.158",
+            "target": 2,
+            "label": "Waterfall Quest"
+          }
+        ]
+      }
+    },
+    "quest.2338": {
+      "name": "Secrets of the North",
+      "wiki": "https://oldschool.runescape.wiki/w/Secrets_of_the_North",
+      "sourceSha256": "fbc78d4b0e6804a72e8b87fa147d4f7ead6fd4ad7c056dc98ba310b967910f2f",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 69,
+            "label": "Agility"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 64,
+            "label": "Thieving"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.hunter.level",
+            "target": 56,
+            "label": "Hunter"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.91",
+            "target": 2,
+            "label": "Making Friends with My Arm"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.59",
+            "target": 2,
+            "label": "The General's Shadow"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.28",
+            "target": 2,
+            "label": "Devious Minds"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.71",
+            "target": 2,
+            "label": "Hazeel Cult"
+          }
+        ]
+      }
+    },
+    "quest.134": {
+      "name": "Sins of the Father",
+      "wiki": "https://oldschool.runescape.wiki/w/Sins_of_the_Father",
+      "sourceSha256": "502abef3e5da285cbf3c119f1fdaf38eb8a4342058f38482a0a3eb3acd3cf0a3",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.155",
+            "target": 2,
+            "label": "Vampyre Slayer"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.144",
+            "target": 2,
+            "label": "A Taste of Hope"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.woodcutting.level",
+            "target": 62,
+            "label": "Woodcutting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.fletching.level",
+            "target": 60,
+            "label": "Fletching"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 56,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 52,
+            "label": "Agility"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.attack.level",
+            "target": 50,
+            "label": "Attack"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.slayer.level",
+            "target": 50,
+            "label": "Slayer"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 49,
+            "label": "Magic"
+          }
+        ]
+      }
+    },
+    "quest.137": {
+      "name": "Song of the Elves",
+      "wiki": "https://oldschool.runescape.wiki/w/Song_of_the_Elves",
+      "sourceSha256": "7a195910dbecfccc5769fd4f1dca9db8884adce465b47ed4703dae1f56f5ea45",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 70,
+            "label": "Agility"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.construction.level",
+            "target": 70,
+            "label": "Construction"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.farming.level",
+            "target": 70,
+            "label": "Farming"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.herblore.level",
+            "target": 70,
+            "label": "Herblore"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.hunter.level",
+            "target": 70,
+            "label": "Hunter"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 70,
+            "label": "Mining"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.smithing.level",
+            "target": 70,
+            "label": "Smithing"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.woodcutting.level",
+            "target": 70,
+            "label": "Woodcutting"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.100",
+            "target": 2,
+            "label": "Mourning's End Part II"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.92",
+            "target": 2,
+            "label": "Making History"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.34",
+            "target": 2,
+            "label": "Druidic Ritual"
+          }
+        ]
+      }
+    },
+    "quest.143": {
+      "name": "Tale of the Righteous",
+      "wiki": "https://oldschool.runescape.wiki/w/Tale_of_the_Righteous",
+      "sourceSha256": "328b6f9468c3e2cf6bf5e9b95d10130a213bb20ee7f38598503a1cbf13823dbb",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.13",
+            "target": 2,
+            "label": "Client of Kourend"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.strength.level",
+            "target": 16,
+            "label": "Strength"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 10,
+            "label": "Mining"
+          }
+        ]
+      }
+    },
+    "quest.146": {
+      "name": "Temple of Ikov",
+      "wiki": "https://oldschool.runescape.wiki/w/Temple_of_Ikov",
+      "sourceSha256": "41d2614f714fad4968bfe199863a619f3289daa51f1971ccd1dae9732d823c12",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 42,
+            "label": "Thieving",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.3": {
+      "name": "The Ascent of Arceuus",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Ascent_of_Arceuus",
+      "sourceSha256": "cca079170d4d911160c4b96c9462df0854db8c6d1519d5356962e57752111ed9",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.13",
+            "target": 2,
+            "label": "Client of Kourend"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.hunter.level",
+            "target": 12,
+            "label": "Hunter"
+          }
+        ]
+      }
+    },
+    "quest.16414": {
+      "name": "The Blood Moon Rises",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Blood_Moon_Rises",
+      "sourceSha256": "86bec780bd388eb9cb3b73eb4309ca9ff4a86cfec9979a8d060d77651cf3f01c",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.slayer.level",
+            "target": 74,
+            "label": "Slayer"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.woodcutting.level",
+            "target": 74,
+            "label": "Woodcutting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.smithing.level",
+            "target": 72,
+            "label": "Smithing"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.cooking.level",
+            "target": 72,
+            "label": "Cooking"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.fletching.level",
+            "target": 70,
+            "label": "Fletching"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 66,
+            "label": "Mining"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.hunter.level",
+            "target": 65,
+            "label": "Hunter"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 64,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.herblore.level",
+            "target": 64,
+            "label": "Herblore"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.magic.level",
+            "target": 57,
+            "label": "Magic"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.104",
+            "target": 2,
+            "label": "A Night at the Theatre"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.134",
+            "target": 2,
+            "label": "Sins of the Father"
+          }
+        ]
+      }
+    },
+    "quest.26": {
+      "name": "The Depths of Despair",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Depths_of_Despair",
+      "sourceSha256": "e273e68ec308b4e90ac329f2a9c39da859f02723dd8ceb7146c54640b8b75f88",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.13",
+            "target": 2,
+            "label": "Client of Kourend"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 18,
+            "label": "Agility"
+          }
+        ]
+      }
+    },
+    "quest.29": {
+      "name": "The Dig Site",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Dig_Site",
+      "sourceSha256": "65d30d969f688f2ac4bfa52a670ec0c91983cb12f395f2a3b2957e05b73325e7",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 10,
+            "label": "Agility",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.herblore.level",
+            "target": 10,
+            "label": "Herblore",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 25,
+            "label": "Thieving",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.5189": {
+      "name": "The Final Dawn",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Final_Dawn",
+      "sourceSha256": "e258a23f60068684445860614e10b061b3d5ea72ac29346ff9b4e67b04286593",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 66,
+            "label": "Thieving"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.runecraft.level",
+            "target": 52,
+            "label": "Runecraft"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.fletching.level",
+            "target": 52,
+            "label": "Fletching"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.3710",
+            "target": 2,
+            "label": "The Heart of Darkness"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.3514",
+            "target": 2,
+            "label": "Perilous Moons"
+          }
+        ]
+      }
+    },
+    "quest.54": {
+      "name": "The Forsaken Tower",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Forsaken_Tower",
+      "sourceSha256": "b160131a35c0dfb0c0d10a87d83fb6fe06e06377cff37559eb5f92c416f7bc08",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.13",
+            "target": 2,
+            "label": "Client of Kourend"
+          }
+        ]
+      }
+    },
+    "quest.55": {
+      "name": "The Fremennik Exiles",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Fremennik_Exiles",
+      "sourceSha256": "96f13693b4561d666f8e5f155d2e815c47c100a0a4f83a9ca663535aac496698",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 65,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.slayer.level",
+            "target": 60,
+            "label": "Slayer"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.smithing.level",
+            "target": 60,
+            "label": "Smithing"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.fishing.level",
+            "target": 60,
+            "label": "Fishing"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.runecraft.level",
+            "target": 55,
+            "label": "Runecraft"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.mining.level",
+            "target": 60,
+            "label": "Mining",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.56",
+            "target": 2,
+            "label": "The Fremennik Isles"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.88",
+            "target": 2,
+            "label": "Lunar Diplomacy"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.98",
+            "target": 2,
+            "label": "Mountain Daughter"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.72",
+            "target": 2,
+            "label": "Heroes' Quest"
+          }
+        ]
+      }
+    },
+    "quest.56": {
+      "name": "The Fremennik Isles",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Fremennik_Isles",
+      "sourceSha256": "52082064baa2c99fb63bca88115db0e651f4f9d349334b6b18a6376bdc053ea8",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.57",
+            "target": 2,
+            "label": "The Fremennik Trials"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.construction.level",
+            "target": 20,
+            "label": "Construction",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.57": {
+      "name": "The Fremennik Trials",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Fremennik_Trials",
+      "sourceSha256": "1f691335bf18b485e89d9103e7b2fe0a41385ec01d54e9db3765b1b87a2285cf",
+      "rule": {
+        "kind": "all",
+        "rules": []
+      }
+    },
+    "quest.164": {
+      "name": "The Frozen Door",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Frozen_Door",
+      "sourceSha256": "ed934dd3556cf6995f6bcb67e93b9a71aab0cae143d76405c13044aa2f0c9f37",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.27",
+            "target": 2,
+            "label": "Desert Treasure I"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 70,
+            "label": "Agility"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.hitpoints.level",
+            "target": 70,
+            "label": "Hitpoints",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.ranged.level",
+            "target": 70,
+            "label": "Ranged"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.strength.level",
+            "target": 70,
+            "label": "Strength"
+          }
+        ]
+      }
+    },
+    "quest.66": {
+      "name": "The Grand Tree",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Grand_Tree",
+      "sourceSha256": "9a77db7d49cb74a17dc5e385acc8552985a56cb1f789d745d647b4d8385e3ce6",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.agility.level",
+            "target": 25,
+            "label": "Agility",
+            "boostable": true
+          }
+        ]
+      }
+    },
+    "quest.9645": {
+      "name": "The Ides of Milk",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Ides_of_Milk",
+      "sourceSha256": "639767dd59dd6f5a7056f0a962dc83a6a86f1630d6377dcb62ac8d2822fcbe5a",
+      "rule": {
+        "kind": "all",
+        "rules": []
+      }
+    },
+    "quest.113": {
+      "name": "The Queen of Thieves",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Queen_of_Thieves",
+      "sourceSha256": "c82e1d05fdd8ad0fc60a3263ce35604a5f3f334aa4fe49c3faf672296d349bfa",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "quest.13",
+            "target": 2,
+            "label": "Client of Kourend"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.thieving.level",
+            "target": 20,
+            "label": "Thieving"
+          }
+        ]
+      }
+    },
+    "quest.7107": {
+      "name": "The Red Reef",
+      "wiki": "https://oldschool.runescape.wiki/w/The_Red_Reef",
+      "sourceSha256": "c447e65ac0340ae1fab7410bf51f839d8964756616a5260eab08e6c059e8ffb1",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.sailing.level",
+            "target": 52,
+            "label": "Sailing"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.smithing.level",
+            "target": 48,
+            "label": "Smithing"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.7106",
+            "target": 2,
+            "label": "Troubled Tortugans"
+          }
+        ]
+      }
+    },
+    "quest.150": {
+      "name": "Tree Gnome Village",
+      "wiki": "https://oldschool.runescape.wiki/w/Tree_Gnome_Village",
+      "sourceSha256": "dac7d469ca439f2f1116d2a48ca25a560e6e596e118fa3ff3ab801392b3b932c",
+      "rule": {
+        "kind": "all",
+        "rules": []
+      }
+    },
+    "quest.7106": {
+      "name": "Troubled Tortugans",
+      "wiki": "https://oldschool.runescape.wiki/w/Troubled_Tortugans",
+      "sourceSha256": "4854fbcff97dbe29a90ebf63c5fcd31b28a331a1f92ed0f48114849ec48b41b7",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.slayer.level",
+            "target": 51,
+            "label": "Slayer"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.construction.level",
+            "target": 48,
+            "label": "Construction"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.sailing.level",
+            "target": 45,
+            "label": "Sailing"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.hunter.level",
+            "target": 45,
+            "label": "Hunter"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.woodcutting.level",
+            "target": 40,
+            "label": "Woodcutting"
+          },
+          {
+            "kind": "threshold",
+            "key": "skill.crafting.level",
+            "target": 34,
+            "label": "Crafting"
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.7103",
+            "target": 2,
+            "label": "Pandemonium"
+          }
+        ]
+      }
+    },
+    "quest.154": {
+      "name": "Underground Pass",
+      "wiki": "https://oldschool.runescape.wiki/w/Underground_Pass",
+      "sourceSha256": "427021475c64ccc34f8eecf5635bee9927ad6c7f782102783a0238f71a03e9ad",
+      "rule": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "threshold",
+            "key": "skill.ranged.level",
+            "target": 25,
+            "label": "Ranged",
+            "boostable": true
+          },
+          {
+            "kind": "threshold",
+            "key": "quest.9",
+            "target": 2,
+            "label": "Biohazard"
+          }
+        ]
+      }
+    },
+    "quest.162": {
+      "name": "X Marks the Spot",
+      "wiki": "https://oldschool.runescape.wiki/w/X_Marks_the_Spot",
+      "sourceSha256": "7ca0ebbb4ff32546084d6f5a088638772c10d06f02f7edcc6d30fd870f65c07e",
+      "rule": {
+        "kind": "all",
+        "rules": []
+      }
+    }
+  }
+}

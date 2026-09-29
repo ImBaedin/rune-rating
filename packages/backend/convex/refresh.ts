@@ -7,6 +7,7 @@ import {
   type MutationCtx,
   mutation,
 } from "./_generated/server.js";
+import { queueAchievementUpdate } from "./lib/achievements";
 import { analyticsDistinctIdForRsn } from "./lib/analytics";
 import { syncCanonicalItemsForCategory } from "./lib/canonicalItems";
 import { getRefreshCooldownMs } from "./lib/config";
@@ -360,6 +361,7 @@ export const completeHiscores = internalMutation({
         requestId: args.requestId,
       },
     );
+    await queueAchievementUpdate(ctx, args.playerId);
     return true;
   },
 });
@@ -889,6 +891,7 @@ export const completeRuneProfile = internalMutation({
       args.requestId,
       args.fetchedAt,
     );
+    await queueAchievementUpdate(ctx, args.playerId, true);
     return true;
   },
 });

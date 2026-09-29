@@ -5,8 +5,8 @@ import type { FunctionReturnType } from "convex/server";
 import { ChevronDown, Info, Search, Shield, Trophy } from "lucide-react";
 import { type CSSProperties, useEffect, useState } from "react";
 import { capturePageView } from "./analytics";
+import { AppHeader } from "./components/AppHeader";
 import { SegmentedControl } from "./components/comparison-ui";
-import { PublicHeader } from "./components/PublicHeader";
 import { InfoPopover } from "./components/primitives/InfoPopover";
 import { useDecorativeMotionPaused } from "./features/decorativeMotion";
 import { leaderboardSearchInput } from "./features/leaderboardSearch";
@@ -138,7 +138,7 @@ export function LeaderboardPage() {
 
   return (
     <main className={`leaderboard-page${motionPaused ? " motion-paused" : ""}`}>
-      <PublicHeader active="leaderboard" />
+      <AppHeader active="leaderboard" />
 
       <section className="leaderboard-shell" id="public-content" tabIndex={-1}>
         <header className="leaderboard-hero">
