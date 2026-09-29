@@ -7,6 +7,11 @@ import {
   type MutationCtx,
   mutation,
 } from "./_generated/server.js";
+import { finishAchievementRefresh } from "./lib/achievementRefresh";
+import {
+  achievementHiscoresContent,
+  updateAchievementSources,
+} from "./lib/achievementSources";
 import { queueAchievementUpdate } from "./lib/achievements";
 import { analyticsDistinctIdForRsn } from "./lib/analytics";
 import { syncCanonicalItemsForCategory } from "./lib/canonicalItems";
@@ -99,6 +104,7 @@ async function finalizeRefreshIfTerminal(
   await ctx.db.patch(playerId, { refreshAllowedAt: now + cooldownMs });
   await syncPlayerRating(ctx, playerId, now);
   await ctx.db.delete(lease._id);
+  await finishAchievementRefresh(ctx, playerId);
   return true;
 }
 
@@ -171,6 +177,7 @@ export const request = mutation({
 
       if (lease) await ctx.db.delete(lease._id);
 
+      await ctx.db.patch(player._id, { lastRequestedAt: now });
       const requestId = crypto.randomUUID();
       await ctx.db.insert("refreshLeases", {
         playerId: player._id,
@@ -338,6 +345,16 @@ export const completeHiscores = internalMutation({
       }
     }
 
+    await updateAchievementSources(
+      ctx,
+      args.playerId,
+      replacements.map((replacement) => ({
+        key: replacement.category,
+        fetchedAt: args.fetchedAt,
+        content: achievementHiscoresContent(replacement.data),
+      })),
+    );
+
     await ctx.db.patch(args.playerId, {
       normalizedRsn: rsnLookupKey(args.displayRsn),
       displayRsn: args.displayRsn,
@@ -361,7 +378,6 @@ export const completeHiscores = internalMutation({
         requestId: args.requestId,
       },
     );
-    await queueAchievementUpdate(ctx, args.playerId);
     return true;
   },
 });
@@ -849,6 +865,25 @@ export const completeRuneProfile = internalMutation({
       });
     }
 
+    await updateAchievementSources(
+      ctx,
+      args.playerId,
+      snapshots.map((snapshot) => ({
+        key:
+          snapshot.category === "collection"
+            ? ("collectionSummary" as const)
+            : snapshot.category,
+        fetchedAt: args.fetchedAt,
+        content:
+          snapshot.category === "collection"
+            ? snapshot.data
+            : {
+                data: snapshot.data,
+                items: itemsByCategory[snapshot.category],
+              },
+      })),
+    );
+
     for (const category of runeProfileCategories) {
       const state = await ctx.db
         .query("snapshotStates")
@@ -891,7 +926,6 @@ export const completeRuneProfile = internalMutation({
       args.requestId,
       args.fetchedAt,
     );
-    await queueAchievementUpdate(ctx, args.playerId, true);
     return true;
   },
 });
@@ -971,6 +1005,7 @@ export const completeFailure = internalMutation({
     }
     await deletePlayerRating(ctx, args.playerId);
     await ctx.db.delete(lease._id);
+    await queueAchievementUpdate(ctx, args.playerId);
     return true;
   },
 });

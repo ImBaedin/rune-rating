@@ -4,16 +4,14 @@ import {
   achievementVersion,
   evaluateAchievements,
 } from "@rune-rating/domain/achievements";
-import { internal } from "../_generated/api";
-import type { Id } from "../_generated/dataModel";
-import type { MutationCtx, QueryCtx } from "../_generated/server";
-import { collectionDetailDedupeKey } from "../providerQueueViews";
+import { internal } from "../../../convex/_generated/api";
+import type { Id } from "../../../convex/_generated/dataModel";
+import type { MutationCtx, QueryCtx } from "../../../convex/_generated/server";
 import {
-  allAchievementSourceKeys,
-  readAchievementSources,
-} from "./achievementSources";
-import { contentHash } from "./contentHash";
-import { categorySnapshotKey, snapshotStateKey } from "./keys";
+  categorySnapshotKey,
+  snapshotStateKey,
+} from "../../../convex/lib/keys";
+import { collectionDetailDedupeKey } from "../../../convex/providerQueueViews";
 
 export const achievementCache = (ctx: QueryCtx, playerId: Id<"players">) =>
   ctx.db
@@ -67,34 +65,6 @@ export async function rebuildAchievementProgress(
 ) {
   const cache = await achievementCache(ctx, playerId);
   if (!cache) return;
-  const metadata = await readAchievementSources(ctx, playerId);
-  const combatState = await ctx.db
-    .query("snapshotStates")
-    .withIndex("by_key", (q) =>
-      q.eq(
-        "key",
-        snapshotStateKey(playerId, "runeProfile", "combatAchievements"),
-      ),
-    )
-    .unique();
-  const sources = JSON.stringify([
-    allAchievementSourceKeys.map((key) => metadata[key]?.contentHash ?? null),
-    combatState?.errorCode ?? null,
-  ]);
-  const timestamps = allAchievementSourceKeys.flatMap((key) =>
-    metadata[key] ? [metadata[key].fetchedAt] : [],
-  );
-  const fetchedAt = timestamps.length ? Math.min(...timestamps) : null;
-  if (
-    cache.version === achievementVersion &&
-    cache.states.length === achievementBindings.length &&
-    cache.sources === sources
-  ) {
-    // A successful unchanged refresh advances freshness without re-evaluating facts.
-    if (cache.fetchedAt !== fetchedAt)
-      await ctx.db.patch(cache._id, { fetchedAt });
-    return;
-  }
   const get = (
     category:
       | "skills"
@@ -111,15 +81,52 @@ export async function rebuildAchievementProgress(
         q.eq("key", categorySnapshotKey(playerId, category, segment)),
       )
       .unique();
-  const [skills, activities, quests, combat, collection, detail] =
-    await Promise.all([
-      get("skills"),
-      get("activities"),
-      get("quests"),
-      get("combatAchievements"),
-      get("collection", "summary"),
-      get("collection", "detail"),
-    ]);
+  const [
+    skills,
+    activities,
+    quests,
+    diaries,
+    combat,
+    collection,
+    detail,
+    combatState,
+  ] = await Promise.all([
+    get("skills"),
+    get("activities"),
+    get("quests"),
+    get("diaries"),
+    get("combatAchievements"),
+    get("collection", "summary"),
+    get("collection", "detail"),
+    ctx.db
+      .query("snapshotStates")
+      .withIndex("by_key", (q) =>
+        q.eq(
+          "key",
+          snapshotStateKey(playerId, "runeProfile", "combatAchievements"),
+        ),
+      )
+      .unique(),
+  ]);
+  const snapshots = [
+    skills,
+    activities,
+    quests,
+    diaries,
+    combat,
+    collection,
+    detail,
+  ];
+  const sources = JSON.stringify([
+    snapshots.map((s) => s?.fetchedAt ?? null),
+    combatState?.errorCode ?? null,
+  ]);
+  if (
+    cache.version === achievementVersion &&
+    cache.states.length === achievementBindings.length &&
+    cache.sources === sources
+  )
+    return;
   const categories = [
     "quests",
     "diaries",
@@ -182,61 +189,40 @@ export async function rebuildAchievementProgress(
     ),
   });
   const result = evaluateAchievements(facts);
+  const fetchedAt = Math.min(
+    ...snapshots.flatMap((s) => (s ? [s.fetchedAt] : [])),
+  );
   await ctx.db.patch(cache._id, {
     version: result.version,
     states: result.states,
     sources,
-    fetchedAt,
+    fetchedAt: Number.isFinite(fetchedAt) ? fetchedAt : null,
     calculatedAt: Date.now(),
   });
-  // Keep fingerprints separate so reading the public progress vector stays small.
-  const index = await ctx.db
-    .query("achievementEvidenceIndex")
-    .withIndex("by_playerId", (q) => q.eq("playerId", playerId))
-    .unique();
-  const legacy = index
-    ? []
-    : await ctx.db
-        .query("achievementEvidence")
-        .withIndex("by_playerId_and_chunk", (q) => q.eq("playerId", playerId))
-        .take(100);
-  if (legacy.length === 100 || result.progress.length > 32 * 100) {
+  // Bounded chunks keep selected-node reads small without 973 writes per refresh.
+  const previous = await ctx.db
+    .query("achievementEvidence")
+    .withIndex("by_playerId_and_chunk", (q) => q.eq("playerId", playerId))
+    .take(100);
+  if (previous.length === 100)
     throw Error("Achievement evidence exceeds the supported catalog size");
-  }
-  const chunks: Array<{ id: Id<"achievementEvidence">; hash: string }> = [];
-  const legacyByChunk = new Map(legacy.map((row) => [row.chunk, row]));
+  const remaining = new Map(previous.map((row) => [row.chunk, row]));
   for (let offset = 0; offset < result.progress.length; offset += 32) {
     const chunk = offset / 32;
-    const rows = result.progress.slice(offset, offset + 32);
-    const hash = await contentHash(rows);
-    const existing = index?.chunks[chunk];
-    const old = legacyByChunk.get(chunk);
-    const id = existing?.id ?? old?._id;
-    const value = { playerId, chunk, version: result.version, rows };
-    if (!id) {
-      chunks.push({
-        id: await ctx.db.insert("achievementEvidence", value),
-        hash,
-      });
-    } else {
-      if (
-        !(index?.version === result.version && existing?.hash === hash) &&
-        !(
-          old?.version === result.version &&
-          (await contentHash(old.rows)) === hash
-        )
-      ) {
-        await ctx.db.replace(id, value);
-      }
-      chunks.push({ id, hash });
-    }
-    legacyByChunk.delete(chunk);
+    const value = {
+      playerId,
+      chunk,
+      version: result.version,
+      rows: result.progress.slice(offset, offset + 32),
+    };
+    const existing = remaining.get(chunk);
+    remaining.delete(chunk);
+    if (!existing) await ctx.db.insert("achievementEvidence", value);
+    else if (
+      existing.version !== value.version ||
+      JSON.stringify(existing.rows) !== JSON.stringify(value.rows)
+    )
+      await ctx.db.replace(existing._id, value);
   }
-  for (const obsolete of index?.chunks.slice(chunks.length) ?? [])
-    await ctx.db.delete(obsolete.id);
-  for (const obsolete of legacyByChunk.values())
-    await ctx.db.delete(obsolete._id);
-  const value = { playerId, version: result.version, chunks };
-  if (index) await ctx.db.replace(index._id, value);
-  else await ctx.db.insert("achievementEvidenceIndex", value);
+  for (const obsolete of remaining.values()) await ctx.db.delete(obsolete._id);
 }

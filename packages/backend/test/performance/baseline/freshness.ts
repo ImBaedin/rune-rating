@@ -2,23 +2,65 @@ import type {
   AchievementSourceFreshness,
   AchievementSourceKey,
 } from "@rune-rating/domain/achievements";
-import type { Doc, Id } from "../_generated/dataModel";
-import type { QueryCtx } from "../_generated/server";
+import type { Doc, Id } from "../../../convex/_generated/dataModel";
+import type { QueryCtx } from "../../../convex/_generated/server";
+import { getRefreshCooldownMs } from "../../../convex/lib/config";
+import {
+  categorySnapshotKey,
+  snapshotStateKey,
+} from "../../../convex/lib/keys";
 import {
   collectionDetailDedupeKey,
   queueViewStatus,
-} from "../providerQueueViews";
-import {
-  type AchievementSources,
-  achievementSourceDefinitions as definitions,
-  readAchievementSources,
-} from "./achievementSources";
-import { getRefreshCooldownMs } from "./config";
-import { snapshotStateKey } from "./keys";
+} from "../../../convex/providerQueueViews";
 
-export { allAchievementSourceKeys } from "./achievementSources";
-
-type FreshnessState = Pick<Doc<"snapshotStates">, "status" | "errorCode">;
+const definitions = {
+  skills: {
+    source: "hiscores",
+    category: "skills",
+    segment: "all",
+    label: "Skill levels",
+  },
+  activities: {
+    source: "hiscores",
+    category: "activities",
+    segment: "all",
+    label: "Activity and boss scores",
+  },
+  quests: {
+    source: "runeProfile",
+    category: "quests",
+    segment: "all",
+    label: "Quest progress",
+  },
+  diaries: {
+    source: "runeProfile",
+    category: "diaries",
+    segment: "all",
+    label: "Achievement diaries",
+  },
+  combatAchievements: {
+    source: "runeProfile",
+    category: "combatAchievements",
+    segment: "all",
+    label: "Combat achievements",
+  },
+  collectionSummary: {
+    source: "runeProfile",
+    category: "collection",
+    segment: "summary",
+    label: "Collection catalog total",
+  },
+  collectionDetail: {
+    source: "runeProfile",
+    category: "collection",
+    segment: "detail",
+    label: "Collection log items",
+  },
+} as const;
+export const allAchievementSourceKeys = Object.keys(
+  definitions,
+) as AchievementSourceKey[];
 
 export async function achievementFreshness(
   ctx: QueryCtx,
@@ -26,21 +68,28 @@ export async function achievementFreshness(
   rsn: string,
   keys: AchievementSourceKey[],
   knownStates: Partial<
-    Record<AchievementSourceKey, FreshnessState | null>
+    Record<AchievementSourceKey, Doc<"snapshotStates"> | null>
   > = {},
-  options: { sources?: AchievementSources; cooldownMs?: number } = {},
 ): Promise<AchievementSourceFreshness[]> {
   const now = Date.now();
-  const cooldownMs = options.cooldownMs ?? (await getRefreshCooldownMs(ctx));
-  const sources =
-    options.sources ??
-    (await readAchievementSources(ctx, playerId, keys, {
-      timestampsOnly: true,
-    }));
+  const cooldownMs = await getRefreshCooldownMs(ctx);
   return await Promise.all(
     keys.map(async (key): Promise<AchievementSourceFreshness> => {
       const definition = definitions[key];
-      const [state, job] = await Promise.all([
+      const [snapshot, state, job] = await Promise.all([
+        ctx.db
+          .query("categorySnapshots")
+          .withIndex("by_key", (q) =>
+            q.eq(
+              "key",
+              categorySnapshotKey(
+                playerId,
+                definition.category,
+                definition.segment,
+              ),
+            ),
+          )
+          .unique(),
         key === "collectionDetail"
           ? null
           : key in knownStates
@@ -67,7 +116,7 @@ export async function achievementFreshness(
               .unique()
           : null,
       ]);
-      const fetchedAt = sources[key]?.fetchedAt ?? null;
+      const fetchedAt = snapshot?.fetchedAt ?? null;
       const staleAt = fetchedAt === null ? null : fetchedAt + cooldownMs;
       let status: AchievementSourceFreshness["status"] =
         fetchedAt === null

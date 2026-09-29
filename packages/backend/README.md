@@ -109,8 +109,15 @@ hide prior results, including selected-node evidence.
 
 `achievementProgress` holds one replaceable current result per enrolled player,
 keyed by the compiled catalog version and canonical source revisions. Successful
-Hiscores, RuneProfile, and collection-detail commits queue recomputation only for
-enrolled players. Repeat reads/refreshes of unchanged revisions do not re-evaluate.
+Player refresh finalization queues any stale/missing collection details in the same
+transaction, then schedules one rebuild after the refresh lease and collection job
+are both settled. Hiscores and RuneProfile intermediate commits do not rebuild.
+Collection retries keep the gate closed; completion, terminal failure, and exhausted
+job leases release it. Collection-only refreshes use the same gate. An optional
+`pendingRebuildId` coalesces pending work and needs no backfill for existing caches.
+Enrollment registers interest without evaluating the previous snapshot or fetching
+collection details ahead of the player refresh. Repeat reads/refreshes of unchanged
+revisions do not re-evaluate.
 No raw payloads, unlock dates, or achievement history are retained.
 
 `progress.needsRebuild` identifies missing caches, catalog version changes, and
@@ -149,7 +156,29 @@ job, independently of the collection summary.
 `achievements.progress.stale` now considers every contributing category instead of
 quests alone. `ready` means a usable current-version state vector exists, not that
 all providers succeeded. Saved progress remains visible during partial failures.
-Freshness means a snapshot was retrieved within an hour; it does not prove that a
+Freshness uses the configured refresh cooldown (one hour by default); it does not prove that a
 player has recently synced their RuneProfile plugin. Regressions cover fresh
 quests with failed Hiscores and a fresh collection summary with old/queued/failed
 item-level details.
+
+### Achievement content and read costs
+
+Source commits maintain compact `achievementSources` metadata in the same
+transaction as canonical snapshots/items. `fetchedAt` describes freshness;
+content hashes describe achievement-relevant changes. The cache guard also
+includes catalog version and combat-detail validation state. Unchanged sources
+advance freshness without rereading canonical items or evaluating milestones.
+Do not add a snapshot/item writer without updating the corresponding source
+metadata; maintenance tools must invalidate that metadata when bypassing writers.
+
+`achievementEvidenceIndex` stores bounded chunk IDs and hashes separately from
+public progress, so warm rebuilds only replace changed evidence and do not read
+all prior chunks. Missing source metadata and evidence indexes use the old live
+read path until naturally refreshed/rebuilt; no migration or bulk backfill is
+required. Existing public progress/profile endpoints remain available. The atlas
+uses `achievements.atlas` to share their player and status reads in one subscription.
+Enrollment does not touch existing player records; `lastRequestedAt` now records
+accepted refresh requests, not visits or rejected requests.
+
+See [measured savings and limitations](ACHIEVEMENT_PERFORMANCE.md) for the
+catalog-sized regression benchmark and reproduction instructions.

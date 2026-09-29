@@ -129,3 +129,9 @@ caches rebuild through the normal atlas load path. No history is retained.
 `achievementSourceKeys` walks completion/readiness dependencies for selected-node
 freshness. Collection rank uses Hiscores for obtained slots and RuneProfile for
 catalog totals; item/page evidence uses the independent collection-detail fetch.
+
+Achievement fact construction indexes collection items by page and observed combat
+tasks by boss once per evaluation. Static page definitions and boss task membership
+are indexed once per module, avoiding a full item/task scan for every page or boss.
+These indexes preserve duplicate-item maximum quantities and incomplete-source
+uncertainty; they are not player snapshot or history caches.

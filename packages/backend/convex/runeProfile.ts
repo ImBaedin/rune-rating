@@ -10,6 +10,7 @@ import {
   type QueryCtx,
   query,
 } from "./_generated/server.js";
+import { updateAchievementSources } from "./lib/achievementSources";
 import { queueAchievementUpdate } from "./lib/achievements";
 import { syncCanonicalItemsForCategory } from "./lib/canonicalItems";
 import { getRefreshCooldownMs } from "./lib/config";
@@ -788,6 +789,7 @@ async function syncCollectionSnapshots(
     previousSnapshots.map((snapshot) => [snapshot.key, snapshot]),
   );
 
+  let summaryUpdated = false;
   for (const snapshot of args.snapshots) {
     const key = categorySnapshotKey(
       args.playerId,
@@ -807,6 +809,7 @@ async function syncCollectionSnapshots(
     };
     const existing = remaining.get(key);
     if (!existing) {
+      if (snapshot.segment === "summary") summaryUpdated = true;
       await ctx.db.insert("categorySnapshots", {
         key,
         playerId: args.playerId,
@@ -819,6 +822,7 @@ async function syncCollectionSnapshots(
     remaining.delete(key);
     if (snapshot.segment === "summary" && existing.fetchedAt > args.fetchedAt)
       continue;
+    if (snapshot.segment === "summary") summaryUpdated = true;
     const dataChanged =
       existing.source !== value.source ||
       existing.segment !== value.segment ||
@@ -840,6 +844,7 @@ async function syncCollectionSnapshots(
   for (const stale of remaining.values()) {
     await ctx.db.delete(stale._id);
   }
+  return summaryUpdated;
 }
 
 export const replaceCollectionLog = internalMutation({
@@ -888,7 +893,7 @@ export const replaceCollectionLog = internalMutation({
         })),
       ]),
     ];
-    await syncCollectionSnapshots(ctx, {
+    const summaryUpdated = await syncCollectionSnapshots(ctx, {
       playerId: player._id,
       fetchedAt: args.fetchedAt,
       snapshots: snapshotValues,
@@ -916,6 +921,26 @@ export const replaceCollectionLog = internalMutation({
       ),
     });
 
+    await updateAchievementSources(ctx, player._id, [
+      {
+        key: "collectionDetail",
+        fetchedAt: args.fetchedAt,
+        content: args.collectionLog,
+      },
+      ...(summaryUpdated
+        ? [
+            {
+              key: "collectionSummary" as const,
+              fetchedAt: args.fetchedAt,
+              content: {
+                type: "collection",
+                obtained: args.collectionLog.obtained,
+                total: args.collectionLog.total,
+              },
+            },
+          ]
+        : []),
+    ]);
     await queueAchievementUpdate(ctx, player._id);
     return true;
   },

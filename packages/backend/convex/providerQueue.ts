@@ -6,6 +6,8 @@ import {
   internalMutation,
   query,
 } from "./_generated/server.js";
+import { queueAchievementUpdate } from "./lib/achievements";
+import { findPlayerByRsn } from "./lib/players";
 import { captureQueuedRefreshResult } from "./providerQueueAnalytics";
 import {
   FAILED_BACKOFF_MS,
@@ -310,6 +312,10 @@ export const completeJob = internalMutation({
       lastErrorCode: null,
       updatedAt: now,
     });
+    if (job.operation === "runeProfileCollectionDetail") {
+      const player = await findPlayerByRsn(ctx, job.args.rsn);
+      if (player) await queueAchievementUpdate(ctx, player._id);
+    }
     await ctx.scheduler.runAfter(0, internal.providerQueue.pump, {});
     return null;
   },
@@ -356,6 +362,9 @@ export const failJob = internalMutation({
 
     if (retry !== null) {
       await ctx.scheduler.runAt(retry, internal.providerQueue.pump, {});
+    } else if (job.operation === "runeProfileCollectionDetail") {
+      const player = await findPlayerByRsn(ctx, job.args.rsn);
+      if (player) await queueAchievementUpdate(ctx, player._id);
     }
     return null;
   },

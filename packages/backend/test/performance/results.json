@@ -1,0 +1,349 @@
+{
+  "fixture": {
+    "quests": 203,
+    "diaries": 48,
+    "tasks": 655,
+    "collectionRows": 1926,
+    "skills": 24,
+    "activities": 111
+  },
+  "measurement": "UTF-8 JSON bytes of documents returned through instrumented database reads; writes count application calls/payloads. Not Convex billed bytes.",
+  "results": {
+    "unchanged_refresh": {
+      "before": {
+        "reads": 3001,
+        "readBytes": 1805096,
+        "writes": 35,
+        "writeBytes": 443486,
+        "tables": {
+          "achievementProgress": {
+            "reads": 1,
+            "bytes": 1401
+          },
+          "categorySnapshots": {
+            "reads": 133,
+            "bytes": 76216
+          },
+          "snapshotStates": {
+            "reads": 1,
+            "bytes": 366
+          },
+          "canonicalItems": {
+            "reads": 2832,
+            "bytes": 1283716
+          },
+          "achievementEvidence": {
+            "reads": 34,
+            "bytes": 443397
+          }
+        }
+      },
+      "after": {
+        "reads": 3,
+        "readBytes": 3146,
+        "writes": 1,
+        "writeBytes": 64,
+        "tables": {
+          "achievementProgress": {
+            "reads": 1,
+            "bytes": 1786
+          },
+          "achievementSources": {
+            "reads": 1,
+            "bytes": 994
+          },
+          "snapshotStates": {
+            "reads": 1,
+            "bytes": 366
+          }
+        }
+      }
+    },
+    "one_skill_changed": {
+      "before": {
+        "reads": 3001,
+        "readBytes": 1805097,
+        "writes": 35,
+        "writeBytes": 443558,
+        "tables": {
+          "achievementProgress": {
+            "reads": 1,
+            "bytes": 1401
+          },
+          "categorySnapshots": {
+            "reads": 133,
+            "bytes": 76217
+          },
+          "snapshotStates": {
+            "reads": 1,
+            "bytes": 366
+          },
+          "canonicalItems": {
+            "reads": 2832,
+            "bytes": 1283716
+          },
+          "achievementEvidence": {
+            "reads": 34,
+            "bytes": 443397
+          }
+        }
+      },
+      "after": {
+        "reads": 2968,
+        "readBytes": 1366928,
+        "writes": 7,
+        "writeBytes": 82419,
+        "tables": {
+          "achievementProgress": {
+            "reads": 1,
+            "bytes": 1786
+          },
+          "achievementSources": {
+            "reads": 1,
+            "bytes": 994
+          },
+          "snapshotStates": {
+            "reads": 1,
+            "bytes": 366
+          },
+          "categorySnapshots": {
+            "reads": 132,
+            "bytes": 75884
+          },
+          "canonicalItems": {
+            "reads": 2832,
+            "bytes": 1283792
+          },
+          "achievementEvidenceIndex": {
+            "reads": 1,
+            "bytes": 4106
+          }
+        }
+      }
+    },
+    "atlas_read": {
+      "before": {
+        "reads": 24,
+        "readBytes": 33250,
+        "writes": 0,
+        "writeBytes": 0,
+        "tables": {
+          "players": {
+            "reads": 2,
+            "bytes": 494
+          },
+          "snapshotStates": {
+            "reads": 13,
+            "bytes": 4488
+          },
+          "achievementProgress": {
+            "reads": 1,
+            "bytes": 1401
+          },
+          "runtimeConfig": {
+            "reads": 1,
+            "bytes": 124
+          },
+          "categorySnapshots": {
+            "reads": 7,
+            "bytes": 26743
+          }
+        }
+      },
+      "after": {
+        "reads": 11,
+        "readBytes": 5573,
+        "writes": 0,
+        "writeBytes": 0,
+        "tables": {
+          "players": {
+            "reads": 1,
+            "bytes": 247
+          },
+          "runtimeConfig": {
+            "reads": 1,
+            "bytes": 124
+          },
+          "snapshotStates": {
+            "reads": 7,
+            "bytes": 2422
+          },
+          "achievementProgress": {
+            "reads": 1,
+            "bytes": 1786
+          },
+          "achievementSources": {
+            "reads": 1,
+            "bytes": 994
+          }
+        }
+      }
+    },
+    "detail_cooks-assistant": {
+      "before": {
+        "reads": 5,
+        "readBytes": 20406,
+        "writes": 0,
+        "writeBytes": 0,
+        "tables": {
+          "players": {
+            "reads": 1,
+            "bytes": 247
+          },
+          "snapshotStates": {
+            "reads": 1,
+            "bytes": 341
+          },
+          "achievementEvidence": {
+            "reads": 1,
+            "bytes": 19291
+          },
+          "runtimeConfig": {
+            "reads": 1,
+            "bytes": 124
+          },
+          "categorySnapshots": {
+            "reads": 1,
+            "bytes": 403
+          }
+        }
+      },
+      "after": {
+        "reads": 5,
+        "readBytes": 20406,
+        "writes": 0,
+        "writeBytes": 0,
+        "tables": {
+          "players": {
+            "reads": 1,
+            "bytes": 247
+          },
+          "snapshotStates": {
+            "reads": 1,
+            "bytes": 341
+          },
+          "achievementEvidence": {
+            "reads": 1,
+            "bytes": 19291
+          },
+          "runtimeConfig": {
+            "reads": 1,
+            "bytes": 124
+          },
+          "categorySnapshots": {
+            "reads": 1,
+            "bytes": 403
+          }
+        }
+      }
+    },
+    "detail_first-200m": {
+      "before": {
+        "reads": 6,
+        "readBytes": 15782,
+        "writes": 0,
+        "writeBytes": 0,
+        "tables": {
+          "players": {
+            "reads": 1,
+            "bytes": 247
+          },
+          "snapshotStates": {
+            "reads": 2,
+            "bytes": 672
+          },
+          "achievementEvidence": {
+            "reads": 1,
+            "bytes": 9906
+          },
+          "runtimeConfig": {
+            "reads": 1,
+            "bytes": 124
+          },
+          "categorySnapshots": {
+            "reads": 1,
+            "bytes": 4833
+          }
+        }
+      },
+      "after": {
+        "reads": 6,
+        "readBytes": 11939,
+        "writes": 0,
+        "writeBytes": 0,
+        "tables": {
+          "players": {
+            "reads": 1,
+            "bytes": 247
+          },
+          "snapshotStates": {
+            "reads": 2,
+            "bytes": 672
+          },
+          "achievementEvidence": {
+            "reads": 1,
+            "bytes": 9902
+          },
+          "runtimeConfig": {
+            "reads": 1,
+            "bytes": 124
+          },
+          "achievementSources": {
+            "reads": 1,
+            "bytes": 994
+          }
+        }
+      }
+    },
+    "enrollment_and_cooldown_player_lookups": {
+      "before": {
+        "reads": 2,
+        "readBytes": 494,
+        "writes": 2,
+        "writeBytes": 190,
+        "tables": {
+          "players": {
+            "reads": 2,
+            "bytes": 494
+          }
+        }
+      },
+      "after": {
+        "reads": 2,
+        "readBytes": 494,
+        "writes": 0,
+        "writeBytes": 0,
+        "tables": {
+          "players": {
+            "reads": 2,
+            "bytes": 494
+          }
+        }
+      }
+    },
+    "common_canonical_item_persistence": {
+      "reads": 2832,
+      "readBytes": 1283792,
+      "writes": 0,
+      "writeBytes": 0,
+      "tables": {
+        "canonicalItems": {
+          "reads": 2832,
+          "bytes": 1283792
+        }
+      }
+    },
+    "added_source_metadata_maintenance": {
+      "reads": 3,
+      "readBytes": 2982,
+      "writes": 3,
+      "writeBytes": 2742,
+      "tables": {
+        "achievementSources": {
+          "reads": 3,
+          "bytes": 2982
+        }
+      }
+    }
+  }
+}

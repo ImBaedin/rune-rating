@@ -2,6 +2,8 @@ import { rsnLookupKey } from "@rune-rating/domain";
 import { internal } from "./_generated/api.js";
 import type { Id } from "./_generated/dataModel";
 import type { MutationCtx } from "./_generated/server.js";
+import { queueAchievementUpdate } from "./lib/achievements";
+import { findPlayerByRsn } from "./lib/players";
 import {
   MAX_ATTEMPTS,
   MAX_JOBS_PER_PUMP,
@@ -130,6 +132,9 @@ export async function reclaimExpiredLeases(ctx: MutationCtx, now: number) {
     });
     if (retry !== null) {
       await ctx.scheduler.runAt(retry, internal.providerQueue.pump, {});
+    } else if (job.operation === "runeProfileCollectionDetail") {
+      const player = await findPlayerByRsn(ctx, job.args.rsn);
+      if (player) await queueAchievementUpdate(ctx, player._id);
     }
   }
 
