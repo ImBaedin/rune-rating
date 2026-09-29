@@ -5,32 +5,25 @@ import {
   achievementVersion,
 } from "@rune-rating/domain/achievements";
 import { v } from "convex/values";
-import { api, internal } from "./_generated/api";
-import type { Doc } from "./_generated/dataModel";
+import { api, internal } from "../../../convex/_generated/api";
 import {
   action,
   internalMutation,
-  type QueryCtx,
   query,
-} from "./_generated/server";
+} from "../../../convex/_generated/server";
+import { finishAchievementRefresh } from "../../../convex/lib/achievementRefresh";
 import {
-  achievementFreshness,
-  allAchievementSourceKeys,
-} from "./lib/achievementFreshness";
-import { finishAchievementRefresh } from "./lib/achievementRefresh";
+  achievementEvidenceFields,
+  achievementSourceFreshnessValidator,
+} from "../../../convex/lib/achievementValidators";
+import { snapshotStateKey } from "../../../convex/lib/keys";
+import { achievementFreshness, allAchievementSourceKeys } from "./freshness";
+import { findPlayerByRsn, getOrCreatePlayer } from "./players";
 import {
   achievementCache,
   achievementRefreshPending,
   rebuildAchievementProgress,
-} from "./lib/achievements";
-import {
-  achievementEvidenceFields,
-  achievementSourceFreshnessValidator,
-} from "./lib/achievementValidators";
-import { getRefreshCooldownMs } from "./lib/config";
-import { snapshotStateKey } from "./lib/keys";
-import { findPlayerByRsn, getOrCreatePlayer } from "./lib/players";
-import { playerProfile, profileValidator } from "./players";
+} from "./rebuild";
 
 const achievementIndexById = new Map(
   achievementBindings.map((node, index) => [node.id, index]),
@@ -102,117 +95,74 @@ const availability = v.union(
   v.literal("requiresRuneProfile"),
   v.literal("failed"),
 );
-const progressValidator = v.object({
-  availability,
-  version: v.string(),
-  states: v.string(),
-  displayRsn: v.string(),
-  fetchedAt: v.union(v.number(), v.null()),
-  refreshing: v.boolean(),
-  stale: v.boolean(),
-  needsRebuild: v.boolean(),
-  refreshAllowedAt: v.number(),
-});
-
-export async function achievementProgress(
-  ctx: QueryCtx,
-  rsn: string,
-  player: Doc<"players"> | null,
-  profile?: Awaited<ReturnType<typeof playerProfile>>,
-  cooldownMs?: number,
-) {
-  const normalized = normalizeRsn(rsn);
-  const empty = {
-    availability: "pending" as const,
-    version: achievementVersion,
-    states: "",
-    displayRsn: normalized,
-    fetchedAt: null,
-    refreshing: false,
-    stale: false,
-    needsRebuild: true,
-    refreshAllowedAt: 0,
-  };
-  if (!player) return empty;
-  const state = profile
-    ? profile.questsState
-    : await ctx.db
-        .query("snapshotStates")
-        .withIndex("by_key", (q) =>
-          q.eq("key", snapshotStateKey(player._id, "runeProfile", "quests")),
-        )
-        .unique();
-  const cache = await achievementCache(ctx, player._id);
-  const sources = await achievementFreshness(
-    ctx,
-    player._id,
-    player.displayRsn,
-    allAchievementSourceKeys,
-    profile
-      ? {
-          skills: profile.skillsState,
-          activities: profile.activitiesState,
-          quests: profile.questsState,
-          diaries: profile.diariesState,
-          combatAchievements: profile.combatAchievementsState,
-          collectionSummary: profile.collectionState,
-        }
-      : { quests: state },
-    { cooldownMs },
-  );
-  const refreshing = sources.some((source) => source.status === "refreshing");
-  const unavailable =
-    state?.status === "notConnected" || state?.status === "notFound";
-  const ready =
-    !!state?.lastSuccessAt &&
-    cache?.version === achievementVersion &&
-    cache.states.length === achievementBindings.length;
-  let availability: "requiresRuneProfile" | "ready" | "failed" | "pending" =
-    "pending";
-  if (unavailable) availability = "requiresRuneProfile";
-  else if (ready) availability = "ready";
-  else if (state?.status === "failed" || state?.status === "rateLimited")
-    availability = "failed";
-  return {
-    availability,
-    version: achievementVersion,
-    states: !unavailable && ready ? cache.states : "",
-    displayRsn: player.displayRsn,
-    fetchedAt: ready ? cache.fetchedAt : null,
-    refreshing,
-    stale: ready && sources.some((source) => source.status !== "fresh"),
-    needsRebuild:
-      cache?.version !== achievementVersion ||
-      cache.states.length !== achievementBindings.length,
-    refreshAllowedAt: player.refreshAllowedAt,
-  };
-}
 export const progress = query({
   args: { rsn: v.string() },
-  returns: progressValidator,
-  handler: async (ctx, { rsn }) =>
-    await achievementProgress(ctx, rsn, await findPlayerByRsn(ctx, rsn)),
-});
-export const atlas = query({
-  args: { rsn: v.string() },
   returns: v.object({
-    progress: progressValidator,
-    profile: v.union(profileValidator, v.null()),
+    availability,
+    version: v.string(),
+    states: v.string(),
+    displayRsn: v.string(),
+    fetchedAt: v.union(v.number(), v.null()),
+    refreshing: v.boolean(),
+    stale: v.boolean(),
+    needsRebuild: v.boolean(),
+    refreshAllowedAt: v.number(),
   }),
   handler: async (ctx, { rsn }) => {
-    const player = await findPlayerByRsn(ctx, rsn);
-    const cooldownMs = await getRefreshCooldownMs(ctx);
-    const profile = player
-      ? await playerProfile(ctx, player, cooldownMs)
-      : null;
-    const progress = await achievementProgress(
+    const normalized = normalizeRsn(rsn);
+    const player = await findPlayerByRsn(ctx, normalized);
+    const empty = {
+      availability: "pending" as const,
+      version: achievementVersion,
+      states: "",
+      displayRsn: normalized,
+      fetchedAt: null,
+      refreshing: false,
+      stale: false,
+      needsRebuild: true,
+      refreshAllowedAt: 0,
+    };
+    if (!player) return empty;
+    const state = await ctx.db
+      .query("snapshotStates")
+      .withIndex("by_key", (q) =>
+        q.eq("key", snapshotStateKey(player._id, "runeProfile", "quests")),
+      )
+      .unique();
+    const cache = await achievementCache(ctx, player._id);
+    const sources = await achievementFreshness(
       ctx,
-      rsn,
-      player,
-      profile ?? undefined,
-      cooldownMs,
+      player._id,
+      player.displayRsn,
+      allAchievementSourceKeys,
+      { quests: state },
     );
-    return { progress, profile };
+    const refreshing = sources.some((source) => source.status === "refreshing");
+    const unavailable =
+      state?.status === "notConnected" || state?.status === "notFound";
+    const ready =
+      !!state?.lastSuccessAt &&
+      cache?.version === achievementVersion &&
+      cache.states.length === achievementBindings.length;
+    let availability: "requiresRuneProfile" | "ready" | "failed" | "pending" =
+      "pending";
+    if (unavailable) availability = "requiresRuneProfile";
+    else if (ready) availability = "ready";
+    else if (state?.status === "failed" || state?.status === "rateLimited")
+      availability = "failed";
+    return {
+      availability,
+      version: achievementVersion,
+      states: !unavailable && ready ? cache.states : "",
+      displayRsn: player.displayRsn,
+      fetchedAt: ready ? cache.fetchedAt : null,
+      refreshing,
+      stale: ready && sources.some((source) => source.status !== "fresh"),
+      needsRebuild:
+        cache?.version !== achievementVersion ||
+        cache.states.length !== achievementBindings.length,
+      refreshAllowedAt: player.refreshAllowedAt,
+    };
   },
 });
 export const detail = query({

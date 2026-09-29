@@ -13,12 +13,21 @@ const modules = {
   "./achievements.ts": () => import("../convex/achievements"),
   "./runeProfile.ts": () => import("../convex/runeProfile"),
 };
+async function enrollFixture(
+  t: ReturnType<typeof convexTest>,
+  args: { rsn: string },
+) {
+  const playerId = await t.mutation(internal.achievements.enroll, args);
+  await t.mutation(internal.achievements.rebuild, { playerId });
+  return playerId;
+}
+
 test("current derived progress is compact, normalized, versioned, and hidden when RuneProfile is unavailable", async () => {
   const t = convexTest({ schema, modules });
   expect(
     await t.query(api.achievements.progress, { rsn: "Atlas User" }),
   ).toMatchObject({ needsRebuild: true, availability: "pending" });
-  await t.mutation(internal.achievements.enroll, { rsn: "Atlas User" });
+  await enrollFixture(t, { rsn: "Atlas User" });
   expect(
     (await t.query(api.achievements.progress, { rsn: "atlas_user" }))
       .availability,
@@ -308,7 +317,7 @@ test("empty complete collection details are cached; stale commits cannot overwri
 
 test("fresh quests cannot hide failed Hiscores and details report only relevant sources", async () => {
   const t = convexTest({ schema, modules });
-  await t.mutation(internal.achievements.enroll, { rsn: "Fresh Test" });
+  await enrollFixture(t, { rsn: "Fresh Test" });
   const now = Date.now();
   await t.run(async (ctx) => {
     const player = await ctx.db.query("players").first();
@@ -372,7 +381,7 @@ test("fresh quests cannot hide failed Hiscores and details report only relevant 
 
 test("collection details use their own timestamp and queue status, not a fresh summary", async () => {
   const t = convexTest({ schema, modules });
-  await t.mutation(internal.achievements.enroll, { rsn: "Log Test" });
+  await enrollFixture(t, { rsn: "Log Test" });
   const now = Date.now();
   const jobId = await t.run(async (ctx) => {
     const player = await ctx.db.query("players").first();
@@ -451,4 +460,52 @@ test("collection details use their own timestamp and queue status, not a fresh s
       (source) => source.key === "collectionDetail",
     ),
   ).toMatchObject({ status: "stale", fetchedAt: now - 7_200_000 });
+});
+
+test("achievement freshness follows the configured refresh cooldown", async () => {
+  const t = convexTest({ schema, modules });
+  const playerId = await enrollFixture(t, { rsn: "Configured" });
+  const now = Date.now();
+  await t.run(async (ctx) => {
+    await ctx.db.insert("runtimeConfig", {
+      key: "refreshCooldownMs",
+      numberValue: 60_000,
+    });
+    await ctx.db.insert("snapshotStates", {
+      key: `${playerId}:runeProfile:quests`,
+      playerId,
+      source: "runeProfile",
+      category: "quests",
+      status: "fresh",
+      requestId: "test",
+      lastAttemptAt: now,
+      lastSuccessAt: now,
+      errorCode: null,
+    });
+    await ctx.db.insert("categorySnapshots", {
+      key: `${playerId}:quests:all`,
+      playerId,
+      source: "runeProfile",
+      category: "quests",
+      segment: "all",
+      fetchedAt: now - 120_000,
+      completeness: "complete",
+      data: {
+        type: "quests",
+        completed: 0,
+        started: 0,
+        notStarted: 1,
+        total: 1,
+        earnedPoints: 0,
+        totalPoints: 1,
+      },
+    });
+  });
+  const detail = await t.query(api.achievements.detail, {
+    rsn: "Configured",
+    nodeId: "cooks-assistant",
+  });
+  expect(detail?.sourceFreshness).toMatchObject([
+    { key: "quests", status: "stale", staleAt: now - 60_000 },
+  ]);
 });

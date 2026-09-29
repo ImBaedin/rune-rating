@@ -46,8 +46,9 @@ export function useAtlasAccount() {
   );
   const requesting = request?.rsn === rsn && request.pending;
   const error = request?.rsn === rsn ? request.error : null;
-  const progress = useQuery(api.achievements.progress, rsn ? { rsn } : "skip");
-  const profile = useQuery(api.players.getProfile, rsn ? { rsn } : "skip");
+  const atlas = useQuery(api.achievements.atlas, rsn ? { rsn } : "skip");
+  const progress = atlas?.progress;
+  const profile = atlas?.profile;
   const refreshAllowedAt = Math.max(
     profile?.refreshAllowedAt ?? 0,
     progress?.refreshAllowedAt ?? 0,

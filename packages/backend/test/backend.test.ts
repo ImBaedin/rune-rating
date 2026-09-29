@@ -1,11 +1,23 @@
 import { describe, expect, test } from "bun:test";
 import type { CanonicalActivity, CanonicalSkill } from "@rune-rating/domain";
 import { makeFunctionReference } from "convex/server";
+import { v } from "convex/values";
 import { convexTest } from "convex-test";
+import { internalAction } from "../convex/_generated/server";
 import { rankFromDistribution } from "../convex/lib/ratingDistributions";
 import { calculateAdjustedEfficiency } from "../convex/lib/wiseOldManEfficiency";
 import schema from "../convex/schema";
 import { buildXpTimelineDashboard } from "../convex/xpTimeline";
+
+// These tests supply provider commits directly. Scheduled network adapters must not
+// make real HTTP requests or race the fixture mutations when hashing yields.
+const fixtureSource = {
+  refreshPlayer: internalAction({
+    args: { playerId: v.id("players"), rsn: v.string(), requestId: v.string() },
+    returns: v.null(),
+    handler: async () => null,
+  }),
+};
 
 const modules = {
   "./_generated/api.js": () => import("../convex/_generated/api.js"),
@@ -19,9 +31,9 @@ const modules = {
   "./runeRating.ts": () => import("../convex/runeRating"),
   "./runeProfile.ts": () => import("../convex/runeProfile"),
   "./runtimeConfig.ts": () => import("../convex/runtimeConfig"),
-  "./sources/hiscores.ts": () => import("../convex/sources/hiscores"),
-  "./sources/runeProfile.ts": () => import("../convex/sources/runeProfile"),
-  "./sources/wiseOldMan.ts": () => import("../convex/sources/wiseOldMan"),
+  "./sources/hiscores.ts": async () => fixtureSource,
+  "./sources/runeProfile.ts": async () => fixtureSource,
+  "./sources/wiseOldMan.ts": async () => fixtureSource,
   "./wiseOldMan.ts": () => import("../convex/wiseOldMan"),
   "./xpTimeline.ts": () => import("../convex/xpTimeline"),
 };
@@ -544,7 +556,18 @@ function skill(
   };
 }
 
+async function cancelFixtureJobs(t: ReturnType<typeof convexTest>) {
+  await t.run(async (ctx) => {
+    for (const job of await ctx.db.system
+      .query("_scheduled_functions")
+      .collect()) {
+      if (job.state.kind === "pending") await ctx.scheduler.cancel(job._id);
+    }
+  });
+}
+
 async function currentLease(t: ReturnType<typeof convexTest>) {
+  await cancelFixtureJobs(t);
   return await t.run(async (ctx) => {
     const lease = await ctx.db.query("refreshLeases").first();
     if (!lease) throw new Error("Expected lease.");
@@ -647,6 +670,7 @@ async function completeRatingFixtures(
       },
     ],
   });
+  await cancelFixtureJobs(t);
   await t.mutation(completeWiseOldMan, {
     playerId: player._id,
     requestId: lease.requestId,

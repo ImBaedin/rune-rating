@@ -14,7 +14,31 @@ import {
   wiseOldManEhpSkillRateValidator,
 } from "./validators";
 
+const achievementSourceValidator = v.object({
+  fetchedAt: v.number(),
+  contentHash: v.string(),
+});
+
 export default defineSchema({
+  achievementSources: defineTable({
+    playerId: v.id("players"),
+    sources: v.object({
+      skills: v.optional(achievementSourceValidator),
+      activities: v.optional(achievementSourceValidator),
+      quests: v.optional(achievementSourceValidator),
+      diaries: v.optional(achievementSourceValidator),
+      combatAchievements: v.optional(achievementSourceValidator),
+      collectionSummary: v.optional(achievementSourceValidator),
+      collectionDetail: v.optional(achievementSourceValidator),
+    }),
+  }).index("by_playerId", ["playerId"]),
+  achievementEvidenceIndex: defineTable({
+    playerId: v.id("players"),
+    version: v.string(),
+    chunks: v.array(
+      v.object({ id: v.id("achievementEvidence"), hash: v.string() }),
+    ),
+  }).index("by_playerId", ["playerId"]),
   achievementProgress: defineTable({
     playerId: v.id("players"),
     version: v.string(),
@@ -22,6 +46,7 @@ export default defineSchema({
     sources: v.string(),
     fetchedAt: v.union(v.number(), v.null()),
     calculatedAt: v.number(),
+    pendingRebuildId: v.optional(v.id("_scheduled_functions")),
   }).index("by_playerId", ["playerId"]),
   achievementEvidence: defineTable({
     playerId: v.id("players"),

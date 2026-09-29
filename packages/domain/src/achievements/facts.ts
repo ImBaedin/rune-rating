@@ -2,6 +2,14 @@ import type { CanonicalActivity, CanonicalSkill } from "../models";
 import definitions from "./definitions.json";
 import type { AchievementFact, AchievementFacts } from "./evaluator";
 
+const pagesByName = new Map(definitions.pages.map((page) => [page.name, page]));
+const taskKeysByBoss = new Map<string, string[]>();
+for (const task of definitions.tasks) {
+  const keys = taskKeysByBoss.get(task.boss) ?? [];
+  keys.push(task.key);
+  taskKeysByBoss.set(task.boss, keys);
+}
+
 export type AchievementItem = {
   itemKey: string;
   label?: string;
@@ -237,13 +245,17 @@ export function achievementFacts(
       `diaries.${tier}`,
       definitions.diaries.filter((d) => d.tier === tier).map((d) => d.key),
     );
-  const taskBosses = new Set(definitions.tasks.map((t) => t.boss));
-  for (const boss of taskBosses) {
-    const keys = new Set(
-      definitions.tasks.filter((t) => t.boss === boss).map((t) => t.key),
-    );
-    for (const t of snapshot.tasks) if (t.group === boss) keys.add(t.itemKey);
-    count(`combatTasks.boss.${boss}`, [...keys]);
+  const observedTaskKeysByBoss = new Map<string, string[]>();
+  for (const task of snapshot.tasks) {
+    const keys = observedTaskKeysByBoss.get(task.group) ?? [];
+    keys.push(task.itemKey);
+    observedTaskKeysByBoss.set(task.group, keys);
+  }
+  for (const [boss, keys] of taskKeysByBoss) {
+    count(`combatTasks.boss.${boss}`, [
+      ...keys,
+      ...(observedTaskKeysByBoss.get(boss) ?? []),
+    ]);
   }
   if (snapshot.combatTier !== null)
     set(
@@ -255,6 +267,13 @@ export function achievementFacts(
         ) + 1,
       ),
     );
+  const itemKeysByPage = new Map<string | null, Set<string>>();
+  for (const item of snapshot.items) {
+    if (item.points === null) continue;
+    const keys = itemKeysByPage.get(item.state) ?? new Set<string>();
+    keys.add(`collection.item.${item.points}`);
+    itemKeysByPage.set(item.state, keys);
+  }
   if (snapshot.collectionComplete) {
     for (const item of definitions.items) set(item.key, 0);
     // One item can occur on multiple pages. Those are duplicated observations, not extra drops.
@@ -266,12 +285,8 @@ export function achievementFacts(
     for (const page of snapshot.pages) {
       const fact = set(`collection.page.${page.name}.current`, page.obtained);
       set(`collection.page.${page.name}.total`, page.total);
-      const definition = definitions.pages.find((p) => p.name === page.name);
-      const observedKeys = new Set(
-        snapshot.items
-          .filter((i) => i.state === page.name && i.points !== null)
-          .map((i) => `collection.item.${i.points}`),
-      );
+      const definition = pagesByName.get(page.name);
+      const observedKeys = itemKeysByPage.get(page.name) ?? new Set<string>();
       // Prefer current page membership; the catalog can fill absent rows only
       // when the complete snapshot's page totals still agree with it.
       const keys =
@@ -294,18 +309,11 @@ export function achievementFacts(
         fact.collectionLog = { items };
     }
   }
-  const petPage = definitions.pages.find((page) => page.name === "All Pets");
+  const petPage = pagesByName.get("All Pets");
   if (!petPage) throw Error("Canonical pet catalog is missing");
   count(
     "collection.pets",
-    [
-      ...new Set([
-        ...petPage.items,
-        ...snapshot.items
-          .filter((i) => i.state === "All Pets" && i.points !== null)
-          .map((i) => `collection.item.${i.points}`),
-      ]),
-    ],
+    [...new Set([...petPage.items, ...(itemKeysByPage.get("All Pets") ?? [])])],
     1,
     "Logged pets",
   );

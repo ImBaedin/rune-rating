@@ -1,5 +1,8 @@
 import { normalizeRsn, rsnLookupKey } from "@rune-rating/domain";
-import type { MutationCtx, QueryCtx } from "../_generated/server.js";
+import type {
+  MutationCtx,
+  QueryCtx,
+} from "../../../convex/_generated/server.js";
 
 type ReadCtx = QueryCtx | MutationCtx;
 
@@ -27,7 +30,10 @@ export async function getOrCreatePlayer(
     )
     .unique();
 
-  if (existing) return existing;
+  if (existing) {
+    await ctx.db.patch(existing._id, { displayRsn, lastRequestedAt: now });
+    return { ...existing, displayRsn, lastRequestedAt: now };
+  }
 
   const playerId = await ctx.db.insert("players", {
     normalizedRsn,
