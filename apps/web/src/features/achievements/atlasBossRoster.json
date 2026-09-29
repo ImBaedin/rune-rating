@@ -1,0 +1,641 @@
+[
+  {
+    "name": "Scurrius",
+    "hiscores": "Scurrius",
+    "metric": "scurrius",
+    "group": "first-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Scurrius"
+  },
+  {
+    "name": "Obor",
+    "hiscores": "Obor",
+    "metric": "obor",
+    "group": "first-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Obor"
+  },
+  {
+    "name": "Bryophyta",
+    "hiscores": "Bryophyta",
+    "metric": "bryophyta",
+    "group": "first-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Bryophyta"
+  },
+  {
+    "name": "Mad Angel",
+    "hiscores": "Mad Angel",
+    "metric": "mad_angel",
+    "group": "new-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Mad_Angel"
+  },
+  {
+    "name": "Maggot King",
+    "hiscores": "Maggot King",
+    "metric": "maggot_king",
+    "group": "new-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Maggot_King"
+  },
+  {
+    "name": "Giant Mole",
+    "hiscores": "Giant Mole",
+    "metric": "giant_mole",
+    "group": "classic-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Giant_Mole"
+  },
+  {
+    "name": "King Black Dragon",
+    "hiscores": "King Black Dragon",
+    "metric": "king_black_dragon",
+    "group": "classic-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "King_Black_Dragon"
+  },
+  {
+    "name": "Kalphite Queen",
+    "hiscores": "Kalphite Queen",
+    "metric": "kalphite_queen",
+    "group": "classic-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Kalphite_Queen"
+  },
+  {
+    "name": "Sarachnis",
+    "hiscores": "Sarachnis",
+    "metric": "sarachnis",
+    "group": "regional-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Sarachnis"
+  },
+  {
+    "name": "Deranged Archaeologist",
+    "hiscores": "Deranged Archaeologist",
+    "metric": "deranged_archaeologist",
+    "group": "regional-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Deranged_Archaeologist"
+  },
+  {
+    "name": "Brutus",
+    "hiscores": "Brutus",
+    "metric": "brutus",
+    "group": "regional-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Brutus"
+  },
+  {
+    "name": "Grotesque Guardians",
+    "hiscores": "Grotesque Guardians",
+    "metric": "grotesque_guardians",
+    "group": "slayer-bosses",
+    "ca": true,
+    "log": true,
+    "wiki": "Grotesque_Guardians"
+  },
+  {
+    "name": "Abyssal Sire",
+    "hiscores": "Abyssal Sire",
+    "metric": "abyssal_sire",
+    "group": "slayer-bosses",
+    "ca": true,
+    "log": true,
+    "wiki": "Abyssal_Sire"
+  },
+  {
+    "name": "Kraken",
+    "hiscores": "Kraken",
+    "metric": "kraken",
+    "group": "slayer-bosses",
+    "ca": true,
+    "log": true,
+    "wiki": "Kraken"
+  },
+  {
+    "name": "Cerberus",
+    "hiscores": "Cerberus",
+    "metric": "cerberus",
+    "group": "slayer-elite",
+    "ca": true,
+    "log": true,
+    "wiki": "Cerberus"
+  },
+  {
+    "name": "Thermonuclear Smoke Devil",
+    "hiscores": "Thermonuclear Smoke Devil",
+    "metric": "thermonuclear_smoke_devil",
+    "group": "slayer-elite",
+    "ca": true,
+    "log": true,
+    "wiki": "Thermonuclear_Smoke_Devil"
+  },
+  {
+    "name": "Alchemical Hydra",
+    "hiscores": "Alchemical Hydra",
+    "metric": "hydra",
+    "group": "slayer-elite",
+    "ca": true,
+    "log": true,
+    "wiki": "Alchemical_Hydra"
+  },
+  {
+    "name": "Araxxor",
+    "hiscores": "Araxxor",
+    "metric": "araxxor",
+    "group": "demons-spiders",
+    "ca": true,
+    "log": true,
+    "wiki": "Araxxor"
+  },
+  {
+    "name": "Skotizo",
+    "hiscores": "Skotizo",
+    "metric": "skotizo",
+    "group": "demons-spiders",
+    "ca": true,
+    "log": true,
+    "wiki": "Skotizo"
+  },
+  {
+    "name": "Yama",
+    "hiscores": "Yama",
+    "metric": "yama",
+    "group": "demons-spiders",
+    "ca": true,
+    "log": true,
+    "wiki": "Yama"
+  },
+  {
+    "name": "General Graardor",
+    "hiscores": "General Graardor",
+    "metric": "general_graardor",
+    "group": "godwars-commanders",
+    "ca": true,
+    "log": true,
+    "wiki": "General_Graardor"
+  },
+  {
+    "name": "Commander Zilyana",
+    "hiscores": "Commander Zilyana",
+    "metric": "commander_zilyana",
+    "group": "godwars-commanders",
+    "ca": true,
+    "log": true,
+    "wiki": "Commander_Zilyana"
+  },
+  {
+    "name": "K'ril Tsutsaroth",
+    "hiscores": "K'ril Tsutsaroth",
+    "metric": "k_ril_tsutsaroth",
+    "group": "godwars-commanders",
+    "ca": true,
+    "log": true,
+    "wiki": "K'ril_Tsutsaroth"
+  },
+  {
+    "name": "Kree'Arra",
+    "hiscores": "Kree'Arra",
+    "metric": "kree_arra",
+    "group": "godwars-ancients",
+    "ca": true,
+    "log": true,
+    "wiki": "Kree'Arra"
+  },
+  {
+    "name": "Nex",
+    "hiscores": "Nex",
+    "metric": "nex",
+    "group": "godwars-ancients",
+    "ca": true,
+    "log": true,
+    "wiki": "Nex"
+  },
+  {
+    "name": "Corporeal Beast",
+    "hiscores": "Corporeal Beast",
+    "metric": "corporeal_beast",
+    "group": "godwars-ancients",
+    "ca": true,
+    "log": true,
+    "wiki": "Corporeal_Beast"
+  },
+  {
+    "name": "Dagannoth Rex",
+    "hiscores": "Dagannoth Rex",
+    "metric": "dagannoth_rex",
+    "group": "dagannoth-kings",
+    "ca": true,
+    "log": false,
+    "wiki": "Dagannoth_Rex"
+  },
+  {
+    "name": "Dagannoth Prime",
+    "hiscores": "Dagannoth Prime",
+    "metric": "dagannoth_prime",
+    "group": "dagannoth-kings",
+    "ca": true,
+    "log": false,
+    "wiki": "Dagannoth_Prime"
+  },
+  {
+    "name": "Dagannoth Supreme",
+    "hiscores": "Dagannoth Supreme",
+    "metric": "dagannoth_supreme",
+    "group": "dagannoth-kings",
+    "ca": true,
+    "log": false,
+    "wiki": "Dagannoth_Supreme"
+  },
+  {
+    "name": "Artio",
+    "hiscores": "Artio",
+    "metric": "artio",
+    "group": "wild-solo",
+    "ca": false,
+    "log": false,
+    "wiki": "Artio"
+  },
+  {
+    "name": "Spindel",
+    "hiscores": "Spindel",
+    "metric": "spindel",
+    "group": "wild-solo",
+    "ca": false,
+    "log": false,
+    "wiki": "Spindel"
+  },
+  {
+    "name": "Calvar'ion",
+    "hiscores": "Calvar'ion",
+    "metric": "calvar_ion",
+    "group": "wild-solo",
+    "ca": false,
+    "log": false,
+    "wiki": "Calvar'ion"
+  },
+  {
+    "name": "Callisto",
+    "hiscores": "Callisto",
+    "metric": "callisto",
+    "group": "wild-multi",
+    "ca": true,
+    "log": true,
+    "wiki": "Callisto"
+  },
+  {
+    "name": "Venenatis",
+    "hiscores": "Venenatis",
+    "metric": "venenatis",
+    "group": "wild-multi",
+    "ca": true,
+    "log": true,
+    "wiki": "Venenatis"
+  },
+  {
+    "name": "Vet'ion",
+    "hiscores": "Vet'ion",
+    "metric": "vet_ion",
+    "group": "wild-multi",
+    "ca": true,
+    "log": true,
+    "wiki": "Vet'ion"
+  },
+  {
+    "name": "Chaos Elemental",
+    "hiscores": "Chaos Elemental",
+    "metric": "chaos_elemental",
+    "group": "wild-roaming",
+    "ca": true,
+    "log": true,
+    "wiki": "Chaos_Elemental"
+  },
+  {
+    "name": "Chaos Fanatic",
+    "hiscores": "Chaos Fanatic",
+    "metric": "chaos_fanatic",
+    "group": "wild-roaming",
+    "ca": true,
+    "log": true,
+    "wiki": "Chaos_Fanatic"
+  },
+  {
+    "name": "Scorpia",
+    "hiscores": "Scorpia",
+    "metric": "scorpia",
+    "group": "wild-roaming",
+    "ca": true,
+    "log": true,
+    "wiki": "Scorpia"
+  },
+  {
+    "name": "Crazy Archaeologist",
+    "hiscores": "Crazy Archaeologist",
+    "metric": "crazy_archaeologist",
+    "group": "keys-chests",
+    "ca": true,
+    "log": true,
+    "wiki": "Crazy_Archaeologist"
+  },
+  {
+    "name": "Barrows",
+    "hiscores": "Barrows Chests",
+    "metric": "barrows",
+    "group": "keys-chests",
+    "ca": true,
+    "log": true,
+    "wiki": "Barrows"
+  },
+  {
+    "name": "Mimic",
+    "hiscores": "Mimic",
+    "metric": "mimic",
+    "group": "keys-chests",
+    "ca": true,
+    "log": false,
+    "wiki": "Mimic"
+  },
+  {
+    "name": "Zulrah",
+    "hiscores": "Zulrah",
+    "metric": "zulrah",
+    "group": "quest-bosses",
+    "ca": true,
+    "log": true,
+    "wiki": "Zulrah"
+  },
+  {
+    "name": "Vorkath",
+    "hiscores": "Vorkath",
+    "metric": "vorkath",
+    "group": "quest-bosses",
+    "ca": true,
+    "log": true,
+    "wiki": "Vorkath"
+  },
+  {
+    "name": "Phantom Muspah",
+    "hiscores": "Phantom Muspah",
+    "metric": "phantom_muspah",
+    "group": "quest-bosses",
+    "ca": true,
+    "log": true,
+    "wiki": "Phantom_Muspah"
+  },
+  {
+    "name": "Duke Sucellus",
+    "hiscores": "Duke Sucellus",
+    "metric": "duke_sucellus",
+    "group": "desert-generals",
+    "ca": true,
+    "log": true,
+    "wiki": "Duke_Sucellus"
+  },
+  {
+    "name": "Vardorvis",
+    "hiscores": "Vardorvis",
+    "metric": "vardorvis",
+    "group": "desert-generals",
+    "ca": true,
+    "log": true,
+    "wiki": "Vardorvis"
+  },
+  {
+    "name": "The Leviathan",
+    "hiscores": "The Leviathan",
+    "metric": "the_leviathan",
+    "group": "desert-generals",
+    "ca": true,
+    "log": true,
+    "wiki": "The_Leviathan"
+  },
+  {
+    "name": "The Whisperer",
+    "hiscores": "The Whisperer",
+    "metric": "the_whisperer",
+    "group": "nightmares",
+    "ca": true,
+    "log": true,
+    "wiki": "The_Whisperer"
+  },
+  {
+    "name": "The Nightmare",
+    "hiscores": "Nightmare",
+    "metric": "the_nightmare",
+    "group": "nightmares",
+    "ca": true,
+    "log": true,
+    "wiki": "The_Nightmare"
+  },
+  {
+    "name": "Phosani's Nightmare",
+    "hiscores": "Phosani's Nightmare",
+    "metric": "phosani_s_nightmare",
+    "group": "nightmares",
+    "ca": true,
+    "log": false,
+    "wiki": "Phosani's_Nightmare"
+  },
+  {
+    "name": "Amoxliatl",
+    "hiscores": "Amoxliatl",
+    "metric": "amoxliatl",
+    "group": "varlamore-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Amoxliatl"
+  },
+  {
+    "name": "The Hueycoatl",
+    "hiscores": "The Hueycoatl",
+    "metric": "the_hueycoatl",
+    "group": "varlamore-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "The_Hueycoatl"
+  },
+  {
+    "name": "Moons of Peril",
+    "hiscores": "Lunar Chests",
+    "metric": "lunar_chests",
+    "group": "varlamore-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Moons_of_Peril"
+  },
+  {
+    "name": "Sol Heredit",
+    "hiscores": "Sol Heredit",
+    "metric": "sol_heredit",
+    "group": "varlamore-depths",
+    "ca": true,
+    "log": true,
+    "wiki": "Sol_Heredit"
+  },
+  {
+    "name": "Doom of Mokhaiotl",
+    "hiscores": "Doom of Mokhaiotl",
+    "metric": "doom_of_mokhaiotl",
+    "group": "varlamore-depths",
+    "ca": true,
+    "log": true,
+    "wiki": "Doom_of_Mokhaiotl"
+  },
+  {
+    "name": "The Royal Titans",
+    "hiscores": "The Royal Titans",
+    "metric": "the_royal_titans",
+    "group": "varlamore-depths",
+    "ca": true,
+    "log": true,
+    "wiki": "Royal_Titans"
+  },
+  {
+    "name": "The Gauntlet",
+    "hiscores": "The Gauntlet",
+    "metric": "gauntlet",
+    "group": "prifddinas-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "The_Gauntlet"
+  },
+  {
+    "name": "The Corrupted Gauntlet",
+    "hiscores": "The Corrupted Gauntlet",
+    "metric": "the_corrupted_gauntlet",
+    "group": "prifddinas-hunts",
+    "ca": true,
+    "log": false,
+    "wiki": "The_Corrupted_Gauntlet"
+  },
+  {
+    "name": "Zalcano",
+    "hiscores": "Zalcano",
+    "metric": "zalcano",
+    "group": "prifddinas-hunts",
+    "ca": true,
+    "log": true,
+    "wiki": "Zalcano"
+  },
+  {
+    "name": "Chambers of Xeric",
+    "hiscores": "Chambers of Xeric",
+    "metric": "cox",
+    "group": "xeric-raids",
+    "ca": true,
+    "log": true,
+    "wiki": "Chambers_of_Xeric"
+  },
+  {
+    "name": "Chambers of Xeric: Challenge Mode",
+    "hiscores": "Chambers of Xeric: Challenge Mode",
+    "metric": "chambers_of_xeric_challenge_mode",
+    "group": "xeric-raids",
+    "ca": true,
+    "log": false,
+    "wiki": "Chambers_of_Xeric"
+  },
+  {
+    "name": "Theatre of Blood",
+    "hiscores": "Theatre of Blood",
+    "metric": "tob",
+    "group": "blood-raids",
+    "ca": true,
+    "log": true,
+    "wiki": "Theatre_of_Blood"
+  },
+  {
+    "name": "Theatre of Blood: Hard Mode",
+    "hiscores": "Theatre of Blood: Hard Mode",
+    "metric": "theatre_of_blood_hard_mode",
+    "group": "blood-raids",
+    "ca": true,
+    "log": false,
+    "wiki": "Theatre_of_Blood"
+  },
+  {
+    "name": "Tombs of Amascut",
+    "hiscores": "Tombs of Amascut",
+    "metric": "toa",
+    "group": "amascut-raids",
+    "ca": true,
+    "log": true,
+    "wiki": "Tombs_of_Amascut"
+  },
+  {
+    "name": "Tombs of Amascut: Expert Mode",
+    "hiscores": "Tombs of Amascut: Expert Mode",
+    "metric": "tombs_of_amascut_expert_mode",
+    "group": "amascut-raids",
+    "ca": true,
+    "log": false,
+    "wiki": "Tombs_of_Amascut"
+  },
+  {
+    "name": "Wintertodt",
+    "hiscores": "Wintertodt",
+    "metric": "wintertodt",
+    "group": "skilling-bosses",
+    "ca": true,
+    "log": true,
+    "wiki": "Wintertodt"
+  },
+  {
+    "name": "Tempoross",
+    "hiscores": "Tempoross",
+    "metric": "tempoross",
+    "group": "skilling-bosses",
+    "ca": true,
+    "log": true,
+    "wiki": "Tempoross"
+  },
+  {
+    "name": "Hespori",
+    "hiscores": "Hespori",
+    "metric": "hespori",
+    "group": "skilling-bosses",
+    "ca": true,
+    "log": true,
+    "wiki": "Hespori"
+  },
+  {
+    "name": "TzTok-Jad",
+    "hiscores": "TzTok-Jad",
+    "metric": "tztok_jad",
+    "group": "tzhaar-challenges",
+    "ca": true,
+    "log": true,
+    "wiki": "TzTok-Jad"
+  },
+  {
+    "name": "TzKal-Zuk",
+    "hiscores": "TzKal-Zuk",
+    "metric": "tzkal_zuk",
+    "group": "tzhaar-challenges",
+    "ca": true,
+    "log": true,
+    "wiki": "TzKal-Zuk"
+  },
+  {
+    "name": "Shellbane Gryphon",
+    "hiscores": "Shellbane Gryphon",
+    "metric": "shellbane_gryphon",
+    "group": "tzhaar-challenges",
+    "ca": true,
+    "log": true,
+    "wiki": "Shellbane_Gryphon"
+  }
+]

@@ -17,6 +17,7 @@ import {
   hashRsnPair,
   lookupRsnPairHashField,
 } from "../../analytics";
+import { AppHeader } from "../../components/AppHeader";
 import { ComparisonHeader } from "./components/ComparisonHeader";
 import {
   ComparisonShellContext,
@@ -432,12 +433,17 @@ export function ComparisonShell({
 
   return (
     <div className="app-shell scoreboard-shell">
+      <AppHeader
+        active="compare"
+        compareHref={comparisonPath(activeView, rsns)}
+        ratingRsn={displayRsns[0]}
+        contentId="main-content"
+      />
       <ComparisonHeader
         skillCount={
           comparison?.skills.filter((skill) => skill.key !== "skill.overall")
             .length ?? null
         }
-        primaryRsn={displayRsns[0]}
         getPath={(view) => comparisonPath(view, rsns)}
         rsns={draftRsns}
         displayRsns={displayRsns}

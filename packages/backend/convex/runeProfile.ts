@@ -10,6 +10,7 @@ import {
   type QueryCtx,
   query,
 } from "./_generated/server.js";
+import { queueAchievementUpdate } from "./lib/achievements";
 import { syncCanonicalItemsForCategory } from "./lib/canonicalItems";
 import { getRefreshCooldownMs } from "./lib/config";
 import { categorySnapshotKey } from "./lib/keys";
@@ -195,20 +196,11 @@ export const getCollectionRefreshPlan = internalQuery({
         .withIndex("by_key", (index) =>
           index.eq(
             "key",
-            categorySnapshotKey(player._id, "collection", "summary"),
+            categorySnapshotKey(player._id, "collection", "detail"),
           ),
         )
         .unique();
-      const detailRows = await ctx.db
-        .query("canonicalItems")
-        .withIndex("by_player_and_category", (index) =>
-          index.eq("playerId", player._id).eq("category", "collection"),
-        )
-        .take(1);
-      const isFresh =
-        summary !== null &&
-        now - summary.fetchedAt < cooldownMs &&
-        detailRows.length > 0;
+      const isFresh = summary !== null && now - summary.fetchedAt < cooldownMs;
       plan.push({
         rsn,
         shouldRefresh: !isFresh,
@@ -825,6 +817,8 @@ async function syncCollectionSnapshots(
     }
 
     remaining.delete(key);
+    if (snapshot.segment === "summary" && existing.fetchedAt > args.fetchedAt)
+      continue;
     const dataChanged =
       existing.source !== value.source ||
       existing.segment !== value.segment ||
@@ -833,7 +827,8 @@ async function syncCollectionSnapshots(
       existing.data.obtained !== snapshot.obtained ||
       existing.data.total !== snapshot.total;
     const shouldUpdateFetchedAt =
-      snapshot.segment === "summary" && existing.fetchedAt !== args.fetchedAt;
+      (snapshot.segment === "summary" || snapshot.segment === "detail") &&
+      existing.fetchedAt !== args.fetchedAt;
     if (dataChanged || shouldUpdateFetchedAt) {
       await ctx.db.patch(existing._id, {
         ...value,
@@ -862,7 +857,19 @@ export const replaceCollectionLog = internalMutation({
     const player = await findPlayerByRsn(ctx, args.rsn);
     if (!player) return false;
 
+    const prior = await ctx.db
+      .query("categorySnapshots")
+      .withIndex("by_key", (q) =>
+        q.eq("key", categorySnapshotKey(player._id, "collection", "detail")),
+      )
+      .unique();
+    if (prior && prior.fetchedAt >= args.fetchedAt) return false;
     const snapshotValues = [
+      {
+        segment: "detail",
+        obtained: args.collectionLog.obtained,
+        total: args.collectionLog.total,
+      },
       {
         segment: "summary",
         obtained: args.collectionLog.obtained,
@@ -909,6 +916,7 @@ export const replaceCollectionLog = internalMutation({
       ),
     });
 
+    await queueAchievementUpdate(ctx, player._id);
     return true;
   },
 });

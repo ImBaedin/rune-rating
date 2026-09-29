@@ -1,5 +1,6 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { achievementEvidenceValidator } from "./lib/achievementValidators";
 import {
   categoryDataValidator,
   categoryValidator,
@@ -14,6 +15,20 @@ import {
 } from "./validators";
 
 export default defineSchema({
+  achievementProgress: defineTable({
+    playerId: v.id("players"),
+    version: v.string(),
+    states: v.string(),
+    sources: v.string(),
+    fetchedAt: v.union(v.number(), v.null()),
+    calculatedAt: v.number(),
+  }).index("by_playerId", ["playerId"]),
+  achievementEvidence: defineTable({
+    playerId: v.id("players"),
+    chunk: v.number(),
+    version: v.string(),
+    rows: v.array(achievementEvidenceValidator),
+  }).index("by_playerId_and_chunk", ["playerId", "chunk"]),
   players: defineTable({
     normalizedRsn: v.string(),
     displayRsn: v.string(),

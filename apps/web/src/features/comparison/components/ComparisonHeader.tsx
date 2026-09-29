@@ -1,10 +1,16 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { ArrowRight, Clock3, RefreshCw, Sparkles } from "lucide-react";
+import { ArrowRight, Clock3, Database, RefreshCw } from "lucide-react";
 import { type FormEvent, useEffect, useRef } from "react";
+import { InfoPopover } from "../../../components/primitives/InfoPopover";
 import { formatAge } from "../formatters";
 import { type AppView, navGroups, navViewByLabel } from "../navigation";
 import { PlayerSearchCombobox } from "./PlayerSearchCombobox";
-import { ShellSourceChip } from "./ShellSourceChip";
+
+const sourceStatusLabels = {
+  live: "Live",
+  delayed: "Delayed",
+  off: "Unavailable",
+};
 
 const playerSides = [
   { id: "a", accent: "blue" },
@@ -13,7 +19,6 @@ const playerSides = [
 
 type ComparisonHeaderProps = {
   skillCount: number | null;
-  primaryRsn: string;
   getPath: (view: AppView) => string;
   rsns: [string, string];
   displayRsns: [string, string];
@@ -39,7 +44,6 @@ type ComparisonHeaderProps = {
 
 export function ComparisonHeader({
   skillCount,
-  primaryRsn,
   getPath,
   rsns,
   displayRsns,
@@ -56,6 +60,18 @@ export function ComparisonHeader({
   womDetail,
   runeProfileDetail,
 }: ComparisonHeaderProps) {
+  const sources = [
+    { label: "Hiscores", status: hiscoresStatus, detail: hiscoresDetail },
+    { label: "Wise Old Man", status: womStatus, detail: womDetail },
+    {
+      label: "RuneProfile",
+      status: runeProfileStatus,
+      detail: runeProfileDetail,
+    },
+  ];
+  const liveSourceCount = sources.filter(
+    (source) => source.status === "live",
+  ).length;
   const navItems = navGroups.flatMap((group) => group.items);
   const pathname = useLocation({ select: (location) => location.pathname });
   const navigationRef = useRef<HTMLElement>(null);
@@ -85,20 +101,8 @@ export function ComparisonHeader({
   }, [pathname]);
 
   return (
-    <header className="comparison-header">
-      <a className="skip-link" href="#main-content">
-        Skip to comparison
-      </a>
-
+    <div className="comparison-header">
       <div className="comparison-header-main">
-        <Link className="scoreboard-brand" to="/" aria-label="RuneRating home">
-          <span className="brand-mark" aria-hidden="true">
-            <span />
-            <span />
-          </span>
-          <strong>RuneRating</strong>
-        </Link>
-
         <form className="matchup-editor" onSubmit={onCompare}>
           <PlayerSearchCombobox
             side={playerSides[0]}
@@ -124,23 +128,40 @@ export function ComparisonHeader({
         </form>
 
         <div className="header-operations">
-          <fieldset className="header-sources" aria-label="Data source health">
-            <ShellSourceChip
-              label="Hiscores"
-              status={hiscoresStatus}
-              detail={hiscoresDetail}
-            />
-            <ShellSourceChip
-              label="Wise Old Man"
-              status={womStatus}
-              detail={womDetail}
-            />
-            <ShellSourceChip
-              label="RuneProfile"
-              status={runeProfileStatus}
-              detail={runeProfileDetail}
-            />
-          </fieldset>
+          <InfoPopover
+            className="header-sources-pill"
+            label={`Data sources: ${liveSourceCount} of 3 live`}
+            title="Data sources"
+            trigger={
+              <>
+                <Database size={13} aria-hidden="true" />
+                <span>Sources</span>
+                <span
+                  className={
+                    liveSourceCount === 3
+                      ? "source-count live"
+                      : "source-count delayed"
+                  }
+                >
+                  {liveSourceCount}/3
+                </span>
+              </>
+            }
+          >
+            <span className="header-source-list">
+              {sources.map(({ label, status, detail }) => (
+                <span className="header-source-row" key={label}>
+                  <span className="header-source-heading">
+                    <strong>{label}</strong>
+                    <span className={`header-source-status ${status}`}>
+                      {sourceStatusLabels[status]}
+                    </span>
+                  </span>
+                  {detail && <span>{detail}</span>}
+                </span>
+              ))}
+            </span>
+          </InfoPopover>
           <span className="snapshot-age">
             <Clock3 size={13} aria-hidden="true" />
             {comparison
@@ -197,15 +218,7 @@ export function ComparisonHeader({
             );
           })}
         </nav>
-        <Link
-          to="/rating"
-          search={{ rsn: primaryRsn }}
-          className="rating-shortcut"
-        >
-          <Sparkles size={14} aria-hidden="true" />
-          <span>Rating</span>
-        </Link>
       </div>
-    </header>
+    </div>
   );
 }

@@ -1,0 +1,8325 @@
+{
+  "sections": [
+    {
+      "id": "quests",
+      "label": "Quests",
+      "description": "Quest lines from the first chapter to the finale.",
+      "paths": [
+        "Elven lands",
+        "Myreque",
+        "Gnomes & monkeys",
+        "Dragonkin",
+        "Desert mysteries",
+        "Kourend"
+      ]
+    },
+    {
+      "id": "travel",
+      "label": "Travel & Magic",
+      "description": "Reach new places, open spellbooks, and make the daily journey easier.",
+      "paths": [
+        "Fairy rings",
+        "Gnomish routes",
+        "Island routes",
+        "Spellbooks",
+        "Prayers"
+      ]
+    },
+    {
+      "id": "equipment",
+      "label": "Combat Gear",
+      "description": "Weapons, armour and the components behind the upgrades.",
+      "paths": []
+    },
+    {
+      "id": "skilling-equipment",
+      "label": "Skilling Gear",
+      "description": "Tools and outfits that make the next grind better.",
+      "paths": []
+    },
+    {
+      "id": "skills",
+      "label": "Self-sufficiency",
+      "description": "Grow your supplies, brew your potions and craft your own gear.",
+      "paths": [
+        "Potion cabinet",
+        "Growing supplies",
+        "Jewellery bench",
+        "Slayer ladder",
+        "Runes & food",
+        "",
+        "",
+        "",
+        "Elven requirements",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "id": "diaries",
+      "label": "Diaries",
+      "description": "Four tiers in each region, building toward the achievement diary cape.",
+      "paths": [
+        "Lumbridge",
+        "Ardougne",
+        "Morytania",
+        "Kandarin",
+        "Falador",
+        "Varrock",
+        "Karamja",
+        "Fremennik",
+        "Desert",
+        "Western",
+        "Wilderness",
+        "Kourend"
+      ]
+    },
+    {
+      "id": "combat",
+      "label": "Bossing",
+      "description": "Kill counts, Combat Achievements and boss collections.",
+      "paths": []
+    },
+    {
+      "id": "collections",
+      "label": "Collections",
+      "description": "Collection ranks, rare finds, clue unlocks and trial rewards.",
+      "paths": []
+    },
+    {
+      "id": "account",
+      "label": "Account",
+      "description": "Levels, experience, quests and the road to max.",
+      "paths": [
+        "Total level",
+        "Base levels",
+        "Total XP",
+        "Combat levels",
+        "Questing",
+        "Combat capes",
+        "Gathering capes",
+        "Artisan capes",
+        "Support capes"
+      ]
+    }
+  ],
+  "placements": {
+    "plague": {
+      "section": "quests",
+      "lane": 0,
+      "row": 0
+    },
+    "biohazard": {
+      "section": "quests",
+      "lane": 0,
+      "row": 1
+    },
+    "underground": {
+      "section": "quests",
+      "lane": 0,
+      "row": 2
+    },
+    "regicide": {
+      "section": "quests",
+      "lane": 0,
+      "row": 3
+    },
+    "roving": {
+      "section": "quests",
+      "lane": 0,
+      "row": 4
+    },
+    "mourning-1": {
+      "section": "quests",
+      "lane": 0,
+      "row": 5
+    },
+    "mourning-2": {
+      "section": "quests",
+      "lane": 0,
+      "row": 6
+    },
+    "song": {
+      "section": "quests",
+      "lane": 0,
+      "row": 9
+    },
+    "priest": {
+      "section": "quests",
+      "lane": 1,
+      "row": 0
+    },
+    "nature": {
+      "section": "quests",
+      "lane": 1,
+      "row": 1
+    },
+    "myreque-search": {
+      "section": "quests",
+      "lane": 1,
+      "row": 2
+    },
+    "myreque-aid": {
+      "section": "quests",
+      "lane": 1,
+      "row": 3
+    },
+    "darkness": {
+      "section": "quests",
+      "lane": 1,
+      "row": 4
+    },
+    "hope": {
+      "section": "quests",
+      "lane": 1,
+      "row": 5
+    },
+    "sins": {
+      "section": "quests",
+      "lane": 1,
+      "row": 6
+    },
+    "tree-village": {
+      "section": "quests",
+      "lane": 2,
+      "row": 0
+    },
+    "grand-tree": {
+      "section": "quests",
+      "lane": 2,
+      "row": 1
+    },
+    "monkey-1": {
+      "section": "quests",
+      "lane": 2,
+      "row": 2
+    },
+    "monkey-2": {
+      "section": "quests",
+      "lane": 2,
+      "row": 3
+    },
+    "dragon-1": {
+      "section": "quests",
+      "lane": 3,
+      "row": 0
+    },
+    "heroes": {
+      "section": "quests",
+      "lane": 3,
+      "row": 1
+    },
+    "legends": {
+      "section": "quests",
+      "lane": 3,
+      "row": 2
+    },
+    "dragon-2": {
+      "section": "quests",
+      "lane": 3,
+      "row": 3
+    },
+    "digsite": {
+      "section": "quests",
+      "lane": 4,
+      "row": 0
+    },
+    "temple-ikov": {
+      "section": "quests",
+      "lane": 4,
+      "row": 1
+    },
+    "desert-1": {
+      "section": "quests",
+      "lane": 4,
+      "row": 2
+    },
+    "secrets-north": {
+      "section": "quests",
+      "lane": 4,
+      "row": 3
+    },
+    "desert-2": {
+      "section": "quests",
+      "lane": 4,
+      "row": 4
+    },
+    "client": {
+      "section": "quests",
+      "lane": 5,
+      "row": 0
+    },
+    "depths": {
+      "section": "quests",
+      "lane": 5,
+      "row": 1
+    },
+    "queen-thieves": {
+      "section": "quests",
+      "lane": 5,
+      "row": 2
+    },
+    "ascent": {
+      "section": "quests",
+      "lane": 5,
+      "row": 3
+    },
+    "forsaken": {
+      "section": "quests",
+      "lane": 5,
+      "row": 4
+    },
+    "righteous": {
+      "section": "quests",
+      "lane": 5,
+      "row": 5
+    },
+    "kingdom": {
+      "section": "quests",
+      "lane": 5,
+      "row": 6
+    },
+    "making-history": {
+      "section": "quests",
+      "lane": 0,
+      "row": 8
+    },
+    "prif": {
+      "section": "quests",
+      "lane": 0,
+      "row": 10
+    },
+    "darkmeyer": {
+      "section": "quests",
+      "lane": 1,
+      "row": 7
+    },
+    "vorkath-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 0.4,
+      "row": 0
+    },
+    "lost-city": {
+      "section": "travel",
+      "lane": 0,
+      "row": 0
+    },
+    "fairy-1": {
+      "section": "travel",
+      "lane": 0,
+      "row": 1
+    },
+    "fairy-rings": {
+      "section": "travel",
+      "lane": 0,
+      "row": 2
+    },
+    "staffless": {
+      "section": "travel",
+      "lane": 0,
+      "row": 3
+    },
+    "spirit-trees": {
+      "section": "travel",
+      "lane": 1,
+      "row": 0
+    },
+    "gliders": {
+      "section": "travel",
+      "lane": 1,
+      "row": 1
+    },
+    "enlightened": {
+      "section": "travel",
+      "lane": 1,
+      "row": 2
+    },
+    "eagles": {
+      "section": "travel",
+      "lane": 1,
+      "row": 3
+    },
+    "bone-voyage": {
+      "section": "travel",
+      "lane": 2,
+      "row": 0
+    },
+    "fremennik-trials": {
+      "section": "travel",
+      "lane": 2,
+      "row": 1
+    },
+    "fremennik-isles": {
+      "section": "travel",
+      "lane": 2,
+      "row": 2
+    },
+    "fremennik-exiles": {
+      "section": "travel",
+      "lane": 2,
+      "row": 3
+    },
+    "ancients": {
+      "section": "travel",
+      "lane": 3,
+      "row": 0
+    },
+    "lunar": {
+      "section": "travel",
+      "lane": 3,
+      "row": 2
+    },
+    "dream-spells": {
+      "section": "travel",
+      "lane": 3,
+      "row": 4
+    },
+    "arceuus-expanded": {
+      "section": "travel",
+      "lane": 3,
+      "row": 6
+    },
+    "lunar-diplomacy": {
+      "section": "travel",
+      "lane": 3,
+      "row": 1
+    },
+    "dream-mentor": {
+      "section": "travel",
+      "lane": 3,
+      "row": 3
+    },
+    "prayer-37": {
+      "section": "travel",
+      "lane": 4,
+      "row": 0
+    },
+    "prayer-40": {
+      "section": "travel",
+      "lane": 4,
+      "row": 1
+    },
+    "prayer-43": {
+      "section": "travel",
+      "lane": 4,
+      "row": 2
+    },
+    "dex-scroll": {
+      "section": "travel",
+      "lane": 4,
+      "row": 3
+    },
+    "arcane-scroll": {
+      "section": "travel",
+      "lane": 4,
+      "row": 4
+    },
+    "cooks-assistant": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 2.4,
+      "row": 0
+    },
+    "rfd-dwarf": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 0,
+      "row": 1
+    },
+    "rfd-goblins": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 1.6,
+      "row": 1
+    },
+    "rfd-pirate": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 3.2,
+      "row": 1
+    },
+    "rfd-guide": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 4.800000000000001,
+      "row": 1
+    },
+    "rfd-evil-dave": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 0,
+      "row": 2
+    },
+    "rfd-skrach": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 1.6,
+      "row": 2
+    },
+    "rfd-awowogei": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 3.2,
+      "row": 2
+    },
+    "rfd-amik": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 4.800000000000001,
+      "row": 2
+    },
+    "rfd-qp": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 4,
+      "row": 3
+    },
+    "rfd-final": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 2.4,
+      "row": 4
+    },
+    "barrows-gloves": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 2.4,
+      "row": 5
+    },
+    "zammy-spear": {
+      "section": "equipment",
+      "group": "slayer-melee",
+      "lane": 2,
+      "row": 1
+    },
+    "slayer-95": {
+      "section": "equipment",
+      "group": "slayer-melee",
+      "lane": 2.8,
+      "row": 0
+    },
+    "hydra-claw": {
+      "section": "equipment",
+      "group": "slayer-melee",
+      "lane": 2.8,
+      "row": 1
+    },
+    "lance": {
+      "section": "equipment",
+      "group": "slayer-melee",
+      "lane": 2.4,
+      "row": 2
+    },
+    "enhanced-seed": {
+      "section": "equipment",
+      "group": "ranged-arsenal",
+      "lane": 0,
+      "row": 0
+    },
+    "armour-seeds": {
+      "section": "equipment",
+      "group": "ranged-arsenal",
+      "lane": 0.8,
+      "row": 0
+    },
+    "crystal-ready": {
+      "section": "equipment",
+      "group": "ranged-arsenal",
+      "lane": 0.4,
+      "row": 1
+    },
+    "trident": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 0,
+      "row": 0
+    },
+    "magic-fang": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 1,
+      "row": 0
+    },
+    "swamp-trident": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 0.5,
+      "row": 1
+    },
+    "occult": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 0.5,
+      "row": 3
+    },
+    "whip": {
+      "section": "equipment",
+      "group": "slayer-melee",
+      "lane": 0,
+      "row": 0
+    },
+    "tentacle": {
+      "section": "equipment",
+      "group": "slayer-melee",
+      "lane": 0.8,
+      "row": 0
+    },
+    "tentacle-ready": {
+      "section": "equipment",
+      "group": "slayer-melee",
+      "lane": 0.4,
+      "row": 1
+    },
+    "jaw": {
+      "section": "equipment",
+      "group": "slayer-melee",
+      "lane": 4.4,
+      "row": 0
+    },
+    "faceguard": {
+      "section": "equipment",
+      "group": "slayer-melee",
+      "lane": 4.4,
+      "row": 1
+    },
+    "fire-cape": {
+      "section": "equipment",
+      "group": "quest-rewards",
+      "lane": 0.8,
+      "row": 0
+    },
+    "infernal-cape": {
+      "section": "equipment",
+      "group": "quest-rewards",
+      "lane": 0.8,
+      "row": 1
+    },
+    "champions-cape": {
+      "section": "equipment",
+      "group": "quest-rewards",
+      "lane": 0.8,
+      "row": 2
+    },
+    "herblore-38": {
+      "section": "skills",
+      "lane": 0,
+      "row": 0
+    },
+    "herblore-63": {
+      "section": "skills",
+      "lane": 0,
+      "row": 3
+    },
+    "herblore-81": {
+      "section": "skills",
+      "lane": 0,
+      "row": 5
+    },
+    "herblore-90": {
+      "section": "skills",
+      "lane": 0,
+      "row": 6
+    },
+    "farming-32": {
+      "section": "skills",
+      "lane": 1,
+      "row": 0
+    },
+    "farming-62": {
+      "section": "skills",
+      "lane": 1,
+      "row": 3
+    },
+    "farming-85": {
+      "section": "skills",
+      "lane": 1,
+      "row": 5
+    },
+    "prayer-supply": {
+      "section": "skills",
+      "lane": 0.5,
+      "row": 1
+    },
+    "restore-supply": {
+      "section": "skills",
+      "lane": 0.5,
+      "row": 4
+    },
+    "crafting-61": {
+      "section": "skills",
+      "lane": 2,
+      "row": 0
+    },
+    "crafting-89": {
+      "section": "skills",
+      "lane": 2,
+      "row": 1
+    },
+    "crafting-98": {
+      "section": "skills",
+      "lane": 2,
+      "row": 4
+    },
+    "slayer-58": {
+      "section": "skills",
+      "lane": 3,
+      "row": 0
+    },
+    "slayer-69": {
+      "section": "skills",
+      "lane": 3,
+      "row": 1
+    },
+    "slayer-85": {
+      "section": "skills",
+      "lane": 3,
+      "row": 2
+    },
+    "slayer-87": {
+      "section": "skills",
+      "lane": 3,
+      "row": 3
+    },
+    "slayer-93": {
+      "section": "skills",
+      "lane": 3,
+      "row": 4
+    },
+    "food-sharks": {
+      "section": "skills",
+      "lane": 4,
+      "row": 1
+    },
+    "food-angler": {
+      "section": "skills",
+      "lane": 4,
+      "row": 2
+    },
+    "food-karambwan": {
+      "section": "skills",
+      "lane": 4,
+      "row": 0
+    },
+    "blood-runes": {
+      "section": "skills",
+      "lane": 4,
+      "row": 3
+    },
+    "soul-runes": {
+      "section": "skills",
+      "lane": 4,
+      "row": 4
+    },
+    "elf-agility": {
+      "section": "skills",
+      "lane": 5,
+      "row": 0
+    },
+    "elf-construction": {
+      "section": "skills",
+      "lane": 5.8,
+      "row": 0
+    },
+    "elf-farming": {
+      "section": "skills",
+      "lane": 6.6,
+      "row": 0
+    },
+    "elf-herblore": {
+      "section": "skills",
+      "lane": 7.3999999999999995,
+      "row": 0
+    },
+    "elf-hunter": {
+      "section": "skills",
+      "lane": 8.2,
+      "row": 0
+    },
+    "elf-mining": {
+      "section": "skills",
+      "lane": 9,
+      "row": 0
+    },
+    "elf-smithing": {
+      "section": "skills",
+      "lane": 9.8,
+      "row": 0
+    },
+    "elf-woodcutting": {
+      "section": "skills",
+      "lane": 10.6,
+      "row": 0
+    },
+    "elven-skills": {
+      "section": "skills",
+      "lane": 7.8,
+      "row": 1
+    },
+    "diary-lumbridge-easy": {
+      "section": "diaries",
+      "lane": 0,
+      "row": 0
+    },
+    "diary-lumbridge-medium": {
+      "section": "diaries",
+      "lane": 0,
+      "row": 1
+    },
+    "diary-lumbridge-hard": {
+      "section": "diaries",
+      "lane": 0,
+      "row": 2
+    },
+    "diary-lumbridge-elite": {
+      "section": "diaries",
+      "lane": 0,
+      "row": 3
+    },
+    "diary-ardougne-easy": {
+      "section": "diaries",
+      "lane": 1,
+      "row": 0
+    },
+    "diary-ardougne-medium": {
+      "section": "diaries",
+      "lane": 1,
+      "row": 1
+    },
+    "diary-ardougne-hard": {
+      "section": "diaries",
+      "lane": 1,
+      "row": 2
+    },
+    "diary-ardougne-elite": {
+      "section": "diaries",
+      "lane": 1,
+      "row": 3
+    },
+    "diary-morytania-easy": {
+      "section": "diaries",
+      "lane": 2,
+      "row": 0
+    },
+    "diary-morytania-medium": {
+      "section": "diaries",
+      "lane": 2,
+      "row": 1
+    },
+    "diary-morytania-hard": {
+      "section": "diaries",
+      "lane": 2,
+      "row": 2
+    },
+    "diary-morytania-elite": {
+      "section": "diaries",
+      "lane": 2,
+      "row": 3
+    },
+    "diary-kandarin-easy": {
+      "section": "diaries",
+      "lane": 3,
+      "row": 0
+    },
+    "diary-kandarin-medium": {
+      "section": "diaries",
+      "lane": 3,
+      "row": 1
+    },
+    "diary-kandarin-hard": {
+      "section": "diaries",
+      "lane": 3,
+      "row": 2
+    },
+    "diary-kandarin-elite": {
+      "section": "diaries",
+      "lane": 3,
+      "row": 3
+    },
+    "diary-falador-easy": {
+      "section": "diaries",
+      "lane": 4,
+      "row": 0
+    },
+    "diary-falador-medium": {
+      "section": "diaries",
+      "lane": 4,
+      "row": 1
+    },
+    "diary-falador-hard": {
+      "section": "diaries",
+      "lane": 4,
+      "row": 2
+    },
+    "diary-falador-elite": {
+      "section": "diaries",
+      "lane": 4,
+      "row": 3
+    },
+    "diary-varrock-easy": {
+      "section": "diaries",
+      "lane": 5,
+      "row": 0
+    },
+    "diary-varrock-medium": {
+      "section": "diaries",
+      "lane": 5,
+      "row": 1
+    },
+    "diary-varrock-hard": {
+      "section": "diaries",
+      "lane": 5,
+      "row": 2
+    },
+    "diary-varrock-elite": {
+      "section": "diaries",
+      "lane": 5,
+      "row": 3
+    },
+    "diary-karamja-easy": {
+      "section": "diaries",
+      "lane": 6,
+      "row": 0
+    },
+    "diary-karamja-medium": {
+      "section": "diaries",
+      "lane": 6,
+      "row": 1
+    },
+    "diary-karamja-hard": {
+      "section": "diaries",
+      "lane": 6,
+      "row": 2
+    },
+    "diary-karamja-elite": {
+      "section": "diaries",
+      "lane": 6,
+      "row": 3
+    },
+    "diary-fremennik-easy": {
+      "section": "diaries",
+      "lane": 7,
+      "row": 0
+    },
+    "diary-fremennik-medium": {
+      "section": "diaries",
+      "lane": 7,
+      "row": 1
+    },
+    "diary-fremennik-hard": {
+      "section": "diaries",
+      "lane": 7,
+      "row": 2
+    },
+    "diary-fremennik-elite": {
+      "section": "diaries",
+      "lane": 7,
+      "row": 3
+    },
+    "diary-desert-easy": {
+      "section": "diaries",
+      "lane": 8,
+      "row": 0
+    },
+    "diary-desert-medium": {
+      "section": "diaries",
+      "lane": 8,
+      "row": 1
+    },
+    "diary-desert-hard": {
+      "section": "diaries",
+      "lane": 8,
+      "row": 2
+    },
+    "diary-desert-elite": {
+      "section": "diaries",
+      "lane": 8,
+      "row": 3
+    },
+    "diary-western-easy": {
+      "section": "diaries",
+      "lane": 9,
+      "row": 0
+    },
+    "diary-western-medium": {
+      "section": "diaries",
+      "lane": 9,
+      "row": 1
+    },
+    "diary-western-hard": {
+      "section": "diaries",
+      "lane": 9,
+      "row": 2
+    },
+    "diary-western-elite": {
+      "section": "diaries",
+      "lane": 9,
+      "row": 3
+    },
+    "diary-wilderness-easy": {
+      "section": "diaries",
+      "lane": 10,
+      "row": 0
+    },
+    "diary-wilderness-medium": {
+      "section": "diaries",
+      "lane": 10,
+      "row": 1
+    },
+    "diary-wilderness-hard": {
+      "section": "diaries",
+      "lane": 10,
+      "row": 2
+    },
+    "diary-wilderness-elite": {
+      "section": "diaries",
+      "lane": 10,
+      "row": 3
+    },
+    "diary-kourend-easy": {
+      "section": "diaries",
+      "lane": 11,
+      "row": 0
+    },
+    "diary-kourend-medium": {
+      "section": "diaries",
+      "lane": 11,
+      "row": 1
+    },
+    "diary-kourend-hard": {
+      "section": "diaries",
+      "lane": 11,
+      "row": 2
+    },
+    "diary-kourend-elite": {
+      "section": "diaries",
+      "lane": 11,
+      "row": 3
+    },
+    "diary-cape": {
+      "section": "diaries",
+      "lane": 5.5,
+      "row": 8
+    },
+    "all-diaries-easy": {
+      "section": "diaries",
+      "lane": 9,
+      "row": 5
+    },
+    "all-diaries-medium": {
+      "section": "diaries",
+      "lane": 9,
+      "row": 6
+    },
+    "all-diaries-hard": {
+      "section": "diaries",
+      "lane": 9,
+      "row": 7
+    },
+    "ca-easy": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 0.4,
+      "row": 0
+    },
+    "ca-medium": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 0.4,
+      "row": 1
+    },
+    "ca-hard": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-elite": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 0.4,
+      "row": 3
+    },
+    "ca-master": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 0.4,
+      "row": 4
+    },
+    "ca-grandmaster": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 0.4,
+      "row": 5
+    },
+    "kc-barrows-25": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-barrows-100": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-barrows-500": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-barrows": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 2,
+      "row": 3
+    },
+    "log-barrows": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-barrows": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-zulrah-25": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-zulrah-100": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-zulrah-500": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-zulrah": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 0,
+      "row": 3
+    },
+    "log-zulrah": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-zulrah": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-vorkath-25": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-vorkath-100": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-vorkath-500": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-vorkath": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 2,
+      "row": 3
+    },
+    "log-vorkath": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-vorkath": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-gauntlet-25": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-gauntlet-100": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-gauntlet-500": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-gauntlet": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 0,
+      "row": 3
+    },
+    "log-gauntlet": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-gauntlet": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-hydra-25": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-hydra-100": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-hydra-500": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-hydra": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 4,
+      "row": 3
+    },
+    "log-hydra": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-hydra": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-cox-25": {
+      "section": "combat",
+      "group": "xeric-raids",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-cox-100": {
+      "section": "combat",
+      "group": "xeric-raids",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-cox-500": {
+      "section": "combat",
+      "group": "xeric-raids",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-cox": {
+      "section": "combat",
+      "group": "xeric-raids",
+      "lane": 0,
+      "row": 3
+    },
+    "log-cox": {
+      "section": "combat",
+      "group": "xeric-raids",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-cox": {
+      "section": "combat",
+      "group": "xeric-raids",
+      "lane": 0.4,
+      "row": 4
+    },
+    "boss-variety-10": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 2.4,
+      "row": 0
+    },
+    "boss-variety-25": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 2.4,
+      "row": 1
+    },
+    "boss-variety-40": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 2.4,
+      "row": 2
+    },
+    "mimic-first": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 4.4,
+      "row": 2
+    },
+    "raid-tour": {
+      "section": "combat",
+      "group": "combat-honours",
+      "lane": 4.4,
+      "row": 0
+    },
+    "raid-tob": {
+      "section": "combat",
+      "group": "blood-raids",
+      "lane": 0.4,
+      "row": 0
+    },
+    "raid-toa": {
+      "section": "combat",
+      "group": "amascut-raids",
+      "lane": 0.4,
+      "row": 0
+    },
+    "collection-bronze": {
+      "section": "collections",
+      "lane": 0.5,
+      "row": 0,
+      "group": "collections-ranks"
+    },
+    "collection-iron": {
+      "section": "collections",
+      "lane": 2.5,
+      "row": 0,
+      "group": "collections-ranks"
+    },
+    "collection-steel": {
+      "section": "collections",
+      "lane": 4.5,
+      "row": 0,
+      "group": "collections-ranks"
+    },
+    "collection-black": {
+      "section": "collections",
+      "lane": 4.5,
+      "row": 1,
+      "group": "collections-ranks"
+    },
+    "collection-mithril": {
+      "section": "collections",
+      "lane": 2.5,
+      "row": 1,
+      "group": "collections-ranks"
+    },
+    "collection-adamant": {
+      "section": "collections",
+      "lane": 0.5,
+      "row": 1,
+      "group": "collections-ranks"
+    },
+    "collection-rune": {
+      "section": "collections",
+      "lane": 0.5,
+      "row": 2,
+      "group": "collections-ranks"
+    },
+    "collection-dragon": {
+      "section": "collections",
+      "lane": 2.5,
+      "row": 2,
+      "group": "collections-ranks"
+    },
+    "collection-gilded": {
+      "section": "collections",
+      "lane": 4.5,
+      "row": 2,
+      "group": "collections-ranks"
+    },
+    "set-ahrim": {
+      "section": "equipment",
+      "lane": 0,
+      "row": 0,
+      "group": "barrows-equipment"
+    },
+    "set-dharok": {
+      "section": "equipment",
+      "lane": 0.7999999999999998,
+      "row": 0,
+      "group": "barrows-equipment"
+    },
+    "set-guthan": {
+      "section": "equipment",
+      "lane": 1.6,
+      "row": 0,
+      "group": "barrows-equipment"
+    },
+    "set-karil": {
+      "section": "equipment",
+      "lane": 2.4,
+      "row": 0,
+      "group": "barrows-equipment"
+    },
+    "set-torag": {
+      "section": "equipment",
+      "lane": 3.2,
+      "row": 0,
+      "group": "barrows-equipment"
+    },
+    "set-verac": {
+      "section": "equipment",
+      "lane": 4,
+      "row": 0,
+      "group": "barrows-equipment"
+    },
+    "barrows-any": {
+      "section": "equipment",
+      "lane": 2,
+      "row": 1,
+      "group": "barrows-equipment"
+    },
+    "barrows-all": {
+      "section": "equipment",
+      "lane": 2,
+      "row": 2,
+      "group": "barrows-equipment"
+    },
+    "outfit-prospector": {
+      "section": "skilling-equipment",
+      "group": "skilling-mining",
+      "lane": 0,
+      "row": 0
+    },
+    "outfit-angler": {
+      "section": "skilling-equipment",
+      "group": "skilling-fishing",
+      "lane": 4,
+      "row": 2
+    },
+    "outfit-rogue": {
+      "section": "skilling-equipment",
+      "group": "skilling-agility-thieving",
+      "lane": 2,
+      "row": 0
+    },
+    "outfit-pyromancer": {
+      "section": "skilling-equipment",
+      "group": "skilling-fire-prayer",
+      "lane": 0,
+      "row": 0
+    },
+    "pets-1": {
+      "section": "collections",
+      "lane": 0,
+      "row": 0,
+      "group": "collections-trophies"
+    },
+    "pets-5": {
+      "section": "collections",
+      "lane": 0,
+      "row": 1,
+      "group": "collections-trophies"
+    },
+    "pets-10": {
+      "section": "collections",
+      "lane": 0,
+      "row": 2,
+      "group": "collections-trophies"
+    },
+    "jar-first": {
+      "section": "collections",
+      "lane": 2,
+      "row": 0,
+      "group": "collections-trophies"
+    },
+    "jars-five": {
+      "section": "collections",
+      "lane": 2,
+      "row": 1,
+      "group": "collections-trophies"
+    },
+    "greenlogs-10": {
+      "section": "collections",
+      "lane": 4,
+      "row": 0,
+      "group": "collections-trophies"
+    },
+    "clues-beginner": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 0,
+      "row": 2
+    },
+    "clues-easy": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 1,
+      "row": 2
+    },
+    "clues-medium": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 2,
+      "row": 2
+    },
+    "clues-hard": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 3,
+      "row": 2
+    },
+    "clues-elite": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 4,
+      "row": 2
+    },
+    "clues-master": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 5,
+      "row": 2
+    },
+    "total-500": {
+      "section": "account",
+      "lane": 0,
+      "row": 0
+    },
+    "total-1000": {
+      "section": "account",
+      "lane": 0,
+      "row": 1
+    },
+    "total-1500": {
+      "section": "account",
+      "lane": 0,
+      "row": 2
+    },
+    "total-1750": {
+      "section": "account",
+      "lane": 0,
+      "row": 3
+    },
+    "total-2000": {
+      "section": "account",
+      "lane": 0,
+      "row": 4
+    },
+    "total-2200": {
+      "section": "account",
+      "lane": 0,
+      "row": 5
+    },
+    "base-30": {
+      "section": "account",
+      "lane": 1,
+      "row": 0
+    },
+    "base-50": {
+      "section": "account",
+      "lane": 1,
+      "row": 1
+    },
+    "base-70": {
+      "section": "account",
+      "lane": 1,
+      "row": 2
+    },
+    "base-80": {
+      "section": "account",
+      "lane": 1,
+      "row": 3
+    },
+    "base-90": {
+      "section": "account",
+      "lane": 1,
+      "row": 4
+    },
+    "xp-1000000": {
+      "section": "account",
+      "lane": 2,
+      "row": 0
+    },
+    "xp-10000000": {
+      "section": "account",
+      "lane": 2,
+      "row": 1
+    },
+    "xp-50000000": {
+      "section": "account",
+      "lane": 2,
+      "row": 2
+    },
+    "xp-100000000": {
+      "section": "account",
+      "lane": 2,
+      "row": 3
+    },
+    "xp-250000000": {
+      "section": "account",
+      "lane": 2,
+      "row": 4
+    },
+    "xp-500000000": {
+      "section": "account",
+      "lane": 2,
+      "row": 5
+    },
+    "xp-1000000000": {
+      "section": "account",
+      "lane": 2,
+      "row": 6
+    },
+    "combat-50": {
+      "section": "account",
+      "lane": 3,
+      "row": 0
+    },
+    "combat-75": {
+      "section": "account",
+      "lane": 3,
+      "row": 1
+    },
+    "combat-100": {
+      "section": "account",
+      "lane": 3,
+      "row": 2
+    },
+    "combat-110": {
+      "section": "account",
+      "lane": 3,
+      "row": 3
+    },
+    "combat-120": {
+      "section": "account",
+      "lane": 3,
+      "row": 4
+    },
+    "combat-126": {
+      "section": "account",
+      "lane": 3,
+      "row": 5
+    },
+    "qp-50": {
+      "section": "account",
+      "lane": 4,
+      "row": 0
+    },
+    "qp-100": {
+      "section": "account",
+      "lane": 4,
+      "row": 1
+    },
+    "qp-175": {
+      "section": "account",
+      "lane": 4,
+      "row": 2
+    },
+    "qp-200": {
+      "section": "account",
+      "lane": 4,
+      "row": 3
+    },
+    "qp-250": {
+      "section": "account",
+      "lane": 4,
+      "row": 4
+    },
+    "f2p-quests": {
+      "section": "account",
+      "lane": 4,
+      "row": 5
+    },
+    "quest-cape": {
+      "section": "account",
+      "lane": 4,
+      "row": 6
+    },
+    "cape-attack": {
+      "section": "account",
+      "lane": 5,
+      "row": 0
+    },
+    "cape-strength": {
+      "section": "account",
+      "lane": 6,
+      "row": 0
+    },
+    "cape-defence": {
+      "section": "account",
+      "lane": 7,
+      "row": 0
+    },
+    "cape-ranged": {
+      "section": "account",
+      "lane": 8,
+      "row": 0
+    },
+    "cape-prayer": {
+      "section": "account",
+      "lane": 5,
+      "row": 1
+    },
+    "cape-magic": {
+      "section": "account",
+      "lane": 6,
+      "row": 1
+    },
+    "cape-runecraft": {
+      "section": "account",
+      "lane": 7,
+      "row": 1
+    },
+    "cape-construction": {
+      "section": "account",
+      "lane": 8,
+      "row": 1
+    },
+    "cape-hitpoints": {
+      "section": "account",
+      "lane": 5,
+      "row": 2
+    },
+    "cape-agility": {
+      "section": "account",
+      "lane": 6,
+      "row": 2
+    },
+    "cape-herblore": {
+      "section": "account",
+      "lane": 7,
+      "row": 2
+    },
+    "cape-thieving": {
+      "section": "account",
+      "lane": 8,
+      "row": 2
+    },
+    "cape-crafting": {
+      "section": "account",
+      "lane": 5,
+      "row": 3
+    },
+    "cape-fletching": {
+      "section": "account",
+      "lane": 6,
+      "row": 3
+    },
+    "cape-slayer": {
+      "section": "account",
+      "lane": 7,
+      "row": 3
+    },
+    "cape-hunter": {
+      "section": "account",
+      "lane": 8,
+      "row": 3
+    },
+    "cape-mining": {
+      "section": "account",
+      "lane": 5,
+      "row": 4
+    },
+    "cape-smithing": {
+      "section": "account",
+      "lane": 6,
+      "row": 4
+    },
+    "cape-fishing": {
+      "section": "account",
+      "lane": 7,
+      "row": 4
+    },
+    "cape-cooking": {
+      "section": "account",
+      "lane": 8,
+      "row": 4
+    },
+    "cape-firemaking": {
+      "section": "account",
+      "lane": 5,
+      "row": 5
+    },
+    "cape-woodcutting": {
+      "section": "account",
+      "lane": 6,
+      "row": 5
+    },
+    "cape-farming": {
+      "section": "account",
+      "lane": 7,
+      "row": 5
+    },
+    "cape-sailing": {
+      "section": "account",
+      "lane": 8,
+      "row": 5
+    },
+    "first-99": {
+      "section": "account",
+      "lane": 6,
+      "row": 6
+    },
+    "five-99": {
+      "section": "account",
+      "lane": 7,
+      "row": 7
+    },
+    "max-cape": {
+      "section": "account",
+      "lane": 6.5,
+      "row": 8
+    },
+    "first-200m": {
+      "section": "account",
+      "lane": 6.5,
+      "row": 9
+    },
+    "crafting-90": {
+      "section": "skills",
+      "lane": 2,
+      "row": 2
+    },
+    "dragon-defender": {
+      "section": "equipment",
+      "group": "quest-rewards",
+      "lane": 3.6,
+      "row": 0
+    },
+    "avernic-hilt": {
+      "section": "equipment",
+      "group": "quest-rewards",
+      "lane": 4.4,
+      "row": 0
+    },
+    "avernic-parts": {
+      "section": "equipment",
+      "group": "quest-rewards",
+      "lane": 4,
+      "row": 1
+    },
+    "staff-dead": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 2,
+      "row": 0
+    },
+    "toxic-staff": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 1.5,
+      "row": 1
+    },
+    "tanz-fang": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 3.2,
+      "row": 0
+    },
+    "fletching-53": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 4.8,
+      "row": 0
+    },
+    "blowpipe-route": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 4,
+      "row": 1
+    },
+    "serp-visage": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 3.2,
+      "row": 3
+    },
+    "crafting-52": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 4.8,
+      "row": 3
+    },
+    "serp-route": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 4,
+      "row": 4
+    },
+    "dhcb": {
+      "section": "equipment",
+      "group": "ranged-arsenal",
+      "lane": 2.4,
+      "row": 0
+    },
+    "armadyl-crossbow": {
+      "section": "equipment",
+      "group": "ranged-arsenal",
+      "lane": 3.6,
+      "row": 0
+    },
+    "nihil-horn": {
+      "section": "equipment",
+      "group": "ranged-arsenal",
+      "lane": 4.4,
+      "row": 0
+    },
+    "zaryte-rares": {
+      "section": "equipment",
+      "group": "ranged-arsenal",
+      "lane": 4,
+      "row": 1
+    },
+    "venator-shards": {
+      "section": "equipment",
+      "group": "ranged-arsenal",
+      "lane": 2.4,
+      "row": 3
+    },
+    "twisted-bow": {
+      "section": "equipment",
+      "group": "ranged-arsenal",
+      "lane": 0.4,
+      "row": 3
+    },
+    "dragon-crossbow-limbs": {
+      "section": "equipment",
+      "group": "ranged-arsenal",
+      "lane": 4.4,
+      "row": 3
+    },
+    "blood-armour": {
+      "section": "equipment",
+      "group": "moons-armour",
+      "lane": 0,
+      "row": 0
+    },
+    "blood-weapon": {
+      "section": "equipment",
+      "group": "moons-armour",
+      "lane": 0.8,
+      "row": 0
+    },
+    "blood-set": {
+      "section": "equipment",
+      "group": "moons-armour",
+      "lane": 0.4,
+      "row": 1
+    },
+    "blue-armour": {
+      "section": "equipment",
+      "group": "moons-armour",
+      "lane": 2,
+      "row": 0
+    },
+    "blue-weapon": {
+      "section": "equipment",
+      "group": "moons-armour",
+      "lane": 2.8,
+      "row": 0
+    },
+    "blue-set": {
+      "section": "equipment",
+      "group": "moons-armour",
+      "lane": 2.4,
+      "row": 1
+    },
+    "eclipse-armour": {
+      "section": "equipment",
+      "group": "moons-armour",
+      "lane": 4,
+      "row": 0
+    },
+    "eclipse-weapon": {
+      "section": "equipment",
+      "group": "moons-armour",
+      "lane": 4.8,
+      "row": 0
+    },
+    "eclipse-set": {
+      "section": "equipment",
+      "group": "moons-armour",
+      "lane": 4.4,
+      "row": 1
+    },
+    "all-moons-sets": {
+      "section": "equipment",
+      "group": "moons-armour",
+      "lane": 2.4,
+      "row": 3
+    },
+    "bandos-piece-0": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 0,
+      "row": 0
+    },
+    "bandos-piece-1": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 0.8,
+      "row": 0
+    },
+    "bandos-piece-2": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 1.6,
+      "row": 0
+    },
+    "bandos-set": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 0.8,
+      "row": 1
+    },
+    "armadyl-piece-0": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 3.2,
+      "row": 0
+    },
+    "armadyl-piece-1": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 4,
+      "row": 0
+    },
+    "armadyl-piece-2": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 4.8,
+      "row": 0
+    },
+    "armadyl-set": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 4,
+      "row": 1
+    },
+    "torva-drops-piece-0": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 1.6,
+      "row": 3
+    },
+    "torva-drops-piece-1": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 2.4,
+      "row": 3
+    },
+    "torva-drops-piece-2": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 3.2,
+      "row": 3
+    },
+    "torva-drops-set": {
+      "section": "equipment",
+      "group": "godwars-armour",
+      "lane": 2.4,
+      "row": 4
+    },
+    "ancestral-piece-0": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 0,
+      "row": 0
+    },
+    "ancestral-piece-1": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 0.8,
+      "row": 0
+    },
+    "ancestral-piece-2": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 1.6,
+      "row": 0
+    },
+    "ancestral-set": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 0.8,
+      "row": 1
+    },
+    "justiciar-piece-0": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 3.2,
+      "row": 0
+    },
+    "justiciar-piece-1": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 4,
+      "row": 0
+    },
+    "justiciar-piece-2": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 4.8,
+      "row": 0
+    },
+    "justiciar-set": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 4,
+      "row": 1
+    },
+    "masori-piece-0": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 1.6,
+      "row": 3
+    },
+    "masori-piece-1": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 2.4,
+      "row": 3
+    },
+    "masori-piece-2": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 3.2,
+      "row": 3
+    },
+    "masori-set": {
+      "section": "equipment",
+      "group": "raid-armour",
+      "lane": 2.4,
+      "row": 4
+    },
+    "virtus-piece-0": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 0,
+      "row": 0
+    },
+    "virtus-piece-1": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 0.8,
+      "row": 0
+    },
+    "virtus-piece-2": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 1.6,
+      "row": 0
+    },
+    "virtus-set": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 0.8,
+      "row": 1
+    },
+    "inquisitor-piece-0": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 3.2,
+      "row": 0
+    },
+    "inquisitor-piece-1": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 4,
+      "row": 0
+    },
+    "inquisitor-piece-2": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 4.8,
+      "row": 0
+    },
+    "inquisitor-set": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 4,
+      "row": 1
+    },
+    "oathplate-piece-0": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 1.6,
+      "row": 3
+    },
+    "oathplate-piece-1": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 2.4,
+      "row": 3
+    },
+    "oathplate-piece-2": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 3.2,
+      "row": 3
+    },
+    "oathplate-set": {
+      "section": "equipment",
+      "group": "elite-armour",
+      "lane": 2.4,
+      "row": 4
+    },
+    "sunfire-fanatic-piece-0": {
+      "section": "equipment",
+      "group": "regional-armour",
+      "lane": 0,
+      "row": 0
+    },
+    "sunfire-fanatic-piece-1": {
+      "section": "equipment",
+      "group": "regional-armour",
+      "lane": 0.8,
+      "row": 0
+    },
+    "sunfire-fanatic-piece-2": {
+      "section": "equipment",
+      "group": "regional-armour",
+      "lane": 1.6,
+      "row": 0
+    },
+    "sunfire-fanatic-set": {
+      "section": "equipment",
+      "group": "regional-armour",
+      "lane": 0.8,
+      "row": 1
+    },
+    "dagon-hai-piece-0": {
+      "section": "equipment",
+      "group": "regional-armour",
+      "lane": 3.2,
+      "row": 0
+    },
+    "dagon-hai-piece-1": {
+      "section": "equipment",
+      "group": "regional-armour",
+      "lane": 4,
+      "row": 0
+    },
+    "dagon-hai-piece-2": {
+      "section": "equipment",
+      "group": "regional-armour",
+      "lane": 4.8,
+      "row": 0
+    },
+    "dagon-hai-set": {
+      "section": "equipment",
+      "group": "regional-armour",
+      "lane": 4,
+      "row": 1
+    },
+    "bludgeon-parts-0": {
+      "section": "equipment",
+      "group": "bludgeon-parts",
+      "lane": 0,
+      "row": 0
+    },
+    "bludgeon-parts-1": {
+      "section": "equipment",
+      "group": "bludgeon-parts",
+      "lane": 2.4,
+      "row": 0
+    },
+    "bludgeon-parts-2": {
+      "section": "equipment",
+      "group": "bludgeon-parts",
+      "lane": 4.8,
+      "row": 0
+    },
+    "bludgeon-parts-ready": {
+      "section": "equipment",
+      "group": "bludgeon-parts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "noxious-parts-0": {
+      "section": "equipment",
+      "group": "noxious-parts",
+      "lane": 0,
+      "row": 0
+    },
+    "noxious-parts-1": {
+      "section": "equipment",
+      "group": "noxious-parts",
+      "lane": 2.4,
+      "row": 0
+    },
+    "noxious-parts-2": {
+      "section": "equipment",
+      "group": "noxious-parts",
+      "lane": 4.8,
+      "row": 0
+    },
+    "noxious-parts-ready": {
+      "section": "equipment",
+      "group": "noxious-parts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "soulreaper-parts-0": {
+      "section": "equipment",
+      "group": "soulreaper-parts",
+      "lane": 0,
+      "row": 0
+    },
+    "soulreaper-parts-1": {
+      "section": "equipment",
+      "group": "soulreaper-parts",
+      "lane": 1.6,
+      "row": 0
+    },
+    "soulreaper-parts-2": {
+      "section": "equipment",
+      "group": "soulreaper-parts",
+      "lane": 3.2,
+      "row": 0
+    },
+    "soulreaper-parts-3": {
+      "section": "equipment",
+      "group": "soulreaper-parts",
+      "lane": 4.8,
+      "row": 0
+    },
+    "soulreaper-parts-ready": {
+      "section": "equipment",
+      "group": "soulreaper-parts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "voidwaker-parts-0": {
+      "section": "equipment",
+      "group": "voidwaker-parts",
+      "lane": 0,
+      "row": 0
+    },
+    "voidwaker-parts-1": {
+      "section": "equipment",
+      "group": "voidwaker-parts",
+      "lane": 2.4,
+      "row": 0
+    },
+    "voidwaker-parts-2": {
+      "section": "equipment",
+      "group": "voidwaker-parts",
+      "lane": 4.8,
+      "row": 0
+    },
+    "voidwaker-parts-ready": {
+      "section": "equipment",
+      "group": "voidwaker-parts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "ballista-parts-0": {
+      "section": "equipment",
+      "group": "ballista-parts",
+      "lane": 0,
+      "row": 0
+    },
+    "ballista-parts-1": {
+      "section": "equipment",
+      "group": "ballista-parts",
+      "lane": 1.6,
+      "row": 0
+    },
+    "ballista-parts-2": {
+      "section": "equipment",
+      "group": "ballista-parts",
+      "lane": 3.2,
+      "row": 0
+    },
+    "ballista-parts-3": {
+      "section": "equipment",
+      "group": "ballista-parts",
+      "lane": 4.8,
+      "row": 0
+    },
+    "ballista-parts-ready": {
+      "section": "equipment",
+      "group": "ballista-parts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "godsword-shards": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 4.8,
+      "row": 0
+    },
+    "hilt-armadyl": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 0,
+      "row": 0
+    },
+    "godsword-armadyl": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 0,
+      "row": 1.5
+    },
+    "hilt-bandos": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 0.96,
+      "row": 0
+    },
+    "godsword-bandos": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 0.96,
+      "row": 1.5
+    },
+    "hilt-saradomin": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 1.92,
+      "row": 0
+    },
+    "godsword-saradomin": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 1.92,
+      "row": 1.5
+    },
+    "hilt-zamorak": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 2.88,
+      "row": 0
+    },
+    "godsword-zamorak": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 2.88,
+      "row": 1.5
+    },
+    "hilt-ancient": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 3.84,
+      "row": 0
+    },
+    "godsword-ancient": {
+      "section": "equipment",
+      "group": "godswords",
+      "lane": 3.84,
+      "row": 1.5
+    },
+    "glory-craft": {
+      "section": "equipment",
+      "group": "jewellery-foundations",
+      "lane": 0.4,
+      "row": 0
+    },
+    "fury-craft": {
+      "section": "equipment",
+      "group": "jewellery-foundations",
+      "lane": 2.4,
+      "row": 0
+    },
+    "onyx-enchant": {
+      "section": "equipment",
+      "group": "jewellery-foundations",
+      "lane": 4.4,
+      "row": 0
+    },
+    "onyx-record": {
+      "section": "equipment",
+      "group": "jewellery-foundations",
+      "lane": 0.4,
+      "row": 2
+    },
+    "zenyte-record": {
+      "section": "equipment",
+      "group": "jewellery-foundations",
+      "lane": 2.4,
+      "row": 2
+    },
+    "blood-shard": {
+      "section": "equipment",
+      "group": "jewellery-foundations",
+      "lane": 4.4,
+      "row": 2
+    },
+    "zenyte-four": {
+      "section": "equipment",
+      "group": "jewellery-foundations",
+      "lane": 2.4,
+      "row": 3
+    },
+    "zenyte-gems": {
+      "section": "equipment",
+      "group": "zenyte-jewellery",
+      "lane": 0,
+      "row": 0
+    },
+    "zenyte-enchant": {
+      "section": "equipment",
+      "group": "zenyte-jewellery",
+      "lane": 4.8,
+      "row": 0
+    },
+    "zenyte-level-89": {
+      "section": "equipment",
+      "group": "zenyte-jewellery",
+      "lane": 0.8,
+      "row": 0
+    },
+    "route-ring-of-suffering": {
+      "section": "equipment",
+      "group": "zenyte-jewellery",
+      "lane": 0,
+      "row": 1
+    },
+    "zenyte-level-92": {
+      "section": "equipment",
+      "group": "zenyte-jewellery",
+      "lane": 1.6,
+      "row": 0
+    },
+    "route-necklace-of-anguish": {
+      "section": "equipment",
+      "group": "zenyte-jewellery",
+      "lane": 1.6,
+      "row": 1
+    },
+    "zenyte-level-95": {
+      "section": "equipment",
+      "group": "zenyte-jewellery",
+      "lane": 2.4,
+      "row": 0
+    },
+    "route-tormented-bracelet": {
+      "section": "equipment",
+      "group": "zenyte-jewellery",
+      "lane": 3.2,
+      "row": 1
+    },
+    "zenyte-level-98": {
+      "section": "equipment",
+      "group": "zenyte-jewellery",
+      "lane": 3.2,
+      "row": 0
+    },
+    "route-amulet-of-torture": {
+      "section": "equipment",
+      "group": "zenyte-jewellery",
+      "lane": 4.8,
+      "row": 1
+    },
+    "base-berserker-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 0,
+      "row": 0
+    },
+    "vestige-ultor-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 0.8,
+      "row": 0
+    },
+    "parts-ultor-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 0.4,
+      "row": 1
+    },
+    "base-warrior-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 4,
+      "row": 0
+    },
+    "vestige-bellator-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 4.8,
+      "row": 0
+    },
+    "parts-bellator-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 4.4,
+      "row": 1
+    },
+    "base-archers-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 0,
+      "row": 3
+    },
+    "vestige-venator-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 0.8,
+      "row": 3
+    },
+    "parts-venator-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 0.4,
+      "row": 4
+    },
+    "base-seers-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 4,
+      "row": 3
+    },
+    "vestige-magus-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 4.8,
+      "row": 3
+    },
+    "parts-magus-ring": {
+      "section": "equipment",
+      "group": "rings",
+      "lane": 4.4,
+      "row": 4
+    },
+    "drop-ghrazi-rapier": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 0.4,
+      "row": 0
+    },
+    "drop-sanguinesti-staff-uncharged": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 2.4,
+      "row": 0
+    },
+    "drop-scythe-of-vitur-uncharged": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 4.4,
+      "row": 0
+    },
+    "drop-osmumten-s-fang": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 0.4,
+      "row": 1.2
+    },
+    "drop-tumeken-s-shadow-uncharged": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 2.4,
+      "row": 1.2
+    },
+    "drop-lightbearer": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 4.4,
+      "row": 1.2
+    },
+    "drop-dragon-claws": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 0.4,
+      "row": 2.4
+    },
+    "drop-kodai-insignia": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 2.4,
+      "row": 2.4
+    },
+    "drop-dinh-s-bulwark": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 4.4,
+      "row": 2.4
+    },
+    "drop-twisted-buckler": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 0.4,
+      "row": 3.5999999999999996
+    },
+    "drop-elidinis-ward": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 2.4,
+      "row": 3.5999999999999996
+    },
+    "drop-dexterous-prayer-scroll": {
+      "section": "equipment",
+      "group": "raid-weapons",
+      "lane": 4.4,
+      "row": 3.5999999999999996
+    },
+    "drop-black-mask-10": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 0.4,
+      "row": 0
+    },
+    "drop-dragon-warhammer": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 2.4,
+      "row": 0
+    },
+    "drop-leaf-bladed-battleaxe": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 4.4,
+      "row": 0
+    },
+    "drop-sarachnis-cudgel": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 0.4,
+      "row": 1.2
+    },
+    "drop-eternal-gem": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 2.4,
+      "row": 1.2
+    },
+    "drop-imbued-heart": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 4.4,
+      "row": 1.2
+    },
+    "drop-primordial-crystal": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 0.4,
+      "row": 2.4
+    },
+    "drop-pegasian-crystal": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 2.4,
+      "row": 2.4
+    },
+    "drop-eternal-crystal": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 4.4,
+      "row": 2.4
+    },
+    "drop-smouldering-stone": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 0.4,
+      "row": 3.5999999999999996
+    },
+    "drop-araxyte-fang": {
+      "section": "equipment",
+      "group": "zenyte-upgrades",
+      "lane": 0.4,
+      "row": 0
+    },
+    "drop-aranea-boots": {
+      "section": "equipment",
+      "group": "slayer-drops",
+      "lane": 4.4,
+      "row": 3.5999999999999996
+    },
+    "drop-tormented-synapse": {
+      "section": "equipment",
+      "group": "demonic-drops",
+      "lane": 0.4,
+      "row": 0
+    },
+    "drop-burning-claw": {
+      "section": "equipment",
+      "group": "demonic-drops",
+      "lane": 2.4,
+      "row": 0
+    },
+    "drop-craw-s-bow-u": {
+      "section": "equipment",
+      "group": "demonic-drops",
+      "lane": 4.4,
+      "row": 0
+    },
+    "drop-viggora-s-chainmace-u": {
+      "section": "equipment",
+      "group": "demonic-drops",
+      "lane": 0.4,
+      "row": 1.2
+    },
+    "drop-thammaron-s-sceptre-u": {
+      "section": "equipment",
+      "group": "demonic-drops",
+      "lane": 2.4,
+      "row": 1.2
+    },
+    "drop-claws-of-callisto": {
+      "section": "equipment",
+      "group": "demonic-drops",
+      "lane": 4.4,
+      "row": 1.2
+    },
+    "drop-fangs-of-venenatis": {
+      "section": "equipment",
+      "group": "demonic-drops",
+      "lane": 0.4,
+      "row": 2.4
+    },
+    "drop-skull-of-vet-ion": {
+      "section": "equipment",
+      "group": "demonic-drops",
+      "lane": 2.4,
+      "row": 2.4
+    },
+    "drop-draconic-visage": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 0.4,
+      "row": 0
+    },
+    "drop-skeletal-visage": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 2.4,
+      "row": 0
+    },
+    "drop-wyvern-visage": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 4.4,
+      "row": 0
+    },
+    "drop-elysian-sigil": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 0.4,
+      "row": 1.2
+    },
+    "drop-arcane-sigil": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 2.4,
+      "row": 1.2
+    },
+    "drop-spectral-sigil": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 4.4,
+      "row": 1.2
+    },
+    "drop-nightmare-staff": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 0.4,
+      "row": 2.4
+    },
+    "drop-harmonised-orb": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 2.4,
+      "row": 2.4
+    },
+    "drop-volatile-orb": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 4.4,
+      "row": 2.4
+    },
+    "drop-eldritch-orb": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 0.4,
+      "row": 3.5999999999999996
+    },
+    "drop-inquisitor-s-mace": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 2.4,
+      "row": 3.5999999999999996
+    },
+    "drop-holy-elixir": {
+      "section": "equipment",
+      "group": "shields-and-staves",
+      "lane": 4.4,
+      "row": 3.5999999999999996
+    },
+    "drop-dizana-s-quiver-uncharged": {
+      "section": "equipment",
+      "group": "varlamore-rewards",
+      "lane": 0.4,
+      "row": 0
+    },
+    "drop-tonalztics-of-ralos-uncharged": {
+      "section": "equipment",
+      "group": "varlamore-rewards",
+      "lane": 2.4,
+      "row": 0
+    },
+    "drop-echo-crystal": {
+      "section": "equipment",
+      "group": "varlamore-rewards",
+      "lane": 4.4,
+      "row": 0
+    },
+    "drop-dragon-hunter-wand": {
+      "section": "equipment",
+      "group": "varlamore-rewards",
+      "lane": 0.4,
+      "row": 1.2
+    },
+    "drop-hueycoatl-hide": {
+      "section": "equipment",
+      "group": "varlamore-rewards",
+      "lane": 2.4,
+      "row": 1.2
+    },
+    "drop-glacial-temotli": {
+      "section": "equipment",
+      "group": "varlamore-rewards",
+      "lane": 4.4,
+      "row": 1.2
+    },
+    "drop-eye-of-ayak-uncharged": {
+      "section": "equipment",
+      "group": "varlamore-rewards",
+      "lane": 0.4,
+      "row": 2.4
+    },
+    "drop-avernic-treads": {
+      "section": "equipment",
+      "group": "varlamore-rewards",
+      "lane": 2.4,
+      "row": 2.4
+    },
+    "drop-mokhaiotl-cloth": {
+      "section": "equipment",
+      "group": "zenyte-upgrades",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-scurrius-100": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-scurrius-500": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-scurrius-1000": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-scurrius": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 0,
+      "row": 3
+    },
+    "log-scurrius": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-scurrius": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-obor-100": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-obor-500": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-obor-1000": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-obor": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 2,
+      "row": 3
+    },
+    "log-obor": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-obor": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-bryophyta-100": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-bryophyta-500": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-bryophyta-1000": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-bryophyta": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 4,
+      "row": 3
+    },
+    "log-bryophyta": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-bryophyta": {
+      "section": "combat",
+      "group": "first-hunts",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-mad-angel-100": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-mad-angel-500": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-mad-angel-1000": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-mad-angel": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 0,
+      "row": 3
+    },
+    "log-mad-angel": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-mad-angel": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-maggot-king-100": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-maggot-king-500": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-maggot-king-1000": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-maggot-king": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 2,
+      "row": 3
+    },
+    "log-maggot-king": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-maggot-king": {
+      "section": "combat",
+      "group": "new-hunts",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-giant-mole-100": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-giant-mole-500": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-giant-mole-1000": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-giant-mole": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 0,
+      "row": 3
+    },
+    "log-giant-mole": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-giant-mole": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-king-black-dragon-100": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-king-black-dragon-500": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-king-black-dragon-1000": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-king-black-dragon": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 2,
+      "row": 3
+    },
+    "log-king-black-dragon": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-king-black-dragon": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-kalphite-queen-100": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-kalphite-queen-500": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-kalphite-queen-1000": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-kalphite-queen": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 4,
+      "row": 3
+    },
+    "log-kalphite-queen": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-kalphite-queen": {
+      "section": "combat",
+      "group": "classic-hunts",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-sarachnis-100": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-sarachnis-500": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-sarachnis-1000": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-sarachnis": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 0,
+      "row": 3
+    },
+    "log-sarachnis": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-sarachnis": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-deranged-archaeologist-100": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-deranged-archaeologist-500": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-deranged-archaeologist-1000": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-deranged-archaeologist": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 2,
+      "row": 3
+    },
+    "log-deranged-archaeologist": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-deranged-archaeologist": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-brutus-100": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-brutus-500": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-brutus-1000": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-brutus": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 4,
+      "row": 3
+    },
+    "log-brutus": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-brutus": {
+      "section": "combat",
+      "group": "regional-hunts",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-grotesque-guardians-100": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-grotesque-guardians-500": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-grotesque-guardians-1000": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-grotesque-guardians": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 0,
+      "row": 3
+    },
+    "log-grotesque-guardians": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-grotesque-guardians": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-abyssal-sire-100": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-abyssal-sire-500": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-abyssal-sire-1000": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-abyssal-sire": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 2,
+      "row": 3
+    },
+    "log-abyssal-sire": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-abyssal-sire": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-kraken-100": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-kraken-500": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-kraken-1000": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-kraken": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 4,
+      "row": 3
+    },
+    "log-kraken": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-kraken": {
+      "section": "combat",
+      "group": "slayer-bosses",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-cerberus-100": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-cerberus-500": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-cerberus-1000": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-cerberus": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 0,
+      "row": 3
+    },
+    "log-cerberus": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-cerberus": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-thermonuclear-smoke-devil-100": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-thermonuclear-smoke-devil-500": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-thermonuclear-smoke-devil-1000": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-thermonuclear-smoke-devil": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 2,
+      "row": 3
+    },
+    "log-thermonuclear-smoke-devil": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-thermonuclear-smoke-devil": {
+      "section": "combat",
+      "group": "slayer-elite",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-araxxor-100": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-araxxor-500": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-araxxor-1000": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-araxxor": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 0,
+      "row": 3
+    },
+    "log-araxxor": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-araxxor": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-skotizo-100": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-skotizo-500": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-skotizo-1000": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-skotizo": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 2,
+      "row": 3
+    },
+    "log-skotizo": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-skotizo": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-yama-100": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-yama-500": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-yama-1000": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-yama": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 4,
+      "row": 3
+    },
+    "log-yama": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-yama": {
+      "section": "combat",
+      "group": "demons-spiders",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-general-graardor-100": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-general-graardor-500": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-general-graardor-1000": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-general-graardor": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 0,
+      "row": 3
+    },
+    "log-general-graardor": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-general-graardor": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-commander-zilyana-100": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-commander-zilyana-500": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-commander-zilyana-1000": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-commander-zilyana": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 2,
+      "row": 3
+    },
+    "log-commander-zilyana": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-commander-zilyana": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-k-ril-tsutsaroth-100": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-k-ril-tsutsaroth-500": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-k-ril-tsutsaroth-1000": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-k-ril-tsutsaroth": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 4,
+      "row": 3
+    },
+    "log-k-ril-tsutsaroth": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-k-ril-tsutsaroth": {
+      "section": "combat",
+      "group": "godwars-commanders",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-kree-arra-100": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-kree-arra-500": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-kree-arra-1000": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-kree-arra": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 0,
+      "row": 3
+    },
+    "log-kree-arra": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-kree-arra": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-nex-100": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-nex-500": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-nex-1000": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-nex": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 2,
+      "row": 3
+    },
+    "log-nex": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-nex": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-corporeal-beast-100": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-corporeal-beast-500": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-corporeal-beast-1000": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-corporeal-beast": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 4,
+      "row": 3
+    },
+    "log-corporeal-beast": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-corporeal-beast": {
+      "section": "combat",
+      "group": "godwars-ancients",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-dagannoth-rex-100": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-dagannoth-rex-500": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-dagannoth-rex-1000": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-dagannoth-rex": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 0.4,
+      "row": 3
+    },
+    "kc-dagannoth-prime-100": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-dagannoth-prime-500": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-dagannoth-prime-1000": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-dagannoth-prime": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 2.4,
+      "row": 3
+    },
+    "kc-dagannoth-supreme-100": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-dagannoth-supreme-500": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-dagannoth-supreme-1000": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-dagannoth-supreme": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 4.4,
+      "row": 3
+    },
+    "log-dagannoth-kings": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 2.4,
+      "row": 5
+    },
+    "dagannoth-tasks": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 2.4,
+      "row": 4
+    },
+    "dagannoth-mastery": {
+      "section": "combat",
+      "group": "dagannoth-kings",
+      "lane": 2.4,
+      "row": 6
+    },
+    "kc-artio-100": {
+      "section": "combat",
+      "group": "wild-solo",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-artio-500": {
+      "section": "combat",
+      "group": "wild-solo",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-artio-1000": {
+      "section": "combat",
+      "group": "wild-solo",
+      "lane": 0.4,
+      "row": 2
+    },
+    "kc-spindel-100": {
+      "section": "combat",
+      "group": "wild-solo",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-spindel-500": {
+      "section": "combat",
+      "group": "wild-solo",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-spindel-1000": {
+      "section": "combat",
+      "group": "wild-solo",
+      "lane": 2.4,
+      "row": 2
+    },
+    "kc-calvar-ion-100": {
+      "section": "combat",
+      "group": "wild-solo",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-calvar-ion-500": {
+      "section": "combat",
+      "group": "wild-solo",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-calvar-ion-1000": {
+      "section": "combat",
+      "group": "wild-solo",
+      "lane": 4.4,
+      "row": 2
+    },
+    "kc-callisto-100": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-callisto-500": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-callisto-1000": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-callisto": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 0,
+      "row": 3
+    },
+    "log-callisto": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-callisto": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-venenatis-100": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-venenatis-500": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-venenatis-1000": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-venenatis": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 2,
+      "row": 3
+    },
+    "log-venenatis": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-venenatis": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-vet-ion-100": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-vet-ion-500": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-vet-ion-1000": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-vet-ion": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 4,
+      "row": 3
+    },
+    "log-vet-ion": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-vet-ion": {
+      "section": "combat",
+      "group": "wild-multi",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-chaos-elemental-100": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-chaos-elemental-500": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-chaos-elemental-1000": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-chaos-elemental": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 0,
+      "row": 3
+    },
+    "log-chaos-elemental": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-chaos-elemental": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-chaos-fanatic-100": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-chaos-fanatic-500": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-chaos-fanatic-1000": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-chaos-fanatic": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 2,
+      "row": 3
+    },
+    "log-chaos-fanatic": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-chaos-fanatic": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-scorpia-100": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-scorpia-500": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-scorpia-1000": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-scorpia": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 4,
+      "row": 3
+    },
+    "log-scorpia": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-scorpia": {
+      "section": "combat",
+      "group": "wild-roaming",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-crazy-archaeologist-100": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-crazy-archaeologist-500": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-crazy-archaeologist-1000": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-crazy-archaeologist": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 0,
+      "row": 3
+    },
+    "log-crazy-archaeologist": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-crazy-archaeologist": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-mimic-100": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-mimic-500": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-mimic-1000": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-mimic": {
+      "section": "combat",
+      "group": "keys-chests",
+      "lane": 4.4,
+      "row": 3
+    },
+    "kc-phantom-muspah-100": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-phantom-muspah-500": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-phantom-muspah-1000": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-phantom-muspah": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 4,
+      "row": 3
+    },
+    "log-phantom-muspah": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-phantom-muspah": {
+      "section": "combat",
+      "group": "quest-bosses",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-duke-sucellus-100": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-duke-sucellus-500": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-duke-sucellus-1000": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-duke-sucellus": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 0,
+      "row": 3
+    },
+    "log-duke-sucellus": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-duke-sucellus": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-vardorvis-100": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-vardorvis-500": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-vardorvis-1000": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-vardorvis": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 2,
+      "row": 3
+    },
+    "log-vardorvis": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-vardorvis": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-the-leviathan-100": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-the-leviathan-500": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-the-leviathan-1000": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-the-leviathan": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 4,
+      "row": 3
+    },
+    "log-the-leviathan": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-the-leviathan": {
+      "section": "combat",
+      "group": "desert-generals",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-the-whisperer-100": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-the-whisperer-500": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-the-whisperer-1000": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-the-whisperer": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 0,
+      "row": 3
+    },
+    "log-the-whisperer": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-the-whisperer": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-the-nightmare-100": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-the-nightmare-500": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-the-nightmare-1000": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-the-nightmare": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 2,
+      "row": 3
+    },
+    "log-the-nightmare": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-the-nightmare": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-phosani-s-nightmare-100": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-phosani-s-nightmare-500": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-phosani-s-nightmare-1000": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-phosani-s-nightmare": {
+      "section": "combat",
+      "group": "nightmares",
+      "lane": 4.4,
+      "row": 3
+    },
+    "kc-amoxliatl-100": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-amoxliatl-500": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-amoxliatl-1000": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-amoxliatl": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 0,
+      "row": 3
+    },
+    "log-amoxliatl": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-amoxliatl": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-the-hueycoatl-100": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-the-hueycoatl-500": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-the-hueycoatl-1000": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-the-hueycoatl": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 2,
+      "row": 3
+    },
+    "log-the-hueycoatl": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-the-hueycoatl": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-lunar-chests-100": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-lunar-chests-500": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-lunar-chests-1000": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-lunar-chests": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 4,
+      "row": 3
+    },
+    "log-lunar-chests": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-lunar-chests": {
+      "section": "combat",
+      "group": "varlamore-hunts",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-sol-heredit-100": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-sol-heredit-500": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-sol-heredit-1000": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-sol-heredit": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 0,
+      "row": 3
+    },
+    "log-sol-heredit": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-sol-heredit": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-doom-of-mokhaiotl-100": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-doom-of-mokhaiotl-500": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-doom-of-mokhaiotl-1000": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-doom-of-mokhaiotl": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 2,
+      "row": 3
+    },
+    "log-doom-of-mokhaiotl": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-doom-of-mokhaiotl": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-the-royal-titans-100": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-the-royal-titans-500": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-the-royal-titans-1000": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-the-royal-titans": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 4,
+      "row": 3
+    },
+    "log-the-royal-titans": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-the-royal-titans": {
+      "section": "combat",
+      "group": "varlamore-depths",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-the-corrupted-gauntlet-100": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-the-corrupted-gauntlet-500": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-the-corrupted-gauntlet-1000": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-the-corrupted-gauntlet": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 2.4,
+      "row": 3
+    },
+    "kc-zalcano-100": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-zalcano-500": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-zalcano-1000": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-zalcano": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 4,
+      "row": 3
+    },
+    "log-zalcano": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-zalcano": {
+      "section": "combat",
+      "group": "prifddinas-hunts",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-chambers-of-xeric-challenge-mode-100": {
+      "section": "combat",
+      "group": "xeric-raids",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-chambers-of-xeric-challenge-mode-500": {
+      "section": "combat",
+      "group": "xeric-raids",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-chambers-of-xeric-challenge-mode-1000": {
+      "section": "combat",
+      "group": "xeric-raids",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-chambers-of-xeric-challenge-mode": {
+      "section": "combat",
+      "group": "xeric-raids",
+      "lane": 2.4,
+      "row": 3
+    },
+    "kc-tob-100": {
+      "section": "combat",
+      "group": "blood-raids",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-tob-500": {
+      "section": "combat",
+      "group": "blood-raids",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-tob": {
+      "section": "combat",
+      "group": "blood-raids",
+      "lane": 0,
+      "row": 3
+    },
+    "log-tob": {
+      "section": "combat",
+      "group": "blood-raids",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-tob": {
+      "section": "combat",
+      "group": "blood-raids",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-theatre-of-blood-hard-mode-100": {
+      "section": "combat",
+      "group": "blood-raids",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-theatre-of-blood-hard-mode-500": {
+      "section": "combat",
+      "group": "blood-raids",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-theatre-of-blood-hard-mode-1000": {
+      "section": "combat",
+      "group": "blood-raids",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-theatre-of-blood-hard-mode": {
+      "section": "combat",
+      "group": "blood-raids",
+      "lane": 2.4,
+      "row": 3
+    },
+    "kc-toa-100": {
+      "section": "combat",
+      "group": "amascut-raids",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-toa-500": {
+      "section": "combat",
+      "group": "amascut-raids",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-toa": {
+      "section": "combat",
+      "group": "amascut-raids",
+      "lane": 0,
+      "row": 3
+    },
+    "log-toa": {
+      "section": "combat",
+      "group": "amascut-raids",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-toa": {
+      "section": "combat",
+      "group": "amascut-raids",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-tombs-of-amascut-expert-mode-100": {
+      "section": "combat",
+      "group": "amascut-raids",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-tombs-of-amascut-expert-mode-500": {
+      "section": "combat",
+      "group": "amascut-raids",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-tombs-of-amascut-expert-mode-1000": {
+      "section": "combat",
+      "group": "amascut-raids",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-tombs-of-amascut-expert-mode": {
+      "section": "combat",
+      "group": "amascut-raids",
+      "lane": 2.4,
+      "row": 3
+    },
+    "kc-wintertodt-100": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-wintertodt-500": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-wintertodt-1000": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-wintertodt": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 0,
+      "row": 3
+    },
+    "log-wintertodt": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-wintertodt": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-tempoross-100": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-tempoross-500": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-tempoross-1000": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-tempoross": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 2,
+      "row": 3
+    },
+    "log-tempoross": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-tempoross": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-hespori-100": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-hespori-500": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-hespori-1000": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-hespori": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 4,
+      "row": 3
+    },
+    "log-hespori": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-hespori": {
+      "section": "combat",
+      "group": "skilling-bosses",
+      "lane": 4.4,
+      "row": 4
+    },
+    "kc-tztok-jad-100": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 0.4,
+      "row": 0
+    },
+    "kc-tztok-jad-500": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 0.4,
+      "row": 1
+    },
+    "kc-tztok-jad-1000": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 0.4,
+      "row": 2
+    },
+    "ca-boss-tztok-jad": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 0,
+      "row": 3
+    },
+    "log-tztok-jad": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 0.8,
+      "row": 3
+    },
+    "mastery-tztok-jad": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 0.4,
+      "row": 4
+    },
+    "kc-tzkal-zuk-100": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 2.4,
+      "row": 0
+    },
+    "kc-tzkal-zuk-500": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 2.4,
+      "row": 1
+    },
+    "kc-tzkal-zuk-1000": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 2.4,
+      "row": 2
+    },
+    "ca-boss-tzkal-zuk": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 2,
+      "row": 3
+    },
+    "log-tzkal-zuk": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 2.8,
+      "row": 3
+    },
+    "mastery-tzkal-zuk": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 2.4,
+      "row": 4
+    },
+    "kc-shellbane-gryphon-100": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 4.4,
+      "row": 0
+    },
+    "kc-shellbane-gryphon-500": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 4.4,
+      "row": 1
+    },
+    "kc-shellbane-gryphon-1000": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 4.4,
+      "row": 2
+    },
+    "ca-boss-shellbane-gryphon": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 4,
+      "row": 3
+    },
+    "log-shellbane-gryphon": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 4.8,
+      "row": 3
+    },
+    "mastery-shellbane-gryphon": {
+      "section": "combat",
+      "group": "tzhaar-challenges",
+      "lane": 4.4,
+      "row": 4
+    },
+    "tasks-theatre-of-blood-entry-mode": {
+      "section": "combat",
+      "group": "other-challenges",
+      "lane": 0.4,
+      "row": 0
+    },
+    "tasks-tombs-of-amascut-entry-mode": {
+      "section": "combat",
+      "group": "other-challenges",
+      "lane": 2.4,
+      "row": 0
+    },
+    "tasks-tzhaar-ket-rak-s-challenges": {
+      "section": "combat",
+      "group": "other-challenges",
+      "lane": 4.4,
+      "row": 0
+    },
+    "crafting-95": {
+      "section": "skills",
+      "lane": 2,
+      "row": 3
+    },
+    "rfd-rescues": {
+      "section": "equipment",
+      "group": "recipe-for-disaster",
+      "lane": 2.4,
+      "row": 3
+    },
+    "rancour": {
+      "section": "equipment",
+      "group": "zenyte-upgrades",
+      "lane": 0.4,
+      "row": 1
+    },
+    "elder-venator-fang": {
+      "section": "equipment",
+      "group": "zenyte-upgrades",
+      "lane": 2.4,
+      "row": 0
+    },
+    "rupture": {
+      "section": "equipment",
+      "group": "zenyte-upgrades",
+      "lane": 2.4,
+      "row": 1
+    },
+    "confliction": {
+      "section": "equipment",
+      "group": "zenyte-upgrades",
+      "lane": 4.4,
+      "row": 1
+    },
+    "frozen-door": {
+      "section": "combat",
+      "group": "boss-quest-gates",
+      "lane": 0.4,
+      "row": 0
+    },
+    "cursed-sands": {
+      "section": "combat",
+      "group": "boss-quest-gates",
+      "lane": 2.4,
+      "row": 0
+    },
+    "perilous-moons": {
+      "section": "combat",
+      "group": "boss-quest-gates",
+      "lane": 4.4,
+      "row": 0
+    },
+    "final-dawn": {
+      "section": "combat",
+      "group": "boss-quest-gates",
+      "lane": 0.4,
+      "row": 1.3
+    },
+    "blood-moon-rises": {
+      "section": "quests",
+      "lane": 2,
+      "row": 7
+    },
+    "fallen-from-grace": {
+      "section": "combat",
+      "group": "boss-quest-gates",
+      "lane": 4.4,
+      "row": 1.3
+    },
+    "muspah-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 2.4,
+      "row": 0
+    },
+    "zulrah-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 4.4,
+      "row": 0
+    },
+    "gauntlet-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 0.4,
+      "row": 1.3
+    },
+    "zalcano-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 2.4,
+      "row": 1.3
+    },
+    "toa-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 4.4,
+      "row": 1.3
+    },
+    "duke-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 0.4,
+      "row": 2.6
+    },
+    "vardorvis-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 2.4,
+      "row": 2.6
+    },
+    "leviathan-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 4.4,
+      "row": 2.6
+    },
+    "whisperer-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 0.4,
+      "row": 3.9000000000000004
+    },
+    "nex-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 2.4,
+      "row": 3.9000000000000004
+    },
+    "moons-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 4.4,
+      "row": 3.9000000000000004
+    },
+    "doom-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 0.4,
+      "row": 5.2
+    },
+    "maggot-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 2.4,
+      "row": 5.2
+    },
+    "angel-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 4.4,
+      "row": 5.2
+    },
+    "fish-barrel": {
+      "section": "skilling-equipment",
+      "group": "skilling-fishing",
+      "lane": 0,
+      "row": 0
+    },
+    "fish-sack": {
+      "section": "skilling-equipment",
+      "group": "skilling-fishing",
+      "lane": 2,
+      "row": 0
+    },
+    "tackle-box": {
+      "section": "skilling-equipment",
+      "group": "skilling-fishing",
+      "lane": 4,
+      "row": 0
+    },
+    "fish-sack-barrel": {
+      "section": "skilling-equipment",
+      "group": "skilling-fishing",
+      "lane": 1,
+      "row": 1
+    },
+    "outfit-spirit-angler": {
+      "section": "skilling-equipment",
+      "group": "skilling-fishing",
+      "lane": 4,
+      "row": 3
+    },
+    "pearl-rods": {
+      "section": "skilling-equipment",
+      "group": "skilling-fishing",
+      "lane": 1,
+      "row": 3
+    },
+    "coal-bag": {
+      "section": "skilling-equipment",
+      "group": "skilling-mining",
+      "lane": 2,
+      "row": 0
+    },
+    "gem-bag": {
+      "section": "skilling-equipment",
+      "group": "expanded-storage",
+      "lane": 4,
+      "row": 5
+    },
+    "mining-gloves": {
+      "section": "skilling-equipment",
+      "group": "skilling-mining",
+      "lane": 0,
+      "row": 2
+    },
+    "superior-mining-gloves": {
+      "section": "skilling-equipment",
+      "group": "skilling-mining",
+      "lane": 2,
+      "row": 2
+    },
+    "expert-mining-gloves-route": {
+      "section": "skilling-equipment",
+      "group": "skilling-mining",
+      "lane": 1,
+      "row": 3
+    },
+    "outfit-lumberjack": {
+      "section": "skilling-equipment",
+      "group": "skilling-forestry",
+      "lane": 0,
+      "row": 0
+    },
+    "outfit-forestry": {
+      "section": "skilling-equipment",
+      "group": "skilling-forestry",
+      "lane": 0,
+      "row": 1
+    },
+    "log-basket": {
+      "section": "skilling-equipment",
+      "group": "skilling-forestry",
+      "lane": 2,
+      "row": 0
+    },
+    "log-brace": {
+      "section": "skilling-equipment",
+      "group": "skilling-forestry",
+      "lane": 4,
+      "row": 0
+    },
+    "forestry-basket-route": {
+      "section": "skilling-equipment",
+      "group": "skilling-forestry",
+      "lane": 3,
+      "row": 1
+    },
+    "felling-axe-handle": {
+      "section": "skilling-equipment",
+      "group": "skilling-forestry",
+      "lane": 0,
+      "row": 2
+    },
+    "twitchers-gloves": {
+      "section": "skilling-equipment",
+      "group": "skilling-forestry",
+      "lane": 2,
+      "row": 2
+    },
+    "clothes-pouch-blueprint": {
+      "section": "skilling-equipment",
+      "group": "skilling-forestry",
+      "lane": 4,
+      "row": 2
+    },
+    "cape-pouch": {
+      "section": "skilling-equipment",
+      "group": "skilling-forestry",
+      "lane": 4,
+      "row": 3
+    },
+    "crystal-tool-seed": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-components",
+      "lane": 0,
+      "row": 0
+    },
+    "smouldering-stone": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-components",
+      "lane": 2,
+      "row": 0
+    },
+    "celestial-ring": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-components",
+      "lane": 3.5,
+      "row": 0
+    },
+    "elven-signet": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-components",
+      "lane": 5,
+      "row": 0
+    },
+    "celestial-signet": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-components",
+      "lane": 4.25,
+      "row": 1
+    },
+    "dragon-axe": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 0.5,
+      "row": 0
+    },
+    "infernal-axe": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 0,
+      "row": 2
+    },
+    "crystal-axe": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 1,
+      "row": 2
+    },
+    "dragon-pickaxe": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 2.5,
+      "row": 0
+    },
+    "infernal-pickaxe": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 2,
+      "row": 2
+    },
+    "crystal-pickaxe": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 3,
+      "row": 2
+    },
+    "dragon-harpoon": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 4.5,
+      "row": 0
+    },
+    "infernal-harpoon": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 4,
+      "row": 2
+    },
+    "crystal-harpoon": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 5,
+      "row": 2
+    },
+    "dragon-felling-axe": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 0,
+      "row": 4
+    },
+    "crystal-felling-axe": {
+      "section": "skilling-equipment",
+      "group": "skilling-tool-upgrades",
+      "lane": 2,
+      "row": 4
+    },
+    "outfit-eye": {
+      "section": "skilling-equipment",
+      "group": "skilling-runecraft",
+      "lane": 0,
+      "row": 0
+    },
+    "abyssal-lantern": {
+      "section": "skilling-equipment",
+      "group": "skilling-runecraft",
+      "lane": 2,
+      "row": 0
+    },
+    "ring-elements": {
+      "section": "skilling-equipment",
+      "group": "skilling-runecraft",
+      "lane": 4,
+      "row": 0
+    },
+    "abyssal-needle": {
+      "section": "skilling-equipment",
+      "group": "skilling-runecraft",
+      "lane": 0,
+      "row": 2
+    },
+    "colossal-pouch-level": {
+      "section": "skilling-equipment",
+      "group": "skilling-runecraft",
+      "lane": 2,
+      "row": 2
+    },
+    "outfit-farmer": {
+      "section": "skilling-equipment",
+      "group": "skilling-farming-herblore",
+      "lane": 0,
+      "row": 0
+    },
+    "herb-sack": {
+      "section": "skilling-equipment",
+      "group": "expanded-storage",
+      "lane": 0,
+      "row": 0
+    },
+    "seed-box": {
+      "section": "skilling-equipment",
+      "group": "skilling-farming-herblore",
+      "lane": 4,
+      "row": 0
+    },
+    "gricollers-can": {
+      "section": "skilling-equipment",
+      "group": "skilling-farming-herblore",
+      "lane": 0,
+      "row": 1
+    },
+    "bottomless-bucket": {
+      "section": "skilling-equipment",
+      "group": "skilling-farming-herblore",
+      "lane": 2,
+      "row": 1
+    },
+    "prescription-goggles": {
+      "section": "skilling-equipment",
+      "group": "skilling-farming-herblore",
+      "lane": 0,
+      "row": 2
+    },
+    "alchemists-amulet": {
+      "section": "skilling-equipment",
+      "group": "skilling-farming-herblore",
+      "lane": 2,
+      "row": 2
+    },
+    "reagent-pouch": {
+      "section": "skilling-equipment",
+      "group": "skilling-farming-herblore",
+      "lane": 4,
+      "row": 2
+    },
+    "outfit-carpenter": {
+      "section": "skilling-equipment",
+      "group": "skilling-workshop",
+      "lane": 0,
+      "row": 0
+    },
+    "plank-sack": {
+      "section": "skilling-equipment",
+      "group": "skilling-workshop",
+      "lane": 2,
+      "row": 0
+    },
+    "amys-saw": {
+      "section": "skilling-equipment",
+      "group": "skilling-workshop",
+      "lane": 4,
+      "row": 0
+    },
+    "imcando-hammer": {
+      "section": "skilling-equipment",
+      "group": "skilling-workshop",
+      "lane": 0,
+      "row": 2
+    },
+    "outfit-smith": {
+      "section": "skilling-equipment",
+      "group": "skilling-workshop",
+      "lane": 2,
+      "row": 2
+    },
+    "double-ammo-mould": {
+      "section": "skilling-equipment",
+      "group": "skilling-workshop",
+      "lane": 4,
+      "row": 2
+    },
+    "outfit-graceful": {
+      "section": "skilling-equipment",
+      "group": "skilling-agility-thieving",
+      "lane": 0,
+      "row": 0
+    },
+    "ring-endurance": {
+      "section": "skilling-equipment",
+      "group": "skilling-agility-thieving",
+      "lane": 4,
+      "row": 0
+    },
+    "hallowed-grapple": {
+      "section": "skilling-equipment",
+      "group": "skilling-agility-thieving",
+      "lane": 0,
+      "row": 2
+    },
+    "hallowed-focus": {
+      "section": "skilling-equipment",
+      "group": "skilling-agility-thieving",
+      "lane": 2,
+      "row": 2
+    },
+    "hallowed-symbol": {
+      "section": "skilling-equipment",
+      "group": "skilling-agility-thieving",
+      "lane": 4,
+      "row": 2
+    },
+    "hallowed-hammer": {
+      "section": "skilling-equipment",
+      "group": "skilling-agility-thieving",
+      "lane": 1,
+      "row": 3
+    },
+    "hallowed-ring": {
+      "section": "skilling-equipment",
+      "group": "skilling-agility-thieving",
+      "lane": 3,
+      "row": 3
+    },
+    "outfit-hunter": {
+      "section": "skilling-equipment",
+      "group": "skilling-hunter-fletching",
+      "lane": 0,
+      "row": 0
+    },
+    "huntsmans-kit": {
+      "section": "skilling-equipment",
+      "group": "skilling-hunter-fletching",
+      "lane": 2,
+      "row": 0
+    },
+    "fletching-knife": {
+      "section": "skilling-equipment",
+      "group": "skilling-hunter-fletching",
+      "lane": 0,
+      "row": 2
+    },
+    "bow-string-spool": {
+      "section": "skilling-equipment",
+      "group": "skilling-hunter-fletching",
+      "lane": 2,
+      "row": 2
+    },
+    "bruma-torch": {
+      "section": "skilling-equipment",
+      "group": "skilling-fire-prayer",
+      "lane": 2,
+      "row": 0
+    },
+    "warm-gloves": {
+      "section": "skilling-equipment",
+      "group": "skilling-fire-prayer",
+      "lane": 4,
+      "row": 0
+    },
+    "outfit-zealot": {
+      "section": "skilling-equipment",
+      "group": "skilling-fire-prayer",
+      "lane": 2,
+      "row": 2
+    },
+    "night-at-theatre": {
+      "section": "quests",
+      "lane": 3,
+      "row": 6
+    },
+    "vampyrium": {
+      "section": "quests",
+      "lane": 2,
+      "row": 8
+    },
+    "fire-staff-crown": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 1.3,
+      "row": 3
+    },
+    "ice-staff-crown": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 2.1,
+      "row": 3
+    },
+    "twinflame-staff": {
+      "section": "equipment",
+      "group": "serpent-magic",
+      "lane": 1.7,
+      "row": 4
+    },
+    "pandemonium": {
+      "section": "quests",
+      "lane": 0,
+      "row": 12
+    },
+    "troubled-tortugans": {
+      "section": "quests",
+      "lane": 0,
+      "row": 13
+    },
+    "red-reef": {
+      "section": "quests",
+      "lane": 0,
+      "row": 14
+    },
+    "ides-of-milk": {
+      "section": "quests",
+      "lane": 2,
+      "row": 12
+    },
+    "ruff-situation": {
+      "section": "quests",
+      "lane": 4,
+      "row": 12
+    },
+    "crab-quest": {
+      "section": "quests",
+      "lane": 2,
+      "row": 14
+    },
+    "sailing-unlock": {
+      "section": "travel",
+      "lane": 0,
+      "row": 8
+    },
+    "great-conch": {
+      "section": "travel",
+      "lane": 0,
+      "row": 9
+    },
+    "dog-adoption": {
+      "section": "travel",
+      "lane": 2,
+      "row": 8
+    },
+    "brutus-access": {
+      "section": "combat",
+      "group": "boss-access",
+      "lane": 0.4,
+      "row": 6.5
+    },
+    "mooleta": {
+      "section": "equipment",
+      "group": "brutus-rewards",
+      "lane": 0,
+      "row": 0
+    },
+    "cow-slippers": {
+      "section": "equipment",
+      "group": "brutus-rewards",
+      "lane": 2,
+      "row": 0
+    },
+    "beef-pet": {
+      "section": "equipment",
+      "group": "brutus-rewards",
+      "lane": 4,
+      "row": 0
+    },
+    "pristine-spider-silk": {
+      "section": "skilling-equipment",
+      "group": "expanded-storage",
+      "lane": 2,
+      "row": 0
+    },
+    "silklined-herb-sack": {
+      "section": "skilling-equipment",
+      "group": "expanded-storage",
+      "lane": 1,
+      "row": 1
+    },
+    "gem-pouch": {
+      "section": "skilling-equipment",
+      "group": "expanded-storage",
+      "lane": 0,
+      "row": 3
+    },
+    "gem-satchel": {
+      "section": "skilling-equipment",
+      "group": "expanded-storage",
+      "lane": 0,
+      "row": 4
+    },
+    "gem-tote": {
+      "section": "skilling-equipment",
+      "group": "expanded-storage",
+      "lane": 0,
+      "row": 5
+    },
+    "immaculate-mole-skin": {
+      "section": "skilling-equipment",
+      "group": "expanded-storage",
+      "lane": 2,
+      "row": 5
+    },
+    "gem-sack": {
+      "section": "skilling-equipment",
+      "group": "expanded-storage",
+      "lane": 2,
+      "row": 6
+    },
+    "horn-of-plenty": {
+      "section": "skilling-equipment",
+      "group": "island-tools",
+      "lane": 0,
+      "row": 0
+    },
+    "jewellers-chisel": {
+      "section": "skilling-equipment",
+      "group": "island-tools",
+      "lane": 2,
+      "row": 0
+    },
+    "bottomless-milk-bucket": {
+      "section": "skilling-equipment",
+      "group": "island-tools",
+      "lane": 4,
+      "row": 0
+    },
+    "air-jewel": {
+      "section": "equipment",
+      "group": "elemental-jewellery",
+      "lane": 0,
+      "row": 0
+    },
+    "amulet-of-air": {
+      "section": "equipment",
+      "group": "elemental-jewellery",
+      "lane": 0,
+      "row": 1
+    },
+    "water-jewel": {
+      "section": "equipment",
+      "group": "elemental-jewellery",
+      "lane": 1.3,
+      "row": 0
+    },
+    "amulet-of-water": {
+      "section": "equipment",
+      "group": "elemental-jewellery",
+      "lane": 1.3,
+      "row": 1
+    },
+    "earth-jewel": {
+      "section": "equipment",
+      "group": "elemental-jewellery",
+      "lane": 2.6,
+      "row": 0
+    },
+    "amulet-of-earth": {
+      "section": "equipment",
+      "group": "elemental-jewellery",
+      "lane": 2.6,
+      "row": 1
+    },
+    "fire-jewel": {
+      "section": "equipment",
+      "group": "elemental-jewellery",
+      "lane": 3.9000000000000004,
+      "row": 0
+    },
+    "amulet-of-fire": {
+      "section": "equipment",
+      "group": "elemental-jewellery",
+      "lane": 3.9000000000000004,
+      "row": 1
+    },
+    "elemental-amulet": {
+      "section": "equipment",
+      "group": "elemental-jewellery",
+      "lane": 1.95,
+      "row": 2
+    },
+    "necklace-of-fangs": {
+      "section": "equipment",
+      "group": "elemental-jewellery",
+      "lane": 4,
+      "row": 3
+    },
+    "crimson-kisten": {
+      "section": "equipment",
+      "group": "frontier-weapons",
+      "lane": 0,
+      "row": 0
+    },
+    "hallowfell": {
+      "section": "equipment",
+      "group": "frontier-weapons",
+      "lane": 2,
+      "row": 0
+    },
+    "soulflame-horn": {
+      "section": "equipment",
+      "group": "frontier-weapons",
+      "lane": 4,
+      "row": 0
+    },
+    "antler-guard": {
+      "section": "equipment",
+      "group": "frontier-weapons",
+      "lane": 0,
+      "row": 1
+    },
+    "earthbound-tecpatl": {
+      "section": "equipment",
+      "group": "frontier-weapons",
+      "lane": 2,
+      "row": 1
+    },
+    "deadeye": {
+      "section": "travel",
+      "lane": 0,
+      "row": 10
+    },
+    "mystic-vigour": {
+      "section": "travel",
+      "lane": 2,
+      "row": 10
+    },
+    "giantsoul-amulet": {
+      "section": "travel",
+      "lane": 4,
+      "row": 10
+    },
+    "rite-of-vile-transference": {
+      "section": "travel",
+      "lane": 0,
+      "row": 12
+    },
+    "belles-folly-tarnished": {
+      "section": "equipment",
+      "group": "sailing-equipment",
+      "lane": 0,
+      "row": 0
+    },
+    "belles-folly": {
+      "section": "equipment",
+      "group": "sailing-equipment",
+      "lane": 0,
+      "row": 1
+    },
+    "aquanite-tendon": {
+      "section": "equipment",
+      "group": "sailing-equipment",
+      "lane": 2,
+      "row": 0
+    },
+    "aquanite-hopper": {
+      "section": "equipment",
+      "group": "sailing-equipment",
+      "lane": 2,
+      "row": 1
+    },
+    "squid-beak": {
+      "section": "equipment",
+      "group": "sailing-equipment",
+      "lane": 4,
+      "row": 0
+    },
+    "camphor-blowpipe": {
+      "section": "equipment",
+      "group": "sailing-equipment",
+      "lane": 0,
+      "row": 3
+    },
+    "ironwood-blowpipe": {
+      "section": "equipment",
+      "group": "sailing-equipment",
+      "lane": 2,
+      "row": 4
+    },
+    "rosewood-blowpipe": {
+      "section": "equipment",
+      "group": "sailing-equipment",
+      "lane": 4,
+      "row": 5
+    },
+    "bosuns-bench-schematic": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 0,
+      "row": 0
+    },
+    "bosuns-bench": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 0,
+      "row": 1
+    },
+    "medallion-fragment-1": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 0,
+      "row": 3
+    },
+    "medallion-fragment-2": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 1.3,
+      "row": 3
+    },
+    "medallion-fragment-3": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 2.6,
+      "row": 3
+    },
+    "medallion-fragment-4": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 3.9000000000000004,
+      "row": 3
+    },
+    "medallion-fragment-5": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 0,
+      "row": 4
+    },
+    "medallion-fragment-6": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 1.3,
+      "row": 4
+    },
+    "medallion-fragment-7": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 2.6,
+      "row": 4
+    },
+    "medallion-fragment-8": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 3.9000000000000004,
+      "row": 4
+    },
+    "medallion-of-the-deep": {
+      "section": "skilling-equipment",
+      "group": "sailing-kit",
+      "lane": 1.95,
+      "row": 5
+    },
+    "tempor-tantrum-swordfish": {
+      "section": "collections",
+      "lane": 0,
+      "row": 0,
+      "group": "collections-trials"
+    },
+    "tempor-tantrum-shark": {
+      "section": "collections",
+      "lane": 0,
+      "row": 1,
+      "group": "collections-trials"
+    },
+    "tempor-tantrum-marlin": {
+      "section": "collections",
+      "lane": 0,
+      "row": 2,
+      "group": "collections-trials"
+    },
+    "jubbly-jive-swordfish": {
+      "section": "collections",
+      "lane": 2,
+      "row": 0,
+      "group": "collections-trials"
+    },
+    "jubbly-jive-shark": {
+      "section": "collections",
+      "lane": 2,
+      "row": 1,
+      "group": "collections-trials"
+    },
+    "jubbly-jive-marlin": {
+      "section": "collections",
+      "lane": 2,
+      "row": 2,
+      "group": "collections-trials"
+    },
+    "gwenith-glide-swordfish": {
+      "section": "collections",
+      "lane": 4,
+      "row": 0,
+      "group": "collections-trials"
+    },
+    "gwenith-glide-shark": {
+      "section": "collections",
+      "lane": 4,
+      "row": 1,
+      "group": "collections-trials"
+    },
+    "gwenith-glide-marlin": {
+      "section": "collections",
+      "lane": 4,
+      "row": 2,
+      "group": "collections-trials"
+    },
+    "barracuda-trials-greenlog": {
+      "section": "collections",
+      "lane": 2,
+      "row": 3,
+      "group": "collections-trials"
+    },
+    "bloodwood": {
+      "section": "skills",
+      "lane": 0,
+      "row": 8
+    },
+    "stymphike-hunting": {
+      "section": "skills",
+      "lane": 2,
+      "row": 8
+    },
+    "leechfin-fishing": {
+      "section": "skills",
+      "lane": 4,
+      "row": 8
+    },
+    "seeker-arrows": {
+      "section": "skills",
+      "lane": 0,
+      "row": 9
+    },
+    "holy-sandals": {
+      "section": "equipment",
+      "group": "slayer-cosmetics",
+      "lane": 0,
+      "row": 0
+    },
+    "mole-slippers": {
+      "section": "equipment",
+      "group": "slayer-cosmetics",
+      "lane": 2,
+      "row": 0
+    },
+    "holy-moleys": {
+      "section": "equipment",
+      "group": "slayer-cosmetics",
+      "lane": 1,
+      "row": 1
+    },
+    "clues-beginner-major": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 0,
+      "row": 3
+    },
+    "clues-beginner-reward": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 0,
+      "row": 4
+    },
+    "clues-easy-major": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 1,
+      "row": 3
+    },
+    "clues-easy-reward": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 1,
+      "row": 4
+    },
+    "clues-medium-major": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 2,
+      "row": 3
+    },
+    "clues-medium-reward": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 2,
+      "row": 4
+    },
+    "clues-hard-major": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 3,
+      "row": 3
+    },
+    "clues-hard-reward": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 3,
+      "row": 4
+    },
+    "clues-elite-major": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 4,
+      "row": 3
+    },
+    "clues-elite-reward": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 4,
+      "row": 4
+    },
+    "clues-master-major": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 5,
+      "row": 3
+    },
+    "clues-master-reward": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 5,
+      "row": 4
+    },
+    "clues-stackable": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 1.5,
+      "row": 0
+    },
+    "clues-mimic-case": {
+      "section": "collections",
+      "group": "collections-clues",
+      "lane": 4.5,
+      "row": 0
+    }
+  },
+  "funnels": [
+    {
+      "result": "lance",
+      "inputs": ["zammy-spear", "hydra-claw"]
+    },
+    {
+      "result": "crystal-ready",
+      "inputs": ["enhanced-seed", "armour-seeds"]
+    },
+    {
+      "result": "swamp-trident",
+      "inputs": ["trident", "magic-fang"]
+    },
+    {
+      "result": "tentacle-ready",
+      "inputs": ["whip", "tentacle"]
+    },
+    {
+      "result": "prayer-supply",
+      "inputs": ["herblore-38", "farming-32"]
+    },
+    {
+      "result": "restore-supply",
+      "inputs": ["herblore-63", "farming-62"]
+    },
+    {
+      "result": "elven-skills",
+      "inputs": [
+        "elf-agility",
+        "elf-construction",
+        "elf-farming",
+        "elf-herblore",
+        "elf-hunter",
+        "elf-mining",
+        "elf-smithing",
+        "elf-woodcutting"
+      ]
+    },
+    {
+      "result": "mastery-barrows",
+      "inputs": ["ca-boss-barrows", "log-barrows"]
+    },
+    {
+      "result": "mastery-zulrah",
+      "inputs": ["ca-boss-zulrah", "log-zulrah"]
+    },
+    {
+      "result": "mastery-vorkath",
+      "inputs": ["ca-boss-vorkath", "log-vorkath"]
+    },
+    {
+      "result": "mastery-gauntlet",
+      "inputs": ["ca-boss-gauntlet", "log-gauntlet"]
+    },
+    {
+      "result": "mastery-hydra",
+      "inputs": ["ca-boss-hydra", "log-hydra"]
+    },
+    {
+      "result": "mastery-cox",
+      "inputs": ["ca-boss-cox", "log-cox"]
+    },
+    {
+      "result": "barrows-any",
+      "inputs": [
+        "set-ahrim",
+        "set-dharok",
+        "set-guthan",
+        "set-karil",
+        "set-torag",
+        "set-verac"
+      ]
+    },
+    {
+      "result": "barrows-all",
+      "inputs": [
+        "set-ahrim",
+        "set-dharok",
+        "set-guthan",
+        "set-karil",
+        "set-torag",
+        "set-verac"
+      ]
+    },
+    {
+      "result": "avernic-parts",
+      "inputs": ["dragon-defender", "avernic-hilt"]
+    },
+    {
+      "result": "toxic-staff",
+      "inputs": ["magic-fang", "staff-dead"]
+    },
+    {
+      "result": "blowpipe-route",
+      "inputs": ["tanz-fang", "fletching-53"]
+    },
+    {
+      "result": "serp-route",
+      "inputs": ["serp-visage", "crafting-52"]
+    },
+    {
+      "result": "zaryte-rares",
+      "inputs": ["armadyl-crossbow", "nihil-horn"]
+    },
+    {
+      "result": "blood-set",
+      "inputs": ["blood-armour", "blood-weapon"]
+    },
+    {
+      "result": "blue-set",
+      "inputs": ["blue-armour", "blue-weapon"]
+    },
+    {
+      "result": "eclipse-set",
+      "inputs": ["eclipse-armour", "eclipse-weapon"]
+    },
+    {
+      "result": "bandos-set",
+      "inputs": ["bandos-piece-0", "bandos-piece-1", "bandos-piece-2"]
+    },
+    {
+      "result": "armadyl-set",
+      "inputs": ["armadyl-piece-0", "armadyl-piece-1", "armadyl-piece-2"]
+    },
+    {
+      "result": "torva-drops-set",
+      "inputs": [
+        "torva-drops-piece-0",
+        "torva-drops-piece-1",
+        "torva-drops-piece-2"
+      ]
+    },
+    {
+      "result": "ancestral-set",
+      "inputs": ["ancestral-piece-0", "ancestral-piece-1", "ancestral-piece-2"]
+    },
+    {
+      "result": "justiciar-set",
+      "inputs": ["justiciar-piece-0", "justiciar-piece-1", "justiciar-piece-2"]
+    },
+    {
+      "result": "masori-set",
+      "inputs": ["masori-piece-0", "masori-piece-1", "masori-piece-2"]
+    },
+    {
+      "result": "virtus-set",
+      "inputs": ["virtus-piece-0", "virtus-piece-1", "virtus-piece-2"]
+    },
+    {
+      "result": "inquisitor-set",
+      "inputs": [
+        "inquisitor-piece-0",
+        "inquisitor-piece-1",
+        "inquisitor-piece-2"
+      ]
+    },
+    {
+      "result": "oathplate-set",
+      "inputs": ["oathplate-piece-0", "oathplate-piece-1", "oathplate-piece-2"]
+    },
+    {
+      "result": "sunfire-fanatic-set",
+      "inputs": [
+        "sunfire-fanatic-piece-0",
+        "sunfire-fanatic-piece-1",
+        "sunfire-fanatic-piece-2"
+      ]
+    },
+    {
+      "result": "dagon-hai-set",
+      "inputs": ["dagon-hai-piece-0", "dagon-hai-piece-1", "dagon-hai-piece-2"]
+    },
+    {
+      "result": "bludgeon-parts-ready",
+      "inputs": ["bludgeon-parts-0", "bludgeon-parts-1", "bludgeon-parts-2"]
+    },
+    {
+      "result": "noxious-parts-ready",
+      "inputs": ["noxious-parts-0", "noxious-parts-1", "noxious-parts-2"]
+    },
+    {
+      "result": "soulreaper-parts-ready",
+      "inputs": [
+        "soulreaper-parts-0",
+        "soulreaper-parts-1",
+        "soulreaper-parts-2",
+        "soulreaper-parts-3"
+      ]
+    },
+    {
+      "result": "voidwaker-parts-ready",
+      "inputs": ["voidwaker-parts-0", "voidwaker-parts-1", "voidwaker-parts-2"]
+    },
+    {
+      "result": "ballista-parts-ready",
+      "inputs": [
+        "ballista-parts-0",
+        "ballista-parts-1",
+        "ballista-parts-2",
+        "ballista-parts-3"
+      ]
+    },
+    {
+      "result": "parts-ultor-ring",
+      "inputs": ["base-berserker-ring", "vestige-ultor-ring"]
+    },
+    {
+      "result": "parts-bellator-ring",
+      "inputs": ["base-warrior-ring", "vestige-bellator-ring"]
+    },
+    {
+      "result": "parts-venator-ring",
+      "inputs": ["base-archers-ring", "vestige-venator-ring"]
+    },
+    {
+      "result": "parts-magus-ring",
+      "inputs": ["base-seers-ring", "vestige-magus-ring"]
+    },
+    {
+      "result": "mastery-scurrius",
+      "inputs": ["ca-boss-scurrius", "log-scurrius"]
+    },
+    {
+      "result": "mastery-obor",
+      "inputs": ["ca-boss-obor", "log-obor"]
+    },
+    {
+      "result": "mastery-bryophyta",
+      "inputs": ["ca-boss-bryophyta", "log-bryophyta"]
+    },
+    {
+      "result": "mastery-mad-angel",
+      "inputs": ["ca-boss-mad-angel", "log-mad-angel"]
+    },
+    {
+      "result": "mastery-maggot-king",
+      "inputs": ["ca-boss-maggot-king", "log-maggot-king"]
+    },
+    {
+      "result": "mastery-giant-mole",
+      "inputs": ["ca-boss-giant-mole", "log-giant-mole"]
+    },
+    {
+      "result": "mastery-king-black-dragon",
+      "inputs": ["ca-boss-king-black-dragon", "log-king-black-dragon"]
+    },
+    {
+      "result": "mastery-kalphite-queen",
+      "inputs": ["ca-boss-kalphite-queen", "log-kalphite-queen"]
+    },
+    {
+      "result": "mastery-sarachnis",
+      "inputs": ["ca-boss-sarachnis", "log-sarachnis"]
+    },
+    {
+      "result": "mastery-deranged-archaeologist",
+      "inputs": ["ca-boss-deranged-archaeologist", "log-deranged-archaeologist"]
+    },
+    {
+      "result": "mastery-brutus",
+      "inputs": ["ca-boss-brutus", "log-brutus"]
+    },
+    {
+      "result": "mastery-grotesque-guardians",
+      "inputs": ["ca-boss-grotesque-guardians", "log-grotesque-guardians"]
+    },
+    {
+      "result": "mastery-abyssal-sire",
+      "inputs": ["ca-boss-abyssal-sire", "log-abyssal-sire"]
+    },
+    {
+      "result": "mastery-kraken",
+      "inputs": ["ca-boss-kraken", "log-kraken"]
+    },
+    {
+      "result": "mastery-cerberus",
+      "inputs": ["ca-boss-cerberus", "log-cerberus"]
+    },
+    {
+      "result": "mastery-thermonuclear-smoke-devil",
+      "inputs": [
+        "ca-boss-thermonuclear-smoke-devil",
+        "log-thermonuclear-smoke-devil"
+      ]
+    },
+    {
+      "result": "mastery-araxxor",
+      "inputs": ["ca-boss-araxxor", "log-araxxor"]
+    },
+    {
+      "result": "mastery-skotizo",
+      "inputs": ["ca-boss-skotizo", "log-skotizo"]
+    },
+    {
+      "result": "mastery-yama",
+      "inputs": ["ca-boss-yama", "log-yama"]
+    },
+    {
+      "result": "mastery-general-graardor",
+      "inputs": ["ca-boss-general-graardor", "log-general-graardor"]
+    },
+    {
+      "result": "mastery-commander-zilyana",
+      "inputs": ["ca-boss-commander-zilyana", "log-commander-zilyana"]
+    },
+    {
+      "result": "mastery-k-ril-tsutsaroth",
+      "inputs": ["ca-boss-k-ril-tsutsaroth", "log-k-ril-tsutsaroth"]
+    },
+    {
+      "result": "mastery-kree-arra",
+      "inputs": ["ca-boss-kree-arra", "log-kree-arra"]
+    },
+    {
+      "result": "mastery-nex",
+      "inputs": ["ca-boss-nex", "log-nex"]
+    },
+    {
+      "result": "mastery-corporeal-beast",
+      "inputs": ["ca-boss-corporeal-beast", "log-corporeal-beast"]
+    },
+    {
+      "result": "dagannoth-tasks",
+      "inputs": [
+        "ca-boss-dagannoth-rex",
+        "ca-boss-dagannoth-prime",
+        "ca-boss-dagannoth-supreme"
+      ]
+    },
+    {
+      "result": "mastery-callisto",
+      "inputs": ["ca-boss-callisto", "log-callisto"]
+    },
+    {
+      "result": "mastery-venenatis",
+      "inputs": ["ca-boss-venenatis", "log-venenatis"]
+    },
+    {
+      "result": "mastery-vet-ion",
+      "inputs": ["ca-boss-vet-ion", "log-vet-ion"]
+    },
+    {
+      "result": "mastery-chaos-elemental",
+      "inputs": ["ca-boss-chaos-elemental", "log-chaos-elemental"]
+    },
+    {
+      "result": "mastery-chaos-fanatic",
+      "inputs": ["ca-boss-chaos-fanatic", "log-chaos-fanatic"]
+    },
+    {
+      "result": "mastery-scorpia",
+      "inputs": ["ca-boss-scorpia", "log-scorpia"]
+    },
+    {
+      "result": "mastery-crazy-archaeologist",
+      "inputs": ["ca-boss-crazy-archaeologist", "log-crazy-archaeologist"]
+    },
+    {
+      "result": "mastery-phantom-muspah",
+      "inputs": ["ca-boss-phantom-muspah", "log-phantom-muspah"]
+    },
+    {
+      "result": "mastery-duke-sucellus",
+      "inputs": ["ca-boss-duke-sucellus", "log-duke-sucellus"]
+    },
+    {
+      "result": "mastery-vardorvis",
+      "inputs": ["ca-boss-vardorvis", "log-vardorvis"]
+    },
+    {
+      "result": "mastery-the-leviathan",
+      "inputs": ["ca-boss-the-leviathan", "log-the-leviathan"]
+    },
+    {
+      "result": "mastery-the-whisperer",
+      "inputs": ["ca-boss-the-whisperer", "log-the-whisperer"]
+    },
+    {
+      "result": "mastery-the-nightmare",
+      "inputs": ["ca-boss-the-nightmare", "log-the-nightmare"]
+    },
+    {
+      "result": "mastery-amoxliatl",
+      "inputs": ["ca-boss-amoxliatl", "log-amoxliatl"]
+    },
+    {
+      "result": "mastery-the-hueycoatl",
+      "inputs": ["ca-boss-the-hueycoatl", "log-the-hueycoatl"]
+    },
+    {
+      "result": "mastery-lunar-chests",
+      "inputs": ["ca-boss-lunar-chests", "log-lunar-chests"]
+    },
+    {
+      "result": "mastery-sol-heredit",
+      "inputs": ["ca-boss-sol-heredit", "log-sol-heredit"]
+    },
+    {
+      "result": "mastery-doom-of-mokhaiotl",
+      "inputs": ["ca-boss-doom-of-mokhaiotl", "log-doom-of-mokhaiotl"]
+    },
+    {
+      "result": "mastery-the-royal-titans",
+      "inputs": ["ca-boss-the-royal-titans", "log-the-royal-titans"]
+    },
+    {
+      "result": "mastery-zalcano",
+      "inputs": ["ca-boss-zalcano", "log-zalcano"]
+    },
+    {
+      "result": "mastery-tob",
+      "inputs": ["ca-boss-tob", "log-tob"]
+    },
+    {
+      "result": "mastery-toa",
+      "inputs": ["ca-boss-toa", "log-toa"]
+    },
+    {
+      "result": "mastery-wintertodt",
+      "inputs": ["ca-boss-wintertodt", "log-wintertodt"]
+    },
+    {
+      "result": "mastery-tempoross",
+      "inputs": ["ca-boss-tempoross", "log-tempoross"]
+    },
+    {
+      "result": "mastery-hespori",
+      "inputs": ["ca-boss-hespori", "log-hespori"]
+    },
+    {
+      "result": "mastery-tztok-jad",
+      "inputs": ["ca-boss-tztok-jad", "log-tztok-jad"]
+    },
+    {
+      "result": "mastery-tzkal-zuk",
+      "inputs": ["ca-boss-tzkal-zuk", "log-tzkal-zuk"]
+    },
+    {
+      "result": "mastery-shellbane-gryphon",
+      "inputs": ["ca-boss-shellbane-gryphon", "log-shellbane-gryphon"]
+    },
+    {
+      "result": "fish-sack-barrel",
+      "inputs": ["fish-barrel", "fish-sack"]
+    },
+    {
+      "result": "expert-mining-gloves-route",
+      "inputs": ["mining-gloves", "superior-mining-gloves"]
+    },
+    {
+      "result": "forestry-basket-route",
+      "inputs": ["log-basket", "log-brace"]
+    },
+    {
+      "result": "celestial-signet",
+      "inputs": ["celestial-ring", "elven-signet"]
+    },
+    {
+      "result": "blood-moon-rises",
+      "inputs": ["sins", "night-at-theatre"]
+    },
+    {
+      "result": "twinflame-staff",
+      "inputs": ["fire-staff-crown", "ice-staff-crown"]
+    },
+    {
+      "result": "silklined-herb-sack",
+      "inputs": ["herb-sack", "pristine-spider-silk"]
+    },
+    {
+      "result": "gem-sack",
+      "inputs": ["gem-tote", "immaculate-mole-skin", "gem-bag"]
+    },
+    {
+      "result": "elemental-amulet",
+      "inputs": [
+        "amulet-of-air",
+        "amulet-of-water",
+        "amulet-of-earth",
+        "amulet-of-fire"
+      ]
+    },
+    {
+      "result": "holy-moleys",
+      "inputs": ["holy-sandals", "mole-slippers"]
+    }
+  ],
+  "groups": [
+    {
+      "id": "recipe-for-disaster",
+      "section": "equipment",
+      "label": "Recipe for Disaster",
+      "description": "Eight guests to rescue. Barrows gloves await after the finale.",
+      "row": 0,
+      "rows": 6,
+      "paths": [
+        {
+          "label": "Eight rescues · any order",
+          "lane": 2.4,
+          "row": 1
+        }
+      ]
+    },
+    {
+      "id": "quest-rewards",
+      "section": "equipment",
+      "label": "Capes & defenders",
+      "description": "Landmark combat rewards and defender upgrades.",
+      "row": 7.5,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "Capes",
+          "lane": 0.8,
+          "row": 0
+        },
+        {
+          "label": "Defenders",
+          "lane": 4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "slayer-melee",
+      "section": "equipment",
+      "label": "Slayer melee upgrades",
+      "description": "Abyssal weapons, a dragon hunter lance, and the Fremennik faceguard.",
+      "row": 12,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "Abyssal tentacle",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Dragon hunter lance",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Neitiznot faceguard",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "serpent-magic",
+      "section": "equipment",
+      "label": "Serpents & spellcasters",
+      "description": "Fangs, staves and the skills to turn drops into upgrades.",
+      "row": 16.5,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Fang branches",
+          "lane": 1,
+          "row": 0
+        },
+        {
+          "label": "Blowpipe",
+          "lane": 4,
+          "row": 0
+        },
+        {
+          "label": "Serpentine helm",
+          "lane": 4,
+          "row": 3
+        },
+        {
+          "label": "Twinflame staff",
+          "lane": 1.7,
+          "row": 3
+        }
+      ]
+    },
+    {
+      "id": "ranged-arsenal",
+      "section": "equipment",
+      "label": "Crystal & crossbows",
+      "description": "Crystal seeds, rare crossbow components, and five venator shards.",
+      "row": 23,
+      "rows": 4,
+      "paths": [
+        {
+          "label": "Crystal loadout",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Dragon hunting",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Zaryte crossbow",
+          "lane": 4,
+          "row": 0
+        },
+        {
+          "label": "Ranged rarities",
+          "lane": 2.4,
+          "row": 3
+        }
+      ]
+    },
+    {
+      "id": "moons-armour",
+      "section": "equipment",
+      "label": "Moons of Peril",
+      "description": "Three complete combat sets, including their matching weapons.",
+      "row": 28.5,
+      "rows": 4,
+      "paths": [
+        {
+          "label": "Blood Moon",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Blue Moon",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Eclipse Moon",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "godwars-armour",
+      "section": "equipment",
+      "label": "God Wars armour",
+      "description": "Collect Bandos, Armadyl and damaged Torva armour.",
+      "row": 34,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Bandos",
+          "lane": 0.8,
+          "row": 0
+        },
+        {
+          "label": "Armadyl",
+          "lane": 4,
+          "row": 0
+        },
+        {
+          "label": "Torva drops",
+          "lane": 2.4,
+          "row": 3
+        }
+      ]
+    },
+    {
+      "id": "raid-armour",
+      "section": "equipment",
+      "label": "Raid armour",
+      "description": "Collect complete armour sets from the three raids.",
+      "row": 40.5,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Ancestral",
+          "lane": 0.8,
+          "row": 0
+        },
+        {
+          "label": "Justiciar",
+          "lane": 4,
+          "row": 0
+        },
+        {
+          "label": "Masori",
+          "lane": 2.4,
+          "row": 3
+        }
+      ]
+    },
+    {
+      "id": "elite-armour",
+      "section": "equipment",
+      "label": "Ancient & demonic armour",
+      "description": "Complete armour sets from ancient and demonic encounters.",
+      "row": 47,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Virtus",
+          "lane": 0.8,
+          "row": 0
+        },
+        {
+          "label": "Inquisitor",
+          "lane": 4,
+          "row": 0
+        },
+        {
+          "label": "Oathplate",
+          "lane": 2.4,
+          "row": 3
+        }
+      ]
+    },
+    {
+      "id": "regional-armour",
+      "section": "equipment",
+      "label": "Regional armour & utility",
+      "description": "Armour sets and utility rewards from across Gielinor.",
+      "row": 53.5,
+      "rows": 2,
+      "paths": [
+        {
+          "label": "Sunfire fanatic",
+          "lane": 0.8,
+          "row": 0
+        },
+        {
+          "label": "Dagon'hai",
+          "lane": 4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "bludgeon-parts",
+      "section": "equipment",
+      "label": "Abyssal bludgeon workshop",
+      "description": "Collect the pieces for the abyssal bludgeon.",
+      "row": 57,
+      "rows": 2,
+      "paths": [
+        {
+          "label": "Abyssal bludgeon",
+          "lane": 2.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "noxious-parts",
+      "section": "equipment",
+      "label": "Noxious halberd workshop",
+      "description": "Collect the pieces for the noxious halberd.",
+      "row": 60.5,
+      "rows": 2,
+      "paths": [
+        {
+          "label": "Noxious halberd",
+          "lane": 2.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "soulreaper-parts",
+      "section": "equipment",
+      "label": "Soulreaper axe workshop",
+      "description": "Collect the pieces for the soulreaper axe.",
+      "row": 64,
+      "rows": 2,
+      "paths": [
+        {
+          "label": "Soulreaper axe",
+          "lane": 2.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "voidwaker-parts",
+      "section": "equipment",
+      "label": "Voidwaker workshop",
+      "description": "Collect the pieces for the voidwaker.",
+      "row": 67.5,
+      "rows": 2,
+      "paths": [
+        {
+          "label": "Voidwaker",
+          "lane": 2.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "ballista-parts",
+      "section": "equipment",
+      "label": "Heavy ballista workshop",
+      "description": "Collect the pieces for the heavy ballista.",
+      "row": 71,
+      "rows": 2,
+      "paths": [
+        {
+          "label": "Heavy ballista",
+          "lane": 2.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "godswords",
+      "section": "equipment",
+      "label": "Godsword forge",
+      "description": "Hilts and blade shards. Each recipe requires its hilt plus all three numbered shards.",
+      "row": 74.5,
+      "rows": 4,
+      "paths": [
+        {
+          "label": "Armadyl",
+          "lane": 0,
+          "row": 0
+        },
+        {
+          "label": "Bandos",
+          "lane": 0.96,
+          "row": 0
+        },
+        {
+          "label": "Saradomin",
+          "lane": 1.92,
+          "row": 0
+        },
+        {
+          "label": "Zamorak",
+          "lane": 2.88,
+          "row": 0
+        },
+        {
+          "label": "Ancient",
+          "lane": 3.84,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "jewellery-foundations",
+      "section": "equipment",
+      "label": "The jewellery bench",
+      "description": "Gems and the skills to craft and enchant jewellery.",
+      "row": 80,
+      "rows": 4,
+      "paths": [
+        {
+          "label": "Onyx",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Zenyte",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Enchanting & blood shards",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "zenyte-jewellery",
+      "section": "equipment",
+      "label": "Zenyte jewellery routes",
+      "description": "The gems and skill levels for all four zenyte pieces.",
+      "row": 85.5,
+      "rows": 2,
+      "paths": []
+    },
+    {
+      "id": "zenyte-upgrades",
+      "section": "equipment",
+      "label": "Beyond zenyte",
+      "description": "Rare components for upgrading zenyte jewellery.",
+      "row": 89,
+      "rows": 2,
+      "paths": [
+        {
+          "label": "Melee",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Ranged",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Magic",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "rings",
+      "section": "equipment",
+      "label": "Dagannoth rings & ancient upgrades",
+      "description": "The original rings lead to vestige recipes; each upgrade also needs three recorded chromium ingots.",
+      "row": 92.5,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Ultor ring",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Bellator ring",
+          "lane": 4.4,
+          "row": 0
+        },
+        {
+          "label": "Venator ring",
+          "lane": 0.4,
+          "row": 3
+        },
+        {
+          "label": "Magus ring",
+          "lane": 4.4,
+          "row": 3
+        }
+      ]
+    },
+    {
+      "id": "raid-weapons",
+      "section": "equipment",
+      "label": "Raid weapons & offhands",
+      "description": "Signature raid drops, independently earned.",
+      "row": 99,
+      "rows": 4.6,
+      "paths": []
+    },
+    {
+      "id": "slayer-drops",
+      "section": "equipment",
+      "label": "Slayer & monster rarities",
+      "description": "Rare drops worth extending the task for.",
+      "row": 105.1,
+      "rows": 4.6,
+      "paths": []
+    },
+    {
+      "id": "demonic-drops",
+      "section": "equipment",
+      "label": "Demonic & Wilderness weapons",
+      "description": "Recorded weapons and upgrade components from demons and the Wilderness.",
+      "row": 111.2,
+      "rows": 3.4,
+      "paths": []
+    },
+    {
+      "id": "shields-and-staves",
+      "section": "equipment",
+      "label": "Sigils, visages & nightmare orbs",
+      "description": "Rare components for shields and staves.",
+      "row": 116.1,
+      "rows": 4.6,
+      "paths": []
+    },
+    {
+      "id": "varlamore-rewards",
+      "section": "equipment",
+      "label": "Varlamore rewards",
+      "description": "Independent collection milestones from Varlamore encounters.",
+      "row": 122.2,
+      "rows": 3.4,
+      "paths": []
+    },
+    {
+      "id": "barrows-equipment",
+      "section": "equipment",
+      "label": "Barrows sets",
+      "description": "Six brothers, six complete sets. Track each set and the milestones for collecting them all.",
+      "row": 127.1,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "The six brothers",
+          "lane": 2,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "boss-quest-gates",
+      "section": "combat",
+      "label": "Quests behind the encounters",
+      "description": "The quests that open up new boss encounters.",
+      "row": 0,
+      "rows": 2.3,
+      "paths": []
+    },
+    {
+      "id": "boss-access",
+      "section": "combat",
+      "label": "Boss unlocks",
+      "description": "Quest unlocks for repeatable boss encounters.",
+      "row": 3.8,
+      "rows": 7.5,
+      "paths": []
+    },
+    {
+      "id": "combat-honours",
+      "section": "combat",
+      "label": "Combat honours",
+      "description": "Combat Achievement tiers and milestones across bosses.",
+      "row": 12.8,
+      "rows": 6,
+      "paths": [
+        {
+          "label": "Combat tiers",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Boss variety",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Special records",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "first-hunts",
+      "section": "combat",
+      "label": "First hunts",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 20.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Scurrius",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Obor",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Bryophyta",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "new-hunts",
+      "section": "combat",
+      "label": "The newest hunts",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 26.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Mad Angel",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Maggot King",
+          "lane": 2.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "classic-hunts",
+      "section": "combat",
+      "label": "Classic hunts",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 33.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Giant Mole",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "King Black Dragon",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Kalphite Queen",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "regional-hunts",
+      "section": "combat",
+      "label": "Regional hunts",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 39.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Sarachnis",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Deranged Archaeologist",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Brutus",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "slayer-bosses",
+      "section": "combat",
+      "label": "Slayer encounters",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 46.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Grotesque Guardians",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Abyssal Sire",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Kraken",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "slayer-elite",
+      "section": "combat",
+      "label": "High-level Slayer",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 52.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Cerberus",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Thermonuclear Smoke Devil",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Alchemical Hydra",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "demons-spiders",
+      "section": "combat",
+      "label": "Spiders & demons",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 59.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Araxxor",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Skotizo",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Yama",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "godwars-commanders",
+      "section": "combat",
+      "label": "God Wars commanders",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 65.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "General Graardor",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Commander Zilyana",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "K'ril Tsutsaroth",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "godwars-ancients",
+      "section": "combat",
+      "label": "Wings, prisons & sigils",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 72.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Kree'Arra",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Nex",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Corporeal Beast",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "dagannoth-kings",
+      "section": "combat",
+      "label": "Dagannoth Kings",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 78.8,
+      "rows": 7,
+      "paths": [
+        {
+          "label": "Dagannoth Rex",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Dagannoth Prime",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Dagannoth Supreme",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "wild-solo",
+      "section": "combat",
+      "label": "Wilderness lairs · solo",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 87.3,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "Artio",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Spindel",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Calvar'ion",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "wild-multi",
+      "section": "combat",
+      "label": "Wilderness lairs · multi",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 91.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Callisto",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Venenatis",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Vet'ion",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "wild-roaming",
+      "section": "combat",
+      "label": "Wilderness encounters",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 98.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Chaos Elemental",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Chaos Fanatic",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Scorpia",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "keys-chests",
+      "section": "combat",
+      "label": "Keys & chests",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 104.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Crazy Archaeologist",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Barrows",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Mimic",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "quest-bosses",
+      "section": "combat",
+      "label": "Quest-unlocked hunts",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 111.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Zulrah",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Vorkath",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Phantom Muspah",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "desert-generals",
+      "section": "combat",
+      "label": "Desert Treasure II · generals",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 117.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Duke Sucellus",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Vardorvis",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "The Leviathan",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "nightmares",
+      "section": "combat",
+      "label": "Whispers & nightmares",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 124.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "The Whisperer",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "The Nightmare",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Phosani's Nightmare",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "varlamore-hunts",
+      "section": "combat",
+      "label": "Varlamore hunts",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 130.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Amoxliatl",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "The Hueycoatl",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Moons of Peril",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "varlamore-depths",
+      "section": "combat",
+      "label": "The arena & the depths",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 137.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Sol Heredit",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Doom of Mokhaiotl",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "The Royal Titans",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "prifddinas-hunts",
+      "section": "combat",
+      "label": "Prifddinas challenges",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 143.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "The Gauntlet",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "The Corrupted Gauntlet",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Zalcano",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "xeric-raids",
+      "section": "combat",
+      "label": "Chambers of Xeric",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 150.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Chambers of Xeric",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Chambers of Xeric: Challenge Mode",
+          "lane": 2.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "blood-raids",
+      "section": "combat",
+      "label": "Theatre of Blood",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 156.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Theatre of Blood",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Theatre of Blood: Hard Mode",
+          "lane": 2.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "amascut-raids",
+      "section": "combat",
+      "label": "Tombs of Amascut",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 163.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Tombs of Amascut",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Tombs of Amascut: Expert Mode",
+          "lane": 2.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "skilling-bosses",
+      "section": "combat",
+      "label": "Skilling encounters",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 169.8,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Wintertodt",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "Tempoross",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Hespori",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "tzhaar-challenges",
+      "section": "combat",
+      "label": "TzHaar & ocean challenges",
+      "description": "Kill counts, Combat Achievements and collection logs.",
+      "row": 176.3,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "TzTok-Jad",
+          "lane": 0.4,
+          "row": 0
+        },
+        {
+          "label": "TzKal-Zuk",
+          "lane": 2.4,
+          "row": 0
+        },
+        {
+          "label": "Shellbane Gryphon",
+          "lane": 4.4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "other-challenges",
+      "section": "combat",
+      "label": "Entry modes & challenge waves",
+      "description": "Combat Achievements for entry modes and challenge waves.",
+      "row": 182.8,
+      "rows": 1,
+      "paths": []
+    },
+    {
+      "id": "skilling-fishing",
+      "section": "skilling-equipment",
+      "label": "Fishing kit",
+      "description": "Fishing storage, wearable tools and the outfits earned along the way.",
+      "row": 0,
+      "rows": 4,
+      "paths": [
+        {
+          "label": "Storage",
+          "lane": 1,
+          "row": 0
+        },
+        {
+          "label": "Tackle & outfits",
+          "lane": 4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "skilling-mining",
+      "section": "skilling-equipment",
+      "label": "Mining kit",
+      "description": "Motherlode storage, the prospector outfit and Mining Guild gloves.",
+      "row": 5.5,
+      "rows": 4,
+      "paths": [
+        {
+          "label": "Motherlode rewards",
+          "lane": 2,
+          "row": 0
+        },
+        {
+          "label": "Glove workshop",
+          "lane": 1,
+          "row": 2
+        }
+      ]
+    },
+    {
+      "id": "skilling-forestry",
+      "section": "skilling-equipment",
+      "label": "Woodcutting & Forestry",
+      "description": "Outfits, log storage and the rewards that travel between the trees.",
+      "row": 11,
+      "rows": 4,
+      "paths": [
+        {
+          "label": "Outfits",
+          "lane": 0,
+          "row": 0
+        },
+        {
+          "label": "Log storage",
+          "lane": 3,
+          "row": 0
+        },
+        {
+          "label": "Forestry accessories",
+          "lane": 2,
+          "row": 2
+        }
+      ]
+    },
+    {
+      "id": "skilling-tool-components",
+      "section": "skilling-equipment",
+      "label": "Tool components & signets",
+      "description": "Tool seeds, stones and signets for skilling upgrades.",
+      "row": 16.5,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "Tool components",
+          "lane": 1,
+          "row": 0
+        },
+        {
+          "label": "Signet workshop",
+          "lane": 4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "skilling-tool-upgrades",
+      "section": "skilling-equipment",
+      "label": "Axe, pickaxe & harpoon upgrades",
+      "description": "Collect the components for infernal and crystal tools.",
+      "row": 21,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Axes",
+          "lane": 0.5,
+          "row": 0
+        },
+        {
+          "label": "Pickaxes",
+          "lane": 2.5,
+          "row": 0
+        },
+        {
+          "label": "Harpoons",
+          "lane": 4.5,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "skilling-runecraft",
+      "section": "skilling-equipment",
+      "label": "Runecraft kit",
+      "description": "Rift rewards and the level milestone for a larger essence pouch.",
+      "row": 27.5,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "Rift outfit & tools",
+          "lane": 2,
+          "row": 0
+        },
+        {
+          "label": "Pouch progression",
+          "lane": 2,
+          "row": 1
+        }
+      ]
+    },
+    {
+      "id": "skilling-farming-herblore",
+      "section": "skilling-equipment",
+      "label": "Farming & Herblore kit",
+      "description": "From seed storage and compost to the tools on the potion bench.",
+      "row": 32,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "Farming supplies",
+          "lane": 2,
+          "row": 0
+        },
+        {
+          "label": "Potion bench",
+          "lane": 2,
+          "row": 2
+        }
+      ]
+    },
+    {
+      "id": "skilling-workshop",
+      "section": "skilling-equipment",
+      "label": "Construction & Smithing kit",
+      "description": "Portable tools, plank storage and the two workshop outfits.",
+      "row": 36.5,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "Mahogany Homes",
+          "lane": 2,
+          "row": 0
+        },
+        {
+          "label": "Smithing workshop",
+          "lane": 2,
+          "row": 2
+        }
+      ]
+    },
+    {
+      "id": "skilling-agility-thieving",
+      "section": "skilling-equipment",
+      "label": "Agility & Thieving kit",
+      "description": "Outfits for the long grind and the tools of the Hallowed Sepulchre.",
+      "row": 41,
+      "rows": 4,
+      "paths": [
+        {
+          "label": "Outfits & endurance",
+          "lane": 2,
+          "row": 0
+        },
+        {
+          "label": "Sepulchre tools",
+          "lane": 2,
+          "row": 2
+        }
+      ]
+    },
+    {
+      "id": "skilling-hunter-fletching",
+      "section": "skilling-equipment",
+      "label": "Hunter & Fletching kit",
+      "description": "Hunting gear from rumours and the tools earned at Vale Totems.",
+      "row": 46.5,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "Hunter Guild",
+          "lane": 1,
+          "row": 0
+        },
+        {
+          "label": "Vale Totems",
+          "lane": 1,
+          "row": 2
+        }
+      ]
+    },
+    {
+      "id": "skilling-fire-prayer",
+      "section": "skilling-equipment",
+      "label": "Firemaking & Prayer kit",
+      "description": "Warm clothing and torch rewards, alongside the zealot outfit.",
+      "row": 51,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "Wintertodt kit",
+          "lane": 2,
+          "row": 0
+        },
+        {
+          "label": "Shades of Mort’ton",
+          "lane": 2,
+          "row": 2
+        }
+      ]
+    },
+    {
+      "id": "brutus-rewards",
+      "section": "equipment",
+      "label": "Brutus rewards",
+      "description": "A bovine offhand, slippers and a very small bull.",
+      "row": 131.6,
+      "rows": 2,
+      "paths": []
+    },
+    {
+      "id": "expanded-storage",
+      "section": "skilling-equipment",
+      "label": "Bigger bags",
+      "description": "Herbs and gems deserve fewer bank trips.",
+      "row": 55.5,
+      "rows": 7,
+      "paths": [
+        {
+          "label": "Herb sack upgrade",
+          "lane": 1,
+          "row": 0
+        },
+        {
+          "label": "Gem storage",
+          "lane": 2,
+          "row": 3
+        }
+      ]
+    },
+    {
+      "id": "island-tools",
+      "section": "skilling-equipment",
+      "label": "Island tools & workshop rewards",
+      "description": "Useful finds from gryphons, golems and the cow pen.",
+      "row": 64,
+      "rows": 2,
+      "paths": []
+    },
+    {
+      "id": "elemental-jewellery",
+      "section": "equipment",
+      "label": "Elemental jewellery",
+      "description": "Four Slayer jewels, four amulets and one combined upgrade.",
+      "row": 135.1,
+      "rows": 4,
+      "paths": []
+    },
+    {
+      "id": "frontier-weapons",
+      "section": "equipment",
+      "label": "Vampyrium, Wyrmscraig & beyond",
+      "description": "Weapons and offhands from the newest hunting grounds.",
+      "row": 140.6,
+      "rows": 3,
+      "paths": []
+    },
+    {
+      "id": "sailing-equipment",
+      "section": "equipment",
+      "label": "Weapons from the sea",
+      "description": "Restore Belle’s Folly, build an aquanite hopper and carve island blowpipes.",
+      "row": 145.1,
+      "rows": 6,
+      "paths": []
+    },
+    {
+      "id": "sailing-kit",
+      "section": "skilling-equipment",
+      "label": "Shipbuilding & deep-sea exploration",
+      "description": "A repair station for the crew and a medallion for the depths.",
+      "row": 67.5,
+      "rows": 6,
+      "paths": []
+    },
+    {
+      "id": "slayer-cosmetics",
+      "section": "equipment",
+      "label": "Holy Moleys",
+      "description": "Combine holy sandals and mole slippers.",
+      "row": 152.6,
+      "rows": 3,
+      "paths": []
+    },
+    {
+      "id": "collections-ranks",
+      "section": "collections",
+      "label": "Collection ranks",
+      "description": "From bronze to gilded: staff unlocks earned by filling unique collection-log slots.",
+      "row": 0,
+      "rows": 3,
+      "paths": []
+    },
+    {
+      "id": "collections-trophies",
+      "section": "collections",
+      "label": "Pets, jars & greenlogs",
+      "description": "Distinct companions, boss jars and fully completed collection-log pages.",
+      "row": 5,
+      "rows": 3,
+      "paths": [
+        {
+          "label": "Pets",
+          "lane": 0,
+          "row": 0
+        },
+        {
+          "label": "Boss jars",
+          "lane": 2,
+          "row": 0
+        },
+        {
+          "label": "Completed pages",
+          "lane": 4,
+          "row": 0
+        }
+      ]
+    },
+    {
+      "id": "collections-clues",
+      "section": "collections",
+      "label": "Treasure Trail unlocks",
+      "description": "Clue capacity upgrades and the unique reward at the end of each tier’s path.",
+      "row": 10,
+      "rows": 5,
+      "paths": [
+        {
+          "label": "Beginner",
+          "lane": 0,
+          "row": 2
+        },
+        {
+          "label": "Easy",
+          "lane": 1,
+          "row": 2
+        },
+        {
+          "label": "Medium",
+          "lane": 2,
+          "row": 2
+        },
+        {
+          "label": "Hard",
+          "lane": 3,
+          "row": 2
+        },
+        {
+          "label": "Elite",
+          "lane": 4,
+          "row": 2
+        },
+        {
+          "label": "Master",
+          "lane": 5,
+          "row": 2
+        }
+      ]
+    },
+    {
+      "id": "collections-trials",
+      "section": "collections",
+      "label": "Barracuda Trial rewards",
+      "description": "Three trial reward paths, from Swordfish through Marlin, leading to a complete log.",
+      "row": 17,
+      "rows": 4,
+      "paths": [
+        {
+          "label": "Tempor Tantrum",
+          "lane": 0,
+          "row": 0
+        },
+        {
+          "label": "Jubbly Jive",
+          "lane": 2,
+          "row": 0
+        },
+        {
+          "label": "Gwenith Glide",
+          "lane": 4,
+          "row": 0
+        }
+      ]
+    }
+  ]
+}

@@ -6,8 +6,8 @@ import type { FunctionReturnType } from "convex/server";
 import { ArrowRight, Search, Swords, Trophy } from "lucide-react";
 import { type FormEvent, memo, useEffect, useRef, useState } from "react";
 import { capturePageView } from "./analytics";
+import { AppHeader } from "./components/AppHeader";
 import { FaultyTerminal } from "./components/FaultyTerminal";
-import { PublicHeader } from "./components/PublicHeader";
 import { fallbackCompareRsns, fallbackExampleRsn } from "./exampleRsns";
 import { comparisonPath } from "./features/comparison/navigation";
 import { formatAccountSummary } from "./features/ratingDisplay";
@@ -40,7 +40,7 @@ export function LandingPage() {
 
   return (
     <main className="landing-page">
-      <PublicHeader compareHref={featuredComparisonHref} />
+      <AppHeader compareHref={featuredComparisonHref} />
 
       <div className="landing-shell" id="public-content" tabIndex={-1}>
         <section className="landing-stage" aria-labelledby="landing-title">
